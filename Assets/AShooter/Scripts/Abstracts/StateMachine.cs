@@ -1,6 +1,7 @@
 using Core;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace abstracts
 {

@@ -23,12 +23,12 @@ namespace DI
             List<ISystem> _systems = new List<ISystem>();
 
             if (_useMoveSystem)
-                _systems.Add(new MoveSystem());
+                _systems.Add(new PlayerMovable());
 
             if (_useShootSystem)
-                _systems.Add(new ShootSystem());
+                _systems.Add(new PlayerShootable());
 
-            Container.Bind<List<ISystem>>().FromInstance(_systems).AsCached();
+            Container.Bind<List<ISystem>>().WithId("PlayerSystems").FromInstance(_systems).AsCached();
         }
         private void Awake()
         {

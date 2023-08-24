@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Core 
 {
-    public class MoveSystem : BaseSystem
+    public class PlayerMovable : BaseSystem
     {
         private IGameComponents _components;
         private PlayerAnimator _animator;
@@ -19,5 +19,6 @@ namespace Core
         {
 
         }
+       
     }
 }
