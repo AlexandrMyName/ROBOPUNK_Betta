@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Core
 {
-    public class ShootSystem : BaseSystem
+    public class PlayerShootable : BaseSystem
     {
         private IGameComponents _components;
         protected override void Awake(IGameComponents components)
