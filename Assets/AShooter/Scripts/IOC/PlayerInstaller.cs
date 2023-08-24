@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Core;
 using abstracts;
 using DI.Spawn;
-using UnityEngine.Rendering.VirtualTexturing;
+using Cinemachine;
 
 namespace DI
 {
@@ -12,6 +12,7 @@ namespace DI
     {
         [SerializeField] private bool _spawnOnAwake;
         [SerializeField] private Spawner _spawner;
+        [SerializeField] private CinemachineVirtualCamera _camera;
         [Space(10), SerializeField] private bool _useMoveSystem;
         [SerializeField] private bool _useShootSystem;
 
@@ -34,9 +35,13 @@ namespace DI
 
         private void Awake()
         {
-
+            
             if (_spawnOnAwake)
-                _spawner.Spawn();
+            {
+               GameObject player = _spawner.Spawn();
+                _camera.Follow = player.transform;
+                _camera.LookAt = player.transform;
+            }
         }
     }
 }
