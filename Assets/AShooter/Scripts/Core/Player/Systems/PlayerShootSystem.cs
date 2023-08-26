@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Core
 {
     
-    public class PlayerShootSystem : BaseSystem
+    public sealed class PlayerShootSystem : BaseSystem
     {
         
         private IGameComponents _components;

@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
+
 namespace abstracts
 {
+    
     public abstract class StateMachine : MonoBehaviour
     {
+        
         private List<ISystem> _systems;
 
         protected abstract List<ISystem> GetSystems();
@@ -23,6 +26,8 @@ namespace abstracts
                 _systems[i].BaseAwake(stack);
             }
         }
+        
+        
         private void OnEnable()
         {
             for (int i = 0; i < _systems.Count; i++)
@@ -30,6 +35,8 @@ namespace abstracts
                 _systems[i].BaseOnEnable();
             }
         }
+        
+        
         private void Start()
         {
             for (int i = 0; i < _systems.Count; i++)
@@ -37,6 +44,8 @@ namespace abstracts
                 _systems[i].BaseStart();
             }
         }
+        
+        
         private void Update()
         {
             for (int i = 0; i < _systems.Count; i++)
@@ -44,6 +53,8 @@ namespace abstracts
                 _systems[i].BaseUpdate();
             }
         }
+        
+        
         private void FixedUpdate()
         {
             for (int i = 0; i < _systems.Count; i++)
@@ -51,6 +62,8 @@ namespace abstracts
                 _systems[i].BaseFixedUpdate();
             }
         }
+        
+        
         private void LateUpdate()
         {
             for (int i = 0; i < _systems.Count; i++)
@@ -58,5 +71,7 @@ namespace abstracts
                 _systems[i].BaseLateUpdate();
             }
         }
+        
+        
     }
 }
