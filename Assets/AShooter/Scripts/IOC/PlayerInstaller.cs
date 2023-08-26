@@ -6,10 +6,13 @@ using abstracts;
 using DI.Spawn;
 using Cinemachine;
 
+
 namespace DI
 {
+    
     public class PlayerInstaller : MonoInstaller
     {
+        
         [SerializeField] private bool _spawnOnAwake;
         [SerializeField] private Spawner _spawner;
         [SerializeField] private CinemachineVirtualCamera _camera;
@@ -18,21 +21,36 @@ namespace DI
 
 
         public override void InstallBindings()
-        => Container.Bind<List<ISystem>>().WithId("PlayerSystems").FromInstance(InitSystem()).AsCached();
+        {
+            Container
+                .Bind<List<ISystem>>()
+                .WithId("PlayerSystems")
+                .FromInstance(InitSystems())
+                .AsCached();
+        }
         
-        private List<ISystem> InitSystem()
+        
+        private List<ISystem> InitSystems()
         {
             List<ISystem> systems = new List<ISystem>();
-
-            if (_useMoveSystem)
-                systems.Add(new PlayerMovable());
-
-            if (_useShootSystem)
-                systems.Add(new PlayerShootable());
+            
+            InputSystem inputSystem = new InputSystem();
+            Container.QueueForInject(inputSystem);
+            
+            PlayerMovementSystem moveSystem = new PlayerMovementSystem();
+            Container.QueueForInject(moveSystem);
+            
+            PlayerShootSystem shootSystem = new PlayerShootSystem();
+            Container.QueueForInject(shootSystem);
+            
+            systems.Add(inputSystem);
+            systems.Add(moveSystem);
+            systems.Add(shootSystem);
 
             return systems;
         }
 
+        
         private void Awake()
         {
             
@@ -43,6 +61,8 @@ namespace DI
                 _camera.LookAt = player.transform;
             }
         }
+        
+        
     }
 }
  
