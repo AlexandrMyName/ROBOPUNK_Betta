@@ -25,10 +25,10 @@ namespace DI
             List<ISystem> systems = new List<ISystem>();
 
             if (_useMoveSystem)
-                systems.Add(new PlayerMovable());
+                systems.Add(new PlayerMovement());
 
             if (_useShootSystem)
-                systems.Add(new PlayerShootable());
+                systems.Add(new PlayerShootSystem());
 
             return systems;
         }
