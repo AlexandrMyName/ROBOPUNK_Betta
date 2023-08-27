@@ -13,16 +13,24 @@ namespace DI
         [SerializeField] private Spawner _spawner;
 
         public override void InstallBindings()
-        =>  Container.Bind<List<ISystem>>().WithId("EnemySystems").FromInstance(InitSystem()).AsCached();
-        
+        => Container.Bind<List<ISystem>>().WithId("EnemySystems").FromInstance(InitSystem()).AsCached();
+
         private List<ISystem> InitSystem()
         {
             List<ISystem> systems = new List<ISystem>();
 
-            systems.Add(new EnemyMovable());
+            var enemyMovable = new EnemyMovementSystem();
+            var enemyDamage = new EnemyDamageSystem();
+
+            Container.QueueForInject(enemyMovable);
+            Container.QueueForInject(enemyDamage);
+
+            systems.Add(enemyMovable);
+            systems.Add(enemyDamage);
 
             return systems;
         }
+
         private void Awake()
         {
             if (_spawnOnAwake)
@@ -30,4 +38,4 @@ namespace DI
         }
     }
 }
- 
+
