@@ -1,22 +1,24 @@
 ﻿using System;
+using Abstracts;
+using UniRx;
 using UnityEngine;
 
 
 namespace Core
 {
 
-    internal sealed class PCAttackInput : IUserInputProxy
+    internal sealed class PCAttackInput : IUserInputProxy<bool>
     {
         
-        public event Action<bool> ButtonAxisOnChange = delegate(bool b) {  };
-        public event Action<float> AxisOnChange;
+        public IObservable<bool> AxisOnChange { get; }
 
-        
-        public void GetAxis()
+
+        public PCAttackInput()
         {
-            ButtonAxisOnChange.Invoke(Input.GetButtonUp(AxisManager.FIRE1));
+            AxisOnChange = Observable
+                .EveryUpdate()
+                .Select(_ => Input.GetButtonDown(AxisManager.FIRE1));
         }
-        
         
     }
 }

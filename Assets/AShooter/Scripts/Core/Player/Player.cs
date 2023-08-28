@@ -1,10 +1,7 @@
-using System;
-using abstracts;
+using Abstracts;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
 using Zenject;
-using StateMachine = abstracts.StateMachine;
+using StateMachine = Abstracts.StateMachine;
 
 
 namespace Core

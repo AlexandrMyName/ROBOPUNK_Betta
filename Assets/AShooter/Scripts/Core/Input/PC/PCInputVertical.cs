@@ -1,21 +1,25 @@
 ﻿using System;
+using Abstracts;
+using UniRx;
 using UnityEngine;
 
 
 namespace Core
 {
     
-    internal sealed class PCInputVertical : IUserInputProxy
+    internal sealed class PCInputVertical : IUserInputProxy<float>
     {
         
-        public event Action<float> AxisOnChange = delegate(float f) {  };
-        public event Action<bool> ButtonAxisOnChange;
+        public IObservable<float> AxisOnChange { get; }
 
-        
-        public void GetAxis()
+
+        public PCInputVertical()
         {
-            AxisOnChange.Invoke(Input.GetAxis(AxisManager.VERTICAL));
+            AxisOnChange = Observable
+                .EveryUpdate()
+                .Select(_ => Input.GetAxis(AxisManager.VERTICAL));
         }
-
+        
+            
     }
 }

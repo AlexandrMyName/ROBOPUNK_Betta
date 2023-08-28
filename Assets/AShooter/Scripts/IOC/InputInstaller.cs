@@ -1,10 +1,6 @@
 using Zenject;
-using UnityEngine;
-using System.Collections.Generic;
 using Core;
-using abstracts;
-using DI.Spawn;
-using Cinemachine;
+using Abstracts;
 
 
 namespace DI

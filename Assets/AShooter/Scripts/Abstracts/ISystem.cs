@@ -1,8 +1,9 @@
-
-namespace abstracts
+namespace Abstracts
 {
+    
     public interface ISystem
     {
+        
         void BaseAwake(IGameComponents baseObjectStack);
         void BaseStart();
         void BaseOnEnable();
@@ -10,6 +11,7 @@ namespace abstracts
         void BaseLateUpdate();
         void BaseFixedUpdate();
         void BaseOnDestroy();
+        
 
     }
 }

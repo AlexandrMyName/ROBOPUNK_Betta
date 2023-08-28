@@ -1,11 +1,10 @@
-
-namespace abstracts
+namespace Abstracts
 {
+    
     public abstract class BaseSystem : ISystem
     {
+        
         protected IGameComponents ComponentCollection;
-
-
 
         protected virtual void OnEnable() { }
         protected virtual void Awake(IGameComponents components) { }
