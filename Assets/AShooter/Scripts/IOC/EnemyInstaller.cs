@@ -18,12 +18,17 @@ namespace DI
         [SerializeField] private bool _spawnOnAwake;
         [SerializeField] private float _maxHealth;
 
-        
-        public override void InstallBindings() => 
+
+        public override void InstallBindings()
+        {
+            SetHealth(_maxHealth);
+            
             Container.Bind<List<ISystem>>()
                 .WithId("EnemySystems")
                 .FromInstance(InitSystem())
                 .AsCached();
+        }
+            
 
 
         private List<ISystem> InitSystem()
