@@ -1,13 +1,16 @@
-using abstracts;
+using Abstracts;
 using UniRx;
 using UnityEngine;
 
+
 namespace Core
 {
+    
     public class EnemyDamageSystem : BaseSystem
     {
+        
         private IGameComponents _components;
-    
+
         protected override void Awake(IGameComponents components)
         {
             _components = components;
@@ -18,6 +21,8 @@ namespace Core
         {
             Debug.LogWarning($"{_components.BaseObject.name} getting damage |DamageSystem|");
         }
+        
+        
     }
 }
 

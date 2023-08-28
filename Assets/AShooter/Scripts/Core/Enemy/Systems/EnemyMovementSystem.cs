@@ -1,11 +1,15 @@
-using abstracts;
+using Abstracts;
 using UnityEngine;
+
 
 namespace Core
 {
+    
     public class EnemyMovementSystem : BaseSystem
     {
+        
         private IGameComponents _components;
+        
         
         protected override void Awake(IGameComponents components)
         {
@@ -14,9 +18,12 @@ namespace Core
             
         }
 
+        
         protected override void Update()
         {
             
         }
+        
+        
     }
 }

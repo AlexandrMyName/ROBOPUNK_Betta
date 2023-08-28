@@ -1,20 +1,23 @@
 ﻿using System;
+using Abstracts;
+using UniRx;
 using UnityEngine;
 
 
 namespace Core
 {
     
-    internal sealed class PCInputHorizontal : IUserInputProxy
+    internal sealed class PCInputHorizontal : IUserInputProxy<float>
     {
         
-        public event Action<float> AxisOnChange = delegate(float f) {  };
-        public event Action<bool> ButtonAxisOnChange;
+        public IObservable<float> AxisOnChange { get; }
 
         
-        public void GetAxis()
+        public PCInputHorizontal()
         {
-            AxisOnChange.Invoke(Input.GetAxis(AxisManager.HORIZONTAL));
+            AxisOnChange = Observable
+                .EveryUpdate()
+                .Select(_ => Input.GetAxis(AxisManager.HORIZONTAL));
         }
         
         

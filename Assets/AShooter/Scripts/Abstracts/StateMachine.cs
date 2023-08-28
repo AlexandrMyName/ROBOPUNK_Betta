@@ -1,10 +1,10 @@
-using Core;
 using System.Collections.Generic;
+using Core;
 using UnityEngine;
 using Zenject;
 
 
-namespace abstracts
+namespace Abstracts
 {
     
     public abstract class StateMachine : MonoBehaviour

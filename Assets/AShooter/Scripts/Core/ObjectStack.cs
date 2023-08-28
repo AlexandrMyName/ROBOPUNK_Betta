@@ -1,10 +1,13 @@
-using abstracts;
+using Abstracts;
 using UnityEngine;
+
 
 namespace Core
 {
+    
     public class ObjectStack : IGameComponents
     {
+        
         private Camera _camera;
         private Transform _transform;
         private GameObject _gameObject;
@@ -16,10 +19,14 @@ namespace Core
             _gameObject = baseObject;
             _transform = baseObject.transform;
         }
+        
+        
         public Camera MainCamera => _camera;
 
         public Transform BaseTransform => _transform;
 
         public GameObject BaseObject => _gameObject;
+        
+        
     }
 }

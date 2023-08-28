@@ -2,7 +2,7 @@ using Zenject;
 using UnityEngine;
 using System.Collections.Generic;
 using Core;
-using abstracts;
+using Abstracts;
 using DI.Spawn;
 using Cinemachine;
 
@@ -33,17 +33,13 @@ namespace DI
         private List<ISystem> InitSystems()
         {
             List<ISystem> systems = new List<ISystem>();
-            
-            InputSystem inputSystem = new InputSystem();
-            Container.QueueForInject(inputSystem);
-            
+
             PlayerMovementSystem moveSystem = new PlayerMovementSystem();
             Container.QueueForInject(moveSystem);
             
             PlayerShootSystem shootSystem = new PlayerShootSystem();
             Container.QueueForInject(shootSystem);
             
-            systems.Add(inputSystem);
             systems.Add(moveSystem);
             systems.Add(shootSystem);
 
