@@ -1,5 +1,5 @@
 using abstracts;
-using User;
+using UniRx;
 using UnityEngine;
 
 namespace Core
@@ -7,22 +7,16 @@ namespace Core
     public class EnemyDamageSystem : BaseSystem
     {
         private IGameComponents _components;
-        private IHealth _health;
-
+    
         protected override void Awake(IGameComponents components)
         {
             _components = components;
-            _health = _components.BaseObject.GetComponent<IHealth>();
+            _components.BaseObject.GetComponent<IAttackable>().Health.Subscribe(OnDamage);
         }
 
-        protected override void Update()
+        private void OnDamage(float amountHealth)
         {
-
-            if (_health != null && _health.CurrentHealth <= 0)
-            {
-                Debug.LogWarning($"Death of the enemy  {_components.BaseObject.name}");
-                Object.Destroy(_components.BaseObject);
-            }
+            Debug.LogWarning($"{_components.BaseObject.name} getting damage |DamageSystem|");
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Core;
 using abstracts;
 using DI.Spawn;
+using UniRx;
 
 namespace DI
 {
@@ -11,9 +12,13 @@ namespace DI
     {
         [SerializeField] private bool _spawnOnAwake;
         [SerializeField] private Spawner _spawner;
+        [SerializeField] private float _maxHealth;
 
         public override void InstallBindings()
-        => Container.Bind<List<ISystem>>().WithId("EnemySystems").FromInstance(InitSystem()).AsCached();
+        {
+            SetHealth(_maxHealth);
+            Container.Bind<List<ISystem>>().WithId("EnemySystems").FromInstance(InitSystem()).AsCached();
+        }
 
         private List<ISystem> InitSystem()
         {
@@ -24,13 +29,17 @@ namespace DI
 
             Container.QueueForInject(enemyMovable);
             Container.QueueForInject(enemyDamage);
-
+            
             systems.Add(enemyMovable);
             systems.Add(enemyDamage);
-
+            
             return systems;
         }
-
+        private void SetHealth(float initializedMaxHealth)
+        {
+            ReactiveProperty<float> health = new ReactiveProperty<float>(initializedMaxHealth);
+            Container.BindInstance(health).WithId("EnemyHealth").AsCached();
+        }
         private void Awake()
         {
             if (_spawnOnAwake)
