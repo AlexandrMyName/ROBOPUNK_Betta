@@ -1,7 +1,9 @@
-using Abstracts;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System;
+using Abstracts;
+using UniRx;
+using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -13,7 +15,7 @@ namespace Core
     {
 
         [Inject] private IInput _input;
-        [Inject] private Weapon _weapon;
+        [Inject] private IWeapon _weapon;
 
         private IGameComponents _components;
         private Camera _camera;
@@ -42,7 +44,7 @@ namespace Core
         {
             var ray = _camera.ScreenPointToRay(_mousePosition);
 
-            if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, _weapon.layerMask))
+            if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, _weapon.LayerMask))
             {
                 Debug.DrawRay(ray.origin, ray.direction * hitInfo.distance, Color.red);
             }
@@ -59,7 +61,7 @@ namespace Core
         {
             if (isClicked)
             {
-                PerformRaycast();
+                FindTarget();
             }
         }
 
@@ -70,11 +72,11 @@ namespace Core
         }
 
 
-        private void PerformRaycast()
+        private void FindTarget()
         {
             var ray = _camera.ScreenPointToRay(_mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, _weapon.layerMask))
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, _weapon.LayerMask))
             {
                 var hitCollider = hitInfo.collider;
 
@@ -94,40 +96,14 @@ namespace Core
 
         private void SpawnParticleEffectOnHit(RaycastHit hitInfo)
         {
-            if (_weapon.effectPrefab != null)
+            if (_weapon.EffectPrefab != null)
             {
                 var hitEffectRotation = Quaternion.LookRotation(hitInfo.normal);
-                var hitEffect = GameObject.Instantiate(_weapon.effectPrefab, hitInfo.point, hitEffectRotation);
+                var hitEffect = GameObject.Instantiate(_weapon.EffectPrefab, new Vector3(hitInfo.point.x, 1f, hitInfo.point.z), hitEffectRotation);
 
-                GameObject.Destroy(hitEffect.gameObject, _weapon.effectDestroyDelay);
+                GameObject.Destroy(hitEffect.gameObject, _weapon.EffectDestroyDelay);
             }
         }
-
-#if UNITY_EDITOR
-        //private void OnDrawGizmosSelected()
-        //{
-        //    var ray = new Ray(_components.BaseTransform.position, _components.BaseTransform.forward);
-        //    DrawRaycast(ray);
-        //}
-
-        //private void DrawRaycast(Ray ray)
-        //{
-        //    if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, _weapon.layerMask))
-        //    {
-        //        DrawRay(ray, hitInfo.point, hitInfo.distance, Color.red);
-        //    }
-        //}
-
-        //private void DrawRay(Ray ray, Vector3 hitPosition, float distance, Color color)
-        //{
-        //    const float hitPointRadius = 0.15f;
-
-        //    Debug.DrawRay(ray.origin, ray.direction * distance, color);
-
-        //    Gizmos.color = color;
-        //    Gizmos.DrawSphere(hitPosition, hitPointRadius);
-        //}
-#endif
 
     }
 }

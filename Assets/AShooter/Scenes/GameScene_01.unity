@@ -187,6 +187,7 @@ MonoBehaviour:
   _camera: {fileID: 2093596454}
   _useMoveSystem: 1
   _useShootSystem: 1
+  _weaponConfig: {fileID: 11400000, guid: 3b6538afe21c486458721f12758b87e4, type: 2}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -599,8 +600,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7923c76d1c032ab42a1f955b1605b7ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnOnAwake: 1
   _spawner: {fileID: 1913960609}
+  _spawnOnAwake: 1
   _maxHealth: 100
 --- !u!114 &1913960609
 MonoBehaviour:
