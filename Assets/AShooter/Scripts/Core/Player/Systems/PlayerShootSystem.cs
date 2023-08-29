@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Abstracts;
 using UniRx;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -33,7 +31,7 @@ namespace Core
 
         protected override void Start()
         {
-            _disposables.AddRange(new ArrayList(){
+            _disposables.AddRange(new List<IDisposable>{
                 _input.LeftClick.AxisOnChange.Subscribe(OnLeftClick),
                 _input.MousePosition.AxisOnChange.Subscribe(OnMousePositionChanged)}
             );
