@@ -11,11 +11,11 @@ namespace Core
         public IUserInputProxy<bool> LeftClick { get; }
         public IUserInputProxy<Vector3> MousePosition { get; }
 
-        public PCInput( [NotNull] InputConfig cnf )
+        public PCInput( [NotNull] InputConfig config )
         {
 
-            Horizontal = new PCInputHorizontal(cnf);
-            Vertical = new PCInputVertical(cnf);
+            Horizontal = new PCInputHorizontal(config);
+            Vertical = new PCInputVertical(config);
             LeftClick = new PCAttackInput();
             MousePosition = new PCMousePositionInput();
         }

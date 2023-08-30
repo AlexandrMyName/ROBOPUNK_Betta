@@ -9,11 +9,11 @@ namespace Core
     {
         public IObservable<float> AxisOnChange { get; }
 
-        public PCInputHorizontal(InputConfig _cnf)
+        public PCInputHorizontal(InputConfig config)
         {
             AxisOnChange = Observable
                 .EveryUpdate()
-                .Select(_ => _cnf.Direction.Vector.ReadValue<Vector2>().x);
+                .Select(_ => config.Direction.Vector.ReadValue<Vector2>().x);
         }
     }
 }
