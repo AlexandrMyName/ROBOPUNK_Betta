@@ -6,6 +6,7 @@ using Abstracts;
 using DI.Spawn;
 using Cinemachine;
 using User;
+using UniRx;
 
 
 namespace DI
@@ -21,10 +22,14 @@ namespace DI
         [Space(10), SerializeField] private bool _useMoveSystem;
         [SerializeField] private bool _spawnOnAwake;
         [SerializeField] private bool _useShootSystem;
-        
-        
+        [SerializeField] private float _maxPlayerHealth;
+
+
         public override void InstallBindings()
         {
+            SetHealth(_maxPlayerHealth);
+            //SetHealth(-3);
+
             Container
                 .Bind<List<ISystem>>()
                 .WithId("PlayerSystems")
@@ -52,14 +57,28 @@ namespace DI
             
             PlayerShootSystem shootSystem = new PlayerShootSystem();
             Container.QueueForInject(shootSystem);
+
+            PlayerHealthSystem healthSystem = new PlayerHealthSystem();
+            Container.QueueForInject(healthSystem);
             
             systems.Add(moveSystem);
             systems.Add(shootSystem);
+            systems.Add(healthSystem);
 
             return systems;
         }
 
-        
+        private void SetHealth(float initializedMaxHealth)
+        {
+            ReactiveProperty<float> health = new ReactiveProperty<float>(initializedMaxHealth);
+
+            Container
+                .BindInstance(health)
+                .WithId("PlayerHealth")
+                .AsCached();
+        }
+
+
         private void Awake()
         {
             
