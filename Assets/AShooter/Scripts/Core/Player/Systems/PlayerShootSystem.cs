@@ -95,8 +95,8 @@ namespace Core
                 var hitEffectRotation = Quaternion.LookRotation(hitInfo.normal);
                 
                 var hitEffect = GameObject.Instantiate(
-                    _weapon.Effect, 
-                    new Vector3(hitInfo.point.x, 1f, hitInfo.point.z), 
+                    _weapon.Effect,
+                    hitInfo.point, 
                     hitEffectRotation);
 
                 GameObject.Destroy(hitEffect.gameObject, _weapon.EffectDestroyDelay);
