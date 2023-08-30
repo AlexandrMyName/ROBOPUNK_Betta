@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Abstracts;
 using UniRx;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -34,7 +32,7 @@ namespace Core
         {
             Debug.LogWarning($"INPUT STARTED {_input != null}");
             
-            _disposables.AddRange(new ArrayList(){
+            _disposables.AddRange(new List<IDisposable>{
                     _input.Horizontal.AxisOnChange.Subscribe(OnHorizontalChanged),
                     _input.Vertical.AxisOnChange.Subscribe(OnVerticalChanged),
                     _input.LeftClick.AxisOnChange.Subscribe(OnLeftClick),

@@ -5,6 +5,7 @@ using Core;
 using Abstracts;
 using DI.Spawn;
 using Cinemachine;
+using User;
 
 
 namespace DI
@@ -13,19 +14,31 @@ namespace DI
     public class PlayerInstaller : MonoInstaller
     {
         
-        [SerializeField] private bool _spawnOnAwake;
-        [SerializeField] private Spawner _spawner;
         [SerializeField] private CinemachineVirtualCamera _camera;
+        [SerializeField] private WeaponConfig _weaponConfig;
+        [SerializeField] private Spawner _spawner;
+        
         [Space(10), SerializeField] private bool _useMoveSystem;
+        [SerializeField] private bool _spawnOnAwake;
         [SerializeField] private bool _useShootSystem;
-
-
+        
+        
         public override void InstallBindings()
         {
             Container
                 .Bind<List<ISystem>>()
                 .WithId("PlayerSystems")
                 .FromInstance(InitSystems())
+                .AsCached();
+            
+            Container.Bind<IWeapon>().FromInstance(
+                new Weapon(
+                    _weaponConfig.WeaponPrefab, 
+                    _weaponConfig.LayerMask, 
+                    _weaponConfig.EffectPrefab, 
+                    _weaponConfig.Damage, 
+                    _weaponConfig.EffectDestroyDelay)
+                )
                 .AsCached();
         }
         
