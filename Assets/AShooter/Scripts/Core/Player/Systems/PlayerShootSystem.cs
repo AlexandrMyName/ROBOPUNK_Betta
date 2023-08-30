@@ -40,15 +40,10 @@ namespace Core
 
         protected override void Update()
         {
-            var ray = _camera.ScreenPointToRay(_mousePosition);
-
-            if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, _weapon.LayerMask))
-            {
-                Debug.DrawRay(ray.origin, ray.direction * hitInfo.distance, Color.red);
-            }
+            DrawDebugRayToMousePosition();
         }
-
-
+        
+        
         protected override void OnDestroy()
         {
             _disposables.ForEach(d => d.Dispose());
@@ -80,6 +75,7 @@ namespace Core
 
                 if (hitCollider.TryGetComponent(out IAttackable unit))
                 {
+                    Debug.Log($"Found target [{unit}]");
                     unit.TakeDamage(_weapon.Damage);
                 }
                 else
@@ -94,14 +90,30 @@ namespace Core
 
         private void SpawnParticleEffectOnHit(RaycastHit hitInfo)
         {
-            if (_weapon.EffectPrefab != null)
+            if (_weapon.Effect != null)
             {
                 var hitEffectRotation = Quaternion.LookRotation(hitInfo.normal);
-                var hitEffect = GameObject.Instantiate(_weapon.EffectPrefab, new Vector3(hitInfo.point.x, 1f, hitInfo.point.z), hitEffectRotation);
+                
+                var hitEffect = GameObject.Instantiate(
+                    _weapon.Effect, 
+                    new Vector3(hitInfo.point.x, 1f, hitInfo.point.z), 
+                    hitEffectRotation);
 
                 GameObject.Destroy(hitEffect.gameObject, _weapon.EffectDestroyDelay);
             }
         }
+        
+        
+        private void DrawDebugRayToMousePosition()
+        {
+            var ray = _camera.ScreenPointToRay(_mousePosition);
+
+            if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, _weapon.LayerMask))
+            {
+                Debug.DrawRay(ray.origin, ray.direction * hitInfo.distance, Color.red);
+            }
+        }
+        
 
     }
 }

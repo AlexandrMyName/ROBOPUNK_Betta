@@ -7,11 +7,15 @@ namespace Abstracts
     internal interface IWeapon
     {
 
-        float Damage { get; set; }
-        GameObject WeaponPrefab { get; set; }
-        LayerMask LayerMask { get; set; }
-        ParticleSystem EffectPrefab { get; set; }
-        float EffectDestroyDelay { get; set; }
+        GameObject WeaponObject { get; }
+        
+        LayerMask LayerMask { get; }
+        
+        ParticleSystem Effect { get; }
+        
+        float Damage { get; }
+        
+        float EffectDestroyDelay { get; }
 
 
     }

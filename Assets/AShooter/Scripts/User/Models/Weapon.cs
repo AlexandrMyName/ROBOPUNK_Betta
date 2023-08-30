@@ -7,15 +7,26 @@ namespace User
 
     public sealed class Weapon : IWeapon
     {
+        public GameObject WeaponObject { get; }
+        
+        public LayerMask LayerMask { get; }
+        
+        public ParticleSystem Effect { get; }
 
-        public WeaponConfig _weaponConfig;
+        public  float Damage { get; }
+        
+        public float EffectDestroyDelay { get; }
 
-        public  float Damage { get; set; }
-        public GameObject WeaponPrefab { get; set; }
-        public LayerMask LayerMask { get; set; }
-        public ParticleSystem EffectPrefab { get; set; }
-        public float EffectDestroyDelay { get; set; }
 
+        public Weapon(GameObject weaponObject, LayerMask layerMask, ParticleSystem effect, float damage, float effectDestroyDelay)
+        {
+            WeaponObject = weaponObject;
+            LayerMask = layerMask;
+            Effect = effect;
+            Damage = damage;
+            EffectDestroyDelay = effectDestroyDelay;
+        }
+        
 
     }
 }
