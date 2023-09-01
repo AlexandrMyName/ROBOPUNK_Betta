@@ -28,7 +28,6 @@ namespace DI
         public override void InstallBindings()
         {
             SetHealth(_maxPlayerHealth);
-            //SetHealth(-3);
 
             Container
                 .Bind<List<ISystem>>()
@@ -68,6 +67,7 @@ namespace DI
             return systems;
         }
 
+
         private void SetHealth(float initializedMaxHealth)
         {
             ReactiveProperty<float> health = new ReactiveProperty<float>(initializedMaxHealth);
@@ -80,8 +80,7 @@ namespace DI
 
 
         private void Awake()
-        {
-            
+        {   
             if (_spawnOnAwake)
             {
                GameObject player = _spawner.Spawn();

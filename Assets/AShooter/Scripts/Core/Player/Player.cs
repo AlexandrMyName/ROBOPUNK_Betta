@@ -18,9 +18,9 @@ namespace Core
         protected override List<ISystem> GetSystems() =>  _systems;
 
 
-        public void TakeDamage(float amountHealth)
+        public void TakeDamage(float amountDamage)
         {
-            Health.Value -= amountHealth;
+            Health.Value -= amountDamage;
         }
 
 

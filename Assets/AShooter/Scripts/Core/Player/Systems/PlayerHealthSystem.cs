@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
-using ModestTree;
 
 
 namespace Core
@@ -15,15 +14,14 @@ namespace Core
 
         private IGameComponents _components;
         private List<IDisposable> _disposables = new();
+        private IAttackable _attackable;
 
 
         protected override void Awake(IGameComponents components)
         {
             _components = components;
-            _disposables.Add(
-                _components.BaseObject.GetComponent<IAttackable>().Health.Subscribe(OnDamage)
-                );
-            DeathCheck();
+            _attackable = _components.BaseObject.GetComponent<IAttackable>();
+            _disposables.Add(_attackable.Health.Subscribe(OnDamage));
         }
 
 
@@ -33,19 +31,22 @@ namespace Core
         }
 
 
-        private void OnDamage(float amountHealth)
+        private void OnDamage(float leftHealth)
         {
-            Debug.LogWarning($"{_components.BaseObject.name} getting damage |DamageSystem|");  
+            Debug.LogWarning($"{_components.BaseObject.name} getting damage |DamageSystem|");
+            DeathCheck(leftHealth);
         }
 
 
-        private void DeathCheck()
+        private void DeathCheck(float leftHealth)
         {
-            if (_components.BaseObject.GetComponent<IAttackable>().Health.Value <= 0)
+            if (leftHealth <= 0)
             {
                 _components.BaseObject.gameObject.SetActive(false);
             }
         }
+
+
     }
 }
 
