@@ -188,6 +188,7 @@ MonoBehaviour:
   _useMoveSystem: 1
   _spawnOnAwake: 1
   _useShootSystem: 1
+  _maxPlayerHealth: 100
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
