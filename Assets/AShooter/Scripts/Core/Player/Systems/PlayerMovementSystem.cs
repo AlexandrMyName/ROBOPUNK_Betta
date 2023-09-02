@@ -15,18 +15,22 @@ namespace Core
         [Inject] private IInput _input;
         private IGameComponents _components;
         private PlayerAnimator _animator;
-        private Rigidbody _rigidbody;
+        private float _horizontal;
+        private float _vertical;
+        private Vector3 _direction;
+        private IMovable _movable;
+        
         
         private List<IDisposable> _disposables = new();
 
 
         protected override void Awake(IGameComponents components)
         {
-            _rigidbody = _components.BaseObject.GetComponent<Rigidbody>();
             _components = components;
             _animator = components.BaseObject.GetComponent<PlayerAnimator>();
             Debug.Log($"Initialized move system! ({components.BaseObject.name})");
             if (_animator == null) Debug.LogWarning($"Player animator not found on {components.BaseObject.name}");
+            _movable = _components.BaseObject.GetComponent<IMovable>();
         }
 
 
@@ -36,9 +40,7 @@ namespace Core
             
             _disposables.AddRange(new List<IDisposable>{
                     _input.Horizontal.AxisOnChange.Subscribe(OnHorizontalChanged),
-                    _input.Vertical.AxisOnChange.Subscribe(OnVerticalChanged),
-                    _input.LeftClick.AxisOnChange.Subscribe(OnLeftClick),
-                    _input.MousePosition.AxisOnChange.Subscribe(OnMousePositionChanged)}
+                    _input.Vertical.AxisOnChange.Subscribe(OnVerticalChanged)}
                 );
         }
 
@@ -46,6 +48,13 @@ namespace Core
         protected override void Update()
         {
 
+        }
+
+        protected override void FixedUpdate()
+        {
+            _direction.x = _horizontal;
+            _direction.z = _vertical;
+            _movable.Move(_direction);
         }
 
 
@@ -57,37 +66,20 @@ namespace Core
 
         private void OnHorizontalChanged(float value)
         {
+            _horizontal = value;
             // Debug.Log($"HORIZONTAL CHANGED [{value}]");
-            Move();
+            
         }
 
 
         private void OnVerticalChanged(float value)
         {
+            
+            _vertical = value;
             // Debug.Log($"VERTICAL CHANGED [{value}]");
-            Move();
-        }
-
-
-        private void OnLeftClick(bool isClicked)
-        {
-            if (isClicked) 
-                Debug.Log($"LMB CHANGED [{isClicked}]");
-        }
-
-
-        private void OnMousePositionChanged(Vector3 position)
-        {
-            // Debug.Log($"MOUSE POSITION CHANGED [{position}]");
-            Move();
-        }
-
-        private void Move()
-        {
-            var Horizontal = Input.GetAxis(AxisManager.HORIZONTAL);
-            var Vertical = Input.GetAxis(AxisManager.VERTICAL);
-            _rigidbody.velocity = new Vector3(Horizontal*100,_rigidbody.velocity.y*100,Vertical*100);
             
         }
+
+
     }
 }

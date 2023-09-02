@@ -23,11 +23,12 @@ namespace DI
         [SerializeField] private bool _spawnOnAwake;
         [SerializeField] private bool _useShootSystem;
         [SerializeField] private float _maxPlayerHealth;
-
+        [SerializeField] private float _speed;
 
         public override void InstallBindings()
         {
             SetHealth(_maxPlayerHealth);
+            SetSpeed(_speed);
 
             Container
                 .Bind<List<ISystem>>()
@@ -75,6 +76,16 @@ namespace DI
             Container
                 .BindInstance(health)
                 .WithId("PlayerHealth")
+                .AsCached();
+        }
+
+        private void SetSpeed(float initSpeed)
+        {
+            ReactiveProperty<float> speed = new ReactiveProperty<float>(initSpeed);
+
+            Container
+                .BindInstance(speed)
+                .WithId("PlayerSpeed")
                 .AsCached();
         }
 
