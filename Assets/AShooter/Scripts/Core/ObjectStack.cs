@@ -11,6 +11,7 @@ namespace Core
         private Camera _camera;
         private Transform _transform;
         private GameObject _gameObject;
+        
 
 
         public ObjectStack(Camera cam, GameObject baseObject)
@@ -26,7 +27,6 @@ namespace Core
         public Transform BaseTransform => _transform;
 
         public GameObject BaseObject => _gameObject;
-        
-        
+
     }
 }
