@@ -11,6 +11,5 @@ namespace Abstracts
         Transform BaseTransform { get; }
         GameObject BaseObject { get; }
         
-        
     }
 }
