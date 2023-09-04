@@ -12,7 +12,6 @@ namespace Abstracts
         ReactiveProperty<bool> IsDeadFlag { get; set; }
         void TakeDamage(float amountHealth);
         void SetMaxHealth(float maxHealth, Action<ReactiveProperty<float>> onCompleted = null);
-
-
+        void SetAttackableDamage(float attackForceDamage);
     }
 }

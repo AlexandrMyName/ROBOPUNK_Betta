@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6884286522476813267}
   - component: {fileID: 6626987850484270960}
   - component: {fileID: 3852475386510055720}
+  - component: {fileID: 1121264568641777633}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -121,10 +122,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e976d386fa3fb924b841a569fdfc17c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isDeadFlag:
+  _enemyRadiusAttack: {fileID: 1121264568641777633}
+  <IsDeadFlag>k__BackingField:
     value: 0
-  <Health>k__BackingField:
-    value: 100
   playerTransform: {fileID: 0}
 --- !u!195 &3852475386510055720
 NavMeshAgent:
@@ -148,3 +148,24 @@ NavMeshAgent:
   m_BaseOffset: 1.33
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!135 &1121264568641777633
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3957541045528095213}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.33
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}

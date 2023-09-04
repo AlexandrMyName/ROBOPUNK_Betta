@@ -10,6 +10,8 @@ namespace Core
         private IGameComponents _components;
         private List<IDisposable> _disposables = new();
         private ReactiveProperty<bool> _isDead;
+
+
         protected override void Awake(IGameComponents components)
         {
             _components = components;

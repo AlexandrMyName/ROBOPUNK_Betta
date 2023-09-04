@@ -10,7 +10,7 @@ using StateMachine = Abstracts.StateMachine;
 namespace Core
 {
     
-    public sealed class Player : StateMachine, IAttackable , IMovable
+    public sealed class Player : StateMachine, IAttackable , IMovable 
     {
         public ReactiveProperty<bool> IsDeadFlag { get; set; }
 
@@ -24,10 +24,8 @@ namespace Core
         protected override List<ISystem> GetSystems() =>  _systems;
 
 
-        public void TakeDamage(float amountDamage)
-        {
-            Health.Value -= amountDamage;
-        }
+        public void TakeDamage(float amountDamage) => Health.Value -= amountDamage;
+       
         
         public void Move(Vector3 direction)
         {
@@ -35,5 +33,7 @@ namespace Core
         }
 
         public void SetMaxHealth(float maxHealth, Action<ReactiveProperty<float>> onCompleted = null) { }
+
+        public void SetAttackableDamage(float attackForceDamage) { }
     }
 }
