@@ -73,6 +73,7 @@ namespace Core
             {
                 var hitCollider = hitInfo.collider;
 
+                if (hitCollider.tag == "Player") return;
                 if (hitCollider.TryGetComponent(out IAttackable unit))
                 {
                     Debug.Log($"Found target [{unit}]");

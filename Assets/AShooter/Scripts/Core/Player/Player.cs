@@ -1,4 +1,5 @@
 using Abstracts;
+using System;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
@@ -11,13 +12,15 @@ namespace Core
     
     public sealed class Player : StateMachine, IAttackable , IMovable
     {
+        public ReactiveProperty<bool> IsDeadFlag { get; set; }
+
         [SerializeField] private Rigidbody _rigidbody;
         
         [Inject(Id = "PlayerSystems")] private List<ISystem> _systems;
         [Inject(Id = "PlayerHealth")] public ReactiveProperty<float> Health { get; }
-
         [Inject(Id = "PlayerSpeed")] public ReactiveProperty<float> Speed { get; }
 
+         
         protected override List<ISystem> GetSystems() =>  _systems;
 
 
@@ -30,7 +33,7 @@ namespace Core
         {
             _rigidbody.velocity = direction * Speed.Value;
         }
-        
-        
+
+        public void SetMaxHealth(float maxHealth, Action<ReactiveProperty<float>> onCompleted = null) { }
     }
 }

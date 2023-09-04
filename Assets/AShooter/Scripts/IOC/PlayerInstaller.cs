@@ -7,6 +7,7 @@ using DI.Spawn;
 using Cinemachine;
 using User;
 using UniRx;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 
 namespace DI
@@ -20,11 +21,10 @@ namespace DI
         [SerializeField] private Spawner _spawner;
         
         [Space(10), SerializeField] private bool _useMoveSystem;
-        [SerializeField] private bool _spawnOnAwake;
         [SerializeField] private bool _useShootSystem;
         [SerializeField] private float _maxPlayerHealth;
         [SerializeField] private float _speed;
-
+        private GameObject _player;
         public override void InstallBindings()
         {
             SetHealth(_maxPlayerHealth);
@@ -89,15 +89,19 @@ namespace DI
                 .AsCached();
         }
 
+        private Transform GetPlayerTransform()
+        {
+            return _player.transform;
+        }
 
         private void Awake()
         {   
-            if (_spawnOnAwake)
-            {
-               GameObject player = _spawner.Spawn();
-                _camera.Follow = player.transform;
-                _camera.LookAt = player.transform;
-            }
+             
+                _player = _spawner.Spawn();
+                _camera.Follow = _player.transform;
+                _camera.LookAt = _player.transform;
+             
+                Container.Bind<Transform>().WithId("PlayerTransform").FromInstance(GetPlayerTransform()).AsCached();
         }
         
         
