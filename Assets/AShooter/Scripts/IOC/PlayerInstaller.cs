@@ -1,8 +1,10 @@
+using System;
 using Zenject;
 using UnityEngine;
 using System.Collections.Generic;
 using Core;
 using Abstracts;
+using AShooter.Scripts.IOC;
 using DI.Spawn;
 using Cinemachine;
 using User;
@@ -17,12 +19,16 @@ namespace DI
         
         [SerializeField] private CinemachineVirtualCamera _camera;
         [SerializeField] private WeaponConfig _weaponConfig;
-        [SerializeField] private Spawner _spawner;
         
         [Space(10), SerializeField] private bool _useMoveSystem;
         [SerializeField] private bool _useShootSystem;
         [SerializeField] private float _maxPlayerHealth;
         [SerializeField] private float _speed;
+        
+        [SerializeField] private GameObject _prefab;
+        [SerializeField] private Transform _spawnTransform;
+        
+        private SpawnPlayerFactory _spawnPlayerFactory;
         
         private GameObject _playerObject;
         private Player _player;
@@ -39,7 +45,14 @@ namespace DI
                 .FromInstance(InitSystems())
                 .AsCached();
 
-            Container.Bind<Player>().FromInstance(_player).AsCached();
+            Container.BindFactory<Player, SpawnPlayerFactory>()
+                .FromComponentInNewPrefab(_prefab)
+                .WithGameObjectName("Player");
+
+            Container
+                .Bind<CinemachineVirtualCamera>()
+                .FromInstance(_camera)
+                .AsCached();
         }
         
         
@@ -90,23 +103,19 @@ namespace DI
         }
 
         
-        private Transform GetPlayerTransform()
+        public override void Start()
         {
-            return _playerObject.transform;
+            _spawnPlayerFactory = Container.Resolve<SpawnPlayerFactory>();
+            _player = _spawnPlayerFactory.Create();
+            
+            _camera.Follow = _player.transform;
+            _camera.LookAt = _player.transform;
+            
+            Container.Bind<Transform>().WithId("PlayerTransform").FromInstance(_player.transform).AsCached();
+            Container.Bind<Player>().FromInstance(_player).AsCached();
         }
-
         
-        private void Awake()
-        {
-            _playerObject = _spawner.Spawn();
-            _camera.Follow = _playerObject.transform;
-            _camera.LookAt = _playerObject.transform;
-            _player = _playerObject.GetComponent<Player>();
         
-            Container.Bind<Transform>().WithId("PlayerTransform").FromInstance(GetPlayerTransform()).AsCached();
-        }
-
-
     }
 }
  

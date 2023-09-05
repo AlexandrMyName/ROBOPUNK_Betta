@@ -2,22 +2,31 @@ using System;
 using UnityEngine;
 using UniRx;
 using Core;
+using Zenject;
+
 
 namespace DI.Spawn
 {
-    public class EnemySpawner : Spawner
+    
+    public class EnemySpawner : MonoBehaviour
     {
+        [Inject] private DiContainer _container;
+        
+        [SerializeField] private GameObject _prefab;
+        [SerializeField] private Transform _spawnTransform;
+        
         [SerializeField] private float respawnDelay = 1f;
         [SerializeField] private int poolSize = 10;
         [SerializeField] private float spawnRadius = 5f;
 
         private GameObjectPool enemyPool;
-        private Subject<Unit> spawnSubject = new Subject<Unit>();
+        private Subject<Unit> spawnSubject = new Subject<Unit>(); // Why?
         private IDisposable spawnDisposable;
         private Transform _playerTransform;
 
         private int activeEnemyCount = 0;
 
+        
         internal void StartSpawnProcess()
         {
             enemyPool = new GameObjectPool(() => CreateEnemy(), poolSize);
@@ -27,13 +36,23 @@ namespace DI.Spawn
                 .Subscribe(_ => TrySpawnEnemy());
         }
 
+        
         private GameObject CreateEnemy()
         {
             GameObject enemyInstance = Spawn();
             _playerTransform = enemyInstance.GetComponent<Enemy>().playerTransform;
             return enemyInstance;
         }
+        
+        
+        public GameObject Spawn()
+        {
+            GameObject sceneInstance = _container.InstantiatePrefab(_prefab);
+            sceneInstance.transform.position = _spawnTransform.position;
+            return sceneInstance;
+        }
 
+        
         private void TrySpawnEnemy()
         {
             if (activeEnemyCount < poolSize)
@@ -62,12 +81,14 @@ namespace DI.Spawn
             }
         }
 
+        
         internal void StopSpawning()
         {
             spawnDisposable.Dispose();
             spawnSubject.OnCompleted();
         }
 
+        
         internal void ReturnEnemyToPool(GameObject enemyInstance)
         {
              
@@ -79,10 +100,13 @@ namespace DI.Spawn
             activeEnemyCount--;
         }
 
+        
         private Vector3 GetCircleIntersectionCoordinates()
         {
             float randomAngle = UnityEngine.Random.Range(0f, 2f * Mathf.PI);
             return new Vector3(Mathf.Cos(randomAngle) * spawnRadius, 0f, Mathf.Sin(randomAngle) * spawnRadius);
         }
+        
+        
     }
 }

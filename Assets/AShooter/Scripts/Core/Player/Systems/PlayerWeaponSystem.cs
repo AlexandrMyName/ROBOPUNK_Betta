@@ -30,15 +30,14 @@ namespace Core
         {
             _components = components;
             _player = components.BaseObject.GetComponent<Player>();
-            
-            InitializeWeapons(_weaponConfigs);
-            
             Debug.Log($"Initialized Player Weapon System! ({components.BaseObject.name})");
         }
 
 
         protected override void Start()
         {
+            InitializeWeapons(_weaponConfigs);
+            
             _disposables.AddRange(new List<IDisposable>{
                     
                 }

@@ -19,3 +19,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   <EffectDestroyDelay>k__BackingField: 2
+  <WeaponType>k__BackingField: 0
+  <WeapoId>k__BackingField: 1

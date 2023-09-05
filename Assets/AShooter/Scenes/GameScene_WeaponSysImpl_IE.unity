@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 133752366}
   - component: {fileID: 133752368}
-  - component: {fileID: 133752367}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -156,20 +155,6 @@ Transform:
   m_Father: {fileID: 1123604993}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &133752367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 133752365}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60051e5e512c82541b3d93fd13564394, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefab: {fileID: 5887370203132432508, guid: 17b4aa089e5ba3840ab53bc474b40888, type: 3}
-  _spawnTransform: {fileID: 3389697477998469875, guid: 17b4aa089e5ba3840ab53bc474b40888, type: 3}
 --- !u!114 &133752368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,11 +169,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 2093596454}
   _weaponConfig: {fileID: 11400000, guid: 3b6538afe21c486458721f12758b87e4, type: 2}
-  _spawner: {fileID: 133752367}
   _useMoveSystem: 1
   _useShootSystem: 1
   _maxPlayerHealth: 100
   _speed: 10
+  _prefab: {fileID: 5887370203132432508, guid: 17b4aa089e5ba3840ab53bc474b40888, type: 3}
+  _spawnTransform: {fileID: 3389697477998469875, guid: 17b4aa089e5ba3840ab53bc474b40888, type: 3}
 --- !u!1 &294146504
 GameObject:
   m_ObjectHideFlags: 0

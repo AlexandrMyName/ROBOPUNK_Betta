@@ -9,25 +9,28 @@ namespace DI
     
     public class EnemyInstaller : MonoInstaller
     {
+        
         [SerializeField] private EnemySpawner _spawner;        
         [SerializeField] private bool _spawnOnAwake;
         [SerializeField] private float _maxHealthOnNewGame;
         [SerializeField] private float _maxAttackDamageOnNewGame;
 
+        
         public override void InstallBindings()
         {
             Container.Bind<EnemySpawner>().FromComponentInHierarchy().AsSingle();
         }
-
         
 
-        private void Awake()
+        public override void Start()
         {
             GameLoopManager.SetEnemyMaxHealth(_maxHealthOnNewGame);
             GameLoopManager.SetEnemyDamageForce(_maxAttackDamageOnNewGame);
             if (_spawnOnAwake)
                 _spawner.StartSpawnProcess();
         }
+        
+        
     }
 }
 
