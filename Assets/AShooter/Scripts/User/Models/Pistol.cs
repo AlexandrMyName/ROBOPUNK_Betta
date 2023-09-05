@@ -5,12 +5,12 @@ using UnityEngine;
 namespace User
 {
 
-    public class Weapon : IWeapon
+    public class Pistol : IWeapon
     {
         public GameObject WeaponObject { get; }
-        
-        public WeaponType WeaponType { get; }
-        
+
+        public WeaponType WeaponType => WeaponType.Pistol;
+
         public LayerMask LayerMask { get; }
         
         public ParticleSystem Effect { get; }
@@ -33,12 +33,12 @@ namespace User
         
         public float FireSpread { get; }
 
-        public virtual void Shoot()
+        public void Shoot()
         {
             
         }
 
-        public Weapon(GameObject weaponObject, LayerMask layerMask, ParticleSystem effect, float damage, float effectDestroyDelay)
+        public Pistol(GameObject weaponObject, LayerMask layerMask, ParticleSystem effect, float damage, float effectDestroyDelay)
         {
             WeaponObject = weaponObject;
             LayerMask = layerMask;

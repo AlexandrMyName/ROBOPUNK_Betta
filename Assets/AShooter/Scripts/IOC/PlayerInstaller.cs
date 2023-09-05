@@ -7,7 +7,6 @@ using DI.Spawn;
 using Cinemachine;
 using User;
 using UniRx;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 
 namespace DI
@@ -24,7 +23,11 @@ namespace DI
         [SerializeField] private bool _useShootSystem;
         [SerializeField] private float _maxPlayerHealth;
         [SerializeField] private float _speed;
-        private GameObject _player;
+        
+        private GameObject _playerObject;
+        private Player _player;
+        
+        
         public override void InstallBindings()
         {
             SetHealth(_maxPlayerHealth);
@@ -35,16 +38,8 @@ namespace DI
                 .WithId("PlayerSystems")
                 .FromInstance(InitSystems())
                 .AsCached();
-            
-            Container.Bind<IWeapon>().FromInstance(
-                new Weapon(
-                    _weaponConfig.WeaponPrefab, 
-                    _weaponConfig.LayerMask, 
-                    _weaponConfig.EffectPrefab, 
-                    _weaponConfig.Damage, 
-                    _weaponConfig.EffectDestroyDelay)
-                )
-                .AsCached();
+
+            Container.Bind<Player>().FromInstance(_player).AsCached();
         }
         
         
@@ -54,13 +49,16 @@ namespace DI
 
             PlayerMovementSystem moveSystem = new PlayerMovementSystem();
             Container.QueueForInject(moveSystem);
+
+            PlayerWeaponSystem weaponSystem = new PlayerWeaponSystem();
+            Container.QueueForInject(weaponSystem);
             
             PlayerShootSystem shootSystem = new PlayerShootSystem();
             Container.QueueForInject(shootSystem);
 
             PlayerHealthSystem healthSystem = new PlayerHealthSystem();
             Container.QueueForInject(healthSystem);
-            
+
             systems.Add(moveSystem);
             systems.Add(shootSystem);
             systems.Add(healthSystem);
@@ -79,6 +77,7 @@ namespace DI
                 .AsCached();
         }
 
+        
         private void SetSpeed(float initSpeed)
         {
             ReactiveProperty<float> speed = new ReactiveProperty<float>(initSpeed);
@@ -89,22 +88,24 @@ namespace DI
                 .AsCached();
         }
 
+        
         private Transform GetPlayerTransform()
         {
-            return _player.transform;
+            return _playerObject.transform;
         }
 
+        
         private void Awake()
-        {   
-             
-                _player = _spawner.Spawn();
-                _camera.Follow = _player.transform;
-                _camera.LookAt = _player.transform;
-             
-                Container.Bind<Transform>().WithId("PlayerTransform").FromInstance(GetPlayerTransform()).AsCached();
+        {
+            _playerObject = _spawner.Spawn();
+            _camera.Follow = _playerObject.transform;
+            _camera.LookAt = _playerObject.transform;
+            _player = _playerObject.GetComponent<Player>();
+        
+            Container.Bind<Transform>().WithId("PlayerTransform").FromInstance(GetPlayerTransform()).AsCached();
         }
-        
-        
+
+
     }
 }
  
