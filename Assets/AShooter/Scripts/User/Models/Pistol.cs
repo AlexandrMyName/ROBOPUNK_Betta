@@ -35,7 +35,7 @@ namespace User
 
         public void Shoot()
         {
-            
+            Debug.Log("I'm FIRING");
         }
 
         public Pistol(GameObject weaponObject, LayerMask layerMask, ParticleSystem effect, float damage, float effectDestroyDelay)

@@ -62,6 +62,7 @@ namespace DI
             systems.Add(moveSystem);
             systems.Add(shootSystem);
             systems.Add(healthSystem);
+            systems.Add(weaponSystem);
 
             return systems;
         }

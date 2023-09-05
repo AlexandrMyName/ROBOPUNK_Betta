@@ -23,13 +23,16 @@ namespace Core
         private List<IDisposable> _disposables = new();
         
         private Player _player;
-        private Dictionary<int, IWeapon> _weapons;
+        private Dictionary<int, IWeapon> _weapons = new();
 
 
         protected override void Awake(IGameComponents components)
         {
             _components = components;
             _player = components.BaseObject.GetComponent<Player>();
+            
+            InitializeWeapons(_weaponConfigs);
+            
             Debug.Log($"Initialized Player Weapon System! ({components.BaseObject.name})");
         }
 
@@ -40,8 +43,6 @@ namespace Core
                     
                 }
             );
-
-            InitializeWeapons();
         }
 
 
@@ -56,9 +57,33 @@ namespace Core
         }
 
 
-        private void InitializeWeapons()
+        private void InitializeWeapons(List<WeaponConfig> configs)
         {
-            
+            for (int i = 0; i < configs.Count; i++)
+            {
+                var config = configs[i];
+                
+                switch (config.WeaponType)
+                {
+                    case WeaponType.Pistol:
+                        _weapons[config.WeapoId] = PistolInit(config);
+                        break;
+                }
+            }
+
+            _weaponState.CurrentWeapon.Value = _weapons[1];
+        }
+
+
+        private IWeapon PistolInit(WeaponConfig config)
+        {
+            var pistolObject = GameObject.Instantiate(config.WeaponPrefab, _player.WeaponContainer);
+            return new Pistol(
+                pistolObject, 
+                config.LayerMask, 
+                config.EffectPrefab, 
+                config.Damage, 
+                config.EffectDestroyDelay);
         }
 
 
