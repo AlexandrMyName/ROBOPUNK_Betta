@@ -14,8 +14,11 @@ namespace DI
         [SerializeField] private bool _spawnOnStart;
         [SerializeField] private float _maxHealthOnNewGame;
         [SerializeField] private float _maxAttackDamageOnNewGame;
+        [SerializeField] private float _meleeAttackRange;
+        [SerializeField] private float _rangedAttackRange;
+        [SerializeField] private float _attackFrequency;
 
-        
+
         public override void InstallBindings()
         {
             Container.Bind<EnemySpawner>().FromComponentInHierarchy().AsSingle();
@@ -26,10 +29,15 @@ namespace DI
         {
             GameLoopManager.SetEnemyMaxHealth(_maxHealthOnNewGame);
             GameLoopManager.SetEnemyDamageForce(_maxAttackDamageOnNewGame);
+            GameLoopManager.SetMeleeAttackRange(_meleeAttackRange);
+            GameLoopManager.SetRangedAttackRange(_rangedAttackRange);
+            GameLoopManager.SetAttackFrequency(_attackFrequency);
+
             if (_spawnOnStart)
                 _spawner.StartSpawnProcess();
         }
         
+
     }
 
 }

@@ -14,23 +14,29 @@ namespace Core
         protected override void Awake(IGameComponents components)
         {
             _targetTransform = components.BaseTransform.GetComponent<Enemy>().playerTransform;
-
             _navMeshAgent = components.BaseObject.GetComponent<NavMeshAgent>();
-            if (_navMeshAgent == null)
-            {
-                Debug.LogError($"NavMeshAgent not found on Enemy object - {components.BaseObject.name}");
-            }
+
+            #if UNITY_EDITOR
+                if (_navMeshAgent == null)
+                {
+                    Debug.LogError($"NavMeshAgent not found on Enemy object - {components.BaseObject.name}");
+                    return;
+                }
+            #endif
         }
 
 
         protected override void OnEnable()
         {
-            Debug.LogWarning("Update");
             _navMeshAgent.ResetPath();
         }
 
 
-        protected override void Update() => Moving(_targetTransform.position);
+        protected override void Update() 
+        {
+            Moving(_targetTransform.position);
+            _navMeshAgent.isStopped = true;
+        }
         
 
         public void Moving(Vector3 targetPosition)
