@@ -4,12 +4,12 @@ using UniRx;
 using Core;
 using Zenject;
 
-
 namespace DI.Spawn
 {
     
     public class EnemySpawner : MonoBehaviour
     {
+
         [Inject] private DiContainer _container;
         
         [SerializeField] private GameObject _prefab;
@@ -20,13 +20,11 @@ namespace DI.Spawn
         [SerializeField] private float spawnRadius = 5f;
 
         private GameObjectPool enemyPool;
-        private Subject<Unit> spawnSubject = new Subject<Unit>(); // Why?
         private IDisposable spawnDisposable;
         private Transform _playerTransform;
 
         private int activeEnemyCount = 0;
 
-        
         internal void StartSpawnProcess()
         {
             enemyPool = new GameObjectPool(() => CreateEnemy(), poolSize);
@@ -57,16 +55,11 @@ namespace DI.Spawn
         {
             if (activeEnemyCount < poolSize)
             {
-                Debug.Log("spawner");
                 GameObject enemyInstance = enemyPool.Get();
+
                 var enemy = enemyInstance.GetComponent<Enemy>();
-
                 enemyInstance.transform.position = _playerTransform.position + GetCircleIntersectionCoordinates() + Vector3.down;
-
-               
                 enemy.IsDeadFlag.Value = false;
-               
-                Debug.Log(enemyInstance.name);
                 
                 enemy.IsDeadFlag.Subscribe(isDead =>
                 {
@@ -85,16 +78,12 @@ namespace DI.Spawn
         internal void StopSpawning()
         {
             spawnDisposable.Dispose();
-            spawnSubject.OnCompleted();
         }
 
         
         internal void ReturnEnemyToPool(GameObject enemyInstance)
         {
-             
-            
             enemyInstance.SetActive(false);
-            var enemy = enemyInstance.GetComponent<Enemy>();
          
             enemyPool.Return(enemyInstance);
             activeEnemyCount--;
@@ -107,6 +96,6 @@ namespace DI.Spawn
             return new Vector3(Mathf.Cos(randomAngle) * spawnRadius, 0f, Mathf.Sin(randomAngle) * spawnRadius);
         }
         
-        
     }
+
 }

@@ -11,7 +11,7 @@ namespace DI
     {
         
         [SerializeField] private EnemySpawner _spawner;        
-        [SerializeField] private bool _spawnOnAwake;
+        [SerializeField] private bool _spawnOnStart;
         [SerializeField] private float _maxHealthOnNewGame;
         [SerializeField] private float _maxAttackDamageOnNewGame;
 
@@ -26,11 +26,10 @@ namespace DI
         {
             GameLoopManager.SetEnemyMaxHealth(_maxHealthOnNewGame);
             GameLoopManager.SetEnemyDamageForce(_maxAttackDamageOnNewGame);
-            if (_spawnOnAwake)
+            if (_spawnOnStart)
                 _spawner.StartSpawnProcess();
         }
         
-        
     }
-}
 
+}

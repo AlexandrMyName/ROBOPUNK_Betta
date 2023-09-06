@@ -1,16 +1,15 @@
 using Abstracts;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
 namespace Core {
+
     public class EnemyAttackSystem : BaseSystem
     {
 
-        private IGameComponents _components;
         private List<IDisposable> _disposables = new();
 
         private Enemy _enemy;
@@ -19,9 +18,7 @@ namespace Core {
 
         protected override void Awake(IGameComponents components)
         {
-            _components = components;
-
-            _enemy = _components.BaseObject.GetComponent<Enemy>();
+            _enemy = components.BaseObject.GetComponent<Enemy>();
             _enemyRadiusAttack = _enemy.EnemyRadiusAttack;
 
             _enemyRadiusAttack.OnTriggerStayAsObservable()
@@ -30,8 +27,10 @@ namespace Core {
                 .Subscribe(_hit => HandleTriggerCollider(_hit))
                 .AddTo(_disposables);
         }
+
+
         protected override void OnEnable()
-        =>_enemy.SetAttackableDamage(GameLoopManager.EnemyDamageForce);
+            =>_enemy.SetAttackableDamage(GameLoopManager.EnemyDamageForce);
          
 
         private void HandleTriggerCollider(Collider collider)
@@ -42,5 +41,7 @@ namespace Core {
             Debug.Log($"PLAYER: {player.Health}  ( HIT -{_enemy.Damage}!)");
         }
 
+
     }
+
 }
