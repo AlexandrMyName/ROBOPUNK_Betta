@@ -37,7 +37,6 @@ namespace Core
         protected override void Start()
         {
             InitializeWeapons(_weaponConfigs);
-            
             _disposables.AddRange(new List<IDisposable>{
                     
                 }
@@ -65,23 +64,54 @@ namespace Core
                 switch (config.WeaponType)
                 {
                     case WeaponType.Pistol:
-                        _weapons[config.WeapoId] = PistolInit(config);
+                        _weapons[config.WeaponId] = PistolInit(config);
                         break;
+                    case WeaponType.Shotgun:
+                        _weapons[config.WeaponId] = ShotgunInit(config);
+                        break;
+                    case WeaponType.RocketLauncher:
+                        _weapons[config.WeaponId] = RocketLauncherInit(config);
+                        break;
+
                 }
             }
 
-            _weaponState.CurrentWeapon.Value = _weapons[1];
+            _weaponState.CurrentWeapon.Value = _weapons[3];
         }
 
 
         private IWeapon PistolInit(WeaponConfig config)
         {
-            var pistolObject = GameObject.Instantiate(config.WeaponPrefab, _player.WeaponContainer);
+            var pistolObject = GameObject.Instantiate(config.WeaponObject, _player.WeaponContainer);
             return new Pistol(
-                pistolObject, 
-                config.LayerMask, 
-                config.EffectPrefab, 
-                config.Damage, 
+                pistolObject,
+                config.LayerMask,
+                config.Effect,
+                config.Damage,
+                config.EffectDestroyDelay);
+        }
+
+
+        private IWeapon ShotgunInit(WeaponConfig config)
+        {
+            var pistolObject = GameObject.Instantiate(config.WeaponObject, _player.WeaponContainer);
+            return new Shotgun(
+                pistolObject,
+                config.LayerMask,
+                config.Effect,
+                config.Damage,
+                config.EffectDestroyDelay);
+        }
+
+
+        private IWeapon RocketLauncherInit(WeaponConfig config)
+        {
+            var pistolObject = GameObject.Instantiate(config.WeaponObject, _player.WeaponContainer);
+            return new RocketLauncher(
+                pistolObject,
+                config.LayerMask,
+                config.Effect,
+                config.Damage,
                 config.EffectDestroyDelay);
         }
 

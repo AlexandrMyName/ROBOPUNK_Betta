@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56c391f0c76b38c4693515e2b13852be, type: 3}
+  m_Name: RocketLauncher
+  m_EditorClassIdentifier: 
+  <WeaponId>k__BackingField: 3
+  <WeaponObject>k__BackingField: {fileID: 6675194448196821719, guid: c5ed9a437df9dae4a85fa321fc994aad, type: 3}
+  <WeaponType>k__BackingField: 2
+  <Damage>k__BackingField: 100
+  <ClipSize>k__BackingField: 0
+  <LeftPatronsCount>k__BackingField: 0
+  <ReloadTime>k__BackingField: 0
+  <ShootDistance>k__BackingField: 0
+  <ShootSpeed>k__BackingField: 0
+  <FireSpread>k__BackingField: 0
+  <LayerMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 128
+  <Effect>k__BackingField: {fileID: 265766274217486953, guid: 5d3d7a89e81960f439e9316c51c9eff6, type: 3}
+  <EffectDestroyDelay>k__BackingField: 2

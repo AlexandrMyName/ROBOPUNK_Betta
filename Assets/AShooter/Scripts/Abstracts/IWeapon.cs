@@ -8,19 +8,13 @@ namespace Abstracts
     public interface IWeapon
     {
 
+        int WeaponId { get; }
+
         GameObject WeaponObject { get; }
-        
-        LayerMask LayerMask { get; }
-        
-        ParticleSystem Effect { get; }
 
         WeaponType WeaponType { get; }
 
-        int WeaponId { get; }
-
         float Damage { get; }
-        
-        float EffectDestroyDelay { get; }
 
         int ClipSize { get; }
 
@@ -34,8 +28,14 @@ namespace Abstracts
 
         float FireSpread { get; }
 
+        LayerMask LayerMask { get; }
 
-        void Shoot();
+        ParticleSystem Effect { get; }
+
+        float EffectDestroyDelay { get; }
+
+
+        void Shoot(Camera camera, Vector3 mousePosition);
 
 
     }

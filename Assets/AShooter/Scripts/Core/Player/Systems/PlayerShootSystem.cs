@@ -4,6 +4,7 @@ using Abstracts;
 using Core.DTO;
 using UniRx;
 using UnityEngine;
+using User;
 using Zenject;
 
 
@@ -58,7 +59,7 @@ namespace Core
         {
             if (isClicked)
             {
-                FindTarget();
+                _currentWeapon.Shoot(_camera, _mousePosition);
             }
         }
 
@@ -69,56 +70,16 @@ namespace Core
         }
 
 
-        private void FindTarget()
-        {
-            var ray = _camera.ScreenPointToRay(_mousePosition);
-
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, _currentWeapon.LayerMask))
-            {
-                var hitCollider = hitInfo.collider;
-
-                if (hitCollider.tag == "Player") return;
-                if (hitCollider.TryGetComponent(out IAttackable unit))
-                {
-                    Debug.Log($"Found target [{unit}]");
-                    unit.TakeDamage(_currentWeapon.Damage);
-                }
-                else
-                {
-                    Debug.Log($"{hitCollider} IAttackable is not found");
-                }
-
-                SpawnParticleEffectOnHit(hitInfo);
-            }
-        }
-
-
-        private void SpawnParticleEffectOnHit(RaycastHit hitInfo)
-        {
-            if (_currentWeapon.Effect != null)
-            {
-                var hitEffectRotation = Quaternion.LookRotation(hitInfo.normal);
-                
-                var hitEffect = GameObject.Instantiate(
-                    _currentWeapon.Effect,
-                    hitInfo.point, 
-                    hitEffectRotation);
-
-                GameObject.Destroy(hitEffect.gameObject, _currentWeapon.EffectDestroyDelay);
-            }
-        }
-        
-        
         private void DrawDebugRayToMousePosition()
         {
             var ray = _camera.ScreenPointToRay(_mousePosition);
-        
+
             if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, _currentWeapon.LayerMask))
             {
                 Debug.DrawRay(ray.origin, ray.direction * hitInfo.distance, Color.red);
             }
         }
-        
+
 
     }
 }

@@ -1,52 +1,47 @@
 ﻿using Abstracts;
+using Core;
 using UnityEngine;
 
 
 namespace User
 {
 
-    public class Weapon : IWeapon
+    public abstract class Weapon : IWeapon
     {
-        public GameObject WeaponObject { get; }
-        
-        public WeaponType WeaponType { get; }
-        
-        public LayerMask LayerMask { get; }
-        
-        public ParticleSystem Effect { get; }
 
-        public int WeaponId { get; }
+        public int WeaponId { get; protected set; }
 
-        public  float Damage { get; }
-        
-        public float EffectDestroyDelay { get; }
-        
-        public int ClipSize { get; }
-        
-        public int LeftPatronsCount { get; }
-        
-        public float ReloadTime { get; }
-        
-        public float ShootDistance { get; }
-        
-        public float ShootSpeed { get; }
-        
-        public float FireSpread { get; }
+        public GameObject WeaponObject { get; protected set; }
 
-        public virtual void Shoot()
+        public WeaponType WeaponType { get; protected set; }
+        
+        public float Damage { get; protected set; }
+
+        public int ClipSize { get; protected set; }
+        
+        public int LeftPatronsCount { get; protected set; }
+        
+        public float ReloadTime { get; protected set; }
+        
+        public float ShootDistance { get; protected set; }
+        
+        public float ShootSpeed { get; protected set; }
+        
+        public float FireSpread { get; protected set; }
+
+        public LayerMask LayerMask { get; protected set; }
+
+        public ParticleSystem Effect { get; protected set; }
+
+        public float EffectDestroyDelay { get; protected set; }
+
+
+        public virtual void Shoot(Camera camera, Vector3 mousePosition)
         {
-            
+            PlayerSimpleAttack simpleAttack = new PlayerSimpleAttack(this, camera, mousePosition);
+            simpleAttack.Attack();
         }
 
-        public Weapon(GameObject weaponObject, LayerMask layerMask, ParticleSystem effect, float damage, float effectDestroyDelay)
-        {
-            WeaponObject = weaponObject;
-            LayerMask = layerMask;
-            Effect = effect;
-            Damage = damage;
-            EffectDestroyDelay = effectDestroyDelay;
-        }
-        
 
     }
 }
