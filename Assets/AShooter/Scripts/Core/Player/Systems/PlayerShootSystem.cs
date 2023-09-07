@@ -40,7 +40,8 @@ namespace Core
             _disposables.AddRange(new List<IDisposable>{
                 _input.LeftClick.AxisOnChange.Subscribe(OnLeftClick),
                 _input.MousePosition.AxisOnChange.Subscribe(OnMousePositionChanged),
-                _weaponState.CurrentWeapon.Subscribe(weapon => { UpdateCurrentWeapon(weapon); })
+                _weaponState.CurrentWeapon.Subscribe(weapon => { UpdateCurrentWeapon(weapon); }),
+                _weaponState.LeftPatrons.Subscribe(count => CheckPatronsCount(count))
             });
         }
 
@@ -49,6 +50,7 @@ namespace Core
         {
             _currentWeapon = weapon;
             _reloadTimer = _currentWeapon?.ReloadTime ?? 0.0f;
+            _weaponState.LeftPatrons.Value = weapon?.LeftPatronsCount ?? 0;
         }
 
 
@@ -56,8 +58,8 @@ namespace Core
         {
             DrawDebugRayToMousePosition();
 
-            if (_weaponState.IsNeedReload)
-                ProcessReload(Time.deltaTime);
+            // if (_weaponState.IsNeedReload)
+            //     ProcessReload(Time.deltaTime);
         }
         
         
@@ -74,10 +76,16 @@ namespace Core
                 if (_currentWeapon.LeftPatronsCount > 0)
                 {
                     _currentWeapon.Shoot(_components.BaseTransform, _camera, _mousePosition);
+                    _weaponState.LeftPatrons.Value -= 1;
                 }
                 else
                 {
-                    _weaponState.IsNeedReload = true;
+                    if (_weaponState.IsNeedReload)
+                    {
+                        _currentWeapon.ProcessReload();
+                        _weaponState.IsNeedReload = false;
+                        _weaponState.LeftPatrons.Value = _currentWeapon.ClipSize;
+                    }
                 }
             }
         }
@@ -100,19 +108,26 @@ namespace Core
         }
 
 
-        private void ProcessReload(float deltaTime)
+        private void CheckPatronsCount(int leftCount)
         {
-            if (_reloadTimer >= 0)
-            {
-                _reloadTimer -= deltaTime;
-            }
-            else
-            {
-                _currentWeapon.Reload();
-                _weaponState.IsNeedReload = false;
-                _reloadTimer = _currentWeapon.ReloadTime;
-            }
+            if (leftCount <= 0)
+                _weaponState.IsNeedReload = true;
         }
+
+
+        // private void ProcessReload(float deltaTime)
+        // {
+        //     if (_reloadTimer >= 0)
+        //     {
+        //         _reloadTimer -= deltaTime;
+        //     }
+        //     else
+        //     {
+        //         _currentWeapon.Reload();
+        //         _weaponState.IsNeedReload = false;
+        //         _reloadTimer = _currentWeapon.ReloadTime;
+        //     }
+        // }
 
 
     }

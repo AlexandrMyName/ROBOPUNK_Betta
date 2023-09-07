@@ -9,13 +9,17 @@ namespace Core.DTO
     {
 
         public ReactiveProperty<IWeapon> CurrentWeapon { get; }
+        public ReactiveProperty<int> LeftPatrons { get; }
 
         public bool IsNeedReload;
-
+        
+        
         public WeaponState()
         {
             CurrentWeapon = new ReactiveProperty<IWeapon>();
+            LeftPatrons = new ReactiveProperty<int>();
         }
+        
 
     }
 }

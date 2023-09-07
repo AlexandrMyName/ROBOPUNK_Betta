@@ -42,6 +42,8 @@ namespace Abstracts
 
         void Reload();
 
+        void ProcessReload();
+
 
     }
 }

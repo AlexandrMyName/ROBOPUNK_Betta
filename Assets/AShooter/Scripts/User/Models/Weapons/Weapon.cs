@@ -1,18 +1,21 @@
-﻿using Abstracts;
+﻿using System;
+using Abstracts;
 using Core;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using Tool;
+using UniRx;
 using UnityEngine;
 
 
 namespace User
 {
 
-    public abstract class Weapon : IWeapon
+    public abstract class Weapon : IWeapon, IDisposable
     {
 
-        private Coroutine _reloadCoroutine;
+        // private Coroutine _reloadCoroutine;
 
 
         public int WeaponId { get; protected set; }
@@ -44,13 +47,16 @@ namespace User
         public float EffectDestroyDelay { get; protected set; }
 
 
+        private List<IDisposable> _disposables = new();
+
+
         public virtual void Shoot(Transform playerTransform, Camera camera, Vector3 mousePosition)
         {
             PlayerSimpleAttack simpleAttack = new PlayerSimpleAttack(this, playerTransform, camera, mousePosition);
             simpleAttack.Attack();
 
             LeftPatronsCount--;
-            Debug.Log("SHOOT MTFK");
+            Debug.Log("SHOOT MTFCKR");
         }
 
 
@@ -61,12 +67,27 @@ namespace User
         }
 
 
+        public void ProcessReload()
+        {
+            _disposables.Add(
+                Observable
+                    .Timer(TimeSpan.FromSeconds(ReloadTime))
+                    .Subscribe(_ => Reload())
+                );
+        }
+        
+        
+        public void Dispose()
+        {
+            _disposables.ForEach(d => d.Dispose());
+        }
+
+        
         // private IEnumerator ReloadCoroutine()
         // {
         //     yield return new WaitForSeconds(ReloadTime);
         //     
         // }
-
-
+        
     }
 }
