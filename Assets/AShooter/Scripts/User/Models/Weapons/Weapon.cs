@@ -46,38 +46,26 @@ namespace User
 
         public virtual void Shoot(Transform playerTransform, Camera camera, Vector3 mousePosition)
         {
-            if (LeftPatronsCount <= 0)
-                Reload();
-            else
-            {
-                if (_reloadCoroutine != null)
-                {
-                    Coroutines.StoptRoutine(_reloadCoroutine);
-                    _reloadCoroutine = null;
-                }
-
-                PlayerSimpleAttack simpleAttack = new PlayerSimpleAttack(this, playerTransform, camera, mousePosition);
-                simpleAttack.Attack();
-            }
+            PlayerSimpleAttack simpleAttack = new PlayerSimpleAttack(this, playerTransform, camera, mousePosition);
+            simpleAttack.Attack();
 
             LeftPatronsCount--;
+            Debug.Log("SHOOT MTFK");
         }
 
 
         public void Reload()
         {
-            if (_reloadCoroutine != null)
-                return;
-
-            _reloadCoroutine = Coroutines.StartRoutine(ReloadCoroutine());
-        }
-
-
-        private IEnumerator ReloadCoroutine()
-        {
-            yield return new WaitForSeconds(ReloadTime);
             LeftPatronsCount = ClipSize;
+            Debug.Log("RELOAD MTFCKR");
         }
+
+
+        // private IEnumerator ReloadCoroutine()
+        // {
+        //     yield return new WaitForSeconds(ReloadTime);
+        //     
+        // }
 
 
     }

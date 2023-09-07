@@ -10,6 +10,8 @@ namespace Core.DTO
 
         public ReactiveProperty<IWeapon> CurrentWeapon { get; }
 
+        public bool IsNeedReload;
+
         public WeaponState()
         {
             CurrentWeapon = new ReactiveProperty<IWeapon>();

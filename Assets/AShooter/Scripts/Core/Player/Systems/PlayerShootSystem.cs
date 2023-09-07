@@ -24,7 +24,9 @@ namespace Core
 
         private IWeapon _currentWeapon;
 
+        private float _reloadTimer;
 
+        
         protected override void Awake(IGameComponents components)
         {
             _components = components;
@@ -38,14 +40,24 @@ namespace Core
             _disposables.AddRange(new List<IDisposable>{
                 _input.LeftClick.AxisOnChange.Subscribe(OnLeftClick),
                 _input.MousePosition.AxisOnChange.Subscribe(OnMousePositionChanged),
-                _weaponState.CurrentWeapon.Subscribe(weapon => _currentWeapon = weapon)
+                _weaponState.CurrentWeapon.Subscribe(weapon => { UpdateCurrentWeapon(weapon); })
             });
+        }
+
+        
+        private void UpdateCurrentWeapon(IWeapon weapon)
+        {
+            _currentWeapon = weapon;
+            _reloadTimer = _currentWeapon?.ReloadTime ?? 0.0f;
         }
 
 
         protected override void Update()
         {
             DrawDebugRayToMousePosition();
+
+            if (_weaponState.IsNeedReload)
+                ProcessReload(Time.deltaTime);
         }
         
         
@@ -59,7 +71,14 @@ namespace Core
         {
             if (isClicked)
             {
-                _currentWeapon.Shoot(_components.BaseTransform, _camera, _mousePosition);
+                if (_currentWeapon.LeftPatronsCount > 0)
+                {
+                    _currentWeapon.Shoot(_components.BaseTransform, _camera, _mousePosition);
+                }
+                else
+                {
+                    _weaponState.IsNeedReload = true;
+                }
             }
         }
 
@@ -77,6 +96,21 @@ namespace Core
             if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, _currentWeapon.LayerMask))
             {
                 Debug.DrawRay(ray.origin, ray.direction * hitInfo.distance, Color.red);
+            }
+        }
+
+
+        private void ProcessReload(float deltaTime)
+        {
+            if (_reloadTimer >= 0)
+            {
+                _reloadTimer -= deltaTime;
+            }
+            else
+            {
+                _currentWeapon.Reload();
+                _weaponState.IsNeedReload = false;
+                _reloadTimer = _currentWeapon.ReloadTime;
             }
         }
 
