@@ -19,9 +19,9 @@ MonoBehaviour:
   <Damage>k__BackingField: 20
   <ClipSize>k__BackingField: 8
   <LeftPatronsCount>k__BackingField: 8
-  <ReloadTime>k__BackingField: 0
+  <ReloadTime>k__BackingField: 1
   <ShootDistance>k__BackingField: 0
-  <ShootSpeed>k__BackingField: 30
+  <ShootSpeed>k__BackingField: 1
   <FireSpread>k__BackingField: 0
   <LayerMask>k__BackingField:
     serializedVersion: 2

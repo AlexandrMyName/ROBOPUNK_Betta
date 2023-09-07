@@ -76,7 +76,7 @@ namespace Core
                 }
             }
 
-            _weaponState.CurrentWeapon.Value = _weapons[3];
+            _weaponState.CurrentWeapon.Value = _weapons[1];
         }
 
 
