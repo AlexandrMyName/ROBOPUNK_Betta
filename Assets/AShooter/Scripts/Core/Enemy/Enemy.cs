@@ -47,7 +47,7 @@ namespace Core
             var systems = new List<ISystem>();
             systems.Add(new EnemyMovementSystem());
             systems.Add(new EnemyDamageSystem());
-            systems.Add(new EnemyAttackSystem());
+            systems.Add(new EnemyMeleeAttackSystem());
             return systems;
         }
 

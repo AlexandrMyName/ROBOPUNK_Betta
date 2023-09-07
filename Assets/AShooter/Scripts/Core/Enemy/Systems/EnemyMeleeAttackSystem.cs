@@ -8,11 +8,10 @@ using UniRx.Triggers;
 namespace Core
 {
 
-    public class EnemyAttackSystem : BaseSystem
+    public class EnemyMeleeAttackSystem : BaseSystem
     {
 
         private List<IDisposable> _disposables = new();
-        private SphereCollider _enemyRadiusAttack;
         private Enemy _enemy;
 
 
