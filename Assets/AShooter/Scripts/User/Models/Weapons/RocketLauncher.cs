@@ -11,21 +11,27 @@ namespace User
     public class RocketLauncher : Weapon
     {
 
-        public RocketLauncher(GameObject weaponObject, LayerMask layerMask, ParticleSystem effect, float damage, float effectDestroyDelay, Projectile projectileObject)
+        public RocketLauncher(int weaponId, GameObject weaponObject, Projectile projectileObject, WeaponType weaponType, float damage, int clipSize, int leftPatronsCount,
+            float reloadTime, float shootDistance, float shootSpeed, float fireSpread, LayerMask layerMask, ParticleSystem effect, float effectDestroyDelay)
         {
-            Debug.Log("INIT RocketLauncher");
-
+            WeaponId = weaponId;
             WeaponObject = weaponObject;
+            ProjectileObject = projectileObject;
+            WeaponType = weaponType;
+            Damage = damage;
+            ClipSize = clipSize;
+            LeftPatronsCount = leftPatronsCount;
+            ReloadTime = reloadTime;
+            ShootDistance = shootDistance;
+            ShootSpeed = shootSpeed;
+            FireSpread = fireSpread;
             LayerMask = layerMask;
             Effect = effect;
-            Damage = damage;
             EffectDestroyDelay = effectDestroyDelay;
-            WeaponType = WeaponType.RocketLauncher;
-            ProjectileObject = projectileObject;
         }
 
 
-        public override void Shoot(Camera camera, Vector3 mousePosition)
+        public override void Shoot(Transform playerTransform, Camera camera, Vector3 mousePosition)
         {
             Transform muzzle = null;
             foreach (Transform child in WeaponObject.transform)
@@ -37,7 +43,7 @@ namespace User
                 }
             }
 
-            PlayerProjectileAttack projectileAttack = new PlayerProjectileAttack(this, muzzle);
+            PlayerProjectileAttack projectileAttack = new PlayerProjectileAttack(this, muzzle, camera, mousePosition);
             projectileAttack.Attack();
         }
 

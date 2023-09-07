@@ -7,16 +7,23 @@ namespace User
     public class Pistol : Weapon
     {
 
-        public Pistol(GameObject weaponObject, LayerMask layerMask, ParticleSystem effect, float damage, float effectDestroyDelay)
+        public Pistol(int weaponId, GameObject weaponObject, Projectile projectileObject, WeaponType weaponType, float damage, int clipSize, int leftPatronsCount,
+            float reloadTime, float shootDistance, float shootSpeed, float fireSpread, LayerMask layerMask, ParticleSystem effect, float effectDestroyDelay)
         {
-            Debug.Log("INIT PISTOL");
-
+            WeaponId = weaponId;
             WeaponObject = weaponObject;
+            ProjectileObject = projectileObject;
+            WeaponType = weaponType;
+            Damage = damage;
+            ClipSize = clipSize;
+            LeftPatronsCount = leftPatronsCount;
+            ReloadTime = reloadTime;
+            ShootDistance = shootDistance;
+            ShootSpeed = shootSpeed;
+            FireSpread = fireSpread;
             LayerMask = layerMask;
             Effect = effect;
-            Damage = damage;
             EffectDestroyDelay = effectDestroyDelay;
-            WeaponType = WeaponType.Pistol;
         }
 
 

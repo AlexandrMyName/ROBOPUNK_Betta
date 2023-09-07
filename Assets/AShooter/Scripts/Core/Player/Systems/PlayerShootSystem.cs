@@ -45,7 +45,7 @@ namespace Core
 
         protected override void Update()
         {
-            // DrawDebugRayToMousePosition();
+            DrawDebugRayToMousePosition();
         }
         
         
@@ -59,7 +59,7 @@ namespace Core
         {
             if (isClicked)
             {
-                _currentWeapon.Shoot(_camera, _mousePosition);
+                _currentWeapon.Shoot(_components.BaseTransform, _camera, _mousePosition);
             }
         }
 

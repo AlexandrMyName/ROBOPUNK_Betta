@@ -38,10 +38,15 @@ namespace User
         public float EffectDestroyDelay { get; protected set; }
 
 
-        public virtual void Shoot(Camera camera, Vector3 mousePosition)
+        public virtual void Shoot(Transform playerTransform, Camera camera, Vector3 mousePosition)
         {
-            PlayerSimpleAttack simpleAttack = new PlayerSimpleAttack(this, camera, mousePosition);
+            PlayerSimpleAttack simpleAttack = new PlayerSimpleAttack(this, playerTransform, camera, mousePosition);
             simpleAttack.Attack();
+        }
+
+        public void Reload()
+        {
+
         }
 
 
