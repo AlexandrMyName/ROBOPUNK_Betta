@@ -43,6 +43,8 @@ namespace Abstracts
         void Reload();
 
         void ProcessReload();
+        
+        bool IsReloadProcessing { get; }
 
 
     }

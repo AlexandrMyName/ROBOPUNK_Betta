@@ -23,9 +23,7 @@ namespace Core
         private List<IDisposable> _disposables = new();
 
         private IWeapon _currentWeapon;
-
-        private float _reloadTimer;
-
+        
         
         protected override void Awake(IGameComponents components)
         {
@@ -40,8 +38,7 @@ namespace Core
             _disposables.AddRange(new List<IDisposable>{
                 _input.LeftClick.AxisOnChange.Subscribe(OnLeftClick),
                 _input.MousePosition.AxisOnChange.Subscribe(OnMousePositionChanged),
-                _weaponState.CurrentWeapon.Subscribe(weapon => { UpdateCurrentWeapon(weapon); }),
-                _weaponState.LeftPatrons.Subscribe(count => CheckPatronsCount(count))
+                _weaponState.CurrentWeapon.Subscribe(weapon => { UpdateCurrentWeapon(weapon); })
             });
         }
 
@@ -49,17 +46,13 @@ namespace Core
         private void UpdateCurrentWeapon(IWeapon weapon)
         {
             _currentWeapon = weapon;
-            _reloadTimer = _currentWeapon?.ReloadTime ?? 0.0f;
-            _weaponState.LeftPatrons.Value = weapon?.LeftPatronsCount ?? 0;
         }
 
 
         protected override void Update()
         {
             DrawDebugRayToMousePosition();
-
-            // if (_weaponState.IsNeedReload)
-            //     ProcessReload(Time.deltaTime);
+            
         }
         
         
@@ -74,19 +67,9 @@ namespace Core
             if (isClicked)
             {
                 if (_currentWeapon.LeftPatronsCount > 0)
-                {
                     _currentWeapon.Shoot(_components.BaseTransform, _camera, _mousePosition);
-                    _weaponState.LeftPatrons.Value -= 1;
-                }
                 else
-                {
-                    if (_weaponState.IsNeedReload)
-                    {
-                        _currentWeapon.ProcessReload();
-                        _weaponState.IsNeedReload = false;
-                        _weaponState.LeftPatrons.Value = _currentWeapon.ClipSize;
-                    }
-                }
+                    _currentWeapon.ProcessReload();
             }
         }
 
@@ -106,28 +89,6 @@ namespace Core
                 Debug.DrawRay(ray.origin, ray.direction * hitInfo.distance, Color.red);
             }
         }
-
-
-        private void CheckPatronsCount(int leftCount)
-        {
-            if (leftCount <= 0)
-                _weaponState.IsNeedReload = true;
-        }
-
-
-        // private void ProcessReload(float deltaTime)
-        // {
-        //     if (_reloadTimer >= 0)
-        //     {
-        //         _reloadTimer -= deltaTime;
-        //     }
-        //     else
-        //     {
-        //         _currentWeapon.Reload();
-        //         _weaponState.IsNeedReload = false;
-        //         _reloadTimer = _currentWeapon.ReloadTime;
-        //     }
-        // }
 
 
     }

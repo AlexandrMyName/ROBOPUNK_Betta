@@ -1,10 +1,7 @@
 ﻿using System;
 using Abstracts;
 using Core;
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
-using Tool;
 using UniRx;
 using UnityEngine;
 
@@ -14,10 +11,7 @@ namespace User
 
     public abstract class Weapon : IWeapon, IDisposable
     {
-
-        // private Coroutine _reloadCoroutine;
-
-
+        
         public int WeaponId { get; protected set; }
 
         public GameObject WeaponObject { get; protected set; }
@@ -49,6 +43,9 @@ namespace User
 
         private List<IDisposable> _disposables = new();
 
+        
+        public bool IsReloadProcessing { get; protected set; }
+
 
         public virtual void Shoot(Transform playerTransform, Camera camera, Vector3 mousePosition)
         {
@@ -64,16 +61,22 @@ namespace User
         {
             LeftPatronsCount = ClipSize;
             Debug.Log("RELOAD MTFCKR");
+            IsReloadProcessing = false;
         }
 
 
         public void ProcessReload()
         {
-            _disposables.Add(
-                Observable
-                    .Timer(TimeSpan.FromSeconds(ReloadTime))
-                    .Subscribe(_ => Reload())
+            if (!IsReloadProcessing)
+            {
+                IsReloadProcessing = true;
+                
+                _disposables.Add(
+                    Observable
+                        .Timer(TimeSpan.FromSeconds(ReloadTime))
+                        .Subscribe(_ => Reload())
                 );
+            }
         }
         
         
@@ -81,13 +84,7 @@ namespace User
         {
             _disposables.ForEach(d => d.Dispose());
         }
-
         
-        // private IEnumerator ReloadCoroutine()
-        // {
-        //     yield return new WaitForSeconds(ReloadTime);
-        //     
-        // }
         
     }
 }
