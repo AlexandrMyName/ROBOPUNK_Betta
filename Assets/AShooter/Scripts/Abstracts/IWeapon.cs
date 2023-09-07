@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using User;
 
 
@@ -37,7 +38,9 @@ namespace Abstracts
         float EffectDestroyDelay { get; }
 
 
-        void Shoot(Camera camera, Vector3 mousePosition);
+        void Shoot(Transform playerTransform, Camera camera, Vector3 mousePosition);
+
+        void Reload();
 
 
     }

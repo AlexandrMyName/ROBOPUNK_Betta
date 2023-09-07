@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 2093596454}
-  _weaponConfig: {fileID: 11400000, guid: 3b6538afe21c486458721f12758b87e4, type: 2}
+  _spawner: {fileID: 0}
   _useMoveSystem: 1
   _useShootSystem: 1
   _maxPlayerHealth: 100
@@ -208,7 +208,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3b6538afe21c486458721f12758b87e4, type: 2}
   - {fileID: 11400000, guid: 7d4d0cf09ac337e43a27ab9bb23748f7, type: 2}
   - {fileID: 11400000, guid: 79ddbc45dcc944546843cd1b88ead445, type: 2}
-  _projectile: {fileID: 2759587474139382199, guid: c1680656887a28340840a682c5abdad3, type: 3}
 --- !u!4 &294146506
 Transform:
   m_ObjectHideFlags: 0

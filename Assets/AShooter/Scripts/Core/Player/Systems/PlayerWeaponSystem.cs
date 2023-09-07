@@ -76,7 +76,7 @@ namespace Core
                 }
             }
 
-            _weaponState.CurrentWeapon.Value = _weapons[3];
+            _weaponState.CurrentWeapon.Value = _weapons[1];
         }
 
 
@@ -84,37 +84,62 @@ namespace Core
         {
             var pistolObject = GameObject.Instantiate(config.WeaponObject, _player.WeaponContainer);
             return new Pistol(
+                config.WeaponId,
                 pistolObject,
+                null,
+                config.WeaponType,
+                config.Damage,
+                config.ClipSize,
+                config.LeftPatronsCount,
+                config.ReloadTime,
+                config.ShootDistance,
+                config.ShootSpeed,
+                config.FireSpread,
                 config.LayerMask,
                 config.Effect,
-                config.Damage,
                 config.EffectDestroyDelay);
         }
 
 
         private IWeapon ShotgunInit(WeaponConfig config)
         {
-            var pistolObject = GameObject.Instantiate(config.WeaponObject, _player.WeaponContainer);
+            var shotgunObject = GameObject.Instantiate(config.WeaponObject, _player.WeaponContainer);
             return new Shotgun(
-                pistolObject,
+                config.WeaponId,
+                shotgunObject,
+                null,
+                config.WeaponType,
+                config.Damage,
+                config.ClipSize,
+                config.LeftPatronsCount,
+                config.ReloadTime,
+                config.ShootDistance,
+                config.ShootSpeed,
+                config.FireSpread,
                 config.LayerMask,
                 config.Effect,
-                config.Damage,
-                config.EffectDestroyDelay,
-                config.ProjectileObject);
+                config.EffectDestroyDelay);
         }
 
 
         private IWeapon RocketLauncherInit(WeaponConfig config)
         {
-            var pistolObject = GameObject.Instantiate(config.WeaponObject, _player.WeaponContainer);
+            var rocketLauncherObject = GameObject.Instantiate(config.WeaponObject, _player.WeaponContainer);
             return new RocketLauncher(
-                pistolObject,
+                config.WeaponId,
+                rocketLauncherObject,
+                config.ProjectileObject,
+                config.WeaponType,
+                config.Damage,
+                config.ClipSize,
+                config.LeftPatronsCount,
+                config.ReloadTime,
+                config.ShootDistance,
+                config.ShootSpeed,
+                config.FireSpread,
                 config.LayerMask,
                 config.Effect,
-                config.Damage,
-                config.EffectDestroyDelay,
-                config.ProjectileObject);
+                config.EffectDestroyDelay);
         }
 
 

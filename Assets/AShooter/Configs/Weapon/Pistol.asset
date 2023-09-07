@@ -14,18 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <WeaponId>k__BackingField: 1
   <WeaponObject>k__BackingField: {fileID: 9177879828942193514, guid: 566a185e4f51b1948b6f550c57fa51c5, type: 3}
+  <ProjectileObject>k__BackingField: {fileID: 0}
   <WeaponType>k__BackingField: 0
   <Damage>k__BackingField: 20
-  <ClipSize>k__BackingField: 0
-  <LeftPatronsCount>k__BackingField: 0
-  <ReloadTime>k__BackingField: 0
+  <ClipSize>k__BackingField: 8
+  <LeftPatronsCount>k__BackingField: 8
+  <ReloadTime>k__BackingField: 1
   <ShootDistance>k__BackingField: 0
-  <ShootSpeed>k__BackingField: 0
+  <ShootSpeed>k__BackingField: 1
   <FireSpread>k__BackingField: 0
   <LayerMask>k__BackingField:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 129
   <Effect>k__BackingField: {fileID: 265766274217486953, guid: 5d3d7a89e81960f439e9316c51c9eff6, type: 3}
   <EffectDestroyDelay>k__BackingField: 2
-  <WeaponType>k__BackingField: 0
-  <WeapoId>k__BackingField: 1
