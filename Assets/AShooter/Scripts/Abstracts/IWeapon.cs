@@ -12,6 +12,8 @@ namespace Abstracts
 
         GameObject WeaponObject { get; }
 
+        Projectile ProjectileObject { get; }
+
         WeaponType WeaponType { get; }
 
         float Damage { get; }

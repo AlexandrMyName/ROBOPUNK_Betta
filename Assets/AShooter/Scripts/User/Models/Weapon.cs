@@ -13,6 +13,8 @@ namespace User
 
         public GameObject WeaponObject { get; protected set; }
 
+        public Projectile ProjectileObject { get; protected set; }
+
         public WeaponType WeaponType { get; protected set; }
         
         public float Damage { get; protected set; }

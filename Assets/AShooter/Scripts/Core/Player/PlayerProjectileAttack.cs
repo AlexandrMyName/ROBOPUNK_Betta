@@ -9,7 +9,7 @@ namespace Core
     public sealed class PlayerProjectileAttack
     {
 
-        [Inject] private Projectile _projectile;
+        //[Inject] private Projectile _projectile;
 
         private Weapon _weapon;
         private ForceMode _forceMode = ForceMode.Impulse;
@@ -35,7 +35,7 @@ namespace Core
 
         public void Attack()
         {
-            var projectile = GameObject.Instantiate(_projectile, _weaponMuzzle.position, _weaponMuzzle.rotation);
+            var projectile = GameObject.Instantiate(_weapon.ProjectileObject, _weaponMuzzle.position, _weaponMuzzle.rotation);
             projectile.Damage = _weapon.Damage;
             projectile.Effect = _weapon.Effect;
             projectile.EffectDestroyDelay = _weapon.EffectDestroyDelay;

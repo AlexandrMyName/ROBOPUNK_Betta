@@ -13,6 +13,8 @@ namespace User
 
         [field: SerializeField] public GameObject WeaponObject { get; private set; }
 
+        [field: SerializeField] public Projectile ProjectileObject { get; private set; }
+
         [field: SerializeField] public WeaponType WeaponType { get; private set; }
         
         [field: SerializeField, Min(0f)] public float Damage { get; private set; }

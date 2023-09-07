@@ -100,7 +100,8 @@ namespace Core
                 config.LayerMask,
                 config.Effect,
                 config.Damage,
-                config.EffectDestroyDelay);
+                config.EffectDestroyDelay,
+                config.ProjectileObject);
         }
 
 
@@ -112,7 +113,8 @@ namespace Core
                 config.LayerMask,
                 config.Effect,
                 config.Damage,
-                config.EffectDestroyDelay);
+                config.EffectDestroyDelay,
+                config.ProjectileObject);
         }
 
 

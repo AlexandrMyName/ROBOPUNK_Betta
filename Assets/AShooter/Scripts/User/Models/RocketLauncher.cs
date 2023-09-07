@@ -8,7 +8,7 @@ namespace User
     public class RocketLauncher : Weapon
     {
 
-        public RocketLauncher(GameObject weaponObject, LayerMask layerMask, ParticleSystem effect, float damage, float effectDestroyDelay)
+        public RocketLauncher(GameObject weaponObject, LayerMask layerMask, ParticleSystem effect, float damage, float effectDestroyDelay, Projectile projectileObject)
         {
             Debug.Log("INIT RocketLauncher");
 
@@ -18,6 +18,7 @@ namespace User
             Damage = damage;
             EffectDestroyDelay = effectDestroyDelay;
             WeaponType = WeaponType.RocketLauncher;
+            ProjectileObject = projectileObject;
         }
 
 

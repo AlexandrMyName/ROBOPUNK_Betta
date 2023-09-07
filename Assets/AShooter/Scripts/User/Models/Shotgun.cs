@@ -6,7 +6,7 @@ namespace User
     public class Shotgun : Weapon
     {
                
-        public Shotgun(GameObject weaponObject, LayerMask layerMask, ParticleSystem effect, float damage, float effectDestroyDelay)
+        public Shotgun(GameObject weaponObject, LayerMask layerMask, ParticleSystem effect, float damage, float effectDestroyDelay, Projectile projectileObject)
         {
             Debug.Log("INIT Shotgun");
 
@@ -16,6 +16,7 @@ namespace User
             Damage = damage;
             EffectDestroyDelay = effectDestroyDelay;
             WeaponType = WeaponType.Shotgun;
+            ProjectileObject = projectileObject;
         }
 
 
