@@ -18,8 +18,8 @@ namespace Core
 
         [HideInInspector] public ReactiveProperty<float> Health { get => _health; set => _health = value; }
         [field: SerializeField] public ReactiveProperty<bool> IsDeadFlag { get; set; }
-        [SerializeField] public ReactiveProperty<bool> IsReadyToStrike { get; set; }
-        [SerializeField] public ReactiveProperty<bool> IsReadyToShoot { get; set; }
+        [field: SerializeField] public ReactiveProperty<bool> IsReadyToMeleeAttack { get; set; }
+        [field: SerializeField] public ReactiveProperty<bool> IsReadyToRangedAttack { get; set; }
         public SphereCollider EnemyRadiusAttack => _enemyRadiusAttack;
         public float Damage => _attackForce;
 
