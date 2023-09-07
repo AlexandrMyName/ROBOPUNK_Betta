@@ -15,16 +15,18 @@ namespace Core
         [SerializeField] private Collider _enemyRadiusAttack;
         private ReactiveProperty<float> _health;
         private float _attackForce;
-        
+
         [HideInInspector] public ReactiveProperty<float> Health { get => _health; set => _health = value; }
         [field: SerializeField] public ReactiveProperty<bool> IsDeadFlag { get; set; }
+        [SerializeField] public ReactiveProperty<bool> IsReadyToStrike { get; set; }
+        [SerializeField] public ReactiveProperty<bool> IsReadyForShoot { get; set; }
         public Collider EnemyRadiusAttack => _enemyRadiusAttack;
         public float Damage => _attackForce;
-         
-        
+
+
         public void SetMaxHealth(float maxHealth, Action<ReactiveProperty<float>> onCompleted = null)
         {
-            if(_health == null)
+            if (_health == null)
                 _health = new ReactiveProperty<float>(maxHealth);
             else
                 _health.Value = maxHealth;
@@ -48,7 +50,7 @@ namespace Core
             systems.Add(new EnemyAttackSystem());
             return systems;
         }
-        
+
 
     }
 
