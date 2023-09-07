@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 4450591860825508766}
   - component: {fileID: 2241226216331610635}
   - component: {fileID: 8831900685845476332}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player_WSI_IE
   m_TagString: Player
   m_Icon: {fileID: 0}
