@@ -12,17 +12,20 @@ namespace Core
     {
 
         private List<IDisposable> _disposables = new();
-        private Collider _enemyRadiusAttack;
+        private SphereCollider _enemyRadiusAttack;
         private Enemy _enemy;
 
 
         protected override void Awake(IGameComponents components)
         {
             _enemy = components.BaseObject.GetComponent<Enemy>();
-            _enemyRadiusAttack = _enemy.EnemyRadiusAttack;
 
-            _enemyRadiusAttack.OnTriggerStayAsObservable()
-                .Where(col => col.GetComponent<Player>() != null)  //gameObject.CompareTag("Player"))
+            var enemyRadiusAttack = _enemy.EnemyRadiusAttack;
+
+            enemyRadiusAttack.radius = GameLoopManager.EnemyMeleeAttackRange;
+
+            enemyRadiusAttack.OnTriggerStayAsObservable()
+                .Where(col => col.GetComponent<Player>() != null)
                 .ThrottleFirst(TimeSpan.FromSeconds(GameLoopManager.EnemyAttackFrequency))
                 .Subscribe(_hit => HandleTriggerCollider(_hit))
                 .AddTo(_disposables);

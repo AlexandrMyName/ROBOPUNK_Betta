@@ -12,15 +12,15 @@ namespace Core
 
         [Inject(Id = "PlayerTransform")] public Transform playerTransform;
 
-        [SerializeField] private Collider _enemyRadiusAttack;
+        [SerializeField] private SphereCollider _enemyRadiusAttack;
         private ReactiveProperty<float> _health;
         private float _attackForce;
 
         [HideInInspector] public ReactiveProperty<float> Health { get => _health; set => _health = value; }
         [field: SerializeField] public ReactiveProperty<bool> IsDeadFlag { get; set; }
         [SerializeField] public ReactiveProperty<bool> IsReadyToStrike { get; set; }
-        [SerializeField] public ReactiveProperty<bool> IsReadyForShoot { get; set; }
-        public Collider EnemyRadiusAttack => _enemyRadiusAttack;
+        [SerializeField] public ReactiveProperty<bool> IsReadyToShoot { get; set; }
+        public SphereCollider EnemyRadiusAttack => _enemyRadiusAttack;
         public float Damage => _attackForce;
 
 
