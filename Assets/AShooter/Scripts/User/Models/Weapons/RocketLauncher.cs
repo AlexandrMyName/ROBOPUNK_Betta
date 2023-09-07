@@ -1,5 +1,8 @@
 ﻿using Abstracts;
 using Core;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.Animations;
 using UnityEngine;
 
 
@@ -24,7 +27,17 @@ namespace User
 
         public override void Shoot(Camera camera, Vector3 mousePosition)
         {
-            PlayerProjectileAttack projectileAttack = new PlayerProjectileAttack(this, WeaponObject.transform);
+            Transform muzzle = null;
+            foreach (Transform child in WeaponObject.transform)
+            {
+                if (child.CompareTag("Muzzle"))
+                {
+                    muzzle = child;
+                    break;
+                }
+            }
+
+            PlayerProjectileAttack projectileAttack = new PlayerProjectileAttack(this, muzzle);
             projectileAttack.Attack();
         }
 

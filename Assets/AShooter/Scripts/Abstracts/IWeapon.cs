@@ -11,7 +11,7 @@ namespace Abstracts
         int WeaponId { get; }
 
         GameObject WeaponObject { get; }
-
+        
         Projectile ProjectileObject { get; }
 
         WeaponType WeaponType { get; }

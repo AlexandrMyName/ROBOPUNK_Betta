@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RocketLauncher
   m_EditorClassIdentifier: 
   <WeaponId>k__BackingField: 3
-  <WeaponObject>k__BackingField: {fileID: 6675194448196821719, guid: c5ed9a437df9dae4a85fa321fc994aad, type: 3}
+  <WeaponObject>k__BackingField: {fileID: 6675194448196821719, guid: 92ef5ea441e08064abf4cb91791dadfc, type: 3}
   <ProjectileObject>k__BackingField: {fileID: 2759587474139382199, guid: c1680656887a28340840a682c5abdad3, type: 3}
   <WeaponType>k__BackingField: 2
   <Damage>k__BackingField: 100

@@ -9,12 +9,10 @@ namespace Core
     public sealed class PlayerProjectileAttack
     {
 
-        //[Inject] private Projectile _projectile;
-
         private Weapon _weapon;
-        private ForceMode _forceMode = ForceMode.Impulse;
-        private float _force = 10f;
         private Transform _weaponMuzzle;
+        private ForceMode _forceMode = ForceMode.Impulse;
+        private float _force = 20f;
         
 
         public PlayerProjectileAttack(Weapon weapon, Transform weaponMuzzle)
