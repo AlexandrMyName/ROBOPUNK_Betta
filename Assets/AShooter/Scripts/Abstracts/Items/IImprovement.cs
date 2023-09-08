@@ -1,8 +1,8 @@
- 
+using System;
 
 namespace Abstracts
 {
-    public interface IImprovement
+    public interface IImprovement : IDisposable
     {
         float Value { get; }
         float Timer { get; }

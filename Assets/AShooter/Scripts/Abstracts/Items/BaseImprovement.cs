@@ -17,6 +17,8 @@ namespace Abstracts
         public ImprovementTime GetImproveTime() => Time;
  
         public ImprovementType GetImproveType() => Type;
+
+        public void Dispose() => Destroy(gameObject);
     }
 }
  
