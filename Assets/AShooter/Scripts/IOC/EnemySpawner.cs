@@ -3,6 +3,8 @@ using UnityEngine;
 using UniRx;
 using Core;
 using Zenject;
+using System.Collections.Generic;
+using Abstracts;
 
 namespace DI.Spawn
 {
@@ -37,17 +39,45 @@ namespace DI.Spawn
 
         private GameObject CreateEnemy()
         {
+            Debug.Log("1");
             GameObject enemyInstance = Spawn();
-            _playerTransform = enemyInstance.GetComponent<Enemy>().PlayerTransform;
+
+            var enemy = enemyInstance.GetComponent<Enemy>();
+            _playerTransform = enemy.PlayerTransform;
+
             return enemyInstance;
         }
 
 
-        public GameObject Spawn()
+        private GameObject Spawn()
         {
-            GameObject sceneInstance = _container.InstantiatePrefab(_prefab);
+            Debug.Log("2");
+            GameObject sceneInstance = _container.InstantiatePrefab(AddingSystems(_prefab));
             sceneInstance.transform.position = _spawnTransform.position;
             return sceneInstance;
+        }
+
+
+        private GameObject AddingSystems(GameObject prefab)
+        {
+            Debug.Log("3");
+            var clonePrefab = Instantiate(prefab, this.transform, false);
+            clonePrefab.GetComponent<Enemy>().SetSystems(createSystem());
+
+            return clonePrefab;
+        }
+
+
+        private List<ISystem> createSystem()
+        {
+            Debug.Log("4");
+            var systems = new List<ISystem>();
+
+            systems.Add(new EnemyMovementSystem(2));
+            systems.Add(new EnemyDamageSystem());
+            systems.Add(new EnemyMeleeAttackSystem());
+
+            return systems;
         }
 
 
@@ -55,6 +85,7 @@ namespace DI.Spawn
         {
             if (activeEnemyCount < poolSize)
             {
+                Debug.Log("6");
                 GameObject enemyInstance = enemyPool.Get();
 
                 var enemy = enemyInstance.GetComponent<Enemy>();

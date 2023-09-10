@@ -18,6 +18,8 @@ namespace Abstracts
         private void Awake()
         {
             _systems = GetSystems();
+            Debug.Log("7");
+            Debug.Log($"_systems == null - {_systems == null}");
 
             ObjectStack stack = new ObjectStack(Camera.main, this.gameObject);
 

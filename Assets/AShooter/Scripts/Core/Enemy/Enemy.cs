@@ -16,7 +16,9 @@ namespace Core
 
         [SerializeField] private SphereCollider _enemyRadiusAttack;
         private ReactiveProperty<float> _health;
+        private List<ISystem> _systems;
         private float _attackForce;
+
 
         [HideInInspector] public ReactiveProperty<float> Health { get => _health; set => _health = value; }
         [field: SerializeField] public ReactiveProperty<bool> IsDeadFlag { get; set; }
@@ -45,13 +47,14 @@ namespace Core
         public void TakeDamage(float amountHealth) => Health.Value -= amountHealth;
 
 
-        protected override List<ISystem> GetSystems()
+        protected override List<ISystem> GetSystems() => _systems;
+
+
+        public void SetSystems(List<ISystem> systems)
         {
-            var systems = new List<ISystem>();
-            systems.Add(new EnemyMovementSystem(MeleeAttackRange.Value));
-            systems.Add(new EnemyDamageSystem());
-            systems.Add(new EnemyMeleeAttackSystem());
-            return systems;
+            _systems = systems;
+            Debug.Log("6");
+            Debug.Log($"_systems == null - {_systems == null}");
         }
 
 
