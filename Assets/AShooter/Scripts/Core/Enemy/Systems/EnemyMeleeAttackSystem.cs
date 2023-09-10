@@ -13,7 +13,6 @@ namespace Core
 
         private List<IDisposable> _disposables = new();
         private Enemy _enemy;
-        private ReactiveProperty<bool> _isReadyToMeleeAttack;
 
         protected override void Awake(IGameComponents components)
         {
@@ -21,20 +20,13 @@ namespace Core
 
             var enemyRadiusAttack = _enemy.EnemyRadiusAttack;
 
-            enemyRadiusAttack.radius = GameLoopManager.EnemyMeleeAttackRange;
+            enemyRadiusAttack.radius = _enemy.MeleeAttackRange.Value;
 
             enemyRadiusAttack.OnTriggerStayAsObservable()
                 .Where(col => col.GetComponent<Player>() != null)
                 .ThrottleFirst(TimeSpan.FromSeconds(GameLoopManager.EnemyAttackFrequency))
                 .Subscribe(_hit => HandleTriggerCollider(_hit))
                 .AddTo(_disposables);
-
-            _isReadyToMeleeAttack = _enemy.IsReadyToMeleeAttack;
-
-            enemyRadiusAttack.OnTriggerExitAsObservable()
-            .Where(col => col.GetComponent<Player>() != null)
-            .Subscribe(_ => _isReadyToMeleeAttack.Value = false)
-            .AddTo(_enemy);
         }
 
 
@@ -46,8 +38,6 @@ namespace Core
         {
             var player = collider.GetComponent<IAttackable>();
             player.TakeDamage(_enemy.Damage);
-
-            _isReadyToMeleeAttack.Value = true;
 
             #if UNITY_EDITOR
             Debug.Log($"PLAYER: {player.Health}  ( HIT -{_enemy.Damage}!)");

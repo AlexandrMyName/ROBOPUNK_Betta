@@ -6,8 +6,6 @@ namespace Core
 
         public static float EnemyMaxHealth { get; set; }
         public static float EnemyDamageForce { get; set; }
-        public static float EnemyMeleeAttackRange { get; set; }
-        public static float EnemyRangedAttackRange { get; set; }
         public static float EnemyAttackFrequency { get; set; }
 
 
@@ -21,18 +19,6 @@ namespace Core
         public static void SetEnemyDamageForce(float damageForce)
         {
             EnemyDamageForce = damageForce;
-        }
-
-
-        public static void SetMeleeAttackRange(float meleeAttackRange)
-        {
-            EnemyMeleeAttackRange = meleeAttackRange;
-        }
-
-
-        public static void SetRangedAttackRange(float rangedAttackRange)
-        {
-            EnemyRangedAttackRange = rangedAttackRange;
         }
 
 

@@ -38,7 +38,7 @@ namespace DI.Spawn
         private GameObject CreateEnemy()
         {
             GameObject enemyInstance = Spawn();
-            _playerTransform = enemyInstance.GetComponent<Enemy>().playerTransform;
+            _playerTransform = enemyInstance.GetComponent<Enemy>().PlayerTransform;
             return enemyInstance;
         }
 

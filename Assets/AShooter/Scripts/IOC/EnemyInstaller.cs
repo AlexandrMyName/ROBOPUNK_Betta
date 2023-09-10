@@ -2,6 +2,7 @@ using Zenject;
 using UnityEngine;
 using Core;
 using DI.Spawn;
+using UniRx;
 
 namespace DI
 {
@@ -28,12 +29,35 @@ namespace DI
         {
             GameLoopManager.SetEnemyMaxHealth(_maxHealthOnNewGame);
             GameLoopManager.SetEnemyDamageForce(_maxAttackDamageOnNewGame);
-            GameLoopManager.SetMeleeAttackRange(_meleeAttackRange);
-            GameLoopManager.SetRangedAttackRange(_rangedAttackRange);
             GameLoopManager.SetAttackFrequency(_attackFrequency);
+
+            SetRangedAttackRange(_rangedAttackRange);
+            SetMeleeAttackRange(_meleeAttackRange);
 
             if (_spawnOnStart)
                 _spawner.StartSpawnProcess();
+        }
+
+
+        private void SetRangedAttackRange(float rangedAttackRange)
+        {
+            ReactiveProperty<float> ranged = new ReactiveProperty<float>(rangedAttackRange);
+
+            Container
+                .BindInstance(ranged)
+                .WithId("EnemyRangedAttackRange")
+                .AsCached();
+        }
+
+
+        private void SetMeleeAttackRange(float meleeAttackRange)
+        {
+            ReactiveProperty<float> ranged = new ReactiveProperty<float>(meleeAttackRange);
+
+            Container
+                .BindInstance(ranged)
+                .WithId("EnemyMeleeAttackRange")
+                .AsCached();
         }
 
 

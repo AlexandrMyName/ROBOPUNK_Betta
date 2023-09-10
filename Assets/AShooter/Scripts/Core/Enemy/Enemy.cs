@@ -9,8 +9,10 @@ namespace Core
 {
     public class Enemy : StateMachine, IAttackable
     {
+        [Inject(Id = "EnemyRangedAttackRange")] private ReactiveProperty<float> _rangedAttackRange;
+        [Inject(Id = "EnemyMeleeAttackRange")] private ReactiveProperty<float> _meleeAttackRange;
+        [Inject(Id = "PlayerTransform")] private Transform _playerTransform;
 
-        [Inject(Id = "PlayerTransform")] public Transform playerTransform;
 
         [SerializeField] private SphereCollider _enemyRadiusAttack;
         private ReactiveProperty<float> _health;
@@ -18,9 +20,10 @@ namespace Core
 
         [HideInInspector] public ReactiveProperty<float> Health { get => _health; set => _health = value; }
         [field: SerializeField] public ReactiveProperty<bool> IsDeadFlag { get; set; }
-        [field: SerializeField] public ReactiveProperty<bool> IsReadyToMeleeAttack { get; set; }
-        [field: SerializeField] public ReactiveProperty<bool> IsReadyToRangedAttack { get; set; }
+        public Transform PlayerTransform { get { return _playerTransform; } }
         public SphereCollider EnemyRadiusAttack => _enemyRadiusAttack;
+        public ReactiveProperty<float> RangedAttackRange { get { return _rangedAttackRange; } }
+        public ReactiveProperty<float> MeleeAttackRange { get { return _meleeAttackRange; } }
         public float Damage => _attackForce;
 
 
@@ -45,7 +48,7 @@ namespace Core
         protected override List<ISystem> GetSystems()
         {
             var systems = new List<ISystem>();
-            systems.Add(new EnemyMovementSystem());
+            systems.Add(new EnemyMovementSystem(MeleeAttackRange.Value));
             systems.Add(new EnemyDamageSystem());
             systems.Add(new EnemyMeleeAttackSystem());
             return systems;

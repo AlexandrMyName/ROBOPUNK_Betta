@@ -12,17 +12,21 @@ namespace Core
     {
         private List<IDisposable> _disposables = new();
         private NavMeshAgent _navMeshAgent;
-        private Transform _targetTransform;
-        private bool _readyToMeleeAttack;
+        private Transform _playerTransform;
+        private float _indentFromTarget;
+        private Enemy _enemy;
 
+        public EnemyMovementSystem(float indentFromTarget)
+        {
+            _indentFromTarget = indentFromTarget;
+        }
 
         protected override void Awake(IGameComponents components)
         {
-            var enemy = components.BaseObject.GetComponent<Enemy>();
-            _targetTransform = enemy.playerTransform;
-            enemy.IsReadyToMeleeAttack.Subscribe(OnReadyToMeleeAttack);
-
             _navMeshAgent = components.BaseObject.GetComponent<NavMeshAgent>();
+            _enemy = components.BaseObject.GetComponent<Enemy>();
+
+            _playerTransform = _enemy.PlayerTransform;
 
 #if UNITY_EDITOR
             if (_navMeshAgent == null)
@@ -37,29 +41,19 @@ namespace Core
         protected override void OnEnable()
         {
             _navMeshAgent.ResetPath();
+            _navMeshAgent.stoppingDistance = _indentFromTarget;
         }
 
 
         protected override void Update()
         {
-            if (_readyToMeleeAttack)
-                Stay();
-            else 
-                Moving(_targetTransform.position);
+            Moving(_playerTransform.position);
         }
 
-        private void Stay()
-        {
-            _navMeshAgent.isStopped = true;
-        }
 
         public void Moving(Vector3 targetPosition)
         {
-            if (_navMeshAgent.isStopped)
-                _navMeshAgent.isStopped = false;
-
-            if (_navMeshAgent.isActiveAndEnabled)
-                _navMeshAgent.SetDestination(targetPosition);
+            _navMeshAgent.SetDestination(targetPosition);
         }
 
 
@@ -69,11 +63,6 @@ namespace Core
             _disposables.Clear();
         }
 
-
-        private void OnReadyToMeleeAttack(bool val)
-        {
-            _readyToMeleeAttack = val;
-        }
 
     }
 
