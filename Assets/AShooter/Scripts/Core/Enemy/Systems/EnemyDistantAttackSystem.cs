@@ -40,7 +40,6 @@ namespace Core
             if (_isPositionReadiness)
             {
                 ThrowPrimitive();
-                Debug.Log("____________POOOOOOOOOHHH!!__________");
             }
                 
         }

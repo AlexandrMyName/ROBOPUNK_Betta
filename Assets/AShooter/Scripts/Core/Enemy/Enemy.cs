@@ -28,6 +28,7 @@ namespace Core
         public ReactiveProperty<bool> IsCameAttackPosition { get { return _isCameAttackPosition; } set { _isCameAttackPosition = value; } }
         public EnemyType EnemyType { get; set; }
         public float Damage => _attackForce;
+        public EnemyState EnemyState { get; set; }
 
 
         public void SetMaxHealth(float maxHealth, Action<ReactiveProperty<float>> onCompleted = null)
