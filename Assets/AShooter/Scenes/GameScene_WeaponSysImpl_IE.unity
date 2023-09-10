@@ -656,9 +656,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 3957541045528095213, guid: 121e617dee79e334aac211198583030d, type: 3}
   _spawnTransform: {fileID: 1913960607}
-  respawnDelay: 3
-  poolSize: 5
-  spawnRadius: 20
+  _respawnDelay: 1
+  _numberMeleeEnemy: 5
+  _numberDistantEnemy: 5
+  _spawnRadius: 20
 --- !u!1 &2018420657
 GameObject:
   m_ObjectHideFlags: 0

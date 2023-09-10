@@ -8,7 +8,7 @@ using UniRx.Triggers;
 namespace Core
 {
 
-    public class EnemyDistantAttackSystem : BaseSystem
+    public class EnemyDistantMeleeAttackSystem : BaseSystem
     {
 
         private List<IDisposable> _disposables = new();

@@ -1,4 +1,5 @@
 using Abstracts;
+using Core.DTO;
 using System;
 using System.Collections.Generic;
 using UniRx;
@@ -26,6 +27,7 @@ namespace Core
         public SphereCollider EnemyRadiusAttack => _enemyRadiusAttack;
         public ReactiveProperty<float> RangedAttackRange { get { return _rangedAttackRange; } }
         public ReactiveProperty<float> MeleeAttackRange { get { return _meleeAttackRange; } }
+        public EnemyType EnemyType { get; set; }
         public float Damage => _attackForce;
 
 
@@ -53,8 +55,6 @@ namespace Core
         public void SetSystems(List<ISystem> systems)
         {
             _systems = systems;
-            Debug.Log("6");
-            Debug.Log($"_systems == null - {_systems == null}");
         }
 
 
