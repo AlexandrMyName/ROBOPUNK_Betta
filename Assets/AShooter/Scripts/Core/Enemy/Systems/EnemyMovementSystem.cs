@@ -15,6 +15,8 @@ namespace Core
         private Transform _playerTransform;
         private float _indentFromTarget;
         private Enemy _enemy;
+        private ReactiveProperty<bool> _isCameAttackPosition;
+
 
         public EnemyMovementSystem(float indentFromTarget)
         {
@@ -25,7 +27,7 @@ namespace Core
         {
             _navMeshAgent = components.BaseObject.GetComponent<NavMeshAgent>();
             _enemy = components.BaseObject.GetComponent<Enemy>();
-
+            _isCameAttackPosition = _enemy.IsCameAttackPosition;
             _playerTransform = _enemy.PlayerTransform;
 
 #if UNITY_EDITOR
@@ -48,6 +50,17 @@ namespace Core
         protected override void Update()
         {
             Moving(_playerTransform.position);
+
+            if (_navMeshAgent.remainingDistance <= _indentFromTarget)
+            {
+                if (!_isCameAttackPosition.Value)
+                    _isCameAttackPosition.Value = true;
+            }
+            else
+            {
+                if (_isCameAttackPosition.Value)
+                    _isCameAttackPosition.Value = false;
+            }
         }
 
 

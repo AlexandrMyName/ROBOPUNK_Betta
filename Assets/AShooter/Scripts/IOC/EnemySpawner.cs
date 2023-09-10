@@ -31,6 +31,7 @@ namespace DI.Spawn
         private int activeEnemyCount = 0;
         private int _poolSize;
 
+
         internal void StartSpawnProcess()
         {
             _poolSize = _numberMeleeEnemy + _numberDistantEnemy;
@@ -72,6 +73,7 @@ namespace DI.Spawn
             return enemyInstance;
         }
 
+
         private void SetModelEnemy(GameObject enemyInstance)
         {
             var rend = enemyInstance.GetComponent<Renderer>();
@@ -88,6 +90,7 @@ namespace DI.Spawn
                     break;
             }
         }
+
 
         private GameObject SpawnEnemy()
         {
@@ -132,7 +135,7 @@ namespace DI.Spawn
             switch (GetEnemyType(enemyInstance))
             {
                 case EnemyType.MeleeEnemy:
-                    systems.Add(new EnemyMovementSystem(4));
+                    systems.Add(new EnemyMovementSystem(2));
                     systems.Add(new EnemyDamageSystem());
                     systems.Add(new EnemyMeleeAttackSystem());
                     break;

@@ -13,13 +13,11 @@ namespace Core
         [Inject(Id = "EnemyRangedAttackRange")] private ReactiveProperty<float> _rangedAttackRange;
         [Inject(Id = "EnemyMeleeAttackRange")] private ReactiveProperty<float> _meleeAttackRange;
         [Inject(Id = "PlayerTransform")] private Transform _playerTransform;
-
-
         [SerializeField] private SphereCollider _enemyRadiusAttack;
         private ReactiveProperty<float> _health;
+        private ReactiveProperty<bool> _isCameAttackPosition = new ReactiveProperty<bool>(false);
         private List<ISystem> _systems;
         private float _attackForce;
-
 
         [HideInInspector] public ReactiveProperty<float> Health { get => _health; set => _health = value; }
         [field: SerializeField] public ReactiveProperty<bool> IsDeadFlag { get; set; }
@@ -27,6 +25,7 @@ namespace Core
         public SphereCollider EnemyRadiusAttack => _enemyRadiusAttack;
         public ReactiveProperty<float> RangedAttackRange { get { return _rangedAttackRange; } }
         public ReactiveProperty<float> MeleeAttackRange { get { return _meleeAttackRange; } }
+        public ReactiveProperty<bool> IsCameAttackPosition { get { return _isCameAttackPosition; } set { _isCameAttackPosition = value; } }
         public EnemyType EnemyType { get; set; }
         public float Damage => _attackForce;
 
