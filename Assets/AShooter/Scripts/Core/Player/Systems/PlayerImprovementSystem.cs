@@ -3,18 +3,18 @@ using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using User.Presenters;
 using Zenject;
 
 namespace Core
 {
-    public class ImprovementSystem : BaseSystem, IImprovable
+    public class PlayerImprovementSystem : BaseSystem, IImprovable
     {
         [Inject] private TimerPool _timerPool;
-        private PlayerImprovable _improvable;
+        [Inject] private ImprovablePresenter _improvable;
         private IGameComponents _components;
         private ConcurrentQueue<IImprovement> _timeImprovements;
         private List<IDisposable> _disposables;
@@ -34,7 +34,10 @@ namespace Core
         {
             _disposables = new();
             _components = components;
-            _improvable = new PlayerImprovable();
+
+            _improvable.Init(_components.BaseObject.GetComponent<IAttackable>(),
+                _components.BaseObject.GetComponent<IMovable>());
+
             _timeImprovements = new ConcurrentQueue<IImprovement>();
             _components.BaseObject.GetComponent<Collider>()
                 .OnTriggerEnterAsObservable()
@@ -44,7 +47,10 @@ namespace Core
                         {
                             collider.GetComponent<IImprovement>().Improve(this);
                         }).AddTo(_disposables);
-            _components.BaseObject.GetComponent<MonoBehaviour>().StartCoroutine(TryCansel());
+
+            _components.BaseObject
+                .GetComponent<MonoBehaviour>()
+                .StartCoroutine(TryCansel());
         }
 
 
@@ -59,16 +65,12 @@ namespace Core
 
 
             ITimer timer = _timerPool.CreateCallBackTimer(timerName);
-
-            Task.Factory.StartNew(() =>
-            {
-
+ 
                 _timerPool.RunTimer(
                     timer,
                     improvementObject.Timer,
                     () => { TimeDown(improvementObject); });
-
-            });
+ 
         }
 
         private void TimeDown(IImprovement improvementObject)
