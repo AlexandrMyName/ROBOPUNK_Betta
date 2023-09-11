@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6978092948683957056}
   - component: {fileID: 3234101714688169076}
   - component: {fileID: 1535726063053864317}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: M1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 3203514137321161891}
   - component: {fileID: 768285289443407932}
   - component: {fileID: 7325730819948997396}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: M2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -219,7 +219,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5970706282863837363}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Muzzle
   m_TagString: Muzzle
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 5605064960011445127}
   - component: {fileID: 1660111446240163205}
   - component: {fileID: 545939717080756649}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: M3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,7 +355,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8245862944466502167}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RocketLauncher_add_muzzle
   m_TagString: Weapon
   m_Icon: {fileID: 0}

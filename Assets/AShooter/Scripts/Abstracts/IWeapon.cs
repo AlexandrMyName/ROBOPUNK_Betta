@@ -33,6 +33,8 @@ namespace Abstracts
 
         float FireSpread { get; }
 
+        float SpreadFactor { get; }
+
         LayerMask LayerMask { get; }
 
         ParticleSystem Effect { get; }

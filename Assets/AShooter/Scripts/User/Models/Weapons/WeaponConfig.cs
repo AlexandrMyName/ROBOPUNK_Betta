@@ -31,7 +31,9 @@ namespace User
 
         [field: SerializeField, Min(0f)] public float ShootSpeed { get; private set; }
 
-        [field: SerializeField, Min(0f)] public float FireSpread { get; private set; }
+        [field: SerializeField, Min(1f)] public float FireSpread { get; private set; }
+        
+        [field: SerializeField] public float SpreadFactor { get; private set; }
 
         [field: SerializeField] public LayerMask LayerMask { get; private set; }
 

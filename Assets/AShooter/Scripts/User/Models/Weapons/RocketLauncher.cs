@@ -26,6 +26,8 @@ namespace User
 
         public override void Shoot(Transform playerTransform, Camera camera, Vector3 mousePosition)
         {
+            Debug.Log("SHOOT MTFCKR");
+            LeftPatronsCount--;
             var hitPoint = FindHitPoint(camera, mousePosition);
             InstantiateProjectile(hitPoint);
         }

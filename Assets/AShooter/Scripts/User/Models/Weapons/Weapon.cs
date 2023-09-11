@@ -35,6 +35,8 @@ namespace User
         public float ShootSpeed { get; protected set; }
         
         public float FireSpread { get; protected set; }
+        
+        public float SpreadFactor { get; protected set; }
 
         public LayerMask LayerMask { get; protected set; }
 

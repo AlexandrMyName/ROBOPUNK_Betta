@@ -13,17 +13,18 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: 
   <WeaponId>k__BackingField: 2
-  <WeaponObject>k__BackingField: {fileID: 4113015385983967611, guid: ffd74aa3837242041bcbb5b66314d899, type: 3}
+  <WeaponObject>k__BackingField: {fileID: 4113015385983967611, guid: fb0b5430209a4b84e887578766d4c836, type: 3}
   <ProjectileObject>k__BackingField: {fileID: 0}
   <ProjectileForce>k__BackingField: 0
   <WeaponType>k__BackingField: 1
   <Damage>k__BackingField: 50
   <ClipSize>k__BackingField: 6
   <LeftPatronsCount>k__BackingField: 6
-  <ReloadTime>k__BackingField: 2
-  <ShootDistance>k__BackingField: 0
+  <ReloadTime>k__BackingField: 3
+  <ShootDistance>k__BackingField: 40
   <ShootSpeed>k__BackingField: 0
-  <FireSpread>k__BackingField: 1
+  <FireSpread>k__BackingField: 20
+  <SpreadFactor>k__BackingField: 10
   <LayerMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 129

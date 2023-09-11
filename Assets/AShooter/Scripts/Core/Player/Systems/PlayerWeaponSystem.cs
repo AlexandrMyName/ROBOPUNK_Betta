@@ -119,6 +119,7 @@ namespace Core
                 config.ShootDistance,
                 config.ShootSpeed,
                 config.FireSpread,
+                config.SpreadFactor,
                 config.LayerMask,
                 config.Effect,
                 config.EffectDestroyDelay);

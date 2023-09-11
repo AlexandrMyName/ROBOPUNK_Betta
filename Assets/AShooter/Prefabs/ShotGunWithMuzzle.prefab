@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4601364690873908128}
   - component: {fileID: 6454882411530130030}
   - component: {fileID: 7994095296179002278}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: M1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5265633049223707627}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ShotGunWithMuzzle
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 2967077884583884102}
   - component: {fileID: 2950915758789085052}
   - component: {fileID: 2448602102887371821}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: M2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5452764944664053266}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Muzzle
   m_TagString: Muzzle
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
@@ -268,7 +268,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9129816105420905684}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.526, y: 0.3658, z: 0.44}
+  m_LocalPosition: {x: -1.281, y: 0.3658, z: 0.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
