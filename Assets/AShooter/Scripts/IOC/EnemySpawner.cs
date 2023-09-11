@@ -2,87 +2,216 @@ using System;
 using UnityEngine;
 using UniRx;
 using Core;
+using Zenject;
+using System.Collections.Generic;
+using Abstracts;
+using Core.DTO;
 
 namespace DI.Spawn
 {
-    public class EnemySpawner : Spawner
+
+    public class EnemySpawner : MonoBehaviour
     {
-        [SerializeField] private float respawnDelay = 1f;
-        [SerializeField] private int poolSize = 10;
-        [SerializeField] private float spawnRadius = 5f;
 
-        private GameObjectPool enemyPool;
-        private Subject<Unit> spawnSubject = new Subject<Unit>();
-        private IDisposable spawnDisposable;
+        [Inject] private DiContainer _container;
+
+        [SerializeField] private GameObject _prefab;
+        [SerializeField] private Transform _spawnTransform;
+        [SerializeField] private float _respawnDelay;
+        //[SerializeField] private int poolSize = 10;
+        [SerializeField] private int _numberMeleeEnemy;
+        [SerializeField] private int _numberDistantEnemy;
+        [SerializeField] private float _spawnRadius;
+
+        private GameObjectPool _enemyPool;
+        private float _numberMeleeEnemy_cnt;
+        private float _numberDistantEnemy_cnt;
+        private IDisposable _spawnDisposable;
         private Transform _playerTransform;
-
         private int activeEnemyCount = 0;
+        private int _poolSize;
+
 
         internal void StartSpawnProcess()
         {
-            enemyPool = new GameObjectPool(() => CreateEnemy(), poolSize);
-            spawnDisposable = Observable
-                .Interval(TimeSpan.FromSeconds(respawnDelay))
+            _poolSize = _numberMeleeEnemy + _numberDistantEnemy;
+            _numberMeleeEnemy_cnt = _numberMeleeEnemy;
+            _numberDistantEnemy_cnt = _numberDistantEnemy;
+
+            _enemyPool = new GameObjectPool(() => CreateEnemy(), (_poolSize));
+            _spawnDisposable = Observable
+                .Interval(TimeSpan.FromSeconds(_respawnDelay))
                 .TakeUntilDestroy(this)
                 .Subscribe(_ => TrySpawnEnemy());
         }
 
+
+        internal void StopSpawning()
+        {
+            _spawnDisposable.Dispose();
+        }
+
+
+        internal void ReturnEnemyToPool(GameObject enemyInstance)
+        {
+            enemyInstance.SetActive(false);
+
+            _enemyPool.Return(enemyInstance);
+            activeEnemyCount--;
+        }
+
+
         private GameObject CreateEnemy()
         {
-            GameObject enemyInstance = Spawn();
-            _playerTransform = enemyInstance.GetComponent<Enemy>().playerTransform;
+            GameObject enemyInstance = SpawnEnemy();
+
+            SetTypeEnemy(enemyInstance);
+            SetSystems(enemyInstance);
+            SetModelEnemy(enemyInstance);
+            GetPlayerTransform(enemyInstance);
+
             return enemyInstance;
         }
 
+
+        private void SetModelEnemy(GameObject enemyInstance)
+        {
+            var rend = enemyInstance.GetComponent<Renderer>();
+
+            switch (enemyInstance.GetComponent<Enemy>().EnemyType)
+            {
+                case EnemyType.MeleeEnemy:
+                    rend.material.color = Color.yellow;
+                    break;
+                case EnemyType.DistantEnemy:
+                    rend.material.color = Color.blue;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+        private GameObject SpawnEnemy()
+        {
+            GameObject sceneInstance = _container.InstantiatePrefab(_prefab);
+            sceneInstance.transform.position = _spawnTransform.position;
+            return sceneInstance;
+        }
+
+
+        private void SetTypeEnemy(GameObject enemyInstance)
+        {
+            if ((_numberMeleeEnemy_cnt--) > 0)
+            {
+                Debug.Log($"_numberMeleeEnemy_cnt - {_numberMeleeEnemy_cnt}");
+                enemyInstance.GetComponent<Enemy>().EnemyType = EnemyType.MeleeEnemy;
+            }
+            else if ((_numberDistantEnemy_cnt--) > 0)
+            {
+                Debug.Log($"_numberDistantEnemy_cnt - {_numberDistantEnemy_cnt}");
+                enemyInstance.GetComponent<Enemy>().EnemyType = EnemyType.DistantEnemy;
+            }
+        }
+
+
+        private void SetSystems(GameObject enemyInstance)
+        {
+            var enemy = enemyInstance.GetComponent<Enemy>();
+            enemy.SetSystems(CreateSystems(enemyInstance));
+        }
+
+
+        private void GetPlayerTransform(GameObject enemyInstance)
+        {
+            _playerTransform = enemyInstance.GetComponent<Enemy>().PlayerTransform;
+        }
+
+
+        private List<ISystem> CreateSystems(GameObject enemyInstance)
+        {
+            var systems = new List<ISystem>();
+
+            switch (GetEnemyType(enemyInstance))
+            {
+                case EnemyType.MeleeEnemy:
+                    systems.Add(new EnemyMovementSystem(2));
+                    systems.Add(new EnemyDamageSystem());
+                    systems.Add(new EnemyMeleeAttackSystem());
+                    break;
+
+                case EnemyType.DistantEnemy:
+                    systems.Add(new EnemyMovementSystem(10));
+                    systems.Add(new EnemyDamageSystem());
+                    systems.Add(new EnemyDistantAttackSystem());
+                    break;
+
+                case EnemyType.DistantMeleeEnemy:
+                    systems.Add(new EnemyMovementSystem(10));
+                    systems.Add(new EnemyDamageSystem());
+                    systems.Add(new EnemyMeleeAttackSystem());
+                    systems.Add(new EnemyDistantAttackSystem());
+                    break;
+
+                case EnemyType.Kamikaze:
+                    systems.Add(new EnemyMovementSystem(1));
+                    systems.Add(new EnemyDamageSystem());
+                    systems.Add(new EnemyKamikazeAttackSystem());
+                    break;
+
+                default:
+                    break;
+            }
+
+            return systems;
+        }
+
+
+        private EnemyType GetEnemyType(GameObject enemyInstance)
+        {
+            return enemyInstance.GetComponent<Enemy>().EnemyType;
+        }
+
+
         private void TrySpawnEnemy()
         {
-            if (activeEnemyCount < poolSize)
+            if (activeEnemyCount < _poolSize)
             {
-                Debug.Log("spawner");
-                GameObject enemyInstance = enemyPool.Get();
+                GameObject enemyInstance = _enemyPool.Get();
                 var enemy = enemyInstance.GetComponent<Enemy>();
 
-                enemyInstance.transform.position = _playerTransform.position + GetCircleIntersectionCoordinates() + Vector3.down;
+                SetEnemyPosition(enemyInstance);
+                SetDeadFlagInTrue(enemy);
 
-               
-                enemy.IsDeadFlag.Value = false;
-               
-                Debug.Log(enemyInstance.name);
-                
                 enemy.IsDeadFlag.Subscribe(isDead =>
                 {
                     if (isDead)
-                    { 
+                    {
                         ReturnEnemyToPool(enemyInstance);
                     }
                 });
                 enemy.gameObject.SetActive(true);
- 
+
                 activeEnemyCount++;
             }
         }
 
-        internal void StopSpawning()
+        private void SetDeadFlagInTrue(Enemy enemy)
         {
-            spawnDisposable.Dispose();
-            spawnSubject.OnCompleted();
+            enemy.IsDeadFlag.Value = false;
         }
 
-        internal void ReturnEnemyToPool(GameObject enemyInstance)
+        private void SetEnemyPosition(GameObject enemyInstance)
         {
-             
-            
-            enemyInstance.SetActive(false);
-            var enemy = enemyInstance.GetComponent<Enemy>();
-         
-            enemyPool.Return(enemyInstance);
-            activeEnemyCount--;
+            enemyInstance.transform.position = _playerTransform.position + GetCircleIntersectionCoordinates() + Vector3.down;
         }
 
         private Vector3 GetCircleIntersectionCoordinates()
         {
             float randomAngle = UnityEngine.Random.Range(0f, 2f * Mathf.PI);
-            return new Vector3(Mathf.Cos(randomAngle) * spawnRadius, 0f, Mathf.Sin(randomAngle) * spawnRadius);
+            return new Vector3(Mathf.Cos(randomAngle) * _spawnRadius, 0f, Mathf.Sin(randomAngle) * _spawnRadius);
         }
+
     }
+
 }

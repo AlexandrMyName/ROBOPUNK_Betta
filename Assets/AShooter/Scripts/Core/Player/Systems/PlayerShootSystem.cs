@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Abstracts;
+using Core.DTO;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -13,12 +14,14 @@ namespace Core
     {
 
         [Inject] private IInput _input;
-        [Inject] private IWeapon _weapon;
+        [Inject] private WeaponState _weaponState;
 
         private IGameComponents _components;
         private Camera _camera;
         private Vector3 _mousePosition;
         private List<IDisposable> _disposables = new();
+
+        private IWeapon _currentWeapon;
 
 
         protected override void Awake(IGameComponents components)
@@ -33,14 +36,15 @@ namespace Core
         {
             _disposables.AddRange(new List<IDisposable>{
                 _input.LeftClick.AxisOnChange.Subscribe(OnLeftClick),
-                _input.MousePosition.AxisOnChange.Subscribe(OnMousePositionChanged)}
-            );
+                _input.MousePosition.AxisOnChange.Subscribe(OnMousePositionChanged),
+                _weaponState.CurrentWeapon.Subscribe(weapon => _currentWeapon = weapon)
+            });
         }
 
 
         protected override void Update()
         {
-            DrawDebugRayToMousePosition();
+            // DrawDebugRayToMousePosition();
         }
         
         
@@ -69,7 +73,7 @@ namespace Core
         {
             var ray = _camera.ScreenPointToRay(_mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, _weapon.LayerMask))
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, _currentWeapon.LayerMask))
             {
                 var hitCollider = hitInfo.collider;
 
@@ -77,7 +81,7 @@ namespace Core
                 if (hitCollider.TryGetComponent(out IAttackable unit))
                 {
                     Debug.Log($"Found target [{unit}]");
-                    unit.TakeDamage(_weapon.Damage);
+                    unit.TakeDamage(_currentWeapon.Damage);
                 }
                 else
                 {
@@ -91,16 +95,16 @@ namespace Core
 
         private void SpawnParticleEffectOnHit(RaycastHit hitInfo)
         {
-            if (_weapon.Effect != null)
+            if (_currentWeapon.Effect != null)
             {
                 var hitEffectRotation = Quaternion.LookRotation(hitInfo.normal);
                 
                 var hitEffect = GameObject.Instantiate(
-                    _weapon.Effect,
+                    _currentWeapon.Effect,
                     hitInfo.point, 
                     hitEffectRotation);
 
-                GameObject.Destroy(hitEffect.gameObject, _weapon.EffectDestroyDelay);
+                GameObject.Destroy(hitEffect.gameObject, _currentWeapon.EffectDestroyDelay);
             }
         }
         
@@ -108,8 +112,8 @@ namespace Core
         private void DrawDebugRayToMousePosition()
         {
             var ray = _camera.ScreenPointToRay(_mousePosition);
-
-            if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, _weapon.LayerMask))
+        
+            if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, _currentWeapon.LayerMask))
             {
                 Debug.DrawRay(ray.origin, ray.direction * hitInfo.distance, Color.red);
             }

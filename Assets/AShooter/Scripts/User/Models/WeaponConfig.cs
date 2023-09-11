@@ -19,6 +19,10 @@ namespace User
         
         [field: SerializeField, Min(0f)] public float EffectDestroyDelay { get; private set; }
 
+        [field: SerializeField] public WeaponType WeaponType { get; private set; }
+
+        [field: SerializeField] public int WeapoId { get; private set; }
+
 
     }
 }

@@ -20,6 +20,8 @@ namespace Core
         [Inject(Id = "PlayerHealth")] public ReactiveProperty<float> Health { get; }
         [Inject(Id = "PlayerSpeed")] public ReactiveProperty<float> Speed { get; }
 
+        [field: SerializeField] public Transform WeaponContainer;
+
          
         protected override List<ISystem> GetSystems() =>  _systems;
 

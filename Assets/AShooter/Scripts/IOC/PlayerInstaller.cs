@@ -1,13 +1,14 @@
+using System;
 using Zenject;
 using UnityEngine;
 using System.Collections.Generic;
 using Core;
 using Abstracts;
+using AShooter.Scripts.IOC;
 using DI.Spawn;
 using Cinemachine;
 using User;
 using UniRx;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 
 namespace DI
@@ -18,13 +19,21 @@ namespace DI
         
         [SerializeField] private CinemachineVirtualCamera _camera;
         [SerializeField] private WeaponConfig _weaponConfig;
-        [SerializeField] private Spawner _spawner;
         
         [Space(10), SerializeField] private bool _useMoveSystem;
         [SerializeField] private bool _useShootSystem;
         [SerializeField] private float _maxPlayerHealth;
         [SerializeField] private float _speed;
-        private GameObject _player;
+        
+        [SerializeField] private GameObject _prefab;
+        [SerializeField] private Transform _spawnTransform;
+        
+        private SpawnPlayerFactory _spawnPlayerFactory;
+        
+        private GameObject _playerObject;
+        private Player _player;
+        
+        
         public override void InstallBindings()
         {
             SetHealth(_maxPlayerHealth);
@@ -35,15 +44,14 @@ namespace DI
                 .WithId("PlayerSystems")
                 .FromInstance(InitSystems())
                 .AsCached();
-            
-            Container.Bind<IWeapon>().FromInstance(
-                new Weapon(
-                    _weaponConfig.WeaponPrefab, 
-                    _weaponConfig.LayerMask, 
-                    _weaponConfig.EffectPrefab, 
-                    _weaponConfig.Damage, 
-                    _weaponConfig.EffectDestroyDelay)
-                )
+
+            Container.BindFactory<Player, SpawnPlayerFactory>()
+                .FromComponentInNewPrefab(_prefab)
+                .WithGameObjectName("Player");
+
+            Container
+                .Bind<CinemachineVirtualCamera>()
+                .FromInstance(_camera)
                 .AsCached();
         }
         
@@ -54,16 +62,20 @@ namespace DI
 
             PlayerMovementSystem moveSystem = new PlayerMovementSystem();
             Container.QueueForInject(moveSystem);
+
+            PlayerWeaponSystem weaponSystem = new PlayerWeaponSystem();
+            Container.QueueForInject(weaponSystem);
             
             PlayerShootSystem shootSystem = new PlayerShootSystem();
             Container.QueueForInject(shootSystem);
 
             PlayerHealthSystem healthSystem = new PlayerHealthSystem();
             Container.QueueForInject(healthSystem);
-            
+
             systems.Add(moveSystem);
             systems.Add(shootSystem);
             systems.Add(healthSystem);
+            systems.Add(weaponSystem);
 
             return systems;
         }
@@ -79,6 +91,7 @@ namespace DI
                 .AsCached();
         }
 
+        
         private void SetSpeed(float initSpeed)
         {
             ReactiveProperty<float> speed = new ReactiveProperty<float>(initSpeed);
@@ -89,19 +102,17 @@ namespace DI
                 .AsCached();
         }
 
-        private Transform GetPlayerTransform()
+        
+        public override void Start()
         {
-            return _player.transform;
-        }
-
-        private void Awake()
-        {   
-             
-                _player = _spawner.Spawn();
-                _camera.Follow = _player.transform;
-                _camera.LookAt = _player.transform;
-             
-                Container.Bind<Transform>().WithId("PlayerTransform").FromInstance(GetPlayerTransform()).AsCached();
+            _spawnPlayerFactory = Container.Resolve<SpawnPlayerFactory>();
+            _player = _spawnPlayerFactory.Create();
+            
+            _camera.Follow = _player.transform;
+            _camera.LookAt = _player.transform;
+            
+            Container.Bind<Transform>().WithId("PlayerTransform").FromInstance(_player.transform).AsCached();
+            Container.Bind<Player>().FromInstance(_player).AsCached();
         }
         
         
