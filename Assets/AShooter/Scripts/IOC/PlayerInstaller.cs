@@ -106,7 +106,7 @@ namespace DI
         }
 
         
-        public override void Start()
+        public void Awake()
         {
             _spawnPlayerFactory = Container.Resolve<SpawnPlayerFactory>();
             _player = _spawnPlayerFactory.Create();
