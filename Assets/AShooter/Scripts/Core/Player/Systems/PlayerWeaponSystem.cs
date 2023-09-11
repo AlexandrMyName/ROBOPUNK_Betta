@@ -133,6 +133,7 @@ namespace Core
                 config.WeaponId,
                 rocketLauncherObject,
                 config.ProjectileObject,
+                config.ProjectileForce,
                 config.WeaponType,
                 config.Damage,
                 config.ClipSize,

@@ -17,7 +17,9 @@ namespace User
         public GameObject WeaponObject { get; protected set; }
 
         public Projectile ProjectileObject { get; protected set; }
-
+        
+        public float ProjectileForce { get; protected set; }
+        
         public WeaponType WeaponType { get; protected set; }
         
         public float Damage { get; protected set; }
@@ -45,7 +47,29 @@ namespace User
 
         
         public bool IsReloadProcessing { get; protected set; }
-
+        
+        
+        public Weapon(int weaponId, GameObject weaponObject, Projectile projectileObject, 
+            WeaponType weaponType, float damage, int clipSize, int leftPatronsCount,
+            float reloadTime, float shootDistance, float shootSpeed, float fireSpread, 
+            LayerMask layerMask, ParticleSystem effect, float effectDestroyDelay)
+        {
+            WeaponId = weaponId;
+            WeaponObject = weaponObject;
+            ProjectileObject = projectileObject;
+            WeaponType = weaponType;
+            Damage = damage;
+            ClipSize = clipSize;
+            LeftPatronsCount = leftPatronsCount;
+            ReloadTime = reloadTime;
+            ShootDistance = shootDistance;
+            ShootSpeed = shootSpeed;
+            FireSpread = fireSpread;
+            LayerMask = layerMask;
+            Effect = effect;
+            EffectDestroyDelay = effectDestroyDelay;
+        }
+        
 
         public virtual void Shoot(Transform playerTransform, Camera camera, Vector3 mousePosition)
         {

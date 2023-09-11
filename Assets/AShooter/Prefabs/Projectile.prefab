@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6183813261589864932}
   - component: {fileID: -2733429778161100562}
   - component: {fileID: 2759587474139382199}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7546731057844136053}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -154,7 +154,7 @@ MonoBehaviour:
     _overlapPoint: {fileID: 8110222893158016418}
     _overlapType: 1
     _boxSize: {x: 1, y: 1, z: 1}
-    _sphereRadius: 2
+    _sphereRadius: 0.5
     _positionOffset: {x: 0, y: 0, z: 0}
     _considerObstacles: 0
     _obstaclesMask:

@@ -15,6 +15,8 @@ namespace Abstracts
         
         Projectile ProjectileObject { get; }
 
+        float ProjectileForce { get; }
+
         WeaponType WeaponType { get; }
 
         float Damage { get; }
