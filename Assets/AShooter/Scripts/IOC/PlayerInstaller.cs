@@ -32,8 +32,11 @@ namespace DI
         
         private GameObject _playerObject;
         private Player _player;
-        
-        
+
+        [Space,SerializeField, Header("Test (can be bull)")]
+        private World _world;
+
+
         public override void InstallBindings()
         {
             SetHealth(_maxPlayerHealth);
@@ -106,7 +109,7 @@ namespace DI
         }
 
         
-        public override void Start()
+        public void Awake()
         {
             _spawnPlayerFactory = Container.Resolve<SpawnPlayerFactory>();
             _player = _spawnPlayerFactory.Create();
@@ -116,6 +119,8 @@ namespace DI
             
             Container.Bind<Transform>().WithId("PlayerTransform").FromInstance(_player.transform).AsCached();
             Container.Bind<Player>().FromInstance(_player).AsCached();
+
+            if (_world) _world.Init(_player.transform);
         }
         
         

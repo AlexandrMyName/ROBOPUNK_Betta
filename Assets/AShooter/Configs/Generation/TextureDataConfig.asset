@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14801405e17853841806f052b560d9fd, type: 3}
+  m_Name: TextureDataConfig
+  m_EditorClassIdentifier: 
+  Configs:
+  - BlockType: 2
+    LeftSide: {x: 2, y: 16}
+    RightSide: {x: 2, y: 16}
+    FrontSide: {x: 2, y: 16}
+    BackSide: {x: 2, y: 16}
+    TopSide: {x: 2, y: 16}
+    BottomSide: {x: 2, y: 16}
+  - BlockType: 1
+    LeftSide: {x: 4, y: 16}
+    RightSide: {x: 4, y: 16}
+    FrontSide: {x: 4, y: 16}
+    BackSide: {x: 4, y: 16}
+    TopSide: {x: 1, y: 16}
+    BottomSide: {x: 3, y: 16}
+  - BlockType: 3
+    LeftSide: {x: 2, y: 16}
+    RightSide: {x: 2, y: 16}
+    FrontSide: {x: 2, y: 16}
+    BackSide: {x: 2, y: 16}
+    TopSide: {x: 2, y: 16}
+    BottomSide: {x: 2, y: 16}
