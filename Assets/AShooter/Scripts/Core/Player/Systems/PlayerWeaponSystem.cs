@@ -17,13 +17,13 @@ namespace Core
 
         [Inject] private IInput _input;
         [Inject] private WeaponState _weaponState;
-        [Inject] private List<WeaponConfig> _weaponConfigs;
+        [Inject] private readonly List<WeaponConfig> _weaponConfigs;
 
         private IGameComponents _components;
         private List<IDisposable> _disposables = new();
         
         private Player _player;
-        private Dictionary<int, IWeapon> _weapons = new();
+        private readonly Dictionary<int, IWeapon> _weapons = new();
 
 
         protected override void Awake(IGameComponents components)
@@ -37,9 +37,10 @@ namespace Core
         protected override void Start()
         {
             InitializeWeapons(_weaponConfigs);
-            
             _disposables.AddRange(new List<IDisposable>{
-                    
+                    _input.WeaponFirst.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(1)),
+                    _input.WeaponSecond.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(2)),
+                    _input.WeaponThird.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(3))
                 }
             );
         }
@@ -65,8 +66,15 @@ namespace Core
                 switch (config.WeaponType)
                 {
                     case WeaponType.Pistol:
-                        _weapons[config.WeapoId] = PistolInit(config);
+                        _weapons[config.WeaponId] = PistolInit(config);
                         break;
+                    case WeaponType.Shotgun:
+                        _weapons[config.WeaponId] = ShotgunInit(config);
+                        break;
+                    case WeaponType.RocketLauncher:
+                        _weapons[config.WeaponId] = RocketLauncherInit(config);
+                        break;
+
                 }
             }
 
@@ -76,13 +84,89 @@ namespace Core
 
         private IWeapon PistolInit(WeaponConfig config)
         {
-            var pistolObject = GameObject.Instantiate(config.WeaponPrefab, _player.WeaponContainer);
+            var pistolObject = GameObject.Instantiate(config.WeaponObject, _player.WeaponContainer);
             return new Pistol(
-                pistolObject, 
-                config.LayerMask, 
-                config.EffectPrefab, 
-                config.Damage, 
+                config.WeaponId,
+                pistolObject,
+                null,
+                config.WeaponType,
+                config.Damage,
+                config.ClipSize,
+                config.LeftPatronsCount,
+                config.ReloadTime,
+                config.ShootDistance,
+                config.ShootSpeed,
+                config.FireSpread,
+                config.LayerMask,
+                config.Effect,
                 config.EffectDestroyDelay);
+        }
+
+
+        private IWeapon ShotgunInit(WeaponConfig config)
+        {
+            var shotgunObject = GameObject.Instantiate(config.WeaponObject, _player.WeaponContainer);
+            shotgunObject.SetActive(false);
+            return new Shotgun(
+                config.WeaponId,
+                shotgunObject,
+                null,
+                config.WeaponType,
+                config.Damage,
+                config.ClipSize,
+                config.LeftPatronsCount,
+                config.ReloadTime,
+                config.ShootDistance,
+                config.ShootSpeed,
+                config.FireSpread,
+                config.SpreadFactor,
+                config.LayerMask,
+                config.Effect,
+                config.EffectDestroyDelay);
+        }
+
+
+        private IWeapon RocketLauncherInit(WeaponConfig config)
+        {
+            var rocketLauncherObject = GameObject.Instantiate(config.WeaponObject, _player.WeaponContainer);
+            rocketLauncherObject.SetActive(false);
+            return new RocketLauncher(
+                config.WeaponId,
+                rocketLauncherObject,
+                config.ProjectileObject,
+                config.ProjectileForce,
+                config.WeaponType,
+                config.Damage,
+                config.ClipSize,
+                config.LeftPatronsCount,
+                config.ReloadTime,
+                config.ShootDistance,
+                config.ShootSpeed,
+                config.FireSpread,
+                config.LayerMask,
+                config.Effect,
+                config.EffectDestroyDelay);
+        }
+
+
+        private void HandleWeaponChangePress(int weaponId)
+        {
+            Debug.Log($"PRESSED WEAPON CHANGE BUTTON - [{weaponId}]");
+            
+            if (!_weaponState.CurrentWeapon.Value.WeaponId.Equals(weaponId))
+                ChangeWeapon(weaponId);
+        }
+
+
+        private void ChangeWeapon(int id)
+        {
+            foreach (var weapon in _weapons)
+            {
+                weapon.Value.WeaponObject.SetActive(false);
+            }
+            
+            _weapons[id].WeaponObject.SetActive(true);
+            _weaponState.CurrentWeapon.Value = _weapons[id];
         }
 
 

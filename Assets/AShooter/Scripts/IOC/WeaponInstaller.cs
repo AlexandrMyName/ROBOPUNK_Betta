@@ -12,7 +12,7 @@ namespace DI
     {
 
         [SerializeField] private List<WeaponConfig> _weaponConfigs;
-        
+
 
         public override void InstallBindings()
         {

@@ -14,6 +14,7 @@ namespace Core.DTO
         {
             CurrentWeapon = new ReactiveProperty<IWeapon>();
         }
+        
 
     }
 }

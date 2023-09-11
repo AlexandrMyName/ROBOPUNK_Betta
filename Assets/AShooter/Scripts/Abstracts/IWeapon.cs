@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using User;
 
 
@@ -8,19 +9,17 @@ namespace Abstracts
     public interface IWeapon
     {
 
+        int WeaponId { get; }
+
         GameObject WeaponObject { get; }
         
-        LayerMask LayerMask { get; }
-        
-        ParticleSystem Effect { get; }
+        Projectile ProjectileObject { get; }
+
+        float ProjectileForce { get; }
 
         WeaponType WeaponType { get; }
 
-        int WeaponId { get; }
-
         float Damage { get; }
-        
-        float EffectDestroyDelay { get; }
 
         int ClipSize { get; }
 
@@ -34,8 +33,22 @@ namespace Abstracts
 
         float FireSpread { get; }
 
+        float SpreadFactor { get; }
 
-        void Shoot();
+        LayerMask LayerMask { get; }
+
+        ParticleSystem Effect { get; }
+
+        float EffectDestroyDelay { get; }
+
+
+        void Shoot(Transform playerTransform, Camera camera, Vector3 mousePosition);
+
+        void Reload();
+
+        void ProcessReload();
+        
+        bool IsReloadProcessing { get; }
 
 
     }

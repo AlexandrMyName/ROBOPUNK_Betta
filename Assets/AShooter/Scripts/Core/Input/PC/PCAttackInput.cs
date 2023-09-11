@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Core
 {
 
-    internal sealed class PCAttackInput : IUserInputProxy<bool>
+    internal sealed class PCAttackInput : IObservableInputProxy<bool>
     {
         
         public IObservable<bool> AxisOnChange { get; }

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56c391f0c76b38c4693515e2b13852be, type: 3}
+  m_Name: Shotgun
+  m_EditorClassIdentifier: 
+  <WeaponId>k__BackingField: 2
+  <WeaponObject>k__BackingField: {fileID: 4113015385983967611, guid: fb0b5430209a4b84e887578766d4c836, type: 3}
+  <ProjectileObject>k__BackingField: {fileID: 0}
+  <ProjectileForce>k__BackingField: 0
+  <WeaponType>k__BackingField: 1
+  <Damage>k__BackingField: 50
+  <ClipSize>k__BackingField: 6
+  <LeftPatronsCount>k__BackingField: 6
+  <ReloadTime>k__BackingField: 3
+  <ShootDistance>k__BackingField: 40
+  <ShootSpeed>k__BackingField: 0
+  <FireSpread>k__BackingField: 20
+  <SpreadFactor>k__BackingField: 10
+  <LayerMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 129
+  <Effect>k__BackingField: {fileID: 265766274217486953, guid: 5d3d7a89e81960f439e9316c51c9eff6, type: 3}
+  <EffectDestroyDelay>k__BackingField: 2

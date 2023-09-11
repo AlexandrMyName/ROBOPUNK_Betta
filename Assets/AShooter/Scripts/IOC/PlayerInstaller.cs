@@ -18,7 +18,7 @@ namespace DI
     {
         
         [SerializeField] private CinemachineVirtualCamera _camera;
-        [SerializeField] private WeaponConfig _weaponConfig;
+        [SerializeField] private Spawner _spawner;
         
         [Space(10), SerializeField] private bool _useMoveSystem;
         [SerializeField] private bool _useShootSystem;

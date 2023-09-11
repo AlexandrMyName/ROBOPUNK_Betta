@@ -4,7 +4,7 @@
 namespace Abstracts
 {
     
-    public interface IUserInputProxy<T>
+    public interface IObservableInputProxy<T>
     {
 
         public IObservable<T> AxisOnChange { get; }

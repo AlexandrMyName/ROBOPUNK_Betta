@@ -4,6 +4,7 @@ using Abstracts;
 using Core.DTO;
 using UniRx;
 using UnityEngine;
+using User;
 using Zenject;
 
 
@@ -22,8 +23,8 @@ namespace Core
         private List<IDisposable> _disposables = new();
 
         private IWeapon _currentWeapon;
-
-
+        
+        
         protected override void Awake(IGameComponents components)
         {
             _components = components;
@@ -37,14 +38,21 @@ namespace Core
             _disposables.AddRange(new List<IDisposable>{
                 _input.LeftClick.AxisOnChange.Subscribe(OnLeftClick),
                 _input.MousePosition.AxisOnChange.Subscribe(OnMousePositionChanged),
-                _weaponState.CurrentWeapon.Subscribe(weapon => _currentWeapon = weapon)
+                _weaponState.CurrentWeapon.Subscribe(weapon => { UpdateCurrentWeapon(weapon); })
             });
+        }
+
+        
+        private void UpdateCurrentWeapon(IWeapon weapon)
+        {
+            _currentWeapon = weapon;
         }
 
 
         protected override void Update()
         {
-            // DrawDebugRayToMousePosition();
+            DrawDebugRayToMousePosition();
+            
         }
         
         
@@ -58,7 +66,10 @@ namespace Core
         {
             if (isClicked)
             {
-                FindTarget();
+                if (_currentWeapon.LeftPatronsCount > 0)
+                    _currentWeapon.Shoot(_components.BaseTransform, _camera, _mousePosition);
+                else
+                    _currentWeapon.ProcessReload();
             }
         }
 
@@ -69,56 +80,16 @@ namespace Core
         }
 
 
-        private void FindTarget()
-        {
-            var ray = _camera.ScreenPointToRay(_mousePosition);
-
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, _currentWeapon.LayerMask))
-            {
-                var hitCollider = hitInfo.collider;
-
-                if (hitCollider.tag == "Player") return;
-                if (hitCollider.TryGetComponent(out IAttackable unit))
-                {
-                    Debug.Log($"Found target [{unit}]");
-                    unit.TakeDamage(_currentWeapon.Damage);
-                }
-                else
-                {
-                    Debug.Log($"{hitCollider} IAttackable is not found");
-                }
-
-                SpawnParticleEffectOnHit(hitInfo);
-            }
-        }
-
-
-        private void SpawnParticleEffectOnHit(RaycastHit hitInfo)
-        {
-            if (_currentWeapon.Effect != null)
-            {
-                var hitEffectRotation = Quaternion.LookRotation(hitInfo.normal);
-                
-                var hitEffect = GameObject.Instantiate(
-                    _currentWeapon.Effect,
-                    hitInfo.point, 
-                    hitEffectRotation);
-
-                GameObject.Destroy(hitEffect.gameObject, _currentWeapon.EffectDestroyDelay);
-            }
-        }
-        
-        
         private void DrawDebugRayToMousePosition()
         {
             var ray = _camera.ScreenPointToRay(_mousePosition);
-        
+
             if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, _currentWeapon.LayerMask))
             {
                 Debug.DrawRay(ray.origin, ray.direction * hitInfo.distance, Color.red);
             }
         }
-        
+
 
     }
 }
