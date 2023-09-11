@@ -6,7 +6,7 @@ using Zenject;
 namespace Core
 {
 
-    public sealed class PlayerProjectileAttack
+    public sealed class ProjectileAttack
     {
 
         private Camera _camera;
@@ -17,7 +17,7 @@ namespace Core
         private float _force = 10f;
 
 
-        public PlayerProjectileAttack(Weapon weapon, Transform weaponMuzzle, Camera camera, Vector3 mousePosition)
+        public ProjectileAttack(Weapon weapon, Transform weaponMuzzle, Camera camera, Vector3 mousePosition)
         {
             _camera = camera;
             _weapon = weapon;
@@ -26,7 +26,7 @@ namespace Core
         }
 
 
-        public PlayerProjectileAttack(Weapon weapon, Transform weaponMuzzle, Camera camera, Vector3 mousePosition, ForceMode forceMode, float force)
+        public ProjectileAttack(Weapon weapon, Transform weaponMuzzle, Camera camera, Vector3 mousePosition, ForceMode forceMode, float force)
         {
             _camera = camera;
             _weapon = weapon;

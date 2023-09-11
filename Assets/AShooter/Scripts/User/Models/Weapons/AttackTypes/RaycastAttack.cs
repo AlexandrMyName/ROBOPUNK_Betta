@@ -7,7 +7,7 @@ using User;
 namespace Core
 {
 
-    public sealed class PlayerSimpleAttack
+    public sealed class RaycastAttack
     {
 
         private Camera _camera;
@@ -16,7 +16,7 @@ namespace Core
         private Transform _playerTransform;
 
 
-        public PlayerSimpleAttack(IWeapon weapon, Transform playerTransform, Camera camera, Vector3 mousePosition)
+        public RaycastAttack(IWeapon weapon, Transform playerTransform, Camera camera, Vector3 mousePosition)
         {
             _camera = camera;
             _playerTransform = playerTransform;

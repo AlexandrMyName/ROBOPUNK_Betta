@@ -8,7 +8,7 @@ namespace User
     public class RocketLauncher : Weapon
     {
 
-        private PlayerProjectileAttack _projectileAttack;
+        private ProjectileAttack _projectileAttack;
         private Transform _muzzle;
         
         

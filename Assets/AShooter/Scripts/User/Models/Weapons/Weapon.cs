@@ -73,7 +73,7 @@ namespace User
 
         public virtual void Shoot(Transform playerTransform, Camera camera, Vector3 mousePosition)
         {
-            PlayerSimpleAttack simpleAttack = new PlayerSimpleAttack(this, playerTransform, camera, mousePosition);
+            RaycastAttack simpleAttack = new RaycastAttack(this, playerTransform, camera, mousePosition);
             simpleAttack.Attack();
 
             LeftPatronsCount--;

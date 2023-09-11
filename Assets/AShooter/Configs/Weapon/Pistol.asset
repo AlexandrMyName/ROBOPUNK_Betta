@@ -15,11 +15,12 @@ MonoBehaviour:
   <WeaponId>k__BackingField: 1
   <WeaponObject>k__BackingField: {fileID: 9177879828942193514, guid: 566a185e4f51b1948b6f550c57fa51c5, type: 3}
   <ProjectileObject>k__BackingField: {fileID: 0}
+  <ProjectileForce>k__BackingField: 0
   <WeaponType>k__BackingField: 0
   <Damage>k__BackingField: 20
   <ClipSize>k__BackingField: 8
   <LeftPatronsCount>k__BackingField: 8
-  <ReloadTime>k__BackingField: 2
+  <ReloadTime>k__BackingField: 1
   <ShootDistance>k__BackingField: 0
   <ShootSpeed>k__BackingField: 1
   <FireSpread>k__BackingField: 0
