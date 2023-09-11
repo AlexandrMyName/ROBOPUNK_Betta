@@ -2178,9 +2178,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1236d1c6c091d9046a84d4e8c80206b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _countItems: 0
-  _improvablePrefabs: []
-  _radius: 0
 --- !u!114 &2093596454 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7091699042213432789, guid: dfef54581946e1241879a76cb3b21796, type: 3}

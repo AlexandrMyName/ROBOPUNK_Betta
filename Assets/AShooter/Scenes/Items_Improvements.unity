@@ -155,6 +155,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d462f052f696eb44b818ca46771cc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timeType: 0
+  _improveType: 0
+  _valueMultiplier: 0
+  _timer: 0
 --- !u!65 &114381735
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -447,7 +451,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _useImproveItems: 1
+  _itemConfigs: {fileID: 0}
   _timerPool: {fileID: 807403774}
+  _improvablePresenter: {fileID: 0}
+  _improvableItemPrefab: {fileID: 0}
 --- !u!114 &807403774
 MonoBehaviour:
   m_ObjectHideFlags: 0
