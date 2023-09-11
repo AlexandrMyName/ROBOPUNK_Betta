@@ -1,30 +1,28 @@
 using UnityEngine;
 using Core.Models;
 using Core.Generation;
+ 
 
 namespace Core
 {
     public class World : MonoBehaviour
     {
-        [SerializeField] private Transform _playerTransform;
+        private Transform _playerTransform;
         [SerializeField] private Material _material;
         [SerializeField] private TextureDataConfig _textureConfig;
 
-
-        private Generator _generator;
         
-        private void Awake() => WorldGeneration.SetRandomSid();
+        private Generator _generator;
 
-
-        private void Start()
+        
+        public void Init(Transform playerTransform)
         {
-           
+            _playerTransform = playerTransform;
+            WorldGeneration.SetRandomSid();
             WorldChunckObjects worldChunckObjects = new WorldChunckObjects();
 
-            _generator = new Generator(_playerTransform, _material, this.transform, this,_textureConfig);
-
-           
-
+            _generator = new Generator(playerTransform, _material, this.transform, this,_textureConfig);
+ 
             _generator.WorldSetUp(worldChunckObjects, true);
              
         }
@@ -32,8 +30,8 @@ namespace Core
 
         private void Update()
         {
-            
-            _generator.RunGenerator();
+            if(_playerTransform != null)
+                _generator.RunGenerator();
             
         }
 

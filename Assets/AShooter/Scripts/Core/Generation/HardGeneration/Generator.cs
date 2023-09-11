@@ -25,6 +25,7 @@ namespace Core.Generation
 
         public Generator(Transform playerTransform, Material blocksMaterial, Transform worldParrent, MonoBehaviour initializer, TextureDataConfig textureConfig)
         {
+            playerTransform.position += Vector3.up * 10f;
             _chuncksMaterial = blocksMaterial;
             _playerTransform = playerTransform;
             _worldParrent = worldParrent;
@@ -37,7 +38,8 @@ namespace Core.Generation
             _worldObjects = objects;
             _radiusGenerate = radiusGeneration;
             _worldObjects.ChunckData = new Dictionary<Vector2Int, ChunckData>();
-            _initializer.StartCoroutine(SetPlayerPosition());
+            if(_playerTransform != null)
+                _initializer.StartCoroutine(SetPlayerPosition());
             if (isGenerateOne) Generate();
         }
         public void RunGenerator()
