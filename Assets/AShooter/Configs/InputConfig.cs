@@ -138,6 +138,102 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Mouse"",
+            ""id"": ""59c08737-b665-4522-99f7-8b6a397879ea"",
+            ""actions"": [
+                {
+                    ""name"": ""New action"",
+                    ""type"": ""Button"",
+                    ""id"": ""26385be9-ac3f-4abd-8746-44cec5edcf25"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""1dae64bf-6594-4092-bfcc-562e29151efc"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Weapon"",
+            ""id"": ""6517b6c8-296d-467f-a262-3ff37301ebb5"",
+            ""actions"": [
+                {
+                    ""name"": ""First"",
+                    ""type"": ""Button"",
+                    ""id"": ""d6803d3c-227e-4fc8-a4ec-bed054053335"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Second"",
+                    ""type"": ""Button"",
+                    ""id"": ""f93ccf9b-8d03-42a9-9f97-e643b1be0045"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Third"",
+                    ""type"": ""Button"",
+                    ""id"": ""0f4f4647-be2c-4a61-8599-47f0a410143c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""37aa9c23-ad8b-44f2-a222-0ded29510d93"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""First"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""34c7e6a2-2650-4bb3-b03a-aed4240ab27d"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Second"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cef28d29-775d-482f-8a2b-2f80238882af"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Third"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -151,6 +247,14 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
         // Direction
         m_Direction = asset.FindActionMap("Direction", throwIfNotFound: true);
         m_Direction_Vector = m_Direction.FindAction("Vector", throwIfNotFound: true);
+        // Mouse
+        m_Mouse = asset.FindActionMap("Mouse", throwIfNotFound: true);
+        m_Mouse_Newaction = m_Mouse.FindAction("New action", throwIfNotFound: true);
+        // Weapon
+        m_Weapon = asset.FindActionMap("Weapon", throwIfNotFound: true);
+        m_Weapon_First = m_Weapon.FindAction("First", throwIfNotFound: true);
+        m_Weapon_Second = m_Weapon.FindAction("Second", throwIfNotFound: true);
+        m_Weapon_Third = m_Weapon.FindAction("Third", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -254,6 +358,114 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
         }
     }
     public DirectionActions @Direction => new DirectionActions(this);
+
+    // Mouse
+    private readonly InputActionMap m_Mouse;
+    private List<IMouseActions> m_MouseActionsCallbackInterfaces = new List<IMouseActions>();
+    private readonly InputAction m_Mouse_Newaction;
+    public struct MouseActions
+    {
+        private @InputConfig m_Wrapper;
+        public MouseActions(@InputConfig wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Newaction => m_Wrapper.m_Mouse_Newaction;
+        public InputActionMap Get() { return m_Wrapper.m_Mouse; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MouseActions set) { return set.Get(); }
+        public void AddCallbacks(IMouseActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MouseActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MouseActionsCallbackInterfaces.Add(instance);
+            @Newaction.started += instance.OnNewaction;
+            @Newaction.performed += instance.OnNewaction;
+            @Newaction.canceled += instance.OnNewaction;
+        }
+
+        private void UnregisterCallbacks(IMouseActions instance)
+        {
+            @Newaction.started -= instance.OnNewaction;
+            @Newaction.performed -= instance.OnNewaction;
+            @Newaction.canceled -= instance.OnNewaction;
+        }
+
+        public void RemoveCallbacks(IMouseActions instance)
+        {
+            if (m_Wrapper.m_MouseActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMouseActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MouseActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MouseActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MouseActions @Mouse => new MouseActions(this);
+
+    // Weapon
+    private readonly InputActionMap m_Weapon;
+    private List<IWeaponActions> m_WeaponActionsCallbackInterfaces = new List<IWeaponActions>();
+    private readonly InputAction m_Weapon_First;
+    private readonly InputAction m_Weapon_Second;
+    private readonly InputAction m_Weapon_Third;
+    public struct WeaponActions
+    {
+        private @InputConfig m_Wrapper;
+        public WeaponActions(@InputConfig wrapper) { m_Wrapper = wrapper; }
+        public InputAction @First => m_Wrapper.m_Weapon_First;
+        public InputAction @Second => m_Wrapper.m_Weapon_Second;
+        public InputAction @Third => m_Wrapper.m_Weapon_Third;
+        public InputActionMap Get() { return m_Wrapper.m_Weapon; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(WeaponActions set) { return set.Get(); }
+        public void AddCallbacks(IWeaponActions instance)
+        {
+            if (instance == null || m_Wrapper.m_WeaponActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_WeaponActionsCallbackInterfaces.Add(instance);
+            @First.started += instance.OnFirst;
+            @First.performed += instance.OnFirst;
+            @First.canceled += instance.OnFirst;
+            @Second.started += instance.OnSecond;
+            @Second.performed += instance.OnSecond;
+            @Second.canceled += instance.OnSecond;
+            @Third.started += instance.OnThird;
+            @Third.performed += instance.OnThird;
+            @Third.canceled += instance.OnThird;
+        }
+
+        private void UnregisterCallbacks(IWeaponActions instance)
+        {
+            @First.started -= instance.OnFirst;
+            @First.performed -= instance.OnFirst;
+            @First.canceled -= instance.OnFirst;
+            @Second.started -= instance.OnSecond;
+            @Second.performed -= instance.OnSecond;
+            @Second.canceled -= instance.OnSecond;
+            @Third.started -= instance.OnThird;
+            @Third.performed -= instance.OnThird;
+            @Third.canceled -= instance.OnThird;
+        }
+
+        public void RemoveCallbacks(IWeaponActions instance)
+        {
+            if (m_Wrapper.m_WeaponActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IWeaponActions instance)
+        {
+            foreach (var item in m_Wrapper.m_WeaponActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_WeaponActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public WeaponActions @Weapon => new WeaponActions(this);
     private int m_MoveSchemeIndex = -1;
     public InputControlScheme MoveScheme
     {
@@ -266,5 +478,15 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
     public interface IDirectionActions
     {
         void OnVector(InputAction.CallbackContext context);
+    }
+    public interface IMouseActions
+    {
+        void OnNewaction(InputAction.CallbackContext context);
+    }
+    public interface IWeaponActions
+    {
+        void OnFirst(InputAction.CallbackContext context);
+        void OnSecond(InputAction.CallbackContext context);
+        void OnThird(InputAction.CallbackContext context);
     }
 }

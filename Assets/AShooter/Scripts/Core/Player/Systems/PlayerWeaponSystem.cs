@@ -17,13 +17,13 @@ namespace Core
 
         [Inject] private IInput _input;
         [Inject] private WeaponState _weaponState;
-        [Inject] private List<WeaponConfig> _weaponConfigs;
+        [Inject] private readonly List<WeaponConfig> _weaponConfigs;
 
         private IGameComponents _components;
         private List<IDisposable> _disposables = new();
         
         private Player _player;
-        private Dictionary<int, IWeapon> _weapons = new();
+        private readonly Dictionary<int, IWeapon> _weapons = new();
 
 
         protected override void Awake(IGameComponents components)
@@ -38,7 +38,9 @@ namespace Core
         {
             InitializeWeapons(_weaponConfigs);
             _disposables.AddRange(new List<IDisposable>{
-                    
+                    _input.WeaponFirst.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(1)),
+                    _input.WeaponSecond.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(2)),
+                    _input.WeaponThird.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(3))
                 }
             );
         }
@@ -104,6 +106,7 @@ namespace Core
         private IWeapon ShotgunInit(WeaponConfig config)
         {
             var shotgunObject = GameObject.Instantiate(config.WeaponObject, _player.WeaponContainer);
+            shotgunObject.SetActive(false);
             return new Shotgun(
                 config.WeaponId,
                 shotgunObject,
@@ -125,6 +128,7 @@ namespace Core
         private IWeapon RocketLauncherInit(WeaponConfig config)
         {
             var rocketLauncherObject = GameObject.Instantiate(config.WeaponObject, _player.WeaponContainer);
+            rocketLauncherObject.SetActive(false);
             return new RocketLauncher(
                 config.WeaponId,
                 rocketLauncherObject,
@@ -140,6 +144,27 @@ namespace Core
                 config.LayerMask,
                 config.Effect,
                 config.EffectDestroyDelay);
+        }
+
+
+        private void HandleWeaponChangePress(int weaponId)
+        {
+            Debug.Log($"PRESSED WEAPON CHANGE BUTTON - [{weaponId}]");
+            
+            if (!_weaponState.CurrentWeapon.Value.WeaponId.Equals(weaponId))
+                ChangeWeapon(weaponId);
+        }
+
+
+        private void ChangeWeapon(int id)
+        {
+            foreach (var weapon in _weapons)
+            {
+                weapon.Value.WeaponObject.SetActive(false);
+            }
+            
+            _weapons[id].WeaponObject.SetActive(true);
+            _weaponState.CurrentWeapon.Value = _weapons[id];
         }
 
 

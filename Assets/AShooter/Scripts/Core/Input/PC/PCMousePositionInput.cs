@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Core
 {
     
-    internal sealed class PCMousePositionInput : IUserInputProxy<Vector3>
+    internal sealed class PCMousePositionInput : IObservableInputProxy<Vector3>
     {
         
         public IObservable<Vector3> AxisOnChange { get; }

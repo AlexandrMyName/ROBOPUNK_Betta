@@ -19,7 +19,7 @@ MonoBehaviour:
   <Damage>k__BackingField: 20
   <ClipSize>k__BackingField: 8
   <LeftPatronsCount>k__BackingField: 8
-  <ReloadTime>k__BackingField: 1
+  <ReloadTime>k__BackingField: 2
   <ShootDistance>k__BackingField: 0
   <ShootSpeed>k__BackingField: 1
   <FireSpread>k__BackingField: 0

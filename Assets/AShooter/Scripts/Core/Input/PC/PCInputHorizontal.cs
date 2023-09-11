@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Core
 {
-    internal sealed class PCInputHorizontal : IUserInputProxy<float>
+    internal sealed class PCInputHorizontal : IObservableInputProxy<float>
     {
         public IObservable<float> AxisOnChange { get; }
 

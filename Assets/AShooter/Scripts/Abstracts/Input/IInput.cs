@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UniRx;
+using UnityEngine;
 
 
 namespace Abstracts
@@ -7,14 +8,20 @@ namespace Abstracts
     public interface IInput
     {
         
-        IUserInputProxy<float> Horizontal { get; }
+        IObservableInputProxy<float> Horizontal { get; }
         
-        IUserInputProxy<float> Vertical { get; }
+        IObservableInputProxy<float> Vertical { get; }
 
-        IUserInputProxy<bool> LeftClick { get; }
+        IObservableInputProxy<bool> LeftClick { get; }
 
         
-        IUserInputProxy<Vector3> MousePosition { get; }
+        IObservableInputProxy<Vector3> MousePosition { get; }
+
+        ISubjectInputProxy<Unit> WeaponFirst { get; }
+        
+        ISubjectInputProxy<Unit> WeaponSecond { get; }
+        
+        ISubjectInputProxy<Unit> WeaponThird { get; }
 
 
     }

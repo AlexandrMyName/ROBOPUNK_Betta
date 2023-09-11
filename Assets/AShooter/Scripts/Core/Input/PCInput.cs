@@ -1,15 +1,29 @@
 ﻿using Abstracts;
 using JetBrains.Annotations;
+using UniRx;
 using UnityEngine;
+
 
 namespace Core
 {
+    
     public sealed class PCInput : IInput
     {
-        public IUserInputProxy<float> Horizontal { get; }
-        public IUserInputProxy<float> Vertical { get; }
-        public IUserInputProxy<bool> LeftClick { get; }
-        public IUserInputProxy<Vector3> MousePosition { get; }
+        
+        public IObservableInputProxy<float> Horizontal { get; }
+        
+        public IObservableInputProxy<float> Vertical { get; }
+        
+        public IObservableInputProxy<bool> LeftClick { get; }
+        
+        public IObservableInputProxy<Vector3> MousePosition { get; }
+        
+        public ISubjectInputProxy<Unit> WeaponFirst { get; }
+        
+        public ISubjectInputProxy<Unit> WeaponSecond { get; }
+        
+        public ISubjectInputProxy<Unit> WeaponThird { get; }
+
 
         public PCInput( [NotNull] InputConfig config )
         {
@@ -18,6 +32,11 @@ namespace Core
             Vertical = new PCInputVertical(config);
             LeftClick = new PCAttackInput();
             MousePosition = new PCMousePositionInput();
+            WeaponFirst = new PCWeaponFirstInput(config);
+            WeaponSecond = new PCWeaponSecondInput(config);
+            WeaponThird = new PCWeaponThirdInput(config);
         }
+        
+        
     }
 }
