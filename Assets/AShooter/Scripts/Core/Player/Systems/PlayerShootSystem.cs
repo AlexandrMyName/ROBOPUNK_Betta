@@ -64,7 +64,7 @@ namespace Core
 
         private void OnLeftClick(bool isClicked)
         {
-            if (isClicked)
+            if (isClicked && _currentWeapon.IsShootReady)
             {
                 if (_currentWeapon.LeftPatronsCount > 0)
                     _currentWeapon.Shoot(_components.BaseTransform, _camera, _mousePosition);

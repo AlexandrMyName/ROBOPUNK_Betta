@@ -49,8 +49,10 @@ namespace User
 
         
         public bool IsReloadProcessing { get; protected set; }
-        
-        
+
+        public bool IsShootReady { get; protected set; }
+
+
         public Weapon(int weaponId, GameObject weaponObject, Projectile projectileObject, 
             WeaponType weaponType, float damage, int clipSize, int leftPatronsCount,
             float reloadTime, float shootDistance, float shootSpeed, float fireSpread, 
@@ -70,6 +72,7 @@ namespace User
             LayerMask = layerMask;
             Effect = effect;
             EffectDestroyDelay = effectDestroyDelay;
+            IsShootReady = true;
         }
         
 
@@ -79,6 +82,9 @@ namespace User
             simpleAttack.Attack();
 
             LeftPatronsCount--;
+            IsShootReady = false;
+            ProcessShootTimeout();
+
             Debug.Log("SHOOT MTFCKR");
         }
 
@@ -104,8 +110,21 @@ namespace User
                 );
             }
         }
-        
-        
+
+
+        public void ProcessShootTimeout()
+        {
+            if (!IsShootReady)
+            {
+                _disposables.Add(
+                    Observable
+                        .Timer(TimeSpan.FromSeconds(ShootSpeed))
+                        .Subscribe(_ => IsShootReady = true)
+                );
+            }
+        }
+
+
         public void Dispose()
         {
             _disposables.ForEach(d => d.Dispose());
