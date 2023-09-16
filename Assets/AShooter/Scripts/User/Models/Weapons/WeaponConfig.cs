@@ -14,7 +14,6 @@ namespace User
 
         [field: SerializeField] public Projectile ProjectileObject { get; private set; }
         
-
         [field: SerializeField] public float ProjectileForce { get; private set; }
 
         [field: SerializeField] public WeaponType WeaponType { get; private set; }
