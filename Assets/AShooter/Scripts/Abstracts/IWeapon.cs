@@ -50,6 +50,8 @@ namespace Abstracts
         
         bool IsReloadProcessing { get; }
 
+        bool IsShootReady { get; }
+
 
     }
 }

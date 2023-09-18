@@ -212,6 +212,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Ability",
+            "id": "81445124-3b14-4fee-b886-45b500b3e14c",
+            "actions": [
+                {
+                    "name": "Explosion",
+                    "type": "Button",
+                    "id": "7a8e010d-81bf-4be0-ba32-d5783b3b7f7a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ed7ce345-650b-4b26-a1dd-929d51de1fdc",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Explosion",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

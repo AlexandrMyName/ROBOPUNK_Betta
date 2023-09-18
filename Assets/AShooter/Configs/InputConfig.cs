@@ -234,6 +234,34 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Ability"",
+            ""id"": ""81445124-3b14-4fee-b886-45b500b3e14c"",
+            ""actions"": [
+                {
+                    ""name"": ""Explosion"",
+                    ""type"": ""Button"",
+                    ""id"": ""7a8e010d-81bf-4be0-ba32-d5783b3b7f7a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""ed7ce345-650b-4b26-a1dd-929d51de1fdc"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Explosion"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -255,6 +283,9 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
         m_Weapon_First = m_Weapon.FindAction("First", throwIfNotFound: true);
         m_Weapon_Second = m_Weapon.FindAction("Second", throwIfNotFound: true);
         m_Weapon_Third = m_Weapon.FindAction("Third", throwIfNotFound: true);
+        // Ability
+        m_Ability = asset.FindActionMap("Ability", throwIfNotFound: true);
+        m_Ability_Explosion = m_Ability.FindAction("Explosion", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -466,6 +497,52 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
         }
     }
     public WeaponActions @Weapon => new WeaponActions(this);
+
+    // Ability
+    private readonly InputActionMap m_Ability;
+    private List<IAbilityActions> m_AbilityActionsCallbackInterfaces = new List<IAbilityActions>();
+    private readonly InputAction m_Ability_Explosion;
+    public struct AbilityActions
+    {
+        private @InputConfig m_Wrapper;
+        public AbilityActions(@InputConfig wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Explosion => m_Wrapper.m_Ability_Explosion;
+        public InputActionMap Get() { return m_Wrapper.m_Ability; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AbilityActions set) { return set.Get(); }
+        public void AddCallbacks(IAbilityActions instance)
+        {
+            if (instance == null || m_Wrapper.m_AbilityActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_AbilityActionsCallbackInterfaces.Add(instance);
+            @Explosion.started += instance.OnExplosion;
+            @Explosion.performed += instance.OnExplosion;
+            @Explosion.canceled += instance.OnExplosion;
+        }
+
+        private void UnregisterCallbacks(IAbilityActions instance)
+        {
+            @Explosion.started -= instance.OnExplosion;
+            @Explosion.performed -= instance.OnExplosion;
+            @Explosion.canceled -= instance.OnExplosion;
+        }
+
+        public void RemoveCallbacks(IAbilityActions instance)
+        {
+            if (m_Wrapper.m_AbilityActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IAbilityActions instance)
+        {
+            foreach (var item in m_Wrapper.m_AbilityActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_AbilityActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public AbilityActions @Ability => new AbilityActions(this);
     private int m_MoveSchemeIndex = -1;
     public InputControlScheme MoveScheme
     {
@@ -488,5 +565,9 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
         void OnFirst(InputAction.CallbackContext context);
         void OnSecond(InputAction.CallbackContext context);
         void OnThird(InputAction.CallbackContext context);
+    }
+    public interface IAbilityActions
+    {
+        void OnExplosion(InputAction.CallbackContext context);
     }
 }

@@ -94,13 +94,18 @@ namespace DI
             PlayerHealthSystem healthSystem = new PlayerHealthSystem();
             Container.QueueForInject(healthSystem);
 
+            ExplosionAbilitySystem explosionAbilitySystem = new ExplosionAbilitySystem();
+            Container.QueueForInject(explosionAbilitySystem);
+
             PlayerImprovementSystem improvementSystem = new PlayerImprovementSystem();
             Container.QueueForInject(improvementSystem);
+
             systems.Add(moveSystem);
             systems.Add(shootSystem);
             systems.Add(healthSystem);
             systems.Add(weaponSystem);
             systems.Add(improvementSystem);
+            systems.Add(explosionAbilitySystem);
 
             return systems;
         }

@@ -22,7 +22,7 @@ MonoBehaviour:
   <LeftPatronsCount>k__BackingField: 6
   <ReloadTime>k__BackingField: 3
   <ShootDistance>k__BackingField: 40
-  <ShootSpeed>k__BackingField: 0
+  <ShootSpeed>k__BackingField: 0.5
   <FireSpread>k__BackingField: 20
   <SpreadFactor>k__BackingField: 10
   <LayerMask>k__BackingField:

@@ -23,6 +23,8 @@ namespace Abstracts
         
         ISubjectInputProxy<Unit> WeaponThird { get; }
 
+        ISubjectInputProxy<Unit> Explosion { get; }
+
 
     }
 }
