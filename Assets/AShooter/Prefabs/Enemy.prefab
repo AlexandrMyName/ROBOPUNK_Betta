@@ -122,9 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e976d386fa3fb924b841a569fdfc17c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyRadiusAttack: {fileID: 1121264568641777633}
-  <IsDeadFlag>k__BackingField:
-    value: 0
+  <EnemyRadiusAttack>k__BackingField: {fileID: 1121264568641777633}
 --- !u!195 &3852475386510055720
 NavMeshAgent:
   m_ObjectHideFlags: 0

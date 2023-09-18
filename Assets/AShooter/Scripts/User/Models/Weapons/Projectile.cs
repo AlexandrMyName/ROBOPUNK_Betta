@@ -16,7 +16,7 @@ namespace User
         [Header("Explosion")]
         [SerializeField] private OverlapSettings _explosionOverlapSettings;
 
-        private readonly List<IAttackable> _explosionOverlapResults = new(32);
+        private readonly List<IEnemy> _explosionOverlapResults = new(32);
 
 
         public bool IsProjectileDisposed { get; private set; }
@@ -60,9 +60,9 @@ namespace User
         }
 
 
-        private void ApplyDamage(IAttackable unit)
+        private void ApplyDamage(IEnemy unit)
         {
-            unit.TakeDamage(Damage);
+            unit.ComponentsStore.Attackable.TakeDamage(Damage);
         }
 
 
