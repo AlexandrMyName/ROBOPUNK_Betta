@@ -28,6 +28,8 @@ namespace User
         {
             Debug.Log("SHOOT MTFCKR");
             LeftPatronsCount--;
+            IsShootReady = false;
+            ProcessShootTimeout();
             var hitPoint = FindHitPoint(camera, mousePosition);
             PerformAttack(hitPoint);
         }

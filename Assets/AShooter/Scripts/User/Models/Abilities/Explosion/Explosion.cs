@@ -1,4 +1,5 @@
 ﻿using Abstracts;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -8,11 +9,10 @@ namespace User
     public sealed class Explosion : MonoBehaviour
     {
 
-        private float _upwardsModifier = 0.5f;
-
         public float Damage { get; set; }
         public float Radius { get; set; }
         public float Force { get; set; }
+        public float UpwardsModifier { get; set; }
         public LayerMask LayerMask { get; set; }
         public ParticleSystem Effect { get; set; }
         public float EffectDestroyDelay { get; set; }
@@ -39,7 +39,7 @@ namespace User
 
                 if (hit.TryGetComponent(out Rigidbody unitRB))
                 {
-                    unitRB.AddExplosionForce(Force, transform.position, Radius, _upwardsModifier, ForceMode.Impulse);
+                    unitRB.AddExplosionForce(Force, transform.position, Radius, UpwardsModifier, ForceMode.Impulse);
                 }
             }
         }
@@ -58,6 +58,13 @@ namespace User
                 var effect = Instantiate(Effect, transform.position, Effect.transform.rotation);
                 Destroy(effect.gameObject, EffectDestroyDelay);
             }
+        }
+
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, Radius);
         }
 
 

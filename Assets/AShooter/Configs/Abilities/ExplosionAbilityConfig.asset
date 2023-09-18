@@ -16,6 +16,7 @@ MonoBehaviour:
   <Damage>k__BackingField: 50
   <Radius>k__BackingField: 10
   <Force>k__BackingField: 10
+  <UpwardsModifier>k__BackingField: 0.5
   <Lifetime>k__BackingField: 5
   <UsageTimeout>k__BackingField: 4
   <LayerMask>k__BackingField:

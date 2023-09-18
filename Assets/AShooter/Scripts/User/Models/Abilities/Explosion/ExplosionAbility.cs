@@ -18,6 +18,8 @@ namespace User
 
         public float Force { get; set; }
 
+        public float UpwardsModifier { get; set; }
+
         public float Lifetime { get; private set; }
 
         public float UsageTimeout { get; private set; }
@@ -34,13 +36,14 @@ namespace User
         private List<IDisposable> _disposables = new();
 
 
-        public ExplosionAbility(Explosion explosionObject, float damage, int radius, float force, float lifetime,
-            float usageTimeout, LayerMask layerMask, ParticleSystem effect, float effectDestroyDelay)
+        public ExplosionAbility(Explosion explosionObject, float damage, int radius, float force, float upwardsModifier,
+            float lifetime, float usageTimeout, LayerMask layerMask, ParticleSystem effect, float effectDestroyDelay)
         {
             ExplosionObject = explosionObject;
             Damage = damage;
             Radius = radius;
             Force = force;
+            UpwardsModifier = upwardsModifier;
             Lifetime = lifetime;
             UsageTimeout = usageTimeout;
             LayerMask = layerMask;
@@ -68,6 +71,7 @@ namespace User
             explosion.Damage = Damage;
             explosion.Radius = Radius;
             explosion.Force = Force;
+            explosion.UpwardsModifier = UpwardsModifier;
             explosion.LayerMask = LayerMask;
             explosion.Effect = Effect;
             explosion.EffectDestroyDelay = EffectDestroyDelay;

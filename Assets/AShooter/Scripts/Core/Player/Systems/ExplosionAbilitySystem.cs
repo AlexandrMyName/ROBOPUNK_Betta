@@ -54,6 +54,7 @@ namespace Core
                 config.Damage,
                 config.Radius,
                 config.Force,
+                config.UpwardsModifier,
                 config.Lifetime,
                 config.UsageTimeout,
                 config.LayerMask,

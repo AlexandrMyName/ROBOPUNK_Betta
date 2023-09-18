@@ -4,7 +4,7 @@
 namespace User
 {
 
-    [CreateAssetMenu(fileName = nameof(ExplosionAbilityConfig), menuName = "Config/" + nameof(ExplosionAbilityConfig), order = 0)]
+    [CreateAssetMenu(fileName = nameof(ExplosionAbilityConfig), menuName = "Config/" + nameof(ExplosionAbilityConfig))]
     public sealed class ExplosionAbilityConfig : ScriptableObject
     {
 
@@ -15,6 +15,8 @@ namespace User
         [field: SerializeField, Min(0f)] public int Radius { get; private set; }
 
         [field: SerializeField, Min(0f)] public float Force { get; set; }
+
+        [field: SerializeField, Min(0f)] public float UpwardsModifier { get; set; }
 
         [field: SerializeField, Min(0f)] public float Lifetime { get; private set; }
 
