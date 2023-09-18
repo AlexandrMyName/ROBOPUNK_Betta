@@ -21,6 +21,6 @@ namespace Abstracts
 
         void SetSystems(List<ISystem> systems);
 
-        void SetComponents(IEnemyComponentsStore components, float meleRangeRadius, float RangeRadius);
+        void SetComponents(IEnemyComponentsStore components, float RangeRadius);
     }
 }

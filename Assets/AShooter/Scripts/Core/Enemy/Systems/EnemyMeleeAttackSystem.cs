@@ -20,8 +20,6 @@ namespace Core
 
             var enemyRadiusAttack = _enemy.EnemyRadiusAttack;
 
-            enemyRadiusAttack.radius = _enemy.ComponentsStore.Attackable.MeleeAttackRange.Value;
-
             enemyRadiusAttack.OnTriggerStayAsObservable()
                 .Where(col => col.GetComponent<IPlayer>() != null)
                 .ThrottleFirst(TimeSpan.FromSeconds(GameLoopManager.EnemyAttackFrequency))

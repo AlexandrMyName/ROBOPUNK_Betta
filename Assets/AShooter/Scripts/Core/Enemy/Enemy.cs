@@ -24,10 +24,10 @@ namespace Core
 
         private List<ISystem> _systems;
 
-        public void SetComponents(IEnemyComponentsStore components, float meleRangeRadius, float rangeRadius)
+        public void SetComponents(IEnemyComponentsStore components,  float rangeRadius)
         {
             ComponentsStore = components;
-            ComponentsStore.Attackable.InitComponent(rangeRadius, meleRangeRadius);
+            ComponentsStore.Attackable.InitComponent(rangeRadius);
         }
 
 

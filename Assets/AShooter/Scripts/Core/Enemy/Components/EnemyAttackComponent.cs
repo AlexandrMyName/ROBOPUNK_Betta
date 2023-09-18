@@ -21,13 +21,11 @@ namespace Core
         public float Damage { get; set; }
 
         public ReactiveProperty<float> RangedAttackRange { get; private set; }
-        public ReactiveProperty<float> MeleeAttackRange { get; private set; }
+      
 
-
-        public void InitComponent(float rangedAttackRange, float meleeAttackRange)
+        public void InitComponent(float rangedAttackRange)
         {
             RangedAttackRange = new ReactiveProperty<float>(rangedAttackRange);
-            MeleeAttackRange = new ReactiveProperty<float>(meleeAttackRange);
             IsDeadFlag = new ReactiveProperty<bool>(false);
             IsCameAttackPosition = new ReactiveProperty<bool>(false);
         }

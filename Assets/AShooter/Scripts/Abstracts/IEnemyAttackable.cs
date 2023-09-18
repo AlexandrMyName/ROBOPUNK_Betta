@@ -12,10 +12,9 @@ namespace Abstracts
 
 
          ReactiveProperty<float> RangedAttackRange { get;  }
-         ReactiveProperty<float> MeleeAttackRange { get; }
          ReactiveProperty<bool> IsCameAttackPosition { get; }
 
 
-        void InitComponent(float rangedAttackRange, float meleeAttackRange);
+        void InitComponent(float rangedAttackRange);
     }
 }

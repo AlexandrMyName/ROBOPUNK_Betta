@@ -22,8 +22,7 @@ namespace DI.Spawn
         [SerializeField] private int _numberMeleeEnemy;
         [SerializeField] private int _numberDistantEnemy;
         [SerializeField] private float _spawnRadius;
-        [SerializeField] private float _meleRangeRadius;
-        [SerializeField] private float _rangeRadiusRange;
+        [SerializeField, Range(1.5f, 7f)] private float _rangeRadiusRange;
 
 
         private GameObjectPool _enemyPool;
@@ -122,7 +121,7 @@ namespace DI.Spawn
         {
             var enemy = enemyInstance.GetComponent<IEnemy>();
             enemy.SetSystems(CreateSystems(enemyInstance));
-            enemy.SetComponents(CreateComponents(),_meleRangeRadius,_rangeRadiusRange);
+            enemy.SetComponents(CreateComponents(), _rangeRadiusRange);
         }
 
 
