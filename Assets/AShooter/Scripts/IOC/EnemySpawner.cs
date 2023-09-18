@@ -18,10 +18,13 @@ namespace DI.Spawn
         [SerializeField] private GameObject _prefab;
         [SerializeField] private Transform _spawnTransform;
         [SerializeField] private float _respawnDelay;
-        //[SerializeField] private int poolSize = 10;
+        
         [SerializeField] private int _numberMeleeEnemy;
         [SerializeField] private int _numberDistantEnemy;
         [SerializeField] private float _spawnRadius;
+        [SerializeField] private float _meleRangeRadius;
+        [SerializeField] private float _rangeRadiusRange;
+
 
         private GameObjectPool _enemyPool;
         private float _numberMeleeEnemy_cnt;
@@ -117,17 +120,23 @@ namespace DI.Spawn
 
         private void SetSystems(GameObject enemyInstance)
         {
-            var enemy = enemyInstance.GetComponent<Enemy>();
+            var enemy = enemyInstance.GetComponent<IEnemy>();
             enemy.SetSystems(CreateSystems(enemyInstance));
+            enemy.SetComponents(CreateComponents(),_meleRangeRadius,_rangeRadiusRange);
         }
 
 
         private void GetPlayerTransform(GameObject enemyInstance)
+        => _playerTransform = enemyInstance.GetComponent<Enemy>().PlayerTransform;
+        
+
+        private IEnemyComponentsStore CreateComponents()
         {
-            _playerTransform = enemyInstance.GetComponent<Enemy>().PlayerTransform;
+
+            EnemyAttackComponent attackable = new EnemyAttackComponent();
+
+            return new EnemyComponentsStore(attackable);
         }
-
-
         private List<ISystem> CreateSystems(GameObject enemyInstance)
         {
             var systems = new List<ISystem>();
@@ -167,10 +176,8 @@ namespace DI.Spawn
         }
 
 
-        private EnemyType GetEnemyType(GameObject enemyInstance)
-        {
-            return enemyInstance.GetComponent<Enemy>().EnemyType;
-        }
+        private EnemyType GetEnemyType(GameObject enemyInstance) => enemyInstance.GetComponent<IEnemy>().EnemyType;
+         
 
 
         private void TrySpawnEnemy()
@@ -179,11 +186,11 @@ namespace DI.Spawn
             {
                 GameObject enemyInstance = _enemyPool.Get();
                 var enemy = enemyInstance.GetComponent<Enemy>();
-
+                
                 SetEnemyPosition(enemyInstance);
                 SetDeadFlagInTrue(enemy);
 
-                enemy.IsDeadFlag.Subscribe(isDead =>
+                enemy.ComponentsStore.Attackable.IsDeadFlag.Subscribe(isDead =>
                 {
                     if (isDead)
                     {
@@ -196,15 +203,12 @@ namespace DI.Spawn
             }
         }
 
-        private void SetDeadFlagInTrue(Enemy enemy)
-        {
-            enemy.IsDeadFlag.Value = false;
-        }
+        private void SetDeadFlagInTrue(Enemy enemy) => enemy.ComponentsStore.Attackable.IsDeadFlag.Value = false;
+        
 
         private void SetEnemyPosition(GameObject enemyInstance)
-        {
-            enemyInstance.transform.position = _playerTransform.position + GetCircleIntersectionCoordinates() + Vector3.down;
-        }
+         => enemyInstance.transform.position = _playerTransform.position + GetCircleIntersectionCoordinates() + Vector3.down;
+         
 
         private Vector3 GetCircleIntersectionCoordinates()
         {

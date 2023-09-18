@@ -13,17 +13,18 @@ namespace Core
 
         private List<IDisposable> _disposables = new();
         private bool _isPositionReadiness;
-        private Enemy _enemy;
-
+        private IEnemy _enemy;
+        IGameComponents _componentsInPrefab;
 
         protected override void Awake(IGameComponents components)
         {
-            _enemy = components.BaseObject.GetComponent<Enemy>();
-            _enemy.IsCameAttackPosition.Subscribe(SetPositionReadiness);
+            _componentsInPrefab = components;
+            _enemy = components.BaseObject.GetComponent<IEnemy>();
+            _enemy.ComponentsStore.Attackable.IsCameAttackPosition.Subscribe(SetPositionReadiness);
 
             var shootDisposable = Observable
                 .Interval(TimeSpan.FromSeconds(GameLoopManager.EnemyAttackFrequency))
-                .TakeUntilDestroy(_enemy)
+                .TakeUntilDestroy(_enemy as Component)
                 .Subscribe(_ => DoShoot());
         }
 
@@ -47,11 +48,11 @@ namespace Core
 
         void ThrowPrimitive()
         {
-            Vector3 directionToPlayer = (_enemy.PlayerTransform.position - _enemy.transform.position).normalized;
+            Vector3 directionToPlayer = (_enemy.PlayerTransform.position - _componentsInPrefab.BaseTransform.position).normalized;
 
             GameObject primitive = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             var rb = primitive.AddComponent<Rigidbody>();
-            primitive.transform.position = _enemy.transform.position + directionToPlayer*2;
+            primitive.transform.position = _componentsInPrefab.BaseTransform.position + directionToPlayer*2;
             rb.velocity = directionToPlayer * 10f;
 
             UnityEngine.Object.Destroy(primitive, 5f);

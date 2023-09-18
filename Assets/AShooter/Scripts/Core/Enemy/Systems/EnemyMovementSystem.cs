@@ -14,7 +14,7 @@ namespace Core
         private NavMeshAgent _navMeshAgent;
         private Transform _playerTransform;
         private float _indentFromTarget;
-        private Enemy _enemy;
+        private IEnemy _enemy;
         private ReactiveProperty<bool> _isCameAttackPosition;
 
 
@@ -26,8 +26,8 @@ namespace Core
         protected override void Awake(IGameComponents components)
         {
             _navMeshAgent = components.BaseObject.GetComponent<NavMeshAgent>();
-            _enemy = components.BaseObject.GetComponent<Enemy>();
-            _isCameAttackPosition = _enemy.IsCameAttackPosition;
+            _enemy = components.BaseObject.GetComponent<IEnemy>();
+            _isCameAttackPosition = _enemy.ComponentsStore.Attackable.IsCameAttackPosition;
             _playerTransform = _enemy.PlayerTransform;
 
 #if UNITY_EDITOR

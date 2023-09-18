@@ -12,7 +12,7 @@ namespace Core
     {
 
         private List<IDisposable> _disposables = new();
-        private Enemy _enemy;
+        private IEnemy _enemy;
 
         protected override void Awake(IGameComponents components)
         {
@@ -20,7 +20,7 @@ namespace Core
 
             var enemyRadiusAttack = _enemy.EnemyRadiusAttack;
 
-            enemyRadiusAttack.radius = _enemy.MeleeAttackRange.Value;
+            enemyRadiusAttack.radius = _enemy.ComponentsStore.Attackable.MeleeAttackRange.Value;
 
             enemyRadiusAttack.OnTriggerStayAsObservable()
                 .Where(col => col.GetComponent<IPlayer>() != null)
@@ -31,16 +31,16 @@ namespace Core
 
 
         protected override void OnEnable()
-            => _enemy.SetAttackableDamage(GameLoopManager.EnemyDamageForce);
+            => _enemy.ComponentsStore.Attackable.SetAttackableDamage(GameLoopManager.EnemyDamageForce);
 
 
         private void HandleTriggerCollider(Collider collider)
         {
             var playerAttackableComponent = collider.GetComponent<IPlayer>().ComponentsStore.Attackable;
-            playerAttackableComponent.TakeDamage(_enemy.Damage);
+            playerAttackableComponent.TakeDamage(_enemy.ComponentsStore.Attackable.Damage);
 
             #if UNITY_EDITOR
-            Debug.Log($"PLAYER: {playerAttackableComponent.Health}  ( HIT -{_enemy.Damage}!)");
+            Debug.Log($"PLAYER: {playerAttackableComponent.Health}  ( HIT -{_enemy.ComponentsStore.Attackable.Damage}!)");
             #endif
         }
 

@@ -16,13 +16,13 @@ namespace Core
         protected override void Awake(IGameComponents components)
         {
             _components = components;
-            _isDead = _components.BaseObject.GetComponent<Enemy>().IsDeadFlag;
+            _isDead = _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.Attackable.IsDeadFlag;
         }
 
         protected override void OnEnable()
         {
-            _components.BaseObject.GetComponent<IAttackable>().SetMaxHealth(GameLoopManager.EnemyMaxHealth, OnSubscribe);
-            _isDead = _components.BaseObject.GetComponent<IAttackable>().IsDeadFlag;
+            _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.Attackable.SetMaxHealth(GameLoopManager.EnemyMaxHealth, OnSubscribe);
+            _isDead = _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.Attackable.IsDeadFlag;
         }
 
 
