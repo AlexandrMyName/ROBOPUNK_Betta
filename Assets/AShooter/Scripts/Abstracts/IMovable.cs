@@ -1,5 +1,5 @@
-﻿using Core.Components;
-
+﻿using UniRx;
+using UnityEngine;
 
 namespace Abstracts
 {
@@ -7,7 +7,10 @@ namespace Abstracts
     public interface IMovable
     {
 
-        public MoveComponent MoveComponent { get; }
+        ReactiveProperty<float> Speed { get; }
 
+        void Move(Vector3 direction);
+
+        void InitComponent(Rigidbody rb);
     }
 }

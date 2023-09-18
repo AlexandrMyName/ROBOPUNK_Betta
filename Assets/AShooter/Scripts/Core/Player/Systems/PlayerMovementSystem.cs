@@ -30,7 +30,8 @@ namespace Core
             _animator = components.BaseObject.GetComponent<PlayerAnimator>();
             Debug.Log($"Initialized move system! ({components.BaseObject.name})");
             if (_animator == null) Debug.LogWarning($"Player animator not found on {components.BaseObject.name}");
-            _movable = _components.BaseObject.GetComponent<IMovable>();
+
+            _movable = _components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Movable;
         }
 
 
@@ -54,7 +55,7 @@ namespace Core
         {
             _direction.x = _horizontal;
             _direction.z = _vertical;
-            _movable.MoveComponent.Move(_direction);
+            _movable.Move(_direction);
         }
 
 

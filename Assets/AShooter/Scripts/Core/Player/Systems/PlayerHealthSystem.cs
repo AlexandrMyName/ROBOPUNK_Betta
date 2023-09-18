@@ -20,7 +20,7 @@ namespace Core
         protected override void Awake(IGameComponents components)
         {
             _components = components;
-            _attackable = _components.BaseObject.GetComponent<IAttackable>();
+            _attackable = _components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Attackable;
             _disposables.Add(_attackable.Health.Subscribe(OnDamage));
         }
 

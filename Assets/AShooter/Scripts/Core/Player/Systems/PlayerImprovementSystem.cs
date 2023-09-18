@@ -35,8 +35,8 @@ namespace Core
             _disposables = new();
             _components = components;
 
-            _improvable.Init(_components.BaseObject.GetComponent<IAttackable>(),
-                _components.BaseObject.GetComponent<IMovable>());
+            _improvable.Init(_components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Attackable,
+                _components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Movable);
 
             _timeImprovements = new ConcurrentQueue<IImprovement>();
             _components.BaseObject.GetComponent<Collider>()

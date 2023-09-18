@@ -1,7 +1,7 @@
 ﻿namespace Abstracts
 {
-    public interface IPlayer : IMovable
+    public interface IPlayer 
     {
-        
+        IComponentsStore ComponentsStore { get; }
     }
 }

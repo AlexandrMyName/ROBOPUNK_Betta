@@ -39,7 +39,7 @@ namespace User.Presenters
                 case ImprovementType.Movable:
                     Debug.Log($"Speed improve - accept! |{improvement.Value}|");
                   
-                    _movable.MoveComponent.Speed.Value *= improvement.Value;
+                    _movable.Speed.Value *= improvement.Value;
 
                     break;
             }
@@ -56,7 +56,7 @@ namespace User.Presenters
                     break;
                 case ImprovementType.Movable:
                     Debug.Log($"Speed improve - canseled! |{improvement.Value}|");
-                    _movable.MoveComponent.Speed.Value /= improvement.Value;
+                    _movable.Speed.Value /= improvement.Value;
                     break;
 
             }
