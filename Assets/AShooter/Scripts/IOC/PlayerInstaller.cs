@@ -7,7 +7,7 @@ using Abstracts;
 using AShooter.Scripts.IOC;
 using DI.Spawn;
 using Cinemachine;
-using User;
+using Core.Components;
 using UniRx;
 
 
@@ -43,6 +43,12 @@ namespace DI
             SetSpeed(_speed);
 
             Container
+                .Bind<IComponentsStore>()
+                .WithId("PlayerComponents")
+                .FromInstance(InitComponents())
+                .AsCached();
+
+            Container
                 .Bind<List<ISystem>>()
                 .WithId("PlayerSystems")
                 .FromInstance(InitSystems())
@@ -58,7 +64,20 @@ namespace DI
                 .AsCached();
         }
         
-        
+
+        private IComponentsStore InitComponents()
+        {
+            PlayerMoveComponent movable = new PlayerMoveComponent();
+            PlayerAttackComponent attackable = new PlayerAttackComponent();
+
+            Container.QueueForInject(movable);
+            Container.QueueForInject(attackable);
+
+            ComponentsStore components = new ComponentsStore(attackable, movable);
+            return components;
+        }
+
+
         private List<ISystem> InitSystems()
         {
             List<ISystem> systems = new List<ISystem>();
@@ -113,7 +132,7 @@ namespace DI
         {
             _spawnPlayerFactory = Container.Resolve<SpawnPlayerFactory>();
             _player = _spawnPlayerFactory.Create();
-            
+
             _camera.Follow = _player.transform;
             _camera.LookAt = _player.transform;
             

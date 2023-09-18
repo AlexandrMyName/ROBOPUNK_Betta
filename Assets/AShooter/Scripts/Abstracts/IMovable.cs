@@ -3,10 +3,14 @@ using UnityEngine;
 
 namespace Abstracts
 {
+    
     public interface IMovable
     {
-        public ReactiveProperty<float> Speed { get; }
 
-        public void Move(Vector3 direction);
+        ReactiveProperty<float> Speed { get; }
+
+        void Move(Vector3 direction);
+
+        void InitComponent(Rigidbody rb);
     }
 }

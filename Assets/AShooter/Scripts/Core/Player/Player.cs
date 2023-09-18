@@ -1,7 +1,5 @@
 using Abstracts;
-using System;
 using System.Collections.Generic;
-using UniRx;
 using UnityEngine;
 using Zenject;
 using StateMachine = Abstracts.StateMachine;
@@ -10,32 +8,25 @@ using StateMachine = Abstracts.StateMachine;
 namespace Core
 {
     
-    public sealed class Player : StateMachine, IAttackable , IMovable 
+    public sealed class Player : StateMachine, IPlayer 
     {
-        public ReactiveProperty<bool> IsDeadFlag { get; set; }
 
-        [SerializeField] private Rigidbody _rigidbody;
+        [Inject(Id = "PlayerComponents")] public IComponentsStore ComponentsStore { get; private set; }
+
         
         [Inject(Id = "PlayerSystems")] private List<ISystem> _systems;
-        [Inject(Id = "PlayerHealth")] public ReactiveProperty<float> Health { get; }
-        [Inject(Id = "PlayerSpeed")] public ReactiveProperty<float> Speed { get; }
-
-        [field: SerializeField] public Transform WeaponContainer;
 
          
-        protected override List<ISystem> GetSystems() =>  _systems;
+        [field: SerializeField] public Transform WeaponContainer;
+         
 
-
-        public void TakeDamage(float amountDamage) => Health.Value -= amountDamage;
-       
-        
-        public void Move(Vector3 direction)
+        protected override List<ISystem> GetSystems()
         {
-            _rigidbody.velocity = direction * Speed.Value;
+            ComponentsStore.Movable.InitComponent(GetComponent<Rigidbody>());
+
+
+           return _systems;
         }
 
-        public void SetMaxHealth(float maxHealth, Action<ReactiveProperty<float>> onCompleted = null) { }
-
-        public void SetAttackableDamage(float attackForceDamage) { }
     }
 }
