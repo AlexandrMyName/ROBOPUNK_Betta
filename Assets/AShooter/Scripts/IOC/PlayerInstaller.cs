@@ -7,6 +7,7 @@ using Abstracts;
 using AShooter.Scripts.IOC;
 using DI.Spawn;
 using Cinemachine;
+using Core.Components;
 using User;
 using UniRx;
 
@@ -113,7 +114,7 @@ namespace DI
         {
             _spawnPlayerFactory = Container.Resolve<SpawnPlayerFactory>();
             _player = _spawnPlayerFactory.Create();
-            
+
             _camera.Follow = _player.transform;
             _camera.LookAt = _player.transform;
             

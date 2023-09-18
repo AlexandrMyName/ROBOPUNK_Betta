@@ -1,12 +1,13 @@
-﻿using UniRx;
-using UnityEngine;
+﻿using Core.Components;
+
 
 namespace Abstracts
 {
+    
     public interface IMovable
     {
-        public ReactiveProperty<float> Speed { get; }
 
-        public void Move(Vector3 direction);
+        public MoveComponent MoveComponent { get; }
+
     }
 }

@@ -54,7 +54,7 @@ namespace Core
         {
             _direction.x = _horizontal;
             _direction.z = _vertical;
-            _movable.Move(_direction);
+            _movable.MoveComponent.Move(_direction);
         }
 
 
