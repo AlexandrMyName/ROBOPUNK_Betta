@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ExplosionObject>k__BackingField: {fileID: 272371557409273288, guid: 90e8907af4fefc243a49eee6768e2e15, type: 3}
   <Damage>k__BackingField: 50
+  <DamageOverTime>k__BackingField: 2
+  <DamageRate>k__BackingField: 1
   <Radius>k__BackingField: 10
   <Force>k__BackingField: 10
   <UpwardsModifier>k__BackingField: 0.5

@@ -12,6 +12,10 @@ namespace User
 
         [field: SerializeField, Min(0f)] public float Damage { get; private set; }
 
+        [field: SerializeField, Min(0f)] public float DamageOverTime { get; private set; }
+
+        [field: SerializeField, Min(0f)] public float DamageRate { get; private set; }
+
         [field: SerializeField, Min(0f)] public int Radius { get; private set; }
 
         [field: SerializeField, Min(0f)] public float Force { get; set; }

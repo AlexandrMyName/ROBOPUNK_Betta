@@ -52,6 +52,8 @@ namespace Core
             _explosionAbility = new ExplosionAbility(
                 config.ExplosionObject,
                 config.Damage,
+                config.DamageOverTime,
+                config.DamageRate,
                 config.Radius,
                 config.Force,
                 config.UpwardsModifier,
