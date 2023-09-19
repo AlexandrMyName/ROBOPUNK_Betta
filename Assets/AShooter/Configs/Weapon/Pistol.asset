@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   <WeaponId>k__BackingField: 1
-  <WeaponObject>k__BackingField: {fileID: 9177879828942193514, guid: 566a185e4f51b1948b6f550c57fa51c5, type: 3}
+  <WeaponObject>k__BackingField: {fileID: 9177879828942193514, guid: 34d9be47eeeb37d4b9b263bce3ecd9b7, type: 3}
   <ProjectileObject>k__BackingField: {fileID: 0}
   <ProjectileForce>k__BackingField: 0
   <WeaponType>k__BackingField: 0
