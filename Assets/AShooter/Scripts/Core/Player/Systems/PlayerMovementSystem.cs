@@ -51,10 +51,12 @@ namespace Core
 
         }
 
+
         protected override void FixedUpdate()
         {
             _direction.x = _horizontal;
             _direction.z = _vertical;
+
             _movable.Move(_direction);
         }
 

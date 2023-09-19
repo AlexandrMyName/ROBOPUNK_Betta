@@ -14,15 +14,18 @@ namespace Core.Components
         
         private Rigidbody _rigidbody;
         
+
         public void Move(Vector3 direction)
         {
-            _rigidbody.velocity = direction * Speed.Value;
+            _rigidbody.velocity = new Vector3(direction.x * Speed.Value, _rigidbody.velocity.y, direction.z * Speed.Value);
         }
         
+
         public void InitComponent(Rigidbody rb)
         {
             _rigidbody = rb;
         }
         
+
     }
 }
