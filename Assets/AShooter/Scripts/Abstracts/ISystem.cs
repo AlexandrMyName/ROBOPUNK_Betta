@@ -11,7 +11,9 @@ namespace Abstracts
         void BaseLateUpdate();
         void BaseFixedUpdate();
         void BaseOnDestroy();
-        
+
+        void BaseOnDrawGizmos();
+
 
     }
 }

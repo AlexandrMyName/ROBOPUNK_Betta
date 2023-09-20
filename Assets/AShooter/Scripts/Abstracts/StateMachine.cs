@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Core;
 using UnityEngine;
@@ -69,6 +70,15 @@ namespace Abstracts
             for (int i = 0; i < _systems.Count; i++)
             {
                 _systems[i].BaseLateUpdate();
+            }
+        }
+
+
+        private void OnDrawGizmos()
+        {
+            for (int i = 0; i < _systems.Count; i++)
+            {
+                _systems[i].BaseOnDrawGizmos();
             }
         }
         

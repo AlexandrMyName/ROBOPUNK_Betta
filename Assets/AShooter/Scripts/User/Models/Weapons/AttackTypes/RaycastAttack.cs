@@ -11,12 +11,12 @@ namespace Core
     {
 
         private Camera _camera;
-        private IWeapon _weapon;
+        private IRangeWeapon _weapon;
         private Vector3 _mousePosition;
         private Transform _playerTransform;
 
 
-        public RaycastAttack(IWeapon weapon, Transform playerTransform, Camera camera, Vector3 mousePosition)
+        public RaycastAttack(IRangeWeapon weapon, Transform playerTransform, Camera camera, Vector3 mousePosition)
         {
             _camera = camera;
             _playerTransform = playerTransform;
@@ -41,10 +41,10 @@ namespace Core
 
                 var hitCollider = hitInfo.collider;
 
-                if (hitCollider.TryGetComponent(out IAttackable unit))
+                if (hitCollider.TryGetComponent(out IEnemy unit))
                 {
-                    Debug.Log($"Found target [{unit}] health {unit.Health}");
-                    unit.TakeDamage(_weapon.Damage);
+                    Debug.Log($"Found target [{unit}] health {unit.ComponentsStore.Attackable.Health}");
+                    unit.ComponentsStore.Attackable.TakeDamage(_weapon.Damage);
                 }
                 else
                 {

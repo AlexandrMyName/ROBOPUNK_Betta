@@ -4,7 +4,7 @@
 namespace User
 {
 
-    public class Pistol : Weapon
+    public sealed class Pistol : Weapon
     {
 
         public Pistol(int weaponId, GameObject weaponObject, Projectile projectileObject, WeaponType weaponType,
