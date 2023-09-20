@@ -36,7 +36,8 @@ namespace Core
         protected override void Start()
         {
             _disposables.AddRange(new List<IDisposable>{
-                _input.LeftClick.AxisOnChange.Subscribe(_ => OnLeftClick()),
+                _input.LeftClick.AxisOnChange.Subscribe(_ => TryShootPerform()),
+                _input.RightClick.AxisOnChange.Subscribe(_ => TryShootPerform()),
                 _input.MousePosition.AxisOnChange.Subscribe(OnMousePositionChanged),
                 _weaponState.CurrentWeapon.Subscribe(weapon => { UpdateCurrentWeapon(weapon); })
             });
@@ -62,7 +63,7 @@ namespace Core
         }
 
 
-        private void OnLeftClick()
+        private void TryShootPerform()
         {
             if (_currentWeapon.IsShootReady)
             {
