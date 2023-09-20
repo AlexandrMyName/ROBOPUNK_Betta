@@ -22,6 +22,7 @@ namespace DI
         
         [Space(10), SerializeField] private bool _useMoveSystem;
         [SerializeField] private bool _useShootSystem;
+        [SerializeField] private bool _useRotationSystem;
         [SerializeField] private float _maxPlayerHealth;
         [SerializeField] private float _speed;
         
@@ -99,6 +100,9 @@ namespace DI
 
             PlayerImprovementSystem improvementSystem = new PlayerImprovementSystem();
             Container.QueueForInject(improvementSystem);
+            
+            PlayerRotationSystem rotationSystem = new PlayerRotationSystem();
+            Container.QueueForInject(rotationSystem);
 
             systems.Add(moveSystem);
             systems.Add(shootSystem);
@@ -106,7 +110,7 @@ namespace DI
             systems.Add(weaponSystem);
             systems.Add(improvementSystem);
             systems.Add(explosionAbilitySystem);
-
+            systems.Add(rotationSystem);
             return systems;
         }
 

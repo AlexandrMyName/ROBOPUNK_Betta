@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: 
   <WeaponId>k__BackingField: 2
-  <WeaponObject>k__BackingField: {fileID: 4113015385983967611, guid: fb0b5430209a4b84e887578766d4c836, type: 3}
+  <WeaponObject>k__BackingField: {fileID: 4113015385983967611, guid: e971b5c42d34cc14d9f13fa703200cc7, type: 3}
   <ProjectileObject>k__BackingField: {fileID: 0}
   <ProjectileForce>k__BackingField: 0
   <WeaponType>k__BackingField: 1
