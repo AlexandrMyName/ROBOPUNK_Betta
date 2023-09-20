@@ -30,6 +30,7 @@ namespace Core
             }
         }
          
+
         protected override void Awake(IGameComponents components)
         {
             _disposables = new();
@@ -57,12 +58,11 @@ namespace Core
         protected override void OnDestroy()
         => _disposables.ForEach(disposable => disposable.Dispose());
 
+
         private void SetTimer(IImprovement improvementObject)
         {
             string timerName = $"Timer of improve : {improvementObject.GetImproveType()} :" +
                 $" +{improvementObject.Value} | on {improvementObject.Timer} sec.";
-
-
 
             ITimer timer = _timerPool.CreateCallBackTimer(timerName);
  

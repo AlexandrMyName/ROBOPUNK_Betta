@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Weapon
   - Muzzle
+  - Chest
   layers:
   - Default
   - TransparentFX
