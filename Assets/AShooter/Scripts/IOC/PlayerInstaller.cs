@@ -100,6 +100,10 @@ namespace DI
 
             PlayerImprovementSystem improvementSystem = new PlayerImprovementSystem();
             Container.QueueForInject(improvementSystem);
+
+            PlayerInventorySystem inventorySystem = new PlayerInventorySystem();
+            Container.QueueForInject(inventorySystem);
+
             
             PlayerRotationSystem rotationSystem = new PlayerRotationSystem();
             Container.QueueForInject(rotationSystem);
@@ -110,6 +114,8 @@ namespace DI
             systems.Add(weaponSystem);
             systems.Add(improvementSystem);
             systems.Add(explosionAbilitySystem);
+            systems.Add(inventorySystem);
+
             systems.Add(rotationSystem);
             return systems;
         }

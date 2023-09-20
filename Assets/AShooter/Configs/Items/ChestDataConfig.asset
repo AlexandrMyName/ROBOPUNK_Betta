@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba711996e598ae944b60263e29b1d9eb, type: 3}
+  m_Name: ChestDataConfig
+  m_EditorClassIdentifier: 
+  <WeaponsPossibleGeneration>k__BackingField:
+  - {fileID: 11400000, guid: 7d4d0cf09ac337e43a27ab9bb23748f7, type: 2}
+  ImprovableItemsPossibleGeneration:
+  - Icon: {fileID: 0}
+    ImprovableType: 0
+  MettaCoinsPossibleGeneration: 0a000000140000002a0000000b000000020000000400000009000000
+  HealthPossibleGeneration:
+  - 20
+  - 30
+  - 22
+  - 60
+  COUNT_POSSIBLE_OBJECTS: 4
