@@ -5,8 +5,10 @@ using UniRx;
 using UnityEngine;
 using Zenject;
 
+
 namespace Core
 {
+    
     public sealed class PlayerRotationSystem : BaseSystem
     {
         [Inject] private IInput _input;
@@ -19,6 +21,7 @@ namespace Core
 
         private Quaternion _rotation = Quaternion.identity;
         private Vector3 _direction;
+        
 
         protected override void Awake(IGameComponents components)
         {
@@ -26,16 +29,17 @@ namespace Core
             _rigidbody = _player.GetComponent<Rigidbody>();
             _camera = Camera.main;
         }
+        
 
         protected override void Start()
         {
-            _disposables.AddRange
-            (new List<IDisposable>
+            _disposables.AddRange(new List<IDisposable>
                 {
                     _input.MousePosition.AxisOnChange.Subscribe(OnMousePositionChanged)
                 }
             );
         }
+        
 
         private void OnMousePositionChanged(Vector3 position)
         {
@@ -47,6 +51,7 @@ namespace Core
                 RotatePlayer();
             }
         }
+        
 
         private void RotatePlayer()
         {
@@ -54,5 +59,13 @@ namespace Core
             _rotation = Quaternion.LookRotation(_direction, Vector3.up);
             _rigidbody.rotation = Quaternion.Euler(0, _rotation.eulerAngles.y, 0);
         }
+        
+        
+        protected override void OnDestroy()
+        {
+            _disposables.ForEach(d => d.Dispose());
+        }
     }
+    
+    
 }
