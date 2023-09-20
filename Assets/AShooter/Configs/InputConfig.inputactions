@@ -122,9 +122,18 @@
             "id": "59c08737-b665-4522-99f7-8b6a397879ea",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "LMB",
                     "type": "Button",
                     "id": "26385be9-ac3f-4abd-8746-44cec5edcf25",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RMB",
+                    "type": "Button",
+                    "id": "a4de8441-51d9-4645-9b42-153d07154504",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -135,11 +144,22 @@
                 {
                     "name": "",
                     "id": "1dae64bf-6594-4092-bfcc-562e29151efc",
-                    "path": "",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "LMB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5e122a74-1903-4d74-b744-e5d586a4ea2c",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RMB",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

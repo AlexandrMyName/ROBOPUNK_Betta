@@ -2,6 +2,7 @@
 using Abstracts;
 using UniRx;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 namespace Core
@@ -11,12 +12,13 @@ namespace Core
     {
         
         public IObservable<Vector3> AxisOnChange { get; }
-
+        
+        
         public PCMousePositionInput()
         {
             AxisOnChange = Observable
                 .EveryUpdate()
-                .Select(_ => Input.mousePosition);
+                .Select(_ => (Vector3) Mouse.current.position.ReadValue());
         }
         
         

@@ -14,7 +14,9 @@ namespace Core
         
         public IObservableInputProxy<float> Vertical { get; }
         
-        public IObservableInputProxy<bool> LeftClick { get; }
+        public ISubjectInputProxy<Unit> LeftClick { get; }
+        
+        public ISubjectInputProxy<Unit> RightClick { get; }
         
         public IObservableInputProxy<Vector3> MousePosition { get; }
         
@@ -32,7 +34,8 @@ namespace Core
 
             Horizontal = new PCInputHorizontal(config);
             Vertical = new PCInputVertical(config);
-            LeftClick = new PCAttackInput();
+            LeftClick = new PCLMBInput(config);
+            RightClick = new PCRMBInput(config);
             MousePosition = new PCMousePositionInput();
             WeaponFirst = new PCWeaponFirstInput(config);
             WeaponSecond = new PCWeaponSecondInput(config);
