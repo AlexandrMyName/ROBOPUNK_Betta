@@ -30,6 +30,7 @@ namespace Core
         
         public IObservableInputProxy<bool> MeleeHold { get; }
 
+        public ISubjectInputProxy<Unit> DashClick { get; }
 
         public PCInput( [NotNull] InputConfig config )
         {
@@ -44,6 +45,7 @@ namespace Core
             WeaponThird = new PCWeaponThirdInput(config);
             Explosion = new PCExplosionInput(config);
             MeleeHold = new PCMeleeInput(config);
+            DashClick = new PCDashInput(config);
         }
         
         

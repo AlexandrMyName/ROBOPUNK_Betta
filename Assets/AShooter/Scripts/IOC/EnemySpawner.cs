@@ -106,12 +106,12 @@ namespace DI.Spawn
         {
             if ((_numberMeleeEnemy_cnt--) > 0)
             {
-                Debug.Log($"_numberMeleeEnemy_cnt - {_numberMeleeEnemy_cnt}");
+                
                 enemyInstance.GetComponent<Enemy>().EnemyType = EnemyType.MeleeEnemy;
             }
             else if ((_numberDistantEnemy_cnt--) > 0)
             {
-                Debug.Log($"_numberDistantEnemy_cnt - {_numberDistantEnemy_cnt}");
+              
                 enemyInstance.GetComponent<Enemy>().EnemyType = EnemyType.DistantEnemy;
             }
         }

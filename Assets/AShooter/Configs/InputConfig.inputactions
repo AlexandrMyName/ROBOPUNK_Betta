@@ -122,7 +122,7 @@
             "id": "59c08737-b665-4522-99f7-8b6a397879ea",
             "actions": [
                 {
-                    "name": "LMB",
+                    "name": "LBM",
                     "type": "Button",
                     "id": "26385be9-ac3f-4abd-8746-44cec5edcf25",
                     "expectedControlType": "Button",
@@ -131,9 +131,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "RMB",
+                    "name": "RBM",
                     "type": "Button",
-                    "id": "a4de8441-51d9-4645-9b42-153d07154504",
+                    "id": "44542e2d-2cc1-4b07-8f20-a18b112b0b2f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -148,18 +148,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "LMB",
+                    "action": "LBM",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "5e122a74-1903-4d74-b744-e5d586a4ea2c",
+                    "id": "ead58ad4-b8d5-4bcd-b902-4f42f16e1c2d",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "RMB",
+                    "action": "RBM",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -276,6 +276,34 @@
                     "processors": "",
                     "groups": "",
                     "action": "Explosion",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Dash",
+            "id": "f9fdf20c-955b-4401-9269-ceb30e0a1860",
+            "actions": [
+                {
+                    "name": "Key",
+                    "type": "Button",
+                    "id": "09202e61-24dc-4d22-87b8-4e1b7adad520",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a1cf3b8f-8479-4e44-91a1-4ed989df8917",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Key",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

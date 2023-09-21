@@ -144,7 +144,7 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
             ""id"": ""59c08737-b665-4522-99f7-8b6a397879ea"",
             ""actions"": [
                 {
-                    ""name"": ""LMB"",
+                    ""name"": ""LBM"",
                     ""type"": ""Button"",
                     ""id"": ""26385be9-ac3f-4abd-8746-44cec5edcf25"",
                     ""expectedControlType"": ""Button"",
@@ -153,9 +153,9 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""RMB"",
+                    ""name"": ""RBM"",
                     ""type"": ""Button"",
-                    ""id"": ""a4de8441-51d9-4645-9b42-153d07154504"",
+                    ""id"": ""44542e2d-2cc1-4b07-8f20-a18b112b0b2f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -170,18 +170,18 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""LMB"",
+                    ""action"": ""LBM"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""5e122a74-1903-4d74-b744-e5d586a4ea2c"",
+                    ""id"": ""ead58ad4-b8d5-4bcd-b902-4f42f16e1c2d"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""RMB"",
+                    ""action"": ""RBM"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -302,6 +302,34 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Dash"",
+            ""id"": ""f9fdf20c-955b-4401-9269-ceb30e0a1860"",
+            ""actions"": [
+                {
+                    ""name"": ""Key"",
+                    ""type"": ""Button"",
+                    ""id"": ""09202e61-24dc-4d22-87b8-4e1b7adad520"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""a1cf3b8f-8479-4e44-91a1-4ed989df8917"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Key"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -317,8 +345,8 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
         m_Direction_Vector = m_Direction.FindAction("Vector", throwIfNotFound: true);
         // Mouse
         m_Mouse = asset.FindActionMap("Mouse", throwIfNotFound: true);
-        m_Mouse_LMB = m_Mouse.FindAction("LMB", throwIfNotFound: true);
-        m_Mouse_RMB = m_Mouse.FindAction("RMB", throwIfNotFound: true);
+        m_Mouse_LBM = m_Mouse.FindAction("LBM", throwIfNotFound: true);
+        m_Mouse_RBM = m_Mouse.FindAction("RBM", throwIfNotFound: true);
         // Weapon
         m_Weapon = asset.FindActionMap("Weapon", throwIfNotFound: true);
         m_Weapon_First = m_Weapon.FindAction("First", throwIfNotFound: true);
@@ -328,6 +356,9 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
         // Ability
         m_Ability = asset.FindActionMap("Ability", throwIfNotFound: true);
         m_Ability_Explosion = m_Ability.FindAction("Explosion", throwIfNotFound: true);
+        // Dash
+        m_Dash = asset.FindActionMap("Dash", throwIfNotFound: true);
+        m_Dash_Key = m_Dash.FindAction("Key", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -435,14 +466,14 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
     // Mouse
     private readonly InputActionMap m_Mouse;
     private List<IMouseActions> m_MouseActionsCallbackInterfaces = new List<IMouseActions>();
-    private readonly InputAction m_Mouse_LMB;
-    private readonly InputAction m_Mouse_RMB;
+    private readonly InputAction m_Mouse_LBM;
+    private readonly InputAction m_Mouse_RBM;
     public struct MouseActions
     {
         private @InputConfig m_Wrapper;
         public MouseActions(@InputConfig wrapper) { m_Wrapper = wrapper; }
-        public InputAction @LMB => m_Wrapper.m_Mouse_LMB;
-        public InputAction @RMB => m_Wrapper.m_Mouse_RMB;
+        public InputAction @LBM => m_Wrapper.m_Mouse_LBM;
+        public InputAction @RBM => m_Wrapper.m_Mouse_RBM;
         public InputActionMap Get() { return m_Wrapper.m_Mouse; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -452,22 +483,22 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_MouseActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_MouseActionsCallbackInterfaces.Add(instance);
-            @LMB.started += instance.OnLMB;
-            @LMB.performed += instance.OnLMB;
-            @LMB.canceled += instance.OnLMB;
-            @RMB.started += instance.OnRMB;
-            @RMB.performed += instance.OnRMB;
-            @RMB.canceled += instance.OnRMB;
+            @LBM.started += instance.OnLBM;
+            @LBM.performed += instance.OnLBM;
+            @LBM.canceled += instance.OnLBM;
+            @RBM.started += instance.OnRBM;
+            @RBM.performed += instance.OnRBM;
+            @RBM.canceled += instance.OnRBM;
         }
 
         private void UnregisterCallbacks(IMouseActions instance)
         {
-            @LMB.started -= instance.OnLMB;
-            @LMB.performed -= instance.OnLMB;
-            @LMB.canceled -= instance.OnLMB;
-            @RMB.started -= instance.OnRMB;
-            @RMB.performed -= instance.OnRMB;
-            @RMB.canceled -= instance.OnRMB;
+            @LBM.started -= instance.OnLBM;
+            @LBM.performed -= instance.OnLBM;
+            @LBM.canceled -= instance.OnLBM;
+            @RBM.started -= instance.OnRBM;
+            @RBM.performed -= instance.OnRBM;
+            @RBM.canceled -= instance.OnRBM;
         }
 
         public void RemoveCallbacks(IMouseActions instance)
@@ -601,6 +632,52 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
         }
     }
     public AbilityActions @Ability => new AbilityActions(this);
+
+    // Dash
+    private readonly InputActionMap m_Dash;
+    private List<IDashActions> m_DashActionsCallbackInterfaces = new List<IDashActions>();
+    private readonly InputAction m_Dash_Key;
+    public struct DashActions
+    {
+        private @InputConfig m_Wrapper;
+        public DashActions(@InputConfig wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Key => m_Wrapper.m_Dash_Key;
+        public InputActionMap Get() { return m_Wrapper.m_Dash; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DashActions set) { return set.Get(); }
+        public void AddCallbacks(IDashActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DashActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DashActionsCallbackInterfaces.Add(instance);
+            @Key.started += instance.OnKey;
+            @Key.performed += instance.OnKey;
+            @Key.canceled += instance.OnKey;
+        }
+
+        private void UnregisterCallbacks(IDashActions instance)
+        {
+            @Key.started -= instance.OnKey;
+            @Key.performed -= instance.OnKey;
+            @Key.canceled -= instance.OnKey;
+        }
+
+        public void RemoveCallbacks(IDashActions instance)
+        {
+            if (m_Wrapper.m_DashActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDashActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DashActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DashActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DashActions @Dash => new DashActions(this);
     private int m_MoveSchemeIndex = -1;
     public InputControlScheme MoveScheme
     {
@@ -616,8 +693,8 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
     }
     public interface IMouseActions
     {
-        void OnLMB(InputAction.CallbackContext context);
-        void OnRMB(InputAction.CallbackContext context);
+        void OnLBM(InputAction.CallbackContext context);
+        void OnRBM(InputAction.CallbackContext context);
     }
     public interface IWeaponActions
     {
@@ -629,5 +706,9 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
     public interface IAbilityActions
     {
         void OnExplosion(InputAction.CallbackContext context);
+    }
+    public interface IDashActions
+    {
+        void OnKey(InputAction.CallbackContext context);
     }
 }

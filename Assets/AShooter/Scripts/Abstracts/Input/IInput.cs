@@ -15,6 +15,8 @@ namespace Abstracts
         ISubjectInputProxy<Unit> LeftClick { get; }
         
         ISubjectInputProxy<Unit> RightClick { get; }
+        
+        ISubjectInputProxy<Unit> DashClick { get; }
 
         IObservableInputProxy<Vector3> MousePosition { get; }
 

@@ -1,15 +1,18 @@
 ﻿using UniRx;
 using UnityEngine;
 
+
 namespace Abstracts
 {
     
     public interface IMovable
     {
 
-        ReactiveProperty<float> Speed { get; }
+        Rigidbody Rigidbody { get; }
 
-        void Move(Vector3 direction);
+        Vector3 MoveDirection { get; set; }
+
+        ReactiveProperty<float> Speed { get; }
 
         void InitComponent(Rigidbody rb);
     }
