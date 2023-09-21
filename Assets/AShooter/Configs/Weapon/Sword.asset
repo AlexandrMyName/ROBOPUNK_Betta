@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sword
   m_EditorClassIdentifier: 
   <WeaponId>k__BackingField: 0
-  <WeaponObject>k__BackingField: {fileID: 586217993582642635, guid: 19ecac467ae2481489b36aa789d3b3a0, type: 3}
+  <WeaponObject>k__BackingField: {fileID: 5176305644967514732, guid: c086530cae48be54c8a5751e7e21a45b, type: 3}
   <ProjectileObject>k__BackingField: {fileID: 0}
   <ProjectileForce>k__BackingField: 20
   <WeaponType>k__BackingField: 0
