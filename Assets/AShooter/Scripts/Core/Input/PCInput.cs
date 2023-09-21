@@ -27,6 +27,8 @@ namespace Core
         public ISubjectInputProxy<Unit> WeaponThird { get; }
 
         public ISubjectInputProxy<Unit> Explosion { get; }
+        
+        public IObservableInputProxy<bool> MeleeHold { get; }
 
 
         public PCInput( [NotNull] InputConfig config )
@@ -41,6 +43,7 @@ namespace Core
             WeaponSecond = new PCWeaponSecondInput(config);
             WeaponThird = new PCWeaponThirdInput(config);
             Explosion = new PCExplosionInput(config);
+            MeleeHold = new PCMeleeInput(config);
         }
         
         

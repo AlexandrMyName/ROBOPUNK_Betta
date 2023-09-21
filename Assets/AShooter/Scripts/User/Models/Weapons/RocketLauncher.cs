@@ -5,7 +5,7 @@ using UnityEngine;
 namespace User
 {
     
-    public class RocketLauncher : Weapon
+    public sealed class RocketLauncher : Weapon
     {
 
         private ProjectileAttack _projectileAttack;

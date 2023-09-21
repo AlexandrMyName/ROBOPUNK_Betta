@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56c391f0c76b38c4693515e2b13852be, type: 3}
-  m_Name: Pistol
+  m_Name: Sword
   m_EditorClassIdentifier: 
-  <WeaponId>k__BackingField: 1
-  <WeaponObject>k__BackingField: {fileID: 4680522553707713395, guid: 4671137579f4bbc468db05b220a3dd21, type: 3}
+  <WeaponId>k__BackingField: 0
+  <WeaponObject>k__BackingField: {fileID: 5176305644967514732, guid: c086530cae48be54c8a5751e7e21a45b, type: 3}
   <ProjectileObject>k__BackingField: {fileID: 0}
-  <ProjectileForce>k__BackingField: 0
-  <WeaponType>k__BackingField: 1
-  <Damage>k__BackingField: 20
-  <ClipSize>k__BackingField: 8
-  <LeftPatronsCount>k__BackingField: 8
-  <ReloadTime>k__BackingField: 1
+  <ProjectileForce>k__BackingField: 20
+  <WeaponType>k__BackingField: 0
+  <Damage>k__BackingField: 35
+  <ClipSize>k__BackingField: 0
+  <LeftPatronsCount>k__BackingField: 0
+  <ReloadTime>k__BackingField: 0
   <ShootDistance>k__BackingField: 0
-  <ShootSpeed>k__BackingField: 0.2
+  <ShootSpeed>k__BackingField: 1
   <FireSpread>k__BackingField: 0
   <SpreadFactor>k__BackingField: 0
   <LayerMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 129
-  <Effect>k__BackingField: {fileID: 265766274217486953, guid: 5d3d7a89e81960f439e9316c51c9eff6, type: 3}
-  <EffectDestroyDelay>k__BackingField: 2
+  <Effect>k__BackingField: {fileID: 0}
+  <EffectDestroyDelay>k__BackingField: 0

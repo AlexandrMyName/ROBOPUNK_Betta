@@ -217,6 +217,15 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Melee"",
+                    ""type"": ""Button"",
+                    ""id"": ""64c6f63c-59b6-4697-bb10-4f63801a4290"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -250,6 +259,17 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Third"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2d0e7a7f-4eda-4f71-ae38-2b5a07377947"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Melee"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -304,6 +324,7 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
         m_Weapon_First = m_Weapon.FindAction("First", throwIfNotFound: true);
         m_Weapon_Second = m_Weapon.FindAction("Second", throwIfNotFound: true);
         m_Weapon_Third = m_Weapon.FindAction("Third", throwIfNotFound: true);
+        m_Weapon_Melee = m_Weapon.FindAction("Melee", throwIfNotFound: true);
         // Ability
         m_Ability = asset.FindActionMap("Ability", throwIfNotFound: true);
         m_Ability_Explosion = m_Ability.FindAction("Explosion", throwIfNotFound: true);
@@ -471,6 +492,7 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
     private readonly InputAction m_Weapon_First;
     private readonly InputAction m_Weapon_Second;
     private readonly InputAction m_Weapon_Third;
+    private readonly InputAction m_Weapon_Melee;
     public struct WeaponActions
     {
         private @InputConfig m_Wrapper;
@@ -478,6 +500,7 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
         public InputAction @First => m_Wrapper.m_Weapon_First;
         public InputAction @Second => m_Wrapper.m_Weapon_Second;
         public InputAction @Third => m_Wrapper.m_Weapon_Third;
+        public InputAction @Melee => m_Wrapper.m_Weapon_Melee;
         public InputActionMap Get() { return m_Wrapper.m_Weapon; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -496,6 +519,9 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
             @Third.started += instance.OnThird;
             @Third.performed += instance.OnThird;
             @Third.canceled += instance.OnThird;
+            @Melee.started += instance.OnMelee;
+            @Melee.performed += instance.OnMelee;
+            @Melee.canceled += instance.OnMelee;
         }
 
         private void UnregisterCallbacks(IWeaponActions instance)
@@ -509,6 +535,9 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
             @Third.started -= instance.OnThird;
             @Third.performed -= instance.OnThird;
             @Third.canceled -= instance.OnThird;
+            @Melee.started -= instance.OnMelee;
+            @Melee.performed -= instance.OnMelee;
+            @Melee.canceled -= instance.OnMelee;
         }
 
         public void RemoveCallbacks(IWeaponActions instance)
@@ -595,6 +624,7 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
         void OnFirst(InputAction.CallbackContext context);
         void OnSecond(InputAction.CallbackContext context);
         void OnThird(InputAction.CallbackContext context);
+        void OnMelee(InputAction.CallbackContext context);
     }
     public interface IAbilityActions
     {

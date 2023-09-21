@@ -16,7 +16,6 @@ namespace Abstracts
         
         ISubjectInputProxy<Unit> RightClick { get; }
 
-        
         IObservableInputProxy<Vector3> MousePosition { get; }
 
         ISubjectInputProxy<Unit> WeaponFirst { get; }
@@ -26,6 +25,8 @@ namespace Abstracts
         ISubjectInputProxy<Unit> WeaponThird { get; }
 
         ISubjectInputProxy<Unit> Explosion { get; }
+
+        IObservableInputProxy<bool> MeleeHold { get; }
 
 
     }

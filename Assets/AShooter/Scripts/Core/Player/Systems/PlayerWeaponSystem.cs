@@ -25,6 +25,8 @@ namespace Core
         private Player _player;
         private readonly Dictionary<int, IWeapon> _weapons = new();
 
+        private bool _isAlredyFalsed;
+
 
         protected override void Awake(IGameComponents components)
         {
@@ -37,12 +39,25 @@ namespace Core
         protected override void Start()
         {
             InitializeWeapons(_weaponConfigs);
+            ChangeWeapon(1);
+            
             _disposables.AddRange(new List<IDisposable>{
+                    _input.MeleeHold.AxisOnChange.Subscribe(b => HandleMeleeButtonPressed(b)),
                     _input.WeaponFirst.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(1)),
                     _input.WeaponSecond.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(2)),
                     _input.WeaponThird.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(3)),
-                    _input.LeftClick.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(1)),
-                    _input.RightClick.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(2))
+                    
+                    _input.LeftClick.AxisOnChange.Subscribe(_ =>
+                    {
+                        if (!_weaponState.IsMeleeWeaponPressed.Value)
+                            HandleWeaponChangePress(1);
+                    }),
+                    
+                    _input.RightClick.AxisOnChange.Subscribe(_ =>
+                    {
+                        if (!_weaponState.IsMeleeWeaponPressed.Value)
+                            HandleWeaponChangePress(2);
+                    })
                 }
             );
         }
@@ -67,6 +82,9 @@ namespace Core
                 
                 switch (config.WeaponType)
                 {
+                    case WeaponType.Sword:
+                        _weapons[config.WeaponId] = SwordInit(config);
+                        break;
                     case WeaponType.Pistol:
                         _weapons[config.WeaponId] = PistolInit(config);
                         break;
@@ -84,9 +102,27 @@ namespace Core
         }
 
 
+        private IWeapon SwordInit(WeaponConfig config)
+        {
+            var swordObject = GameObject.Instantiate(config.WeaponObject, _player.WeaponContainer);
+            swordObject.SetActive(false);
+            return new Sword(
+                config.WeaponId,
+                swordObject,
+                config.WeaponType,
+                config.Damage,
+                config.LayerMask,
+                config.Effect,
+                config.EffectDestroyDelay,
+                config.ShootSpeed
+                );
+        }
+
+
         private IWeapon PistolInit(WeaponConfig config)
         {
             var pistolObject = GameObject.Instantiate(config.WeaponObject, _player.WeaponContainer);
+            pistolObject.SetActive(false);
             return new Pistol(
                 config.WeaponId,
                 pistolObject,
@@ -169,6 +205,27 @@ namespace Core
             
             _weapons[id].WeaponObject.SetActive(true);
             _weaponState.CurrentWeapon.Value = _weapons[id];
+        }
+        
+        
+        private void HandleMeleeButtonPressed(bool isPressing)
+        {
+            if (isPressing)
+            {
+                _isAlredyFalsed = false;
+                HandleWeaponChangePress(0);
+                _weaponState.IsMeleeWeaponPressed.Value = true;
+            }
+            else
+            {
+                if (!_isAlredyFalsed)
+                {
+                    _weaponState.IsMeleeWeaponPressed.Value = false;
+                    HandleWeaponChangePress(1);
+                }
+
+                _isAlredyFalsed = true;
+            }
         }
 
 

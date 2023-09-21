@@ -9,7 +9,7 @@ using UnityEngine;
 namespace User
 {
 
-    public abstract class Weapon : IWeapon, IDisposable
+    public abstract class Weapon : IRangeWeapon, IDisposable
     {
         
         public int WeaponId { get; protected set; }

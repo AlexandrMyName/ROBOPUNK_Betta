@@ -5,7 +5,7 @@ using UnityEngine;
 namespace User
 {
     
-    public class Shotgun : Weapon
+    public sealed class Shotgun : Weapon
     {
 
         private Transform _muzzle;
@@ -92,10 +92,10 @@ namespace User
             {
                 var hitCollider = hitInfo.collider;
 
-                if (hitCollider.TryGetComponent(out IAttackable unit))
+                if (hitCollider.TryGetComponent(out IEnemy unit))
                 {
-                    Debug.Log($"Found target [{unit}] health {unit.Health}");
-                    unit.TakeDamage(Damage / FireSpread);
+                    Debug.Log($"Found target [{unit}] health {unit.ComponentsStore.Attackable.Health}");
+                    unit.ComponentsStore.Attackable.TakeDamage(Damage / FireSpread);
                 }
                 else
                 {

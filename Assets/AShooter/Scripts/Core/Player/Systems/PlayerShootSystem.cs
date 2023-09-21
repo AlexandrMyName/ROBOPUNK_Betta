@@ -4,7 +4,6 @@ using Abstracts;
 using Core.DTO;
 using UniRx;
 using UnityEngine;
-using User;
 using Zenject;
 
 
@@ -22,14 +21,13 @@ namespace Core
         private Vector3 _mousePosition;
         private List<IDisposable> _disposables = new();
 
-        private IWeapon _currentWeapon;
+        private IRangeWeapon _currentRangeWeapon;
         
         
         protected override void Awake(IGameComponents components)
         {
             _components = components;
             _camera = _components.MainCamera;
-            Debug.Log($"Initialized shoot system! ({components.BaseObject.name})");
         }
 
 
@@ -44,9 +42,12 @@ namespace Core
         }
 
         
-        private void UpdateCurrentWeapon(IWeapon weapon)
+        private void UpdateCurrentWeapon(IWeapon rangeWeapon)
         {
-            _currentWeapon = weapon;
+            if (rangeWeapon is IRangeWeapon weapon)
+                _currentRangeWeapon = weapon;
+            else
+                _currentRangeWeapon = null;
         }
 
 
@@ -65,12 +66,15 @@ namespace Core
 
         private void TryShootPerform()
         {
-            if (_currentWeapon.IsShootReady)
+            if (_currentRangeWeapon != null)
             {
-                if (_currentWeapon.LeftPatronsCount > 0)
-                    _currentWeapon.Shoot(_components.BaseTransform, _camera, _mousePosition);
-                else
-                    _currentWeapon.ProcessReload();
+                if (_currentRangeWeapon.IsShootReady)
+                {
+                    if (_currentRangeWeapon.LeftPatronsCount > 0)
+                        _currentRangeWeapon.Shoot(_components.BaseTransform, _camera, _mousePosition);
+                    else
+                        _currentRangeWeapon.ProcessReload();
+                }
             }
         }
 
@@ -83,11 +87,14 @@ namespace Core
 
         private void DrawDebugRayToMousePosition()
         {
-            var ray = _camera.ScreenPointToRay(_mousePosition);
-
-            if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, _currentWeapon.LayerMask))
+            if (_currentRangeWeapon != null)
             {
-                Debug.DrawRay(ray.origin, ray.direction * hitInfo.distance, Color.red);
+                var ray = _camera.ScreenPointToRay(_mousePosition);
+
+                if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, _currentRangeWeapon.LayerMask))
+                {
+                    Debug.DrawRay(ray.origin, ray.direction * hitInfo.distance, Color.red);
+                }
             }
         }
 
