@@ -40,7 +40,9 @@ namespace Core
             _disposables.AddRange(new List<IDisposable>{
                     _input.WeaponFirst.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(1)),
                     _input.WeaponSecond.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(2)),
-                    _input.WeaponThird.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(3))
+                    _input.WeaponThird.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(3)),
+                    _input.LeftClick.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(1)),
+                    _input.RightClick.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(2))
                 }
             );
         }
