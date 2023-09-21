@@ -13,9 +13,9 @@ namespace Core
 
         public PCRMBInput(InputConfig config)
         {
-            config.Mouse.RMB.performed += context => AxisOnChange.OnNext(Unit.Default);
+            config.Mouse.RBM.performed += context => AxisOnChange.OnNext(Unit.Default);
         }
-        
+         
         
     }
 }

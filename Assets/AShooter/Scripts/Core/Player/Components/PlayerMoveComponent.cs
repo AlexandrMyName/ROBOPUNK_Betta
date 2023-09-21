@@ -10,22 +10,19 @@ namespace Core.Components
     public sealed class PlayerMoveComponent : IMovable
     {
 
-        [Inject(Id = "PlayerSpeed")] public ReactiveProperty<float> Speed { get; }
-        
-        private Rigidbody _rigidbody;
-        
-
-        public void Move(Vector3 direction)
-        {
-            _rigidbody.velocity = new Vector3(direction.x * Speed.Value, _rigidbody.velocity.y, direction.z * Speed.Value);
-        }
-        
-
         public void InitComponent(Rigidbody rb)
         {
-            _rigidbody = rb;
+            Rigidbody = rb;
+            MoveDirection = Vector3.zero;
         }
+
+
+        [Inject(Id = "PlayerSpeed")] public ReactiveProperty<float> Speed { get; }
         
+        public Rigidbody Rigidbody { get; private set; }
+        
+        public Vector3 MoveDirection { get; set; }
+
 
     }
 }

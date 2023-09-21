@@ -13,7 +13,7 @@ namespace Core
 
         public PCLMBInput(InputConfig config)
         {
-            config.Mouse.LMB.performed += context => AxisOnChange.OnNext(Unit.Default);
+            config.Mouse.LBM.performed += context => AxisOnChange.OnNext(Unit.Default);
         }
         
         
