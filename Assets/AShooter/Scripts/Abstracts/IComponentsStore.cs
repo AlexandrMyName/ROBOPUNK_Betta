@@ -10,5 +10,8 @@ namespace Abstracts
         IDash Dash { get;  }
         IPlayerHP PlayerHP { get; }
         IViews Views { get; }
+        IGoldWallet GoldWallet { get; }
+
+
     }
 }

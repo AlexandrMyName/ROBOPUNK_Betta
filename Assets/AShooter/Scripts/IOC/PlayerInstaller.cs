@@ -76,12 +76,13 @@ namespace DI
             PlayerDashComponent dash = new PlayerDashComponent(_dashConfig);
             PlayerHPComponent playerHP = new PlayerHPComponent(_playerHPConfig);
             ViewsComponent views = new ViewsComponent();
+            PlayerGoldComponent gold = new PlayerGoldComponent();
 
             Container.QueueForInject(movable);
             Container.QueueForInject(attackable);
             Container.QueueForInject(views);
 
-            ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP, views);
+            ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP, views, gold);
 
             return components;
         }

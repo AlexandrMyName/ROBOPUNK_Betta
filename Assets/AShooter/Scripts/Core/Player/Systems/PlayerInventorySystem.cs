@@ -14,9 +14,8 @@ namespace Core
     {
 
         private IGameComponents _components;
-       
         private List<IDisposable> _disposables;
-
+        private IGoldWallet _goldWallet;
 
         public void Dispose() => _disposables.ForEach(disposable => disposable.Dispose());
 
@@ -25,7 +24,8 @@ namespace Core
         {
             _disposables = new();
             _components = components;
- 
+            _goldWallet = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.GoldWallet;
+
             _components.BaseObject.GetComponent<Collider>()
                 .OnTriggerEnterAsObservable()
                     .Where(x => x.GetComponent<IChest>() != null)
@@ -34,7 +34,7 @@ namespace Core
                         {
                             ApplyGettingItem(collider.GetComponent<IChest>().GetRandomItem());
                         }).AddTo(_disposables);
-
+            
         }
 
 
@@ -42,34 +42,73 @@ namespace Core
         {
             if(objItem == null)
             {
-
-                Debug.LogWarning("Chest is empty))");
+                ApplayGettingEmpty();
                 return;
             }
-            if(objItem.GetType() == typeof(int))
+
+            if(objItem.GetType() == typeof(CoinMetta))
             {
-                ICoinMetta coinMetta = new CoinMetta((int)objItem);
-                Debug.LogWarning("Get Coin");
+                ApplayGettingGold((ICoinMetta)objItem);
             }
 
             if (objItem.GetType() == typeof(float))
             {
-                IHealth coinMetta = new HealthObject((float)objItem);
-                Debug.LogWarning("Get Health");
+                ApplayGettingMedicineChest();
             }
 
             if (objItem.GetType() == typeof(WeaponConfig))
             {
-                Debug.LogWarning("Get Weapon");
+                ApplayGettingWeapon();
             }
 
             if (objItem.GetType() == typeof(ImprovableItemConfig))
             {
-                Debug.LogWarning("Get Improvable");
+                ApplayGettingImprovable();
             }
-
-            Debug.Log($"Get item from chest : {objItem.GetType()}");
         }
+
+
+        private void ApplayGettingImprovable()
+        {
+#if UNITY_EDITOR
+            Debug.Log("Get Improvable");
+#endif
+        }
+
+
+        private void ApplayGettingEmpty()
+        {
+#if UNITY_EDITOR
+            Debug.Log("Chest is empty))");
+#endif
+        }
+
+
+        private void ApplayGettingWeapon()
+        {
+#if UNITY_EDITOR
+            Debug.Log("Get Weapon");
+#endif
+        }
+
+
+        private void ApplayGettingMedicineChest()
+        {
+#if UNITY_EDITOR
+            Debug.Log("Get Medicine Chest");
+#endif
+        }
+
+
+        private void ApplayGettingGold(ICoinMetta coin)
+        {
+            _goldWallet.AddGold(coin.Value);
+
+#if UNITY_EDITOR
+            Debug.Log($"Add Gold -> {coin.Value}, Gold Account -> {_goldWallet.CurrentGold}");
+#endif
+        }
+
 
     }
 }
