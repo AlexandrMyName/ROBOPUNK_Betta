@@ -25,6 +25,9 @@ namespace DI.Spawn
         [SerializeField, Range(1.5f, 7f)] private float _rangeRadiusRange;
 
 
+        [SerializeField] private GameObject _spiderPrefab;
+        [SerializeField, Range(0, 1)] private float _spiderProbableInstance;
+
         private GameObjectPool _enemyPool;
         private float _numberMeleeEnemy_cnt;
         private float _numberDistantEnemy_cnt;
@@ -83,14 +86,35 @@ namespace DI.Spawn
             switch (enemyInstance.GetComponent<Enemy>().EnemyType)
             {
                 case EnemyType.MeleeEnemy:
+
                     rend.material.color = Color.yellow;
+
                     break;
+
                 case EnemyType.DistantEnemy:
+
                     rend.material.color = Color.blue;
+
+                    var spiderPercentSpawn = UnityEngine.Random.Range(0, 100);
+
+                        if(spiderPercentSpawn < _spiderProbableInstance * 100)
+                            SetSpider(enemyInstance);
+            
                     break;
+
                 default:
+
                     break;
             }
+        }
+
+
+        private void SetSpider(GameObject enemyInstance)
+        {
+            var rend = enemyInstance.GetComponent<Renderer>();
+            rend.enabled = false;
+
+            GameObject.Instantiate(_spiderPrefab, enemyInstance.transform);
         }
 
 
@@ -136,6 +160,8 @@ namespace DI.Spawn
 
             return new EnemyComponentsStore(attackable);
         }
+
+
         private List<ISystem> CreateSystems(GameObject enemyInstance)
         {
             var systems = new List<ISystem>();
