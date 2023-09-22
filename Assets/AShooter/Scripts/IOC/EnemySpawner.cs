@@ -6,6 +6,7 @@ using Zenject;
 using System.Collections.Generic;
 using Abstracts;
 using Core.DTO;
+using UnityEngine.AI;
 
 namespace DI.Spawn
 {
@@ -21,9 +22,13 @@ namespace DI.Spawn
         
         [SerializeField] private int _numberMeleeEnemy;
         [SerializeField] private int _numberDistantEnemy;
-        [SerializeField] private float _spawnRadius;
+        [SerializeField] private float _spawnRadius = 2f;
         [SerializeField, Range(1.5f, 7f)] private float _rangeRadiusRange;
 
+
+        [SerializeField] private GameObject _spiderPrefab;
+        [SerializeField, Range(0, 1)] private float _spiderProbableInstance;
+        [SerializeField, Range(1.5f, 2.5f)] private float _spiderRadius;
 
         private GameObjectPool _enemyPool;
         private float _numberMeleeEnemy_cnt;
@@ -83,14 +88,40 @@ namespace DI.Spawn
             switch (enemyInstance.GetComponent<Enemy>().EnemyType)
             {
                 case EnemyType.MeleeEnemy:
+
                     rend.material.color = Color.yellow;
+
                     break;
+
                 case EnemyType.DistantEnemy:
+
                     rend.material.color = Color.blue;
+
+                    var spiderPercentSpawn = UnityEngine.Random.Range(0, 100);
+
+                    if (spiderPercentSpawn < _spiderProbableInstance * 100)
+                    {
+                        SetSpider(enemyInstance);
+                         
+
+                    }
+            
                     break;
+
                 default:
+
                     break;
             }
+        }
+
+
+        private void SetSpider(GameObject enemyInstance)
+        {
+
+            var rend = enemyInstance.GetComponent<Renderer>();
+            rend.enabled = false;
+            enemyInstance.GetComponent<NavMeshAgent>().radius = _spawnRadius;
+            Instantiate(_spiderPrefab, enemyInstance.transform);
         }
 
 
@@ -104,6 +135,7 @@ namespace DI.Spawn
 
         private void SetTypeEnemy(GameObject enemyInstance)
         {
+
             if ((_numberMeleeEnemy_cnt--) > 0)
             {
                 
@@ -136,6 +168,8 @@ namespace DI.Spawn
 
             return new EnemyComponentsStore(attackable);
         }
+
+
         private List<ISystem> CreateSystems(GameObject enemyInstance)
         {
             var systems = new List<ISystem>();
