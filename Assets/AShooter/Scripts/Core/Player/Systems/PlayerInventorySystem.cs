@@ -34,7 +34,6 @@ namespace Core
                         {
                             ApplyGettingItem(collider.GetComponent<IChest>().GetRandomItem());
                         }).AddTo(_disposables);
-            
         }
 
 

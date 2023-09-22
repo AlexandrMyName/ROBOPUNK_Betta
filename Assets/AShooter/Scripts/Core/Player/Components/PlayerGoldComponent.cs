@@ -11,6 +11,7 @@ namespace Core
 
         public ReactiveProperty<float> CurrentGold { get; }
 
+
         public PlayerGoldComponent()
         {
             CurrentGold = new ReactiveProperty<float>(0);

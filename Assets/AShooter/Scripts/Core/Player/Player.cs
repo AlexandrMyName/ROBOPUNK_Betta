@@ -31,6 +31,7 @@ namespace Core
             return _systems;
         }
 
+           ComponentsStore.Movable.InitComponent(GetComponent<Rigidbody>());
 
         public void Dispose()
         {
@@ -47,6 +48,7 @@ namespace Core
 
             this.enabled = false;
         }
+
 
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using Zenject;
 using UnityEngine;
 using System.Collections.Generic;
@@ -12,25 +11,25 @@ using UniRx;
 using User;
 using User.Components;
 
+
 namespace DI
 {
     
     public class PlayerInstaller : MonoInstaller
     {
-        
-        [SerializeField] private CinemachineVirtualCamera _camera;
-        [SerializeField] private Spawner _spawner;
-        
+
         [Space(10), SerializeField] private bool _useMoveSystem;
         [SerializeField] private DashConfig _dashConfig;
         [SerializeField] private PlayerHPConfig _playerHPConfig;
+        [SerializeField] private CinemachineVirtualCamera _camera;
+        [SerializeField] private DashConfig _dashConfig;
+        [SerializeField] private Transform _spawnTransform;
         [SerializeField] private bool _useShootSystem;
         [SerializeField] private bool _useRotationSystem;
         [SerializeField] private float _maxPlayerHealth;
-        [SerializeField] private float _speed;
-        
         [SerializeField] private GameObject _prefab;
-        [SerializeField] private Transform _spawnTransform;
+        [SerializeField] private Spawner _spawner;
+        [SerializeField] private float _speed;
         
         private SpawnPlayerFactory _spawnPlayerFactory;
         
