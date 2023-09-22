@@ -17,7 +17,7 @@ namespace User
         public GameObject WeaponObject { get; protected set; }
 
         public Projectile ProjectileObject { get; protected set; }
-        
+
         public float ProjectileForce { get; protected set; }
         
         public WeaponType WeaponType { get; protected set; }
@@ -47,10 +47,11 @@ namespace User
 
         private List<IDisposable> _disposables = new();
 
-        
         public bool IsReloadProcessing { get; protected set; }
 
         public bool IsShootReady { get; protected set; }
+
+        public Laser Laser { get; private set; }
 
 
         public Weapon(int weaponId, GameObject weaponObject, Projectile projectileObject, 
@@ -73,8 +74,10 @@ namespace User
             Effect = effect;
             EffectDestroyDelay = effectDestroyDelay;
             IsShootReady = true;
+            
+            Laser = new Laser(WeaponObject);
         }
-        
+
 
         public virtual void Shoot(Transform playerTransform, Camera camera, Vector3 mousePosition)
         {

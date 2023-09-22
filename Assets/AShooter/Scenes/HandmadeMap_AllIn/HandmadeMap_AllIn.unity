@@ -7571,6 +7571,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 818711499}
     - target: {fileID: 3857836893237787469, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3857836893237787469, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: _attackFrequency
       value: 3
       objectReference: {fileID: 0}
