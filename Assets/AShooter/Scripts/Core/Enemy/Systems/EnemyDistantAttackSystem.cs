@@ -29,20 +29,16 @@ namespace Core
         }
 
 
-        private void SetPositionReadiness(bool val)
-        {
-
-            _isPositionReadiness = val;
-        }
-
+        private void SetPositionReadiness(bool val) => _isPositionReadiness = val;
+        
 
         private void DoShoot()
         {
-            if (_isPositionReadiness)
-            {
-                ThrowPrimitive();
-            }
-                
+
+            if (!_componentsInPrefab.BaseObject.activeSelf) return;
+
+            if (_isPositionReadiness) ThrowPrimitive();
+
         }
 
 
