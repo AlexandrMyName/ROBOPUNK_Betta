@@ -9,6 +9,7 @@ namespace Core
         public static float EnemyAttackFrequency { get; set; }
 
 
+
         public static void SetEnemyMaxHealth(float maxHealth)
         {
             EnemyMaxHealth = maxHealth;

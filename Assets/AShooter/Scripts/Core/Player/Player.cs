@@ -17,6 +17,7 @@ namespace Core
 
         [Inject(Id = "PlayerSystems")] private List<ISystem> _systems;
 
+         
         [field: SerializeField] public Transform WeaponContainer;
          
 
@@ -48,7 +49,6 @@ namespace Core
 
             this.enabled = false;
         }
-
 
     }
 }
