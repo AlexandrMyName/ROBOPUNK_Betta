@@ -102,7 +102,7 @@ namespace DI.Spawn
                     if (spiderPercentSpawn < _spiderProbableInstance * 100)
                     {
                         SetSpider(enemyInstance);
-                        enemyInstance.GetComponent<NavMeshAgent>().radius = _spawnRadius;
+                         
 
                     }
             
@@ -117,10 +117,11 @@ namespace DI.Spawn
 
         private void SetSpider(GameObject enemyInstance)
         {
+
             var rend = enemyInstance.GetComponent<Renderer>();
             rend.enabled = false;
-
-            GameObject.Instantiate(_spiderPrefab, enemyInstance.transform);
+            enemyInstance.GetComponent<NavMeshAgent>().radius = _spawnRadius;
+            Instantiate(_spiderPrefab, enemyInstance.transform);
         }
 
 
@@ -134,6 +135,7 @@ namespace DI.Spawn
 
         private void SetTypeEnemy(GameObject enemyInstance)
         {
+
             if ((_numberMeleeEnemy_cnt--) > 0)
             {
                 
