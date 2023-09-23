@@ -4,9 +4,9 @@ using UniRx;
 using UnityEngine;
 #endif
 
+
 namespace Core
 {
-
 
     public class PlayerGoldComponent : IGoldWallet
     {

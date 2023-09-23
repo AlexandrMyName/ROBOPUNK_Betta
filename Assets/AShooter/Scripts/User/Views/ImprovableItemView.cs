@@ -2,8 +2,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 namespace User.View
 {
+
     public class ImprovableItemView : MonoBehaviour
     {
 
@@ -18,6 +20,7 @@ namespace User.View
             _textTimer.text = temporary ? $"{time} sec." : "";
             Destroy(gameObject, time);
         }
+
 
     }
 }
