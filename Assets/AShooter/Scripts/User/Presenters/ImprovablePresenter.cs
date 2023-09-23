@@ -4,10 +4,13 @@ using UnityEngine;
 using User.View;
 using Zenject;
 
+
 namespace User.Presenters
 {
+
     public class ImprovablePresenter : MonoBehaviour
     {
+
         [Inject] private ItemConfigs _itemConfigs;
         [SerializeField] private Transform _containerForView; 
         [Inject(Id = "ImprovableItemView")] private GameObject _itemViewPrefab;
@@ -46,6 +49,7 @@ namespace User.Presenters
 
         }
 
+
         public void CanselImprove(IImprovement improvement)
         {
             switch (improvement.GetImproveType())
@@ -69,12 +73,14 @@ namespace User.Presenters
            GameObject itemObject = GameObject.Instantiate(_itemViewPrefab, _containerForView);
            ImprovableItemView itemView = itemObject.GetComponent<ImprovableItemView>();
             _itemViews.Add(itemView);
-
+           
            itemView.InitView(
                _itemConfigs.ImprovableItems.Find(item => item.ImprovableType == improvement.GetImproveType()).Icon,
                improvement.Value,
                improvement.Timer, 
                improvement.GetImproveTime() == ImprovementTime.Temporary);
         }
+
+
     }
 }

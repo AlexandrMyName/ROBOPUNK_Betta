@@ -9,21 +9,21 @@ namespace Core
     public class PlayerGoldComponent : IGoldWallet
     {
 
-        public ReactiveProperty<float> CurrentGold { get; }
+        public ReactiveProperty<int> CurrentGold { get; }
 
         public PlayerGoldComponent()
         {
-            CurrentGold = new ReactiveProperty<float>(0);
+            CurrentGold = new ReactiveProperty<int>(0);
         }
 
 
-        public void AddGold(float amountGold)
+        public void AddGold(int amountGold)
         {
             CurrentGold.Value += amountGold;
         }
 
 
-        public void RemoveGold(float amountGold)
+        public void RemoveGold(int amountGold)
         {
             CurrentGold.Value -= amountGold;
         }

@@ -125,6 +125,9 @@ namespace DI
             PlayerDashSystem dashSystem = new PlayerDashSystem();
             Container.QueueForInject(dashSystem);
 
+            PlayerStoreSystem playerStoreSystem = new PlayerStoreSystem();
+            Container.QueueForInject(playerStoreSystem);
+
             systems.Add(moveSystem);
             systems.Add(shootSystem);
             systems.Add(healthSystem);
@@ -135,6 +138,7 @@ namespace DI
             systems.Add(meleeAttackSystem);
             systems.Add(dashSystem);
             systems.Add(rotationSystem);
+            systems.Add(playerStoreSystem);
 
             return systems;
         }

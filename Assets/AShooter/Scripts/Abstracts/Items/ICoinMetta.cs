@@ -5,7 +5,7 @@ namespace User
     public interface ICoinMetta
     {
 
-        public float Value { get; }
+        public int Value { get; }
 
 
     }

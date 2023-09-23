@@ -7,10 +7,10 @@ namespace Abstracts
     public interface IGoldWallet
     {
 
-        ReactiveProperty<float> CurrentGold { get; }
+        ReactiveProperty<int> CurrentGold { get; }
 
-        public void AddGold(float amountGold);
-        public void RemoveGold(float amountGold);
+        public void AddGold(int amountGold);
+        public void RemoveGold(int amountGold);
 
 
     }
