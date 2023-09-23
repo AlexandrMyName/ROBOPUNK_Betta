@@ -11,6 +11,7 @@ namespace Abstracts
         IPlayerHP PlayerHP { get; }
         IViews Views { get; }
         IGoldWallet GoldWallet { get; }
+        IExpAccumulation expAccumulation { get; }
 
 
     }

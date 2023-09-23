@@ -13,17 +13,20 @@ MonoBehaviour:
   m_Name: StoreDataConfig
   m_EditorClassIdentifier: 
   HealthItems:
+    description: Coefficient value in units
     name: Health
     Icon: {fileID: 0}
     price: 10
     improvementCoefficient: 5
   SpeedItems:
+    description: Coefficient value in percent
     name: Speed
     Icon: {fileID: 0}
     price: 20
-    improvementCoefficient: 1.05
+    improvementCoefficient: 5
   DamageItems:
+    description: Coefficient value in percent
     name: Damage
     Icon: {fileID: 0}
     price: 40
-    improvementCoefficient: 1.05
+    improvementCoefficient: 5

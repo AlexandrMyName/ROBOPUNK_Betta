@@ -79,12 +79,13 @@ namespace DI
             PlayerHPComponent playerHP = new PlayerHPComponent(_playerHPConfig);
             ViewsComponent views = new ViewsComponent();
             PlayerGoldComponent gold = new PlayerGoldComponent();
+            PlayerExpComponent exp = new PlayerExpComponent();
 
             Container.QueueForInject(movable);
             Container.QueueForInject(attackable);
             Container.QueueForInject(views);
 
-            ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP, views, gold);
+            ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP, views, gold, exp);
 
             return components;
         }
@@ -177,8 +178,14 @@ namespace DI
             _camera.Follow = _player.transform;
             _camera.LookAt = _player.transform;
             
-            Container.Bind<Transform>().WithId("PlayerTransform").FromInstance(_player.transform).AsCached();
-            Container.Bind<Player>().FromInstance(_player).AsCached();
+            Container.Bind<Transform>()
+                .WithId("PlayerTransform")
+                .FromInstance(_player.transform)
+                .AsCached();
+
+            Container.Bind<Player>()
+                .FromInstance(_player)
+                .AsCached();
 
             if (_world) _world.Init(_player.transform);
         }

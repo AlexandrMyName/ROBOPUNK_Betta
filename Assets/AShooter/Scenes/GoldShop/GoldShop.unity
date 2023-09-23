@@ -7381,8 +7381,12 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 373266094636543478, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
+      propertyPath: _goldDropRate
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 373266094636543478, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: _respawnDelay
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 373266094636543478, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: _numberMeleeEnemy
@@ -7390,7 +7394,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 373266094636543478, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: _numberDistantEnemy
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2856735744120671710, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: m_IsActive
@@ -11146,6 +11150,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 233404178622155190, guid: bf6d18f3b680e554bb68222a0263c5cb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1552149440117888862, guid: bf6d18f3b680e554bb68222a0263c5cb, type: 3}
+      propertyPath: m_isRightToLeft
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5589194248133402397, guid: bf6d18f3b680e554bb68222a0263c5cb, type: 3}

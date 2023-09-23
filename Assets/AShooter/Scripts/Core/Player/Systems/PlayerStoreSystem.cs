@@ -47,7 +47,7 @@ namespace Core
                 _componentsStore.Movable.Speed.Value *= value;
                 _componentsStore.GoldWallet.RemoveGold(price);
 #if UNITY_EDITOR
-                Debug.Log($"Speed upgrade by 5%! Current speed -> {_componentsStore.Movable.Speed.Value}. Current gold -> {_componentsStore.GoldWallet.CurrentGold.Value}");
+                Debug.Log($"Speed upgrade by 5%! Current speed -> {_componentsStore.Movable.Speed.Value}");
 #endif
             }
             else
@@ -66,7 +66,7 @@ namespace Core
                 _componentsStore.Attackable.Health.Value += value;
                 _componentsStore.GoldWallet.RemoveGold(price);
 #if UNITY_EDITOR
-                Debug.Log($"Health upgrade by 5 HP! Current HP -> {_componentsStore.Attackable.Health.Value}. Current gold -> {_componentsStore.GoldWallet.CurrentGold.Value}");
+                Debug.Log($"Health upgrade by 5 HP! Current HP -> {_componentsStore.Attackable.Health.Value}");
 #endif
             }
             else

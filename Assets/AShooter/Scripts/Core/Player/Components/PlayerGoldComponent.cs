@@ -1,6 +1,8 @@
 using Abstracts;
 using UniRx;
-
+#if UNITY_EDITOR
+using UnityEngine;
+#endif
 
 namespace Core
 {
@@ -20,12 +22,18 @@ namespace Core
         public void AddGold(int amountGold)
         {
             CurrentGold.Value += amountGold;
+#if UNITY_EDITOR
+            Debug.Log($"Add Gold -> {amountGold}, Gold Account -> {CurrentGold.Value}");
+#endif
         }
 
 
         public void RemoveGold(int amountGold)
         {
             CurrentGold.Value -= amountGold;
+#if UNITY_EDITOR
+            Debug.Log($"Remove Gold -> {amountGold}, Gold Account -> {CurrentGold.Value}");
+#endif
         }
 
 
