@@ -7386,11 +7386,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 373266094636543478, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: _numberMeleeEnemy
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 373266094636543478, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: _numberDistantEnemy
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2856735744120671710, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: m_IsActive

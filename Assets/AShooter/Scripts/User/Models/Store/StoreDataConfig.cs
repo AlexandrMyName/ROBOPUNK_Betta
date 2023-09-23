@@ -17,6 +17,7 @@ namespace User
     [Serializable]
     public class StoreItemConfig
     {
+        public string name;
         public Sprite Icon;
         public int price;
         public float improvementCoefficient;

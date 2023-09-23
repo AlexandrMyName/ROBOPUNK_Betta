@@ -21,9 +21,21 @@ namespace User.Presenters
                             UnityAction<int, float> onClickSpeedButton, 
                             UnityAction<int, float> onClickDamageButton)
         {
+
             _healthButton.onClick.AddListener(() => onClickHealthButton(_itemConfigs.HealthItems.price, _itemConfigs.HealthItems.improvementCoefficient));
             _speedButton.onClick.AddListener(() => onClickSpeedButton(_itemConfigs.SpeedItems.price, _itemConfigs.SpeedItems.improvementCoefficient));
             _damageButton.onClick.AddListener(() => onClickDamageButton(_itemConfigs.DamageItems.price, _itemConfigs.DamageItems.improvementCoefficient));
+
+            //SetInscription(_healthButton, _itemConfigs.HealthItems);
+            //SetInscription(_speedButton, _itemConfigs.SpeedItems);
+            //SetInscription(_damageButton, _itemConfigs.DamageItems);
+        }
+
+
+        private void SetInscription(Button btn, StoreItemConfig items)
+        {
+            var txt = btn.GetComponentInChildren<Text>();
+            txt.text = $"{items.improvementCoefficient} {items.name} -> {items.price}g";
         }
 
 
