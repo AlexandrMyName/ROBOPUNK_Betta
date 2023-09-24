@@ -24,8 +24,6 @@ namespace DI
         [SerializeField] private CinemachineVirtualCamera _camera;
         [SerializeField] private Spawner _spawner;
         
-        [Space(10), SerializeField] private bool _useMoveSystem;
-        [SerializeField] private DashConfig _dashConfig;    
         [SerializeField] private bool _useShootSystem;
         [SerializeField] private bool _useRotationSystem;
         [SerializeField] private float _maxPlayerHealth;

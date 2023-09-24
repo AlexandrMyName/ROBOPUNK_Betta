@@ -4,7 +4,7 @@
 namespace Abstracts
 {
 
-    public interface IExpAccumulation
+    public interface IExperienceAccumulation
     {
 
         ReactiveProperty<float> CurrentExp { get; }

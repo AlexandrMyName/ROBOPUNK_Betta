@@ -9,7 +9,7 @@ namespace Core
 {
 
 
-    public class PlayerExpComponent : IExpAccumulation
+    public class PlayerExpComponent : IExperienceAccumulation
     {
 
         public ReactiveProperty<float> CurrentExp { get; }

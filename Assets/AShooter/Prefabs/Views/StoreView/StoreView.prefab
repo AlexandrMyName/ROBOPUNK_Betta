@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4955529994020524235}
   - component: {fileID: 3253547361427035611}
   - component: {fileID: 4128494645037622955}
+  - component: {fileID: 3008393907010193424}
   m_Layer: 5
   m_Name: DamageButton
   m_TagString: Untagged
@@ -120,19 +121,21 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3253547361427035611}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5589194248133402397}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &3008393907010193424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472432633283328460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 724e913412910d8458d2553f4ab71c58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemConfigs: {fileID: 11400000, guid: 9fa353a1e9fc30542878b41d9769e65a, type: 2}
+  _button: {fileID: 4128494645037622955}
 --- !u!1 &2075574710998063164
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,7 +414,7 @@ GameObject:
   m_Component:
   - component: {fileID: 233404178622155190}
   - component: {fileID: 7526315409089081561}
-  - component: {fileID: 6927923338920286233}
+  - component: {fileID: 1268436950473506743}
   m_Layer: 5
   m_Name: StoreView
   m_TagString: Untagged
@@ -449,7 +452,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5589194248133402397}
   m_CullTransparentMesh: 1
---- !u!114 &6927923338920286233
+--- !u!114 &1268436950473506743
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -458,12 +461,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5589194248133402397}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1707c06c770f8b40aae02d9759afcdc, type: 3}
+  m_Script: {fileID: 11500000, guid: 3be34b238ca64b24a99e65782cac23e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthButton: {fileID: 1424547248043389537}
-  _speedButton: {fileID: 3284083029249422361}
-  _damageButton: {fileID: 4128494645037622955}
+  _healthButton: {fileID: 6876436556631149738}
+  _speedButton: {fileID: 796672167435204331}
+  _damageButton: {fileID: 3008393907010193424}
 --- !u!1 &5857123956336887484
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,6 +479,7 @@ GameObject:
   - component: {fileID: 1189001517077044190}
   - component: {fileID: 3361956724098496626}
   - component: {fileID: 1424547248043389537}
+  - component: {fileID: 6876436556631149738}
   m_Layer: 5
   m_Name: HealthButton
   m_TagString: Untagged
@@ -585,6 +589,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6876436556631149738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5857123956336887484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 724e913412910d8458d2553f4ab71c58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemConfigs: {fileID: 11400000, guid: f2369b6d12d5add4da41d0e0a6b9bffe, type: 2}
+  _button: {fileID: 1424547248043389537}
 --- !u!1 &6650638691417213552
 GameObject:
   m_ObjectHideFlags: 0
@@ -731,6 +749,7 @@ GameObject:
   - component: {fileID: 6208057781957892190}
   - component: {fileID: 1619382970102374791}
   - component: {fileID: 3284083029249422361}
+  - component: {fileID: 796672167435204331}
   m_Layer: 5
   m_Name: SpeedButton
   m_TagString: Untagged
@@ -840,3 +859,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &796672167435204331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9034903493228996006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 724e913412910d8458d2553f4ab71c58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemConfigs: {fileID: 11400000, guid: 8a137f7da1c47e34297710daba442f99, type: 2}
+  _button: {fileID: 3284083029249422361}
