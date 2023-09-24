@@ -15,6 +15,7 @@ namespace Core
         private IGameComponents _components;
         private IAttackable _attackable;
         private IPlayerHP _playerHP;
+        private IDeathView _loseView;
         private List<IDisposable> _disposables = new();
          
 
@@ -25,6 +26,7 @@ namespace Core
             _components = components;
             _attackable = _components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Attackable;
             _playerHP = _components.BaseObject.GetComponent<IPlayer>().ComponentsStore.PlayerHP;
+            _loseView = _components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.Death;
             _disposables.Add(_attackable.Health.Subscribe(DeathCheck));
         }
 
@@ -42,6 +44,7 @@ namespace Core
 
             if (leftHealth <= 0)
             {
+
                 var playerRigidbody = _components.BaseObject.GetComponent<Rigidbody>();
 
                 playerRigidbody.AddForce(Vector3.back * _playerHP.PunchForce, ForceMode.Impulse);
@@ -49,6 +52,9 @@ namespace Core
                 _playerHP.IsAlive.Value = false;
 
                 InputManager.DisableSystem();
+
+                _loseView.Show();
+
             }
             else
             {
