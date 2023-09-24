@@ -10,6 +10,7 @@ namespace Core
 
         public ComponentsStore(IAttackable attackable, IMovable movable, IDash dash, IPlayerHP playerHP)
         {
+
             Attackable = attackable;
             Movable = movable;
             Dash = dash;

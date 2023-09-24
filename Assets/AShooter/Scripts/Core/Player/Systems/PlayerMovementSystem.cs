@@ -9,7 +9,7 @@ using Zenject;
 namespace Core 
 {
 
-    public sealed class PlayerMovementSystem : BaseSystem
+    public sealed class PlayerMovementSystem : BaseSystem, IDisposable
     {
 
         [Inject] private IInput _input;
@@ -33,12 +33,13 @@ namespace Core
 
         protected override void Start()
         {
-            
+
             _disposables.AddRange(new List<IDisposable>{
-                    _input.Horizontal.AxisOnChange.Subscribe(OnHorizontalChanged),
-                    _input.Vertical.AxisOnChange.Subscribe(OnVerticalChanged)}
-            );
+                    _input.Horizontal.AxisOnChange.Subscribe(value => _direction.x = value),
+                    _input.Vertical.AxisOnChange.Subscribe(value => _direction.z = value) 
+            });
         }
+
 
         protected override void Update() => _movable.MoveDirection = _direction;
 
@@ -56,12 +57,16 @@ namespace Core
 
 
         protected override void OnDestroy() => _disposables.ForEach(d => d.Dispose());
-         
 
-        private void OnHorizontalChanged(float value) => _direction.x = value;
-      
 
-        private void OnVerticalChanged(float value) => _direction.z = value;
+        public void Dispose()
+        {
+
+            _disposables.ForEach(d => d.Dispose());
+            _disposables.Clear();
+            _movable.Rigidbody.isKinematic = true;
+        }
 
     }
+
 }

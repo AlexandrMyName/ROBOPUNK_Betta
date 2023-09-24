@@ -12,7 +12,7 @@ using Zenject;
 namespace Core
 {
 
-    public sealed class PlayerWeaponSystem : BaseSystem
+    public sealed class PlayerWeaponSystem : BaseSystem, IDisposable
     {
 
         [Inject] private IInput _input;
@@ -60,17 +60,6 @@ namespace Core
                     })
                 }
             );
-        }
-
-
-        protected override void Update()
-        {
-        }
-        
-        
-        protected override void OnDestroy()
-        {
-            _disposables.ForEach(d => d.Dispose());
         }
 
 
@@ -228,6 +217,8 @@ namespace Core
             }
         }
 
+
+        public void Dispose() => _disposables.ForEach(d => d.Dispose());
 
     }
 }

@@ -10,7 +10,7 @@ using Zenject;
 namespace Core
 {
 
-    public sealed class PlayerShootSystem : BaseSystem
+    public sealed class PlayerShootSystem : BaseSystem, IDisposable
     {
 
         [Inject] private IInput _input;
@@ -26,6 +26,7 @@ namespace Core
         
         protected override void Awake(IGameComponents components)
         {
+
             _components = components;
             _camera = _components.MainCamera;
         }
@@ -33,6 +34,7 @@ namespace Core
 
         protected override void Start()
         {
+
             _disposables.AddRange(new List<IDisposable>{
                 _input.LeftClick.AxisOnChange.Subscribe(_ => TryShootPerform()),
                 _input.RightClick.AxisOnChange.Subscribe(_ => TryShootPerform()),
@@ -44,6 +46,7 @@ namespace Core
         
         private void UpdateCurrentWeapon(IWeapon rangeWeapon)
         {
+
             if (rangeWeapon is IRangeWeapon weapon)
                 _currentRangeWeapon = weapon;
             else
@@ -51,21 +54,12 @@ namespace Core
         }
 
 
-        protected override void Update()
-        {
-            DrawDebugRayToMousePosition();
+        protected override void Update() => DrawDebugRayToMousePosition();
             
-        }
         
-        
-        protected override void OnDestroy()
-        {
-            _disposables.ForEach(d => d.Dispose());
-        }
-
-
         private void TryShootPerform()
         {
+
             if (_currentRangeWeapon != null)
             {
                 if (_currentRangeWeapon.IsShootReady)
@@ -79,14 +73,12 @@ namespace Core
         }
 
 
-        private void OnMousePositionChanged(Vector3 position)
-        {
-            _mousePosition = position;
-        }
-
+        private void OnMousePositionChanged(Vector3 position) => _mousePosition = position;
+       
 
         private void DrawDebugRayToMousePosition()
         {
+
             if (_currentRangeWeapon != null)
             {
                 var ray = _camera.ScreenPointToRay(_mousePosition);
@@ -98,6 +90,8 @@ namespace Core
             }
         }
 
+
+        public void Dispose() => _disposables.ForEach(d => d.Dispose());
 
     }
 }

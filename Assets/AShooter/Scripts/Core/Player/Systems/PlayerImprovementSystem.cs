@@ -9,10 +9,13 @@ using UnityEngine;
 using User.Presenters;
 using Zenject;
 
+
 namespace Core
 {
-    public class PlayerImprovementSystem : BaseSystem, IImprovable
+
+    public class PlayerImprovementSystem : BaseSystem, IImprovable , IDisposable
     {
+
         [Inject] private TimerPool _timerPool;
         [Inject] private ImprovablePresenter _improvable;
         private IGameComponents _components;
@@ -29,7 +32,10 @@ namespace Core
                 SetTimer(improvementObject);
             }
         }
-         
+
+
+        public void Dispose() => _disposables.ForEach(disposable => disposable.Dispose());
+
 
         protected override void Awake(IGameComponents components)
         {
@@ -53,11 +59,7 @@ namespace Core
                 .GetComponent<MonoBehaviour>()
                 .StartCoroutine(TryCansel());
         }
-
-
-        protected override void OnDestroy()
-        => _disposables.ForEach(disposable => disposable.Dispose());
-
+         
 
         private void SetTimer(IImprovement improvementObject)
         {
@@ -72,6 +74,7 @@ namespace Core
                     () => { TimeDown(improvementObject); });
  
         }
+
 
         private void TimeDown(IImprovement improvementObject)
         => _timeImprovements.Enqueue(improvementObject);

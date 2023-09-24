@@ -7257,6 +7257,10 @@ PrefabInstance:
       propertyPath: _dashConfig
       value: 
       objectReference: {fileID: 11400000, guid: 30a2ad29a9613b74fa1e5c2355cec3d4, type: 2}
+    - target: {fileID: 6041886409023221945, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
+      propertyPath: _playerHPConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 1da11eeaac5abab48934667bc435db89, type: 2}
     - target: {fileID: 6495472897878780537, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: _prefab
       value: 

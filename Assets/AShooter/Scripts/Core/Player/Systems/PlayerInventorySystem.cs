@@ -10,12 +10,15 @@ using User;
 namespace Core
 {
 
-    public class PlayerInventorySystem : BaseSystem
+    public class PlayerInventorySystem : BaseSystem, IDisposable
     {
 
         private IGameComponents _components;
        
         private List<IDisposable> _disposables;
+
+
+        public void Dispose() => _disposables.ForEach(disposable => disposable.Dispose());
 
 
         protected override void Awake(IGameComponents components)
@@ -33,10 +36,6 @@ namespace Core
                         }).AddTo(_disposables);
 
         }
-
-
-        protected override void OnDestroy()
-        => _disposables.ForEach(disposable => disposable.Dispose());
 
 
         private void ApplyGettingItem(object objItem)

@@ -1,9 +1,13 @@
-﻿namespace Abstracts
+﻿using UniRx;
+
+
+namespace Abstracts
 {
     public interface IPlayerHP
     {
-        IComponentsStore ComponentsStore { get; }
-        bool _playerAlive { get; set; }
-        float _deathPunchForce { get; set; }
+
+        ReactiveProperty<bool> IsAlive { get; set; }
+        float PunchForce { get; }
+
     }
 }
