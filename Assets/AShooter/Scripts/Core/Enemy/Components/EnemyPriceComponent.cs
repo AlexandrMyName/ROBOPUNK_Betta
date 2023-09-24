@@ -1,4 +1,5 @@
 using Abstracts;
+using UnityEngine;
 
 
 namespace Core
@@ -31,9 +32,9 @@ namespace Core
         }
 
 
-        public float GetExp()
+        public float GetExperienceValue()
         {
-            return UnityEngine.Random.Range(5f, 10f);
+            return Random.Range(5f, 10f);
         }
 
 

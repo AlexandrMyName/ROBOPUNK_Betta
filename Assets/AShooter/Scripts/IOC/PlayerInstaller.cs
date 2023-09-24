@@ -77,7 +77,7 @@ namespace DI
             PlayerHPComponent playerHP = new PlayerHPComponent(_playerHPConfig);
             ViewsComponent views = new ViewsComponent();
             PlayerGoldComponent gold = new PlayerGoldComponent();
-            PlayerExpComponent exp = new PlayerExpComponent();
+            PlayerExperienceComponent exp = new PlayerExperienceComponent();
 
             Container.QueueForInject(movable);
             Container.QueueForInject(attackable);

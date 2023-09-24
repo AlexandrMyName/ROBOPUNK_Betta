@@ -8,7 +8,7 @@ using Zenject;
 namespace User.View
 {
 
-    public class ExpView : MonoBehaviour // Test View
+    public class ExperienceView : MonoBehaviour // Test View
     {
 
         [SerializeField] private TMP_Text _textUI;
@@ -17,13 +17,13 @@ namespace User.View
 
         private void Awake()
         {
-            _componentsPlayer.expAccumulation.CurrentExp.Subscribe(ChangeExp);
+            _componentsPlayer.ExperienceHandle.CurrentExperience.Subscribe(ChangeExperience);
         }
 
 
-        private void ChangeExp(float expValue)
+        private void ChangeExperience(float experienceValue)
         {
-            _textUI.text = $"Exp account : {expValue}";
+            _textUI.text = $"Exp account : {experienceValue}";
         }
 
     }

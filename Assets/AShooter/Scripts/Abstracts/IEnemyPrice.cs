@@ -6,7 +6,7 @@ namespace Abstracts
     public interface IEnemyPrice
     {
 
-        float GetExp();
+        float GetExperienceValue();
 
 
         (bool, int) CheckingForGold();

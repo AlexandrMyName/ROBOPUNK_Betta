@@ -246,8 +246,8 @@ namespace DI.Spawn
         private void AddExpToPlayer(GameObject enemyInstance)
         {
             var eneny = enemyInstance.GetComponent<Enemy>();
-            var ExpValue = eneny.ComponentsStore.EnemyPrice.GetExp();
-            _componentsPlayer.expAccumulation.AddExp(ExpValue);
+            var ExpValue = eneny.ComponentsStore.EnemyPrice.GetExperienceValue();
+            _componentsPlayer.ExperienceHandle.AddExperience(ExpValue);
         }
 
 
