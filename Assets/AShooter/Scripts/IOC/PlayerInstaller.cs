@@ -21,7 +21,8 @@ namespace DI
         [SerializeField] private Spawner _spawner;
         
         [Space(10), SerializeField] private bool _useMoveSystem;
-        [SerializeField] private DashConfig _dashConfig;    
+        [SerializeField] private DashConfig _dashConfig;
+        [SerializeField] private PlayerHPConfig _playerHPConfig;
         [SerializeField] private bool _useShootSystem;
         [SerializeField] private bool _useRotationSystem;
         [SerializeField] private float _maxPlayerHealth;
@@ -72,11 +73,12 @@ namespace DI
             PlayerMoveComponent movable = new PlayerMoveComponent();
             PlayerAttackComponent attackable = new PlayerAttackComponent();
             PlayerDashComponent dash = new PlayerDashComponent(_dashConfig);
+            PlayerHPComponent playerHP = new PlayerHPComponent(_playerHPConfig);
 
             Container.QueueForInject(movable);
             Container.QueueForInject(attackable);
 
-            ComponentsStore components = new ComponentsStore(attackable, movable, dash);
+            ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP);
 
             return components;
         }
