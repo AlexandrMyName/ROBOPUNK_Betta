@@ -9,5 +9,6 @@ namespace Abstracts
         IMovable Movable { get; }
         IDash Dash { get;  }
         IPlayerHP PlayerHP { get; }
+        IViews Views { get; }
     }
 }

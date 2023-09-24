@@ -10,6 +10,7 @@ using Cinemachine;
 using Core.Components;
 using UniRx;
 using User;
+using User.Components;
 
 namespace DI
 {
@@ -74,11 +75,13 @@ namespace DI
             PlayerAttackComponent attackable = new PlayerAttackComponent();
             PlayerDashComponent dash = new PlayerDashComponent(_dashConfig);
             PlayerHPComponent playerHP = new PlayerHPComponent(_playerHPConfig);
+            ViewsComponent views = new ViewsComponent();
 
             Container.QueueForInject(movable);
             Container.QueueForInject(attackable);
+            Container.QueueForInject(views);
 
-            ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP);
+            ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP, views);
 
             return components;
         }

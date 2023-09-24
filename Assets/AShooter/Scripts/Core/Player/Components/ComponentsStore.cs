@@ -8,13 +8,14 @@ namespace Core
     public class ComponentsStore : IComponentsStore
     {
 
-        public ComponentsStore(IAttackable attackable, IMovable movable, IDash dash, IPlayerHP playerHP)
+        public ComponentsStore(IAttackable attackable, IMovable movable, IDash dash, IPlayerHP playerHP, IViews views)
         {
 
             Attackable = attackable;
             Movable = movable;
             Dash = dash;
             PlayerHP = playerHP;
+            Views = views;
         } 
 
 
@@ -26,6 +27,7 @@ namespace Core
 
         public IPlayerHP PlayerHP { get; private set; }
 
+        public IViews Views { get; private set; }
     }
 
 }
