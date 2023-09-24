@@ -10,7 +10,7 @@ using User;
 namespace Core
 {
 
-    public class ExplosionAbilitySystem : BaseSystem
+    public class ExplosionAbilitySystem : BaseSystem, IDisposable
     {
 
         [Inject] private IInput _input;
@@ -24,14 +24,15 @@ namespace Core
 
         protected override void Awake(IGameComponents components)
         {
+
             _components = components;
             _playerTransform = _components.BaseTransform;
-            Debug.Log($"Initialized Explosion Ability System! ({components.BaseObject.name})");
         }
 
 
         protected override void Start()
         {
+
             InitializeExplosionAbility(_explosionAbilityConfigs);
 
             _disposables.AddRange(new List<IDisposable>{
@@ -39,13 +40,7 @@ namespace Core
                 }
             );
         }
-
-
-        protected override void OnDestroy()
-        {
-            _disposables.ForEach(d => d.Dispose());
-        }
-
+         
 
         private void InitializeExplosionAbility(ExplosionAbilityConfig config)
         {
@@ -71,6 +66,13 @@ namespace Core
                 explosionAbility.Apply(playerTransform);
         }
 
+
+        public void Dispose()
+        {
+
+            _disposables.ForEach(d => d.Dispose());
+            _disposables.Clear();
+        }
 
     }
 }

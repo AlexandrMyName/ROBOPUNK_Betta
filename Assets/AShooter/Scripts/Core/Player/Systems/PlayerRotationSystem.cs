@@ -9,8 +9,9 @@ using Zenject;
 namespace Core
 {
     
-    public sealed class PlayerRotationSystem : BaseSystem
+    public sealed class PlayerRotationSystem : BaseSystem , IDisposable
     {
+
         [Inject] private IInput _input;
         private Player _player;
         private Rigidbody _rigidbody;
@@ -61,11 +62,8 @@ namespace Core
         }
         
         
-        protected override void OnDestroy()
-        {
-            _disposables.ForEach(d => d.Dispose());
-        }
+        public void Dispose() => _disposables.ForEach(d => d.Dispose());
+
     }
-    
-    
+
 }

@@ -12,7 +12,7 @@ using Zenject;
 namespace Core
 {
 
-    public sealed class PlayerMeleeAttackSystem : BaseSystem
+    public sealed class PlayerMeleeAttackSystem : BaseSystem, IDisposable
     {
 
         [Inject] private IInput _input;
@@ -45,12 +45,6 @@ namespace Core
         }
         
         
-        protected override void Update()
-        {
-            
-        }
-
-        
         protected override void OnDrawGizmos()
         {
             if (_currentMeleeWeapon != null)
@@ -59,13 +53,7 @@ namespace Core
             }
         }
         
-        
-        protected override void OnDestroy()
-        {
-            _disposables.ForEach(d => d.Dispose());
-        }
-        
-        
+      
         private void UpdateCurrentWeapon(IWeapon meleeWeapon)
         {
             if (meleeWeapon is IMeleeWeapon melee)
@@ -85,6 +73,7 @@ namespace Core
             }
         }
 
+        public void Dispose() => _disposables.ForEach(d => d.Dispose());
 
     }
 }

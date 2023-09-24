@@ -21,7 +21,8 @@ namespace DI
         [SerializeField] private Spawner _spawner;
         
         [Space(10), SerializeField] private bool _useMoveSystem;
-        [SerializeField] private DashConfig _dashConfig;    
+        [SerializeField] private DashConfig _dashConfig;
+        [SerializeField] private PlayerHPConfig _playerHPConfig;
         [SerializeField] private bool _useShootSystem;
         [SerializeField] private bool _useRotationSystem;
         [SerializeField] private float _maxPlayerHealth;
@@ -32,7 +33,6 @@ namespace DI
         
         private SpawnPlayerFactory _spawnPlayerFactory;
         
-        private GameObject _playerObject;
         private Player _player;
 
         [Space,SerializeField, Header("Test (can be bull)")]
@@ -69,14 +69,16 @@ namespace DI
 
         private IComponentsStore InitComponents()
         {
+
             PlayerMoveComponent movable = new PlayerMoveComponent();
             PlayerAttackComponent attackable = new PlayerAttackComponent();
             PlayerDashComponent dash = new PlayerDashComponent(_dashConfig);
+            PlayerHPComponent playerHP = new PlayerHPComponent(_playerHPConfig);
 
             Container.QueueForInject(movable);
             Container.QueueForInject(attackable);
 
-            ComponentsStore components = new ComponentsStore(attackable, movable, dash);
+            ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP);
 
             return components;
         }
@@ -84,6 +86,7 @@ namespace DI
 
         private List<ISystem> InitSystems()
         {
+
             List<ISystem> systems = new List<ISystem>();
 
             PlayerMovementSystem moveSystem = new PlayerMovementSystem();
@@ -133,6 +136,7 @@ namespace DI
 
         private void SetHealth(float initializedMaxHealth)
         {
+
             ReactiveProperty<float> health = new ReactiveProperty<float>(initializedMaxHealth);
 
             Container
@@ -144,6 +148,7 @@ namespace DI
         
         private void SetSpeed(float initSpeed)
         {
+
             ReactiveProperty<float> speed = new ReactiveProperty<float>(initSpeed);
 
             Container
@@ -155,6 +160,7 @@ namespace DI
         
         public void Awake()
         {
+
             _spawnPlayerFactory = Container.Resolve<SpawnPlayerFactory>();
             _player = _spawnPlayerFactory.Create();
 
