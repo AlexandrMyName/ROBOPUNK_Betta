@@ -32,7 +32,7 @@ namespace User
             if (_isLaserExist)
             {
                 _hitVector = DrawRayUntilCollision();
-                _endLineVector.z = _hitVector.z;
+                _endLineVector.z = _hitVector.z > _distance ? _distance : _hitVector.z;
                 _lineRenderer.SetPosition(1, _endLineVector);
             }
         }
