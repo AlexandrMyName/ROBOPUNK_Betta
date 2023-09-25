@@ -8,5 +8,7 @@ namespace Abstracts
 
         IDeathView Death { get; }
 
+        IDashView Dash { get; }
+
     }
 }
