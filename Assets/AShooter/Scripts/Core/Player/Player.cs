@@ -38,7 +38,9 @@ namespace Core
 
             foreach(var system in _systems)
             {
-               var disposableSystem = (IDisposable) system;
+                IDisposable disposableSystem = (IDisposable) system;
+
+                
 
                 if(disposableSystem != null)
                 {

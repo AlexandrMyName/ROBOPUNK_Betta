@@ -9,7 +9,7 @@ using Zenject;
 namespace Core
 {
 
-    public class PlayerStoreSystem : BaseSystem
+    public class PlayerStoreSystem : BaseSystem , IDisposable
     {
 
         [Inject] private IStoreView _store;
@@ -17,6 +17,7 @@ namespace Core
         private List<IDisposable> _disposables;
         private IComponentsStore _componentsStore;
         
+
         protected override void Awake(IGameComponents components)
         {
             _disposables = new();
@@ -56,18 +57,12 @@ namespace Core
         }
         
         
-        protected override void OnDestroy()
-        {
-            _disposables.ForEach(disposable => disposable.Dispose());
-        
-        }
-        
-        
         private float ConversionToDecimalFromPercentage(float x)
         {
             return ((x/100)+1);
         }
 
+        public void Dispose() => _disposables.ForEach(disposable => disposable.Dispose());
     }
 }
 
