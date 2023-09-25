@@ -16,13 +16,13 @@ namespace DI
     
     public class PlayerInstaller : MonoInstaller
     {
-        
-        [SerializeField] private CinemachineVirtualCamera _camera;
-        [SerializeField] private Spawner _spawner;
-        
+
         [Space(10), SerializeField] private bool _useMoveSystem;
         [SerializeField] private DashConfig _dashConfig;
         [SerializeField] private PlayerHPConfig _playerHPConfig;
+        [SerializeField] private CinemachineVirtualCamera _camera;
+        [SerializeField] private Spawner _spawner;
+        
         [SerializeField] private bool _useShootSystem;
         [SerializeField] private bool _useRotationSystem;
         [SerializeField] private float _maxPlayerHealth;
@@ -75,12 +75,14 @@ namespace DI
             PlayerDashComponent dash = new PlayerDashComponent(_dashConfig);
             PlayerHPComponent playerHP = new PlayerHPComponent(_playerHPConfig);
             ViewsComponent views = new ViewsComponent();
+            PlayerGoldComponent gold = new PlayerGoldComponent();
+            PlayerExperienceComponent exp = new PlayerExperienceComponent();
 
             Container.QueueForInject(movable);
             Container.QueueForInject(attackable);
             Container.QueueForInject(views);
 
-            ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP, views);
+            ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP, views, gold, exp);
 
             return components;
         }
@@ -121,6 +123,9 @@ namespace DI
             PlayerDashSystem dashSystem = new PlayerDashSystem();
             Container.QueueForInject(dashSystem);
 
+            PlayerStoreSystem playerStoreSystem = new PlayerStoreSystem();
+            Container.QueueForInject(playerStoreSystem);
+
             systems.Add(moveSystem);
             systems.Add(shootSystem);
             systems.Add(healthSystem);
@@ -131,6 +136,7 @@ namespace DI
             systems.Add(meleeAttackSystem);
             systems.Add(dashSystem);
             systems.Add(rotationSystem);
+            systems.Add(playerStoreSystem);
 
             return systems;
         }
@@ -169,8 +175,14 @@ namespace DI
             _camera.Follow = _player.transform;
             _camera.LookAt = _player.transform;
             
-            Container.Bind<Transform>().WithId("PlayerTransform").FromInstance(_player.transform).AsCached();
-            Container.Bind<Player>().FromInstance(_player).AsCached();
+            Container.Bind<Transform>()
+                .WithId("PlayerTransform")
+                .FromInstance(_player.transform)
+                .AsCached();
+
+            Container.Bind<Player>()
+                .FromInstance(_player)
+                .AsCached();
 
             if (_world) _world.Init(_player.transform);
         }

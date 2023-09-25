@@ -8,17 +8,6 @@ namespace Core
     public class ComponentsStore : IComponentsStore
     {
 
-        public ComponentsStore(IAttackable attackable, IMovable movable, IDash dash, IPlayerHP playerHP, IViews views)
-        {
-
-            Attackable = attackable;
-            Movable = movable;
-            Dash = dash;
-            PlayerHP = playerHP;
-            Views = views;
-        } 
-
-
         public IAttackable Attackable { get; private set; }
 
         public IMovable Movable { get; private set; }
@@ -28,6 +17,25 @@ namespace Core
         public IPlayerHP PlayerHP { get; private set; }
 
         public IViews Views { get; private set; }
+
+        public IGoldWallet GoldWallet { get; private set; }
+
+        public IExperienceHandle ExperienceHandle { get; private set; }
+
+
+        public ComponentsStore(IAttackable attackable, IMovable movable, IDash dash, IPlayerHP playerHP, IViews views, IGoldWallet gold, IExperienceHandle exp)
+        {
+
+            Attackable = attackable;
+            Movable = movable;
+            Dash = dash;
+            PlayerHP = playerHP;
+            Views = views;
+            GoldWallet = gold;
+            ExperienceHandle = exp;
+        } 
+
+
     }
 
 }

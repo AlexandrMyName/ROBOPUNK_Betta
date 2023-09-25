@@ -15,6 +15,7 @@ namespace DI.Spawn
     {
 
         [Inject] private DiContainer _container;
+        [Inject(Id = "PlayerComponents")] private IComponentsStore _componentsPlayer;
 
         [SerializeField] private GameObject _prefab;
         [SerializeField] private Transform _spawnTransform;
@@ -25,10 +26,10 @@ namespace DI.Spawn
         [SerializeField] private float _spawnRadius = 2f;
         [SerializeField, Range(1.5f, 7f)] private float _rangeRadiusRange;
 
-
         [SerializeField] private GameObject _spiderPrefab;
         [SerializeField, Range(0, 1)] private float _spiderProbableInstance;
         [SerializeField, Range(1.5f, 2.5f)] private float _spiderRadius;
+        [SerializeField, Range(1, 100)] int _goldDropRate;
 
         private GameObjectPool _enemyPool;
         private float _numberMeleeEnemy_cnt;
@@ -88,28 +89,20 @@ namespace DI.Spawn
             switch (enemyInstance.GetComponent<Enemy>().EnemyType)
             {
                 case EnemyType.MeleeEnemy:
-
                     rend.material.color = Color.yellow;
-
                     break;
 
                 case EnemyType.DistantEnemy:
-
                     rend.material.color = Color.blue;
-
                     var spiderPercentSpawn = UnityEngine.Random.Range(0, 100);
 
                     if (spiderPercentSpawn < _spiderProbableInstance * 100)
                     {
                         SetSpider(enemyInstance);
-                         
-
                     }
-            
                     break;
 
                 default:
-
                     break;
             }
         }
@@ -165,8 +158,9 @@ namespace DI.Spawn
         {
 
             EnemyAttackComponent attackable = new EnemyAttackComponent();
+            EnemyPriceComponent enemyPrice = new EnemyPriceComponent(_goldDropRate);
 
-            return new EnemyComponentsStore(attackable);
+            return new EnemyComponentsStore(attackable, enemyPrice);
         }
 
 
@@ -204,14 +198,12 @@ namespace DI.Spawn
                 default:
                     break;
             }
-
             return systems;
         }
 
 
         private EnemyType GetEnemyType(GameObject enemyInstance) => enemyInstance.GetComponent<IEnemy>().EnemyType;
          
-
 
         private void TrySpawnEnemy()
         {
@@ -227,6 +219,8 @@ namespace DI.Spawn
                 {
                     if (isDead)
                     {
+                        AddExpToPlayer(enemyInstance);
+                        AddGoldToPlayer(enemyInstance);
                         ReturnEnemyToPool(enemyInstance);
                     }
                 });
@@ -235,6 +229,26 @@ namespace DI.Spawn
                 activeEnemyCount++;
             }
         }
+
+
+        private void AddGoldToPlayer(GameObject enemyInstance)
+        {
+            
+            var eneny = enemyInstance.GetComponent<Enemy>();
+            int goldValue = eneny.ComponentsStore.EnemyPrice.GetGoldValue();
+
+            if (goldValue > 0)
+                _componentsPlayer.GoldWallet.AddGold(goldValue);
+        }
+
+
+        private void AddExpToPlayer(GameObject enemyInstance)
+        {
+            var eneny = enemyInstance.GetComponent<Enemy>();
+            var ExpValue = eneny.ComponentsStore.EnemyPrice.GetExperienceValue();
+            _componentsPlayer.ExperienceHandle.AddExperience(ExpValue);
+        }
+
 
         private void SetDeadFlagInTrue(Enemy enemy) => enemy.ComponentsStore.Attackable.IsDeadFlag.Value = false;
         
@@ -249,6 +263,6 @@ namespace DI.Spawn
             return new Vector3(Mathf.Cos(randomAngle) * _spawnRadius, 0f, Mathf.Sin(randomAngle) * _spawnRadius);
         }
 
-    }
 
+    }
 }

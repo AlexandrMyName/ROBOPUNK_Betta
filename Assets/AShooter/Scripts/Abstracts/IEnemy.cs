@@ -5,8 +5,6 @@ using UnityEngine;
 
 namespace Abstracts
 {
-
-
     public interface IEnemy
     {
         EnemyType EnemyType { get; set; }

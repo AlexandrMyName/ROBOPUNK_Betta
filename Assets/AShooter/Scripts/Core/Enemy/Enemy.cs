@@ -14,15 +14,16 @@ namespace Core
 
         [field: SerializeField] public SphereCollider EnemyRadiusAttack { get; private set; }
 
+        [Inject(Id = "PlayerTransform")] public Transform PlayerTransform { get; private set; }
+
         public EnemyType EnemyType { get; set; }
 
         public EnemyState EnemyState { get; set; }
 
         public IEnemyComponentsStore ComponentsStore { get; private set; }
 
-        [Inject(Id = "PlayerTransform")] public Transform PlayerTransform { get; private set; }
-
         private List<ISystem> _systems;
+
 
         public void SetComponents(IEnemyComponentsStore components,  float rangeRadius)
         {
@@ -36,6 +37,6 @@ namespace Core
 
         protected override List<ISystem> GetSystems() =>  _systems;
 
-    }
 
+    }
 }
