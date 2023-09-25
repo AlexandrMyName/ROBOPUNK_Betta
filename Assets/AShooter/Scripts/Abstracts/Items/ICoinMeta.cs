@@ -2,7 +2,7 @@
 namespace User
 {
 
-    public interface ICoinMetta
+    public interface ICoinMeta
     {
 
         public int Value { get; }

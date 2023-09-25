@@ -46,9 +46,9 @@ namespace Core
                 return;
             }
 
-            if(objItem.GetType() == typeof(CoinMetta))
+            if(objItem.GetType() == typeof(CoinMeta))
             {
-                ApplayGettingGold((ICoinMetta)objItem);
+                ApplayGettingGold((ICoinMeta)objItem);
             }
 
             if (objItem.GetType() == typeof(float))
@@ -100,7 +100,7 @@ namespace Core
         }
 
 
-        private void ApplayGettingGold(ICoinMetta coin)
+        private void ApplayGettingGold(ICoinMeta coin)
         {
             _goldWallet.AddGold(coin.Value);
 

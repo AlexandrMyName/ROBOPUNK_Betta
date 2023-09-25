@@ -38,7 +38,7 @@ public class Chest : MonoBehaviour, IChest
     {
         var rndGoldCoinNumber = Random.Range(0, chestConfig.MettaCoinsPossibleGeneration.Count - 1);
         var rndGoldCoinValue = chestConfig.MettaCoinsPossibleGeneration[rndGoldCoinNumber];
-        return new CoinMetta(rndGoldCoinValue);
+        return new CoinMeta(rndGoldCoinValue);
     }
 
 

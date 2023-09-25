@@ -3,13 +3,13 @@
 namespace User
 {
      
-    public class CoinMetta : ICoinMetta
+    public class CoinMeta : ICoinMeta
     {
 
         public int Value { get; private set; }
 
 
-        public CoinMetta(int countHealth)
+        public CoinMeta(int countHealth)
         {
             Value = countHealth;
         }
