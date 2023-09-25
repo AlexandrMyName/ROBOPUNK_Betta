@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 
 namespace User
@@ -62,20 +63,21 @@ namespace User
 
         private Vector3 DrawRayUntilCollision()
         {
-            Vector3 hitPoint = Vector3.zero;
-            
+  
             var ray = new Ray(_laserTransform.position, _laserTransform.forward);
 
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, _distance) && !hitInfo.collider.isTrigger)
-            {
-                hitPoint = _laserTransform.InverseTransformPoint(hitInfo.point);
-            }
+            RaycastHit [] hits = Physics.RaycastAll(ray, _distance);
+
+            if (hits.Length == 0) return _endLineVectorDefault;
             else
             {
-                hitPoint = _endLineVectorDefault;
+                bool isFindedCollider = hits.Select(hit => !hit.collider.isTrigger).First();
+                if(!isFindedCollider) return _endLineVectorDefault;
+
+                RaycastHit hit = hits.Where(hit => !hit.collider.isTrigger).FirstOrDefault();
+                return _laserTransform.InverseTransformPoint(hit.point);
             }
 
-            return hitPoint;
         }
         
         

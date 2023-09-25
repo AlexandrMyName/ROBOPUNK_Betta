@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4405172, g: 0.48913097, b: 0.56928134, a: 1}
+  m_IndirectSpecularColor: {r: 0.44051686, g: 0.48913074, b: 0.56928056, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7502,6 +7502,10 @@ PrefabInstance:
       propertyPath: _containerForUI
       value: 
       objectReference: {fileID: 696660040}
+    - target: {fileID: 2056653737502585326, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
+      propertyPath: _dashViewPrefab
+      value: 
+      objectReference: {fileID: 8883014059306586274, guid: afff7b4e6b4c22440ba5a86054e68eb3, type: 3}
     - target: {fileID: 4383781397521461427, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: _improvablePresenter
       value: 
