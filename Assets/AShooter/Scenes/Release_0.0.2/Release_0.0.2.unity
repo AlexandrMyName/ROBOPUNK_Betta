@@ -7598,6 +7598,10 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 373266094636543478, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
+      propertyPath: _respawnDelay
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 373266094636543478, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: _spiderPrefab
       value: 
       objectReference: {fileID: 5783359468839766296, guid: 09b8414b5daac0142abdd54089367d69, type: 3}
