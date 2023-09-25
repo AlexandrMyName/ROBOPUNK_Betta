@@ -10,7 +10,7 @@ namespace Abstracts
         ReactiveProperty<int> CurrentGold { get; }
 
         public void AddGold(int amountGold);
-        public void RemoveGold(int amountGold);
+        public void DeductGold(int amountGold);
 
 
     }

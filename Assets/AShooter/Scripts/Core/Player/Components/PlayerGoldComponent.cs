@@ -28,7 +28,7 @@ namespace Core
         }
 
 
-        public void RemoveGold(int amountGold)
+        public void DeductGold(int amountGold)
         {
             CurrentGold.Value -= amountGold;
 #if UNITY_EDITOR

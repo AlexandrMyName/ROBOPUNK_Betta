@@ -41,7 +41,7 @@ namespace Core
             if (_componentsStore.GoldWallet.CurrentGold.Value >= price)
             {
                 _componentsStore.Movable.Speed.Value *= ConversionToDecimalFromPercentage(value);
-                _componentsStore.GoldWallet.RemoveGold(price);
+                _componentsStore.GoldWallet.DeductGold(price);
             }
         }
         
@@ -51,7 +51,7 @@ namespace Core
             if (_componentsStore.GoldWallet.CurrentGold.Value >= price)
             {
                 _componentsStore.Attackable.Health.Value += value;
-                _componentsStore.GoldWallet.RemoveGold(price);
+                _componentsStore.GoldWallet.DeductGold(price);
             }
         }
         
