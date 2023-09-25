@@ -10,6 +10,8 @@ namespace Abstracts
 
         Projectile ProjectileObject { get; }
 
+        Laser Laser { get; }
+
         float ProjectileForce { get; }
 
         int ClipSize { get; }

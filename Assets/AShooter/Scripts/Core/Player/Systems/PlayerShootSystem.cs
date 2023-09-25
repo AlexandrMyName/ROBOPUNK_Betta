@@ -52,10 +52,15 @@ namespace Core
             else
                 _currentRangeWeapon = null;
         }
+        
+        
+        protected override void Update()
+        {
+            DrawDebugRayToMousePosition();
+            if (_currentRangeWeapon != null)
+                _currentRangeWeapon.Laser.Update();
+        }
 
-
-        protected override void Update() => DrawDebugRayToMousePosition();
-            
         
         private void TryShootPerform()
         {
