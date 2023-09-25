@@ -3252,6 +3252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _containerForUI: {fileID: 227812498}
   _deathViewPrefab: {fileID: 6588995917222519346, guid: fa087c53736b858439b3f6493e3fb4ee, type: 3}
+  _dashViewPrefab: {fileID: 8883014059306586274, guid: afff7b4e6b4c22440ba5a86054e68eb3, type: 3}
 --- !u!1 &550520363
 GameObject:
   m_ObjectHideFlags: 0

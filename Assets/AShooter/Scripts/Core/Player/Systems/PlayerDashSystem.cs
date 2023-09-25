@@ -14,17 +14,23 @@ namespace Core
 
         [Inject] private IInput _input;
         private IDash _dash;
+        private IDashView _view;
         private IMovable _movable;
 
         private List<IDisposable> _inputsDisposables = new();
         private List<IDisposable> _timersDisposables = new();
 
-
+       
         protected override void Awake(IGameComponents components)
         {
 
             _dash = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Dash;
             _movable = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Movable;
+            _view = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.Dash;
+
+            _view.Regenerate(_dash.RegenerationTime);
+            _view.Show();
+
         }
 
 
@@ -39,11 +45,24 @@ namespace Core
         }
 
 
+        protected override void Update()
+        {
+
+            if (_dash.IsProccess) 
+                _view.Refresh();
+
+        }
+
+
         private void RegenerateDash()
         {
 
             Observable.Timer(TimeSpan.FromSeconds(_dash.RegenerationTime))
-                .Subscribe(timer => { _dash.IsProccess = false; DisposeTimers(); })
+                .Subscribe(timer => { 
+
+                    _dash.IsProccess = false;
+                    DisposeTimers();
+                    _view.Regenerate(_dash.RegenerationTime); })
                 .AddTo(_timersDisposables);
  
         }

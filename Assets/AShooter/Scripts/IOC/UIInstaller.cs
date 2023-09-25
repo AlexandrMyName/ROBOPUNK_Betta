@@ -11,6 +11,8 @@ public class UIInstaller : MonoInstaller
 
     [SerializeField] private GameObject _deathViewPrefab;
 
+    [SerializeField] private GameObject _dashViewPrefab;
+
 
     public override void InstallBindings()
     {
@@ -19,9 +21,12 @@ public class UIInstaller : MonoInstaller
             .Bind<IDeathView>()
             .FromInstance(InstantiateView<IDeathView>(_deathViewPrefab))
             .AsCached();
-        
 
-        
+        Container
+            .Bind<IDashView>()
+            .FromInstance(InstantiateView<IDashView>(_dashViewPrefab))
+            .AsCached();
+
 
 
 

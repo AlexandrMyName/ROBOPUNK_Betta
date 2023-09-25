@@ -10,8 +10,7 @@ namespace User.Components
 
         [Inject] public IDeathView Death { get;  }
 
-
-
+        [Inject] public IDashView Dash { get; }
 
     }
 }
