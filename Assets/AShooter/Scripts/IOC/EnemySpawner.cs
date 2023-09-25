@@ -233,13 +233,12 @@ namespace DI.Spawn
 
         private void AddGoldToPlayer(GameObject enemyInstance)
         {
+            
             var eneny = enemyInstance.GetComponent<Enemy>();
-            var (GoldAvailability, GoldValue) = eneny.ComponentsStore.EnemyPrice.CheckingForGold();
+            int goldValue = eneny.ComponentsStore.EnemyPrice.GetGoldValue();
 
-            if (GoldAvailability)
-            {
-                _componentsPlayer.GoldWallet.AddGold(GoldValue);
-            }
+            if (goldValue > 0)
+                _componentsPlayer.GoldWallet.AddGold(goldValue);
         }
 
 

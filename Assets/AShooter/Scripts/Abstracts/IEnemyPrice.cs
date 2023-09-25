@@ -9,7 +9,7 @@ namespace Abstracts
         float GetExperienceValue();
 
 
-        (bool, int) CheckingForGold();
+        int GetGoldValue();
 
 
     }

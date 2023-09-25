@@ -18,23 +18,15 @@ namespace Core
         }
 
 
-        public (bool, int) CheckingForGold()
-        {
-            bool goldAvailability;
-            int goldValue = 0;
-
-            if (goldAvailability = (UnityEngine.Random.Range(1, 100) <= _goldDropRate))
-            {
-                goldValue = UnityEngine.Random.Range(1, 10);
-            }
-
-            return (goldAvailability, goldValue);
-        }
-
-
         public float GetExperienceValue()
         {
             return Random.Range(5f, 10f);
+        }
+
+
+        public int GetGoldValue()
+        {
+            return (Random.Range(1, 100) <= _goldDropRate) ? Random.Range(1, 10) : 0;
         }
 
 

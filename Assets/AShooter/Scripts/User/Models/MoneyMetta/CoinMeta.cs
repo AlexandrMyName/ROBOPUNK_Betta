@@ -9,9 +9,9 @@ namespace User
         public int Value { get; private set; }
 
 
-        public CoinMeta(int countHealth)
+        public CoinMeta(int countValue)
         {
-            Value = countHealth;
+            Value = countValue;
         }
 
        
