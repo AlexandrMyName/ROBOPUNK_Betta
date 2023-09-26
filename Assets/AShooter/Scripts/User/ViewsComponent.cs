@@ -12,5 +12,11 @@ namespace User.Components
 
         [Inject] public IDashView Dash { get; }
 
+        [Inject] public IStoreView Store { get; }
+
+        [Inject] public IGoldWalletView GoldWallet { get; }
+
+        [Inject] public IExperienceView ExperienceView { get; }
+
     }
 }

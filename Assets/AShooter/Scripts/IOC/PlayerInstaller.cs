@@ -22,7 +22,8 @@ namespace DI
         [SerializeField] private PlayerHPConfig _playerHPConfig;
         [SerializeField] private CinemachineVirtualCamera _camera;
         [SerializeField] private Spawner _spawner;
-        
+        [SerializeField] private StoreItemsDataConfig _storeItemsDataConfig;
+
         [SerializeField] private bool _useShootSystem;
         [SerializeField] private bool _useRotationSystem;
         [SerializeField] private float _maxPlayerHealth;
@@ -75,14 +76,15 @@ namespace DI
             PlayerDashComponent dash = new PlayerDashComponent(_dashConfig);
             PlayerHPComponent playerHP = new PlayerHPComponent(_playerHPConfig);
             ViewsComponent views = new ViewsComponent();
-            PlayerGoldComponent gold = new PlayerGoldComponent();
+            PlayerGoldWalletComponent gold = new PlayerGoldWalletComponent();
             PlayerExperienceComponent exp = new PlayerExperienceComponent();
+            PlayerStoreEnhancementComponent store = new PlayerStoreEnhancementComponent(_storeItemsDataConfig);
 
             Container.QueueForInject(movable);
             Container.QueueForInject(attackable);
             Container.QueueForInject(views);
 
-            ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP, views, gold, exp);
+            ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP, views, gold, exp, store);
 
             return components;
         }
@@ -126,6 +128,12 @@ namespace DI
             PlayerStoreSystem playerStoreSystem = new PlayerStoreSystem();
             Container.QueueForInject(playerStoreSystem);
 
+            PlayerExperienceSystem playerExperienceSystem = new PlayerExperienceSystem();
+            Container.QueueForInject(playerExperienceSystem);
+
+            PlayerGoldWalletSystem playerGoldWalletSystem = new PlayerGoldWalletSystem();
+            Container.QueueForInject(playerGoldWalletSystem);
+
             systems.Add(moveSystem);
             systems.Add(shootSystem);
             systems.Add(healthSystem);
@@ -137,6 +145,8 @@ namespace DI
             systems.Add(dashSystem);
             systems.Add(rotationSystem);
             systems.Add(playerStoreSystem);
+            systems.Add(playerExperienceSystem);
+            systems.Add(playerGoldWalletSystem);
 
             return systems;
         }

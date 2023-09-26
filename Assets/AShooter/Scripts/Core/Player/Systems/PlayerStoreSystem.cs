@@ -1,9 +1,7 @@
 using Abstracts;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using Zenject;
+using User.Presenters;
 
 
 namespace Core
@@ -11,48 +9,56 @@ namespace Core
 
     public class PlayerStoreSystem : BaseSystem , IDisposable
     {
-
-        [Inject] private IStoreView _store;
         
         private List<IDisposable> _disposables;
         private IComponentsStore _componentsStore;
-        
+        private IStoreView _store;
+
 
         protected override void Awake(IGameComponents components)
         {
             _disposables = new();
             _componentsStore = components.BaseObject.GetComponent<IPlayer>().ComponentsStore;
-        
-            _store.Init(
-                onClickHealthButton: (price, value) => BuyHealthUpgrade(price, value),
-                onClickSpeedButton: (price, value) => BuySpeedUpgrade(price, value),
-                onClickDamageButton: (price, value) => BuyDamageUpgrade(price, value)
+            _store = _componentsStore.Views.Store;
+
+            _store.Show();
+
+            _store.SetInscriptions(
+                _componentsStore.StoreEnhancement.HealthEnhancement, 
+                _componentsStore.StoreEnhancement.SpeedEnhancement,
+                _componentsStore.StoreEnhancement.DamageEnhancement);
+
+            _store.SubscribeClickButtons(
+                onClickButtonHealth: (obj) => BuyHealthUpgrade(obj),
+                onClickButtonSpeed: (obj) => BuySpeedUpgrade(obj),
+                onClickButtonDamage: (obj) => BuyDamageUpgrade(obj)
             );
         }
         
         
-        private void BuyDamageUpgrade(int price, float value)
+        private void BuyDamageUpgrade(StoreItemView obj)
         {
         
         }
         
         
-        private void BuySpeedUpgrade(int price, float value)
+        private void BuySpeedUpgrade(StoreItemView obj)
         {
-            if (_componentsStore.GoldWallet.CurrentGold.Value >= price)
+            if (_componentsStore.GoldWallet.CurrentGold.Value >= _componentsStore.StoreEnhancement.SpeedEnhancement.price)
             {
-                _componentsStore.Movable.Speed.Value *= ConversionToDecimalFromPercentage(value);
-                _componentsStore.GoldWallet.DeductGold(price);
+                _componentsStore.Movable.Speed.Value *= ConversionToDecimalFromPercentage(_componentsStore.StoreEnhancement.SpeedEnhancement.improvementCoefficient);
+                _componentsStore.GoldWallet.DeductGold(_componentsStore.StoreEnhancement.SpeedEnhancement.price);
             }
         }
         
         
-        private void BuyHealthUpgrade(int price, float value)
+        private void BuyHealthUpgrade(StoreItemView obj)
         {
-            if (_componentsStore.GoldWallet.CurrentGold.Value >= price)
+            
+            if (_componentsStore.GoldWallet.CurrentGold.Value >= _componentsStore.StoreEnhancement.HealthEnhancement.price)
             {
-                _componentsStore.Attackable.Health.Value += value;
-                _componentsStore.GoldWallet.DeductGold(price);
+                _componentsStore.Attackable.Health.Value += _componentsStore.StoreEnhancement.HealthEnhancement.improvementCoefficient;
+                _componentsStore.GoldWallet.DeductGold(_componentsStore.StoreEnhancement.HealthEnhancement.price);
             }
         }
         

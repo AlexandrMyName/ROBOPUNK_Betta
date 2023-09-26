@@ -9,24 +9,36 @@ namespace User.Presenters
     public class StoreView : MonoBehaviour, IStoreView
     {
 
-        [SerializeField] private StoreButtonView _healthButton;
-        [SerializeField] private StoreButtonView _speedButton;
-        [SerializeField] private StoreButtonView _damageButton;
+        [SerializeField] private StoreItemView _healthEnhancement;
+        [SerializeField] private StoreItemView _speedEnhancement;
+        [SerializeField] private StoreItemView _damageEnhancement;
 
 
         public void Show()
         {
-            _healthButton.Show();
-            _speedButton.Show();
-            _damageButton.Show();
+            gameObject.SetActive(true);
         }
-    
 
-        public void Init(UnityAction<int, float> onClickButtonHealth, UnityAction<int, float> onClickButtonSpeed, UnityAction<int, float> onClickButtonDamage)
+
+        public void Hide()
         {
-            _healthButton.Init(onClickButtonHealth);
-            _speedButton.Init(onClickButtonSpeed);
-            _damageButton.Init(onClickButtonDamage);
+            gameObject.SetActive(false);
+        }
+
+
+        public void SetInscriptions(StoreItemConfig storeHealthDataConfig, StoreItemConfig storeSpeedDataConfig, StoreItemConfig storeDamageDataConfig)
+        {
+            _healthEnhancement.SetInscription(storeHealthDataConfig);
+            _speedEnhancement.SetInscription(storeSpeedDataConfig);
+            _damageEnhancement.SetInscription(storeDamageDataConfig);
+        }
+
+
+        public void SubscribeClickButtons(UnityAction<StoreItemView> onClickButtonHealth, UnityAction<StoreItemView> onClickButtonSpeed, UnityAction<StoreItemView> onClickButtonDamage)
+        {
+            _healthEnhancement.SubscribeClickButton(onClickButtonHealth);
+            _speedEnhancement.SubscribeClickButton(onClickButtonSpeed);
+            _damageEnhancement.SubscribeClickButton(onClickButtonDamage);
         }
 
 

@@ -11,6 +11,8 @@ public class UIInstaller : MonoInstaller
     [SerializeField] private GameObject _deathViewPrefab;
     [SerializeField] private GameObject _storeViewPrefab;
     [SerializeField] private GameObject _dashViewPrefab;
+    [SerializeField] private GameObject _goldWalletViewPrefab;
+    [SerializeField] private GameObject _experienceViewPrefab;
 
 
     public override void InstallBindings()
@@ -21,7 +23,6 @@ public class UIInstaller : MonoInstaller
             .FromInstance(InstantiateView<IDeathView>(_deathViewPrefab))
             .AsCached();
 
-
         Container
             .Bind<IStoreView>()
             .FromInstance(InstantiateView<IStoreView>(_storeViewPrefab))
@@ -31,6 +32,17 @@ public class UIInstaller : MonoInstaller
             .Bind<IDashView>()
             .FromInstance(InstantiateView<IDashView>(_dashViewPrefab))
             .AsCached();
+
+        Container
+            .Bind<IExperienceView>()
+            .FromInstance(InstantiateView<IExperienceView>(_experienceViewPrefab))
+            .AsCached();
+
+        Container
+            .Bind<IGoldWalletView>()
+            .FromInstance(InstantiateView<IGoldWalletView>(_goldWalletViewPrefab))
+            .AsCached();
+
     }
 
 

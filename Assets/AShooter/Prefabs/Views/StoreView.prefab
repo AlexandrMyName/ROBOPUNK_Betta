@@ -134,7 +134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 724e913412910d8458d2553f4ab71c58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemConfigs: {fileID: 11400000, guid: 9fa353a1e9fc30542878b41d9769e65a, type: 2}
   _button: {fileID: 4128494645037622955}
 --- !u!1 &2075574710998063164
 GameObject:
@@ -464,9 +463,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3be34b238ca64b24a99e65782cac23e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthButton: {fileID: 6876436556631149738}
-  _speedButton: {fileID: 796672167435204331}
-  _damageButton: {fileID: 3008393907010193424}
+  _healthEnhancement: {fileID: 6876436556631149738}
+  _speedEnhancement: {fileID: 796672167435204331}
+  _damageEnhancement: {fileID: 3008393907010193424}
 --- !u!1 &5857123956336887484
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,7 +600,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 724e913412910d8458d2553f4ab71c58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemConfigs: {fileID: 11400000, guid: f2369b6d12d5add4da41d0e0a6b9bffe, type: 2}
   _button: {fileID: 1424547248043389537}
 --- !u!1 &6650638691417213552
 GameObject:
@@ -871,5 +869,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 724e913412910d8458d2553f4ab71c58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemConfigs: {fileID: 11400000, guid: 8a137f7da1c47e34297710daba442f99, type: 2}
   _button: {fileID: 3284083029249422361}

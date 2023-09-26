@@ -22,8 +22,18 @@ namespace Core
 
         public IExperienceHandle ExperienceHandle { get; private set; }
 
+        public IStoreEnhancement StoreEnhancement { get; private set; }
 
-        public ComponentsStore(IAttackable attackable, IMovable movable, IDash dash, IPlayerHP playerHP, IViews views, IGoldWallet gold, IExperienceHandle exp)
+
+        public ComponentsStore(
+            IAttackable attackable, 
+            IMovable movable, 
+            IDash dash, 
+            IPlayerHP playerHP, 
+            IViews views, 
+            IGoldWallet gold, 
+            IExperienceHandle exp, 
+            IStoreEnhancement store)
         {
 
             Attackable = attackable;
@@ -33,6 +43,7 @@ namespace Core
             Views = views;
             GoldWallet = gold;
             ExperienceHandle = exp;
+            StoreEnhancement = store;
         } 
 
 
