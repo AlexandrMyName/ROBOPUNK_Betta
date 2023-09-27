@@ -81,13 +81,13 @@ namespace DI
             PlayerExperienceComponent exp = new PlayerExperienceComponent();
             WeaponStorage weapons = new WeaponStorage();
             PlayerStoreEnhancementComponent store = new PlayerStoreEnhancementComponent(_storeItemsDataConfig);
-
+            PlayerShieldComponent shield = new PlayerShieldComponent(10);
             Container.QueueForInject(movable);
             Container.QueueForInject(attackable);
             Container.QueueForInject(views);
             Container.QueueForInject(weapons);
 
-            ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP, views, gold, exp, store, weapons);
+            ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP, views, gold, exp, store, weapons, shield);
 
             return components;
         }

@@ -25,6 +25,8 @@ namespace Core
         public IWeaponStorage WeaponStorage { get; private set; }
         public IStoreEnhancement StoreEnhancement { get; private set; }
 
+        public IShield Shield { get; private set; }
+
 
         public ComponentsStore(
             IAttackable attackable, 
@@ -35,7 +37,8 @@ namespace Core
             IGoldWallet gold, 
             IExperienceHandle exp, 
             IStoreEnhancement store,
-            IWeaponStorage weapons)
+            IWeaponStorage weapons,
+            IShield shield)
         {
 
             /////[Construct]\\\\\
@@ -48,6 +51,7 @@ namespace Core
             ExperienceHandle = exp;
             WeaponStorage = weapons;
             StoreEnhancement = store;
+            Shield = shield;
         } 
 
 

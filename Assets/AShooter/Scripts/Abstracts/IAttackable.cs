@@ -7,7 +7,8 @@ namespace Abstracts
     
     public interface IAttackable 
     {
-        
+
+        bool IsIgnoreDamage { get; set; }
         ReactiveProperty<float> Health { get;  }
         ReactiveProperty<bool> IsDeadFlag { get; set; }
         void TakeDamage(float amountHealth);

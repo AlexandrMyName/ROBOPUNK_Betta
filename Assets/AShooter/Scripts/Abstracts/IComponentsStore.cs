@@ -16,5 +16,7 @@ namespace Abstracts
 
         IStoreEnhancement StoreEnhancement { get; }
 
+        IShield Shield { get; }
+
     }
 }
