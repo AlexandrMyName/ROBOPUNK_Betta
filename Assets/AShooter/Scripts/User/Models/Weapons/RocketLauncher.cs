@@ -34,6 +34,7 @@ namespace User
 
             var hitPoint = FindHitPoint(camera, mousePosition);
             InstantiateProjectile(hitPoint);
+            Laser.Blink(ShootSpeed);
         }
         
 
