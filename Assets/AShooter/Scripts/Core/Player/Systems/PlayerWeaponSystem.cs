@@ -1,11 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Abstracts;
-using Core.DTO;
 using UniRx;
-using UnityEngine;
-using User;
 using Zenject;
 
 
@@ -16,29 +12,24 @@ namespace Core
     {
 
         [Inject] private IInput _input;
-        [Inject] private WeaponState _weaponState;
-        [Inject] private readonly List<WeaponConfig> _weaponConfigs;
-
-        private IGameComponents _components;
         private List<IDisposable> _disposables = new();
-        
-        private Player _player;
-        private readonly Dictionary<int, IWeapon> _weapons = new();
-
+        private IWeaponStorage _weaponStorage;  
         private bool _isAlredyFalsed;
 
 
         protected override void Awake(IGameComponents components)
         {
-            _components = components;
-            _player = components.BaseObject.GetComponent<Player>();
-            Debug.Log($"Initialized Player Weapon System! ({components.BaseObject.name})");
+          
+            var weaponContainer = components.BaseObject.GetComponent<Player>().WeaponContainer;
+            _weaponStorage = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.WeaponStorage;
+
+            _weaponStorage.InitializeWeapons(weaponContainer);
         }
 
 
         protected override void Start()
         {
-            InitializeWeapons(_weaponConfigs);
+
             ChangeWeapon(1);
             
             _disposables.AddRange(new List<IDisposable>{
@@ -49,151 +40,40 @@ namespace Core
                     
                     _input.LeftClick.AxisOnChange.Subscribe(_ =>
                     {
-                        if (!_weaponState.IsMeleeWeaponPressed.Value)
+                        if (!_weaponStorage.WeaponState.IsMeleeWeaponPressed.Value)
                             HandleWeaponChangePress(1);
                     }),
                     
                     _input.RightClick.AxisOnChange.Subscribe(_ =>
                     {
-                        if (!_weaponState.IsMeleeWeaponPressed.Value)
+                        if (!_weaponStorage.WeaponState.IsMeleeWeaponPressed.Value)
                             HandleWeaponChangePress(2);
                     })
                 }
             );
-        }
 
+            _weaponStorage.WeaponState.CurrentWeapon.Value = _weaponStorage.Weapons[1];
 
-        private void InitializeWeapons(List<WeaponConfig> configs)
-        {
-            for (int i = 0; i < configs.Count; i++)
-            {
-                var config = configs[i];
-                
-                switch (config.WeaponType)
-                {
-                    case WeaponType.Sword:
-                        _weapons[config.WeaponId] = SwordInit(config);
-                        break;
-                    case WeaponType.Pistol:
-                        _weapons[config.WeaponId] = PistolInit(config);
-                        break;
-                    case WeaponType.Shotgun:
-                        _weapons[config.WeaponId] = ShotgunInit(config);
-                        break;
-                    case WeaponType.RocketLauncher:
-                        _weapons[config.WeaponId] = RocketLauncherInit(config);
-                        break;
-
-                }
-            }
-
-            _weaponState.CurrentWeapon.Value = _weapons[1];
-        }
-
-
-        private IWeapon SwordInit(WeaponConfig config)
-        {
-            var swordObject = GameObject.Instantiate(config.WeaponObject, _player.WeaponContainer);
-            swordObject.SetActive(false);
-            return new Sword(
-                config.WeaponId,
-                swordObject,
-                config.WeaponType,
-                config.Damage,
-                config.LayerMask,
-                config.Effect,
-                config.EffectDestroyDelay,
-                config.ShootSpeed
-                );
-        }
-
-
-        private IWeapon PistolInit(WeaponConfig config)
-        {
-            var pistolObject = GameObject.Instantiate(config.WeaponObject, _player.WeaponContainer);
-            pistolObject.SetActive(false);
-            return new Pistol(
-                config.WeaponId,
-                pistolObject,
-                null,
-                config.WeaponType,
-                config.Damage,
-                config.ClipSize,
-                config.LeftPatronsCount,
-                config.ReloadTime,
-                config.ShootDistance,
-                config.ShootSpeed,
-                config.FireSpread,
-                config.LayerMask,
-                config.Effect,
-                config.EffectDestroyDelay);
-        }
-
-
-        private IWeapon ShotgunInit(WeaponConfig config)
-        {
-            var shotgunObject = GameObject.Instantiate(config.WeaponObject, _player.WeaponContainer);
-            shotgunObject.SetActive(false);
-            return new Shotgun(
-                config.WeaponId,
-                shotgunObject,
-                null,
-                config.WeaponType,
-                config.Damage,
-                config.ClipSize,
-                config.LeftPatronsCount,
-                config.ReloadTime,
-                config.ShootDistance,
-                config.ShootSpeed,
-                config.FireSpread,
-                config.SpreadFactor,
-                config.LayerMask,
-                config.Effect,
-                config.EffectDestroyDelay);
-        }
-
-
-        private IWeapon RocketLauncherInit(WeaponConfig config)
-        {
-            var rocketLauncherObject = GameObject.Instantiate(config.WeaponObject, _player.WeaponContainer);
-            rocketLauncherObject.SetActive(false);
-            return new RocketLauncher(
-                config.WeaponId,
-                rocketLauncherObject,
-                config.ProjectileObject,
-                config.ProjectileForce,
-                config.WeaponType,
-                config.Damage,
-                config.ClipSize,
-                config.LeftPatronsCount,
-                config.ReloadTime,
-                config.ShootDistance,
-                config.ShootSpeed,
-                config.FireSpread,
-                config.LayerMask,
-                config.Effect,
-                config.EffectDestroyDelay);
         }
 
 
         private void HandleWeaponChangePress(int weaponId)
         {
-            Debug.Log($"PRESSED WEAPON CHANGE BUTTON - [{weaponId}]");
             
-            if (!_weaponState.CurrentWeapon.Value.WeaponId.Equals(weaponId))
+            if (!_weaponStorage.WeaponState.CurrentWeapon.Value.WeaponId.Equals(weaponId))
                 ChangeWeapon(weaponId);
         }
 
 
         private void ChangeWeapon(int id)
         {
-            foreach (var weapon in _weapons)
+            foreach (var weapon in _weaponStorage.Weapons)
             {
                 weapon.Value.WeaponObject.SetActive(false);
             }
-            
-            _weapons[id].WeaponObject.SetActive(true);
-            _weaponState.CurrentWeapon.Value = _weapons[id];
+
+            _weaponStorage.Weapons[id].WeaponObject.SetActive(true);
+            _weaponStorage.WeaponState.CurrentWeapon.Value = _weaponStorage.Weapons[id];
         }
         
         
@@ -203,13 +83,13 @@ namespace Core
             {
                 _isAlredyFalsed = false;
                 HandleWeaponChangePress(0);
-                _weaponState.IsMeleeWeaponPressed.Value = true;
+                _weaponStorage.WeaponState.IsMeleeWeaponPressed.Value = true;
             }
             else
             {
                 if (!_isAlredyFalsed)
                 {
-                    _weaponState.IsMeleeWeaponPressed.Value = false;
+                    _weaponStorage.WeaponState.IsMeleeWeaponPressed.Value = false;
                     HandleWeaponChangePress(1);
                 }
 

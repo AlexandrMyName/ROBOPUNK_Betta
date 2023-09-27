@@ -22,6 +22,7 @@ namespace Core
 
         public IExperienceHandle ExperienceHandle { get; private set; }
 
+        public IWeaponStorage WeaponStorage { get; private set; }
         public IStoreEnhancement StoreEnhancement { get; private set; }
 
 
@@ -33,9 +34,11 @@ namespace Core
             IViews views, 
             IGoldWallet gold, 
             IExperienceHandle exp, 
-            IStoreEnhancement store)
+            IStoreEnhancement store,
+            IWeaponStorage weapons)
         {
 
+            /////[Construct]\\\\\
             Attackable = attackable;
             Movable = movable;
             Dash = dash;
@@ -43,6 +46,7 @@ namespace Core
             Views = views;
             GoldWallet = gold;
             ExperienceHandle = exp;
+            WeaponStorage = weapons;
             StoreEnhancement = store;
         } 
 

@@ -12,6 +12,8 @@ namespace Abstracts
         IViews Views { get; }
         IGoldWallet GoldWallet { get; }
         IExperienceHandle ExperienceHandle { get; }
+        IWeaponStorage WeaponStorage { get; }
+
         IStoreEnhancement StoreEnhancement { get; }
 
     }
