@@ -6,7 +6,7 @@ using UnityEngine;
 namespace User.View
 {
 
-    public class GoldWalletView : MonoBehaviour, IGoldWalletView
+    public class ExperienceView : MonoBehaviour, IExperienceView
     {
 
         [SerializeField] private TMP_Text _textUI;
@@ -15,9 +15,9 @@ namespace User.View
         public void Show() => gameObject.SetActive(true);
 
 
-        public void ChangeDisplay(int value)
+        public void ChangeDisplay(float experienceValue)
         {
-            _textUI.text = $"Gold: {value}";
+            _textUI.text = $"XP: {experienceValue}";
         }
 
 

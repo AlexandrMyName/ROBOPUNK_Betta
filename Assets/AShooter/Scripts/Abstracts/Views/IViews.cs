@@ -10,5 +10,11 @@ namespace Abstracts
 
         IDashView Dash { get; }
 
+        IStoreView Store { get; }
+
+        IGoldWalletView GoldWallet { get; }
+
+        IExperienceView ExperienceView { get; }
+
     }
 }

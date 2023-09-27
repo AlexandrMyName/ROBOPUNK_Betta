@@ -12,7 +12,7 @@ namespace Abstracts
         IViews Views { get; }
         IGoldWallet GoldWallet { get; }
         IExperienceHandle ExperienceHandle { get; }
-
+        IStoreEnhancement StoreEnhancement { get; }
 
     }
 }
