@@ -78,13 +78,15 @@ namespace DI
             ViewsComponent views = new ViewsComponent();
             PlayerGoldWalletComponent gold = new PlayerGoldWalletComponent();
             PlayerExperienceComponent exp = new PlayerExperienceComponent();
+            WeaponStorage weapons = new WeaponStorage();
             PlayerStoreEnhancementComponent store = new PlayerStoreEnhancementComponent(_storeItemsDataConfig);
 
             Container.QueueForInject(movable);
             Container.QueueForInject(attackable);
             Container.QueueForInject(views);
+            Container.QueueForInject(weapons);
 
-            ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP, views, gold, exp, store);
+            ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP, views, gold, exp, store, weapons);
 
             return components;
         }

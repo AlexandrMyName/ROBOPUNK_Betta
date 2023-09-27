@@ -29,7 +29,7 @@ namespace User
         private void OnCollisionEnter(Collision collision)
         {
             if (IsProjectileDisposed) return;
-
+            if (collision.collider.isTrigger) return;
             DisposeProjectile();
         }
 
