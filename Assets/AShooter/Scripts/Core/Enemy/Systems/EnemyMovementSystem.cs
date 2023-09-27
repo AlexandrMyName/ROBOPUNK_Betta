@@ -29,14 +29,6 @@ namespace Core
             _enemy = components.BaseObject.GetComponent<IEnemy>();
             _isCameAttackPosition = _enemy.ComponentsStore.Attackable.IsCameAttackPosition;
             _playerTransform = _enemy.PlayerTransform;
-
-#if UNITY_EDITOR
-            if (_navMeshAgent == null)
-            {
-                Debug.LogError($"NavMeshAgent not found on Enemy object - {components.BaseObject.name}");
-                return;
-            }
-#endif
         }
 
 
