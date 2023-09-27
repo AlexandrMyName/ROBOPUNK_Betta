@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Abstracts;
 using Core.DTO;
 using UnityEngine.AI;
+using UnityEngine.Pool;
 
 namespace DI.Spawn
 {
@@ -40,17 +41,62 @@ namespace DI.Spawn
         private int _poolSize;
 
 
+        private ObjectPool<GameObject> _pool;
+
+
         internal void StartSpawnProcess()
         {
             _poolSize = _numberMeleeEnemy + _numberDistantEnemy;
             _numberMeleeEnemy_cnt = _numberMeleeEnemy;
             _numberDistantEnemy_cnt = _numberDistantEnemy;
 
-            _enemyPool = new GameObjectPool(() => CreateEnemy(), (_poolSize));
+            _pool = new ObjectPool<GameObject>(
+                createFunc: () => CreateEnemy(), 
+                actionOnGet: (obj) => OnTakeFromPool(obj), 
+                actionOnRelease: (obj) => OnReturnedToPool(obj), 
+                actionOnDestroy: (obj) => OnDestroyPoolObject(obj), 
+                collectionCheck: false, 
+                defaultCapacity: _poolSize/2, 
+                maxSize: _poolSize);
+
+            //_enemyPool = new GameObjectPool(() => CreateEnemy(), (_poolSize));
             _spawnDisposable = Observable
                 .Interval(TimeSpan.FromSeconds(_respawnDelay))
                 .TakeUntilDestroy(this)
                 .Subscribe(_ => TrySpawnEnemy());
+        }
+
+
+
+        private GameObject CreateEnemy()
+        {
+            GameObject enemyInstance = SpawnEnemy();
+
+            SetTypeEnemy(enemyInstance);
+            SetSystems(enemyInstance);
+            SetModelEnemy(enemyInstance);
+            GetPlayerTransform(enemyInstance);
+
+            return enemyInstance;
+        }
+
+
+
+        private void OnDestroyPoolObject(GameObject obj)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        private void OnReturnedToPool(GameObject obj)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        private void OnTakeFromPool(GameObject obj)
+        {
+            throw new NotImplementedException();
         }
 
 
@@ -68,18 +114,6 @@ namespace DI.Spawn
             activeEnemyCount--;
         }
 
-
-        private GameObject CreateEnemy()
-        {
-            GameObject enemyInstance = SpawnEnemy();
-
-            SetTypeEnemy(enemyInstance);
-            SetSystems(enemyInstance);
-            SetModelEnemy(enemyInstance);
-            GetPlayerTransform(enemyInstance);
-
-            return enemyInstance;
-        }
 
 
         private void SetModelEnemy(GameObject enemyInstance)
