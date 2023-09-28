@@ -8,12 +8,14 @@ using Abstracts;
 using Core.DTO;
 using UnityEngine.AI;
 using UnityEngine.Pool;
+using User;
+
 
 namespace DI.Spawn
 {
 
-    public class EnemySpawner : MonoBehaviour
-    {
+    public class EnemySpawner
+    { 
 
         [Inject] private DiContainer _container;
         [Inject(Id = "PlayerComponents")] private IComponentsStore _componentsPlayer;
@@ -40,7 +42,6 @@ namespace DI.Spawn
         private int activeEnemyCount = 0;
         private int _poolSize;
 
-
         private ObjectPool<GameObject> _pool;
 
 
@@ -59,11 +60,19 @@ namespace DI.Spawn
                 defaultCapacity: _poolSize/2, 
                 maxSize: _poolSize);
 
-            //_enemyPool = new GameObjectPool(() => CreateEnemy(), (_poolSize));
-            _spawnDisposable = Observable
+            _spawnDisposable = (IDisposable)Observable
                 .Interval(TimeSpan.FromSeconds(_respawnDelay))
-                .TakeUntilDestroy(this)
-                .Subscribe(_ => TrySpawnEnemy());
+                .Where(_ => activeEnemyCount < 10)
+                .Select(_ => _pool.Get());
+
+
+            //_enemyPool = new GameObjectPool(() => CreateEnemy(), (_poolSize));
+
+
+            //_spawnDisposable = Observable
+            //    .Interval(TimeSpan.FromSeconds(_respawnDelay))
+            //    .TakeUntilDestroy()
+            //    .Subscribe(_ => TrySpawnEnemy());
         }
 
 
@@ -148,7 +157,7 @@ namespace DI.Spawn
             var rend = enemyInstance.GetComponent<Renderer>();
             rend.enabled = false;
             enemyInstance.GetComponent<NavMeshAgent>().radius = _spawnRadius;
-            Instantiate(_spiderPrefab, enemyInstance.transform);
+            UnityEngine.Object.Instantiate(_spiderPrefab, enemyInstance.transform);
         }
 
 
