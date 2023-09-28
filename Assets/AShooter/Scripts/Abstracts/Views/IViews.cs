@@ -16,5 +16,7 @@ namespace Abstracts
 
         IExperienceView ExperienceView { get; }
 
+        IHealthView HealthView { get; }
+
     }
 }
