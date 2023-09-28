@@ -28,6 +28,7 @@ namespace DI
         [SerializeField] private bool _useRotationSystem;
 
         [SerializeField] private float _maxPlayerHealth;
+        [SerializeField] private float _maxPlayerProtection = 50f;
         [SerializeField] private float _speed;
         
         [SerializeField] private GameObject _prefab;
@@ -81,7 +82,7 @@ namespace DI
             PlayerExperienceComponent exp = new PlayerExperienceComponent();
             WeaponStorage weapons = new WeaponStorage();
             PlayerStoreEnhancementComponent store = new PlayerStoreEnhancementComponent(_storeItemsDataConfig);
-            PlayerShieldComponent shield = new PlayerShieldComponent(10);
+            PlayerShieldComponent shield = new PlayerShieldComponent(_maxPlayerProtection);
             Container.QueueForInject(movable);
             Container.QueueForInject(attackable);
             Container.QueueForInject(views);
