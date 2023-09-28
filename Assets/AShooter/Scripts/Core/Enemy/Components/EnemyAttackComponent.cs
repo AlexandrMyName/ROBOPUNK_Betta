@@ -12,7 +12,7 @@ namespace Core
 
     public class EnemyAttackComponent : IEnemyAttackable
     {
-        public ReactiveProperty<float> Health { get; set; }
+        public ReactiveProperty<float> Health { get; private set; }
 
         public ReactiveProperty<bool> IsDeadFlag { get; set; }
 
@@ -20,12 +20,11 @@ namespace Core
 
         public float Damage { get; set; }
 
-        public ReactiveProperty<float> RangedAttackRange { get; private set; }
-      
+        public float AttackDistance { get; set; }
 
-        public void InitComponent(float rangedAttackRange)
+
+        public EnemyAttackComponent()
         {
-            RangedAttackRange = new ReactiveProperty<float>(rangedAttackRange);
             IsDeadFlag = new ReactiveProperty<bool>(false);
             IsCameAttackPosition = new ReactiveProperty<bool>(false);
         }

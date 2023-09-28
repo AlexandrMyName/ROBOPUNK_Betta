@@ -13,10 +13,6 @@ namespace Abstracts
 
         IEnemyComponentsStore ComponentsStore { get; }
 
-        Transform PlayerTransform { get; }
-
-        SphereCollider EnemyRadiusAttack { get; }
-
         void SetSystems(List<ISystem> systems);
 
         void SetComponents(IEnemyComponentsStore components, float RangeRadius);

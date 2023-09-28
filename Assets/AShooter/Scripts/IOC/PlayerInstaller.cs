@@ -40,6 +40,8 @@ namespace DI
         [Space,SerializeField, Header("Test (can be bull)")]
         private World _world;
 
+        public Vector3 PlayerPosition { get; private set; }
+
 
         public override void InstallBindings()
         {
@@ -187,10 +189,12 @@ namespace DI
 
             _camera.Follow = _player.transform;
             _camera.LookAt = _player.transform;
-            
-            Container.Bind<Transform>()
-                .WithId("PlayerTransform")
-                .FromInstance(_player.transform)
+
+            PlayerPosition = _player.transform.position;
+
+            Container.Bind<Vector3>()
+                .WithId("PlayerPosition")
+                .FromInstance(PlayerPosition)
                 .AsCached();
 
             Container.Bind<Player>()
