@@ -1,28 +1,25 @@
 using Abstracts;
 using TMPro;
-using UniRx;
 using UnityEngine;
-using Zenject;
+using UnityEngine.UI;
 
 namespace User.View
 {
     
-    public class HealthView : MonoBehaviour // Test View
+    public class HealthView : MonoBehaviour, IHealthView // Test View
     {
 
         [SerializeField] private TMP_Text _textUI;
-        [Inject(Id = "PlayerComponents")] private IComponentsStore _componentsPlayer;
+        [SerializeField] private Image _HP_Bar;
 
 
-        private void Awake()
-        {
-            _componentsPlayer.Attackable.Health.Subscribe(ChangeHealth);
-        }
+        public void Show() => gameObject.SetActive(true);
 
-
-        private void ChangeHealth(float healthValue)
+        public void ChangeDisplay(float healthValue)
         {
             _textUI.text = $"Health : {healthValue}";
+            _HP_Bar.fillAmount = healthValue / 100;
+            
         }
 
 

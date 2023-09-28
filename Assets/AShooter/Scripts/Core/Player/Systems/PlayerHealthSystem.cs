@@ -16,6 +16,7 @@ namespace Core
         private IAttackable _attackable;
         private IPlayerHP _playerHP;
         private IDeathView _loseView;
+        private IHealthView _healthView;
         private List<IDisposable> _disposables = new();
          
 
@@ -26,6 +27,13 @@ namespace Core
             _components = components;
             _attackable = _components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Attackable;
             _playerHP = _components.BaseObject.GetComponent<IPlayer>().ComponentsStore.PlayerHP;
+
+            _healthView = _components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.HealthView;
+            var currentHealth = _components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Attackable.Health;
+            _disposables.Add(_attackable.Health.Subscribe(UpdateDisplay));
+            _healthView.Show();
+            _healthView.ChangeDisplay(currentHealth.Value);
+
             _loseView = _components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.Death;
             _disposables.Add(_attackable.Health.Subscribe(DeathCheck));
         }
@@ -37,7 +45,10 @@ namespace Core
             _disposables.ForEach(d => d.Dispose());
             _disposables.Clear();
         }
- 
+
+
+        private void UpdateDisplay(float healthValue) => _healthView.ChangeDisplay(healthValue);
+
 
         private void DeathCheck(float leftHealth)
         {
