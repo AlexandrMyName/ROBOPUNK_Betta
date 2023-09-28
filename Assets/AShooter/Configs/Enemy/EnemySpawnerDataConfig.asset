@@ -12,150 +12,111 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 254906f2cdd7b004d8aace9e0192471e, type: 3}
   m_Name: EnemySpawnerDataConfig
   m_EditorClassIdentifier: 
-  loop: 0
+  loop: 1
   Wave:
   - Enemy:
     - description: 
       nameEnemy: 
       enemyType: 0
-      prefab: {fileID: 0}
-      maxHealth: 0
-      maxAttackDamage: 0
-      attackDistance: 0
-      attackFrequency: 0
-      goldDropRate: 0
+      prefab: {fileID: 3957541045528095213, guid: 5775e246580657045982392a26274915, type: 3}
+      maxHealth: 100
+      maxAttackDamage: 10
+      attackDistance: 2
+      attackFrequency: 2
+      goldDropRate: 50
       goldValueRange:
-        min: 0
-        max: 0
+        min: 5
+        max: 10
       experienceRange:
-        min: 0
-        max: 0
+        min: 2
+        max: 5
+      numberEnemiesInWave: 5
     - description: 
       nameEnemy: 
-      enemyType: 0
-      prefab: {fileID: 0}
-      maxHealth: 0
-      maxAttackDamage: 0
-      attackDistance: 0
-      attackFrequency: 0
-      goldDropRate: 0
+      enemyType: 1
+      prefab: {fileID: 3957541045528095213, guid: 121e617dee79e334aac211198583030d, type: 3}
+      maxHealth: 100
+      maxAttackDamage: 20
+      attackDistance: 10
+      attackFrequency: 3
+      goldDropRate: 75
       goldValueRange:
-        min: 0
-        max: 0
+        min: 5
+        max: 12
       experienceRange:
-        min: 0
-        max: 0
-    respawnEnemyInWaveDelay: 0
-    spawnRadiusRelativeToPlayer: 0
+        min: 3
+        max: 6
+      numberEnemiesInWave: 5
+    respawnEnemyInWaveDelay: 1
+    spawnRadiusRelativeToPlayer: 20
   - Enemy:
     - description: 
       nameEnemy: 
       enemyType: 0
-      prefab: {fileID: 0}
-      maxHealth: 0
-      maxAttackDamage: 0
-      attackDistance: 0
-      attackFrequency: 0
-      goldDropRate: 0
+      prefab: {fileID: 3957541045528095213, guid: 5775e246580657045982392a26274915, type: 3}
+      maxHealth: 100
+      maxAttackDamage: 10
+      attackDistance: 2
+      attackFrequency: 2
+      goldDropRate: 50
       goldValueRange:
-        min: 0
-        max: 0
+        min: 5
+        max: 10
       experienceRange:
-        min: 0
-        max: 0
+        min: 4
+        max: 6
+      numberEnemiesInWave: 5
     - description: 
       nameEnemy: 
       enemyType: 0
-      prefab: {fileID: 0}
-      maxHealth: 0
-      maxAttackDamage: 0
-      attackDistance: 0
-      attackFrequency: 0
-      goldDropRate: 0
+      prefab: {fileID: 5783359468839766296, guid: 60c4eb066a128fa4d866d28177faa2ee, type: 3}
+      maxHealth: 200
+      maxAttackDamage: 30
+      attackDistance: 3
+      attackFrequency: 3
+      goldDropRate: 100
       goldValueRange:
-        min: 0
-        max: 0
+        min: 10
+        max: 20
       experienceRange:
-        min: 0
-        max: 0
-    - description: 
-      nameEnemy: 
-      enemyType: 0
-      prefab: {fileID: 0}
-      maxHealth: 0
-      maxAttackDamage: 0
-      attackDistance: 0
-      attackFrequency: 0
-      goldDropRate: 0
-      goldValueRange:
-        min: 0
-        max: 0
-      experienceRange:
-        min: 0
-        max: 0
-    respawnEnemyInWaveDelay: 0
-    spawnRadiusRelativeToPlayer: 0
+        min: 8
+        max: 15
+      numberEnemiesInWave: 5
+    respawnEnemyInWaveDelay: 1
+    spawnRadiusRelativeToPlayer: 20
   - Enemy:
     - description: 
       nameEnemy: 
       enemyType: 0
-      prefab: {fileID: 0}
-      maxHealth: 0
-      maxAttackDamage: 0
-      attackDistance: 0
-      attackFrequency: 0
-      goldDropRate: 0
+      prefab: {fileID: 5783359468839766296, guid: 60c4eb066a128fa4d866d28177faa2ee, type: 3}
+      maxHealth: 200
+      maxAttackDamage: 30
+      attackDistance: 3
+      attackFrequency: 3
+      goldDropRate: 100
       goldValueRange:
-        min: 0
-        max: 0
+        min: 10
+        max: 20
       experienceRange:
-        min: 0
-        max: 0
+        min: 8
+        max: 15
+      numberEnemiesInWave: 5
     - description: 
       nameEnemy: 
-      enemyType: 0
-      prefab: {fileID: 0}
-      maxHealth: 0
-      maxAttackDamage: 0
-      attackDistance: 0
-      attackFrequency: 0
-      goldDropRate: 0
+      enemyType: 1
+      prefab: {fileID: 5783359468839766296, guid: 09b8414b5daac0142abdd54089367d69, type: 3}
+      maxHealth: 300
+      maxAttackDamage: 50
+      attackDistance: 15
+      attackFrequency: 2
+      goldDropRate: 100
       goldValueRange:
-        min: 0
-        max: 0
+        min: 15
+        max: 25
       experienceRange:
-        min: 0
-        max: 0
-    - description: 
-      nameEnemy: 
-      enemyType: 0
-      prefab: {fileID: 0}
-      maxHealth: 0
-      maxAttackDamage: 0
-      attackDistance: 0
-      attackFrequency: 0
-      goldDropRate: 0
-      goldValueRange:
-        min: 0
-        max: 0
-      experienceRange:
-        min: 0
-        max: 0
-    - description: 
-      nameEnemy: 
-      enemyType: 0
-      prefab: {fileID: 0}
-      maxHealth: 0
-      maxAttackDamage: 0
-      attackDistance: 0
-      attackFrequency: 0
-      goldDropRate: 0
-      goldValueRange:
-        min: 0
-        max: 0
-      experienceRange:
-        min: 0
-        max: 0
-    respawnEnemyInWaveDelay: 0
-    spawnRadiusRelativeToPlayer: 0
-  respawnWaveDelay: 2
+        min: 15
+        max: 30
+      numberEnemiesInWave: 3
+    respawnEnemyInWaveDelay: 1
+    spawnRadiusRelativeToPlayer: 25
+  respawnWaveDelay: 100

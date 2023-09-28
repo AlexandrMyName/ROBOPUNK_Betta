@@ -12,23 +12,24 @@ namespace Core
     {
         private List<IDisposable> _disposables = new();
         private NavMeshAgent _navMeshAgent;
-        private Transform _playerTransform;
+        private Vector3 _targetPosition;
         private float _indentFromTarget;
         private IEnemy _enemy;
         private ReactiveProperty<bool> _isCameAttackPosition;
 
 
-        public EnemyMovementSystem(float indentFromTarget)
+        public EnemyMovementSystem(float indentFromTarget, Vector3 targetPosition)
         {
             _indentFromTarget = indentFromTarget;
+            _targetPosition = targetPosition;
         }
+
 
         protected override void Awake(IGameComponents components)
         {
             _navMeshAgent = components.BaseObject.GetComponent<NavMeshAgent>();
             _enemy = components.BaseObject.GetComponent<IEnemy>();
             _isCameAttackPosition = _enemy.ComponentsStore.Attackable.IsCameAttackPosition;
-            _playerTransform = _enemy.PlayerTransform;
         }
 
 
@@ -41,7 +42,7 @@ namespace Core
 
         protected override void Update()
         {
-            Moving(_playerTransform.position);
+            Moving(_targetPosition);
 
             if (_navMeshAgent.remainingDistance <= _indentFromTarget)
             {
@@ -60,6 +61,9 @@ namespace Core
         {
             _navMeshAgent.SetDestination(targetPosition);
         }
+
+
+        protected override void OnDestroy() => Dispose();
 
 
         private void Dispose()

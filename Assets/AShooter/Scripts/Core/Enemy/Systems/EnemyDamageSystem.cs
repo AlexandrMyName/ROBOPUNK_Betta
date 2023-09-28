@@ -12,6 +12,14 @@ namespace Core
         private IGameComponents _components;
         private List<IDisposable> _disposables = new();
         private ReactiveProperty<bool> _isDead;
+        private float _maxHealth;
+
+
+        public EnemyDamageSystem(float maxHealth)
+        {
+            _maxHealth = maxHealth;
+        }
+
 
         protected override void Awake(IGameComponents components)
         {
@@ -19,9 +27,10 @@ namespace Core
             _isDead = _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.Attackable.IsDeadFlag;
         }
 
+
         protected override void OnEnable()
         {
-            _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.Attackable.SetMaxHealth(GameLoopManager.EnemyMaxHealth, OnSubscribe);
+            _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.Attackable.SetMaxHealth(_maxHealth, OnSubscribe);
             _isDead = _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.Attackable.IsDeadFlag;
         }
 

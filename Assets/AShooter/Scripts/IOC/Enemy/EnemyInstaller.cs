@@ -19,7 +19,7 @@ namespace DI
 
         public override void InstallBindings()
         {
-            Container.Bind<EnemySpawnerController>().FromComponentInHierarchy().AsSingle();
+            //Container.Bind<EnemySpawnerController>().FromComponentInHierarchy().AsSingle();
         }
 
 
@@ -34,6 +34,7 @@ namespace DI
             {
                 _spawner = new EnemySpawnerController(_enemySpawnerDataConfig);
                 _spawner.StartSpawnProcess();
+                
             }
                 
 

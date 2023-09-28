@@ -27,7 +27,7 @@ namespace Core
         protected override void Awake(IGameComponents components)
         {
             _components = components;
-            Debug.Log($"Initialized player melee attack system! ({components.BaseObject.name})");
+            //Debug.Log($"Initialized player melee attack system! ({components.BaseObject.name})");
         }
 
 

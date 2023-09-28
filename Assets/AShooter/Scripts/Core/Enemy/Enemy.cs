@@ -21,7 +21,7 @@ namespace Core
         private List<ISystem> _systems;
 
 
-        public void SetComponents(IEnemyComponentsStore components,  float rangeRadius)
+        public void SetComponents(IEnemyComponentsStore components)
         {
             ComponentsStore = components;
         }
