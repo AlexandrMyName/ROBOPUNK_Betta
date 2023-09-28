@@ -23,10 +23,13 @@ namespace Core
         public float AttackDistance { get; set; }
 
 
-        public EnemyAttackComponent()
+        public EnemyAttackComponent(float health, float damage, float attackDistance)
         {
+            Health = new ReactiveProperty<float>(health);
             IsDeadFlag = new ReactiveProperty<bool>(false);
             IsCameAttackPosition = new ReactiveProperty<bool>(false);
+            Damage = damage;
+            AttackDistance = attackDistance;
         }
 
 

@@ -36,7 +36,7 @@ namespace DI.Spawn
             _enemySpawnerDataConfig = enemySpawnerDataConfig;
 
             _waveNumber = _enemySpawnerDataConfig.Wave.Count;
-            Debug.Log($"_waveNumber -> {_waveNumber}");
+            Debug.Log($"___Wave number {_waveNumber}___");
             _loopWave = _enemySpawnerDataConfig.loop;
             _respawnWaveDelay = _enemySpawnerDataConfig.respawnWaveDelay;
         }
@@ -44,8 +44,9 @@ namespace DI.Spawn
 
         internal void StartSpawnProcess()
         {
-            _waveDisposable = (IDisposable)Observable
-                .Interval(TimeSpan.FromSeconds(_respawnWaveDelay))
+            Debug.Log("___Start Spawn Process___");
+            _waveDisposable = Observable
+                .Timer(TimeSpan.Zero, TimeSpan.FromSeconds(_respawnWaveDelay))
                 .Where(_ => (_loopWave ? LoppWaveTrue() : LoopWaveFalse()))
                 .Subscribe(_ => CallingWave());
 
@@ -62,6 +63,7 @@ namespace DI.Spawn
 
         private void CallingWave()
         {
+            Debug.Log($"____enemySpawnerDataConfig.Wave[{_waveCount-1}] {_enemySpawnerDataConfig.Wave[_waveCount - 1]}___");
             _enemySpawner.StartSpawnProcess(_enemySpawnerDataConfig.Wave[_waveCount-1]);
         }
 

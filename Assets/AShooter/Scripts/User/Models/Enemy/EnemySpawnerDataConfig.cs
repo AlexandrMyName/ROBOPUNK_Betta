@@ -77,7 +77,7 @@ namespace User
         [Space(10)]
         [Header("Gold configs: ")]
         [Range(0, 100)]
-        public float goldDropRate;
+        public int goldDropRate;
         [SerializeField]
         public Range goldValueRange;
 

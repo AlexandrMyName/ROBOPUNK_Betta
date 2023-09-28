@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
-using UniRx.Triggers;
+
 
 namespace Core
 {
@@ -14,18 +14,29 @@ namespace Core
         private List<IDisposable> _disposables = new();
         private bool _isPositionReadiness;
         private IEnemy _enemy;
-        IGameComponents _componentsInPrefab;
+        private IGameComponents _components;
+        private Vector3 _targetPosition;
+        private float _attackFrequency;
+
+        public EnemyDistantAttackSystem(Vector3 targetPosition, float attackFrequency)
+        {
+            _targetPosition = targetPosition;
+            _attackFrequency = attackFrequency;
+        }
+
 
         protected override void Awake(IGameComponents components)
         {
-            _componentsInPrefab = components;
+            _components = components;
             _enemy = components.BaseObject.GetComponent<IEnemy>();
             _enemy.ComponentsStore.Attackable.IsCameAttackPosition.Subscribe(SetPositionReadiness);
 
             var shootDisposable = Observable
-                .Interval(TimeSpan.FromSeconds(GameLoopManager.EnemyAttackFrequency))
+                .Interval(TimeSpan.FromSeconds(_attackFrequency))
                 .TakeUntilDestroy(_enemy as Component)
-                .Subscribe(_ => DoShoot());
+                .Where(_ => (_isPositionReadiness))
+                .Subscribe(_ => DoShoot())
+                .AddTo(_disposables);
         }
 
 
@@ -35,7 +46,7 @@ namespace Core
         private void DoShoot()
         {
 
-            if (!_componentsInPrefab.BaseObject.activeSelf) return;
+            if (!_components.BaseObject.activeSelf) return;
 
             if (_isPositionReadiness) ThrowPrimitive();
 
@@ -44,11 +55,11 @@ namespace Core
 
         void ThrowPrimitive()
         {
-            Vector3 directionToPlayer = (_enemy.PlayerTransform.position - _componentsInPrefab.BaseTransform.position).normalized;
+            Vector3 directionToPlayer = (_targetPosition - _components.BaseTransform.position).normalized;
 
             GameObject primitive = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             var rb = primitive.AddComponent<Rigidbody>();
-            primitive.transform.position = _componentsInPrefab.BaseTransform.position + directionToPlayer*2;
+            primitive.transform.position = _components.BaseTransform.position + directionToPlayer*2;
             rb.velocity = directionToPlayer * 10f;
 
             UnityEngine.Object.Destroy(primitive, 5f);
