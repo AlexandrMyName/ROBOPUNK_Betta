@@ -12,3 +12,150 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 254906f2cdd7b004d8aace9e0192471e, type: 3}
   m_Name: EnemySpawnerDataConfig
   m_EditorClassIdentifier: 
+  loop: 0
+  Wave:
+  - Enemy:
+    - description: 
+      nameEnemy: 
+      enemyType: 0
+      prefab: {fileID: 0}
+      maxHealth: 0
+      maxAttackDamage: 0
+      attackDistance: 0
+      attackFrequency: 0
+      goldDropRate: 0
+      goldValueRange:
+        min: 0
+        max: 0
+      experienceRange:
+        min: 0
+        max: 0
+    - description: 
+      nameEnemy: 
+      enemyType: 0
+      prefab: {fileID: 0}
+      maxHealth: 0
+      maxAttackDamage: 0
+      attackDistance: 0
+      attackFrequency: 0
+      goldDropRate: 0
+      goldValueRange:
+        min: 0
+        max: 0
+      experienceRange:
+        min: 0
+        max: 0
+    respawnEnemyInWaveDelay: 0
+    spawnRadiusRelativeToPlayer: 0
+  - Enemy:
+    - description: 
+      nameEnemy: 
+      enemyType: 0
+      prefab: {fileID: 0}
+      maxHealth: 0
+      maxAttackDamage: 0
+      attackDistance: 0
+      attackFrequency: 0
+      goldDropRate: 0
+      goldValueRange:
+        min: 0
+        max: 0
+      experienceRange:
+        min: 0
+        max: 0
+    - description: 
+      nameEnemy: 
+      enemyType: 0
+      prefab: {fileID: 0}
+      maxHealth: 0
+      maxAttackDamage: 0
+      attackDistance: 0
+      attackFrequency: 0
+      goldDropRate: 0
+      goldValueRange:
+        min: 0
+        max: 0
+      experienceRange:
+        min: 0
+        max: 0
+    - description: 
+      nameEnemy: 
+      enemyType: 0
+      prefab: {fileID: 0}
+      maxHealth: 0
+      maxAttackDamage: 0
+      attackDistance: 0
+      attackFrequency: 0
+      goldDropRate: 0
+      goldValueRange:
+        min: 0
+        max: 0
+      experienceRange:
+        min: 0
+        max: 0
+    respawnEnemyInWaveDelay: 0
+    spawnRadiusRelativeToPlayer: 0
+  - Enemy:
+    - description: 
+      nameEnemy: 
+      enemyType: 0
+      prefab: {fileID: 0}
+      maxHealth: 0
+      maxAttackDamage: 0
+      attackDistance: 0
+      attackFrequency: 0
+      goldDropRate: 0
+      goldValueRange:
+        min: 0
+        max: 0
+      experienceRange:
+        min: 0
+        max: 0
+    - description: 
+      nameEnemy: 
+      enemyType: 0
+      prefab: {fileID: 0}
+      maxHealth: 0
+      maxAttackDamage: 0
+      attackDistance: 0
+      attackFrequency: 0
+      goldDropRate: 0
+      goldValueRange:
+        min: 0
+        max: 0
+      experienceRange:
+        min: 0
+        max: 0
+    - description: 
+      nameEnemy: 
+      enemyType: 0
+      prefab: {fileID: 0}
+      maxHealth: 0
+      maxAttackDamage: 0
+      attackDistance: 0
+      attackFrequency: 0
+      goldDropRate: 0
+      goldValueRange:
+        min: 0
+        max: 0
+      experienceRange:
+        min: 0
+        max: 0
+    - description: 
+      nameEnemy: 
+      enemyType: 0
+      prefab: {fileID: 0}
+      maxHealth: 0
+      maxAttackDamage: 0
+      attackDistance: 0
+      attackFrequency: 0
+      goldDropRate: 0
+      goldValueRange:
+        min: 0
+        max: 0
+      experienceRange:
+        min: 0
+        max: 0
+    respawnEnemyInWaveDelay: 0
+    spawnRadiusRelativeToPlayer: 0
+  respawnWaveDelay: 2

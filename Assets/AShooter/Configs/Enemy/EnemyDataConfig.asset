@@ -31,7 +31,7 @@ MonoBehaviour:
     respawnDelay: 0
   - description: 
     nameEnemy: 
-    enemyType: 0
+    enemyType: 1
     prefab: {fileID: 0}
     maxHealth: 0
     maxAttackDamage: 0

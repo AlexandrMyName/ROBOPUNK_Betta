@@ -19,49 +19,73 @@ namespace DI.Spawn
 
         [Inject] private DiContainer _container;
         [Inject(Id = "PlayerComponents")] private IComponentsStore _componentsPlayer;
+        [Inject(Id = "PlayerPosition")] private Vector3 _playerPosition;
 
-        private EnemyDataConfig _enemyDataConfig;
         private EnemySpawnerDataConfig _enemySpawnerDataConfig;
-        private List<EnemySpawner> _enemySpawners;
+        private IDisposable _waveDisposable;
+        private EnemySpawner _enemySpawner;
 
+        private int _waveNumber;
+        private bool _loopWave;
+        private float _respawnWaveDelay;
 
-        internal EnemySpawnerController(EnemyDataConfig enemyDataConfig, EnemySpawnerDataConfig enemySpawnerDataConfig)
+        private int _waveCount;
+
+        internal EnemySpawnerController(EnemySpawnerDataConfig enemySpawnerDataConfig)
         {
-            _enemyDataConfig = enemyDataConfig;
             _enemySpawnerDataConfig = enemySpawnerDataConfig;
 
-            Init();
+            _waveNumber = _enemySpawnerDataConfig.Wave.Count;
+            Debug.Log($"_waveNumber -> {_waveNumber}");
+            _loopWave = _enemySpawnerDataConfig.loop;
+            _respawnWaveDelay = _enemySpawnerDataConfig.respawnWaveDelay;
         }
-
 
 
         internal void StartSpawnProcess()
         {
-            
+            _waveDisposable = (IDisposable)Observable
+                .Interval(TimeSpan.FromSeconds(_respawnWaveDelay))
+                .Where(_ => (_loopWave ? LoppWaveTrue() : LoopWaveFalse()))
+                .Subscribe(_ => CallingWave());
+
+            _enemySpawner = new EnemySpawner(_container, _playerPosition);
         }
+
 
 
         internal void StopSpawnProcess()
         {
-
+            _waveDisposable.Dispose();
         }
 
 
-        private void Init()
+        private void CallingWave()
         {
-            for (int i = 0; i < _enemyDataConfig.Configs.Count; i++)
-            {
-                EnemySpawner spawner = CreateSpawner(_enemyDataConfig.Configs[i]);
-                _enemySpawners.Add(spawner);
-            }
+            _enemySpawner.StartSpawnProcess(_enemySpawnerDataConfig.Wave[_waveCount-1]);
         }
 
 
-        private EnemySpawner CreateSpawner(EnemyConfig enemyConfig)
+
+        private bool LoopWaveFalse()
         {
+            var value = (_waveCount < _waveNumber);
+            _waveCount++;
 
-            return null;
+            return value;
         }
+
+
+        private bool LoppWaveTrue()
+        {
+            if (_waveCount >= _waveNumber)
+                _waveCount = 0;
+
+            _waveCount++;
+
+            return true;
+        }
+
 
 
     }

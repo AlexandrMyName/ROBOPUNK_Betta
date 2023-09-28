@@ -13,7 +13,6 @@ namespace DI
     {
 
         [SerializeField] private bool _spawnOnStart;
-        [SerializeField] private EnemyDataConfig _enemyDataConfig;
         [SerializeField] private EnemySpawnerDataConfig _enemySpawnerDataConfig;
 
         private EnemySpawnerController _spawner;
@@ -33,7 +32,7 @@ namespace DI
             
             if (_spawnOnStart)
             {
-                _spawner = new EnemySpawnerController(_enemyDataConfig, _enemySpawnerDataConfig);
+                _spawner = new EnemySpawnerController(_enemySpawnerDataConfig);
                 _spawner.StartSpawnProcess();
             }
                 

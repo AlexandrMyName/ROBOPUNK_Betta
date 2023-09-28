@@ -28,8 +28,8 @@ namespace Core
         }
 
 
-        protected override void OnEnable()
-            => _enemy.ComponentsStore.Attackable.SetAttackableDamage(GameLoopManager.EnemyDamageForce);
+        //protected override void OnEnable()
+        //    => _enemy.ComponentsStore.Attackable.SetAttackableDamage(GameLoopManager.EnemyDamageForce);
 
 
         private void HandleTriggerCollider(Collider collider)

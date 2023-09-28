@@ -15,41 +15,41 @@ namespace DI.Spawn
 {
 
     public class EnemySpawner
-    { 
+    {
 
-        [Inject] private DiContainer _container;
-        [Inject(Id = "PlayerComponents")] private IComponentsStore _componentsPlayer;
+        private float _respawnEnemyInWaveDelay;
+        private float _spawnRadiusRelativeToPlayer;
+        private List<EnemyConfig> _enemyConfigs;
+        private int _numberEnemiesInWave;
 
-        [SerializeField] private GameObject _prefab;
-        [SerializeField] private Transform _spawnTransform;
-        [SerializeField] private float _respawnDelay;
-        
-        [SerializeField] private int _numberMeleeEnemy;
-        [SerializeField] private int _numberDistantEnemy;
-        [SerializeField] private float _spawnRadius = 2f;
-        [SerializeField, Range(1.5f, 7f)] private float _rangeRadiusRange;
-
-        [SerializeField] private GameObject _spiderPrefab;
-        [SerializeField, Range(0, 1)] private float _spiderProbableInstance;
-        [SerializeField, Range(1.5f, 2.5f)] private float _spiderRadius;
-        [SerializeField, Range(1, 100)] int _goldDropRate;
-
-        private GameObjectPool _enemyPool;
-        private float _numberMeleeEnemy_cnt;
-        private float _numberDistantEnemy_cnt;
         private IDisposable _spawnDisposable;
-        private Transform _playerTransform;
-        private int activeEnemyCount = 0;
-        private int _poolSize;
+        private Vector3 _playerPosition;
+        private DiContainer _diContainer;
 
         private ObjectPool<GameObject> _pool;
+        private List<GameObject> _enemyPrototypes;
 
 
-        internal void StartSpawnProcess()
+        public EnemySpawner(DiContainer diContainer, Vector3 playerPosition)
         {
-            _poolSize = _numberMeleeEnemy + _numberDistantEnemy;
-            _numberMeleeEnemy_cnt = _numberMeleeEnemy;
-            _numberDistantEnemy_cnt = _numberDistantEnemy;
+            _diContainer = diContainer;
+            _playerPosition = playerPosition;
+        }
+
+
+        internal void StartSpawnProcess(EnemyWaveConfig enemyWaveConfig)
+        {
+            _respawnEnemyInWaveDelay = enemyWaveConfig.respawnEnemyInWaveDelay;
+            _spawnRadiusRelativeToPlayer = enemyWaveConfig.spawnRadiusRelativeToPlayer;
+            _enemyConfigs = enemyWaveConfig.Enemy;
+
+            foreach (var item in _enemyConfigs)
+            {
+                _numberEnemiesInWave += item.numberEnemiesInWave;
+
+                _enemyPrototypes.Add(BuildPrototypeEnemy(item));
+            }
+
 
             _pool = new ObjectPool<GameObject>(
                 createFunc: () => CreateEnemy(), 
@@ -57,28 +57,47 @@ namespace DI.Spawn
                 actionOnRelease: (obj) => OnReturnedToPool(obj), 
                 actionOnDestroy: (obj) => OnDestroyPoolObject(obj), 
                 collectionCheck: false, 
-                defaultCapacity: _poolSize/2, 
-                maxSize: _poolSize);
+                defaultCapacity: _numberEnemiesInWave, 
+                maxSize: _numberEnemiesInWave);
 
             _spawnDisposable = (IDisposable)Observable
-                .Interval(TimeSpan.FromSeconds(_respawnDelay))
-                .Where(_ => activeEnemyCount < 10)
-                .Select(_ => _pool.Get());
-
-
-            //_enemyPool = new GameObjectPool(() => CreateEnemy(), (_poolSize));
-
-
-            //_spawnDisposable = Observable
-            //    .Interval(TimeSpan.FromSeconds(_respawnDelay))
-            //    .TakeUntilDestroy()
-            //    .Subscribe(_ => TrySpawnEnemy());
+                .Interval(TimeSpan.FromSeconds(_respawnEnemyInWaveDelay))
+                .Where(cnt => (cnt < _numberEnemiesInWave))
+                .Subscribe(_ => _pool.Get());
         }
 
+
+        private GameObject BuildPrototypeEnemy(EnemyConfig item)
+        {
+            var prefab = item.prefab;
+
+            var enemy = prefab.GetComponent<Enemy>();
+            enemy.EnemyType = item.enemyType;
+            enemy.SetSystems(CreatSystems(item));
+
+            var attackable = enemy.ComponentsStore.Attackable;
+            attackable.Damage = item.maxAttackDamage;
+            attackable.SetMaxHealth(item.maxHealth);
+            attackable.AttackDistance = item.attackDistance;
+
+            var enemyPrice = enemy.ComponentsStore.EnemyPrice;
+            enemyPrice.go
+
+
+
+            return prefab;
+        }
+
+
+        private List<ISystem> CreatSystems(EnemyConfig item)
+        {
+            throw new NotImplementedException();
+        }
 
 
         private GameObject CreateEnemy()
         {
+
             GameObject enemyInstance = SpawnEnemy();
 
             SetTypeEnemy(enemyInstance);
@@ -90,6 +109,19 @@ namespace DI.Spawn
         }
 
 
+        private GameObject SpawnEnemy()
+        {
+            GameObject sceneInstance = _diContainer.InstantiatePrefab(_prefab);
+            //sceneInstance.transform.position = ;
+            return sceneInstance;
+        }
+
+
+        private void OnTakeFromPool(GameObject obj)
+        {
+            throw new NotImplementedException();
+        }
+
 
         private void OnDestroyPoolObject(GameObject obj)
         {
@@ -98,12 +130,6 @@ namespace DI.Spawn
 
 
         private void OnReturnedToPool(GameObject obj)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        private void OnTakeFromPool(GameObject obj)
         {
             throw new NotImplementedException();
         }
@@ -160,13 +186,6 @@ namespace DI.Spawn
             UnityEngine.Object.Instantiate(_spiderPrefab, enemyInstance.transform);
         }
 
-
-        private GameObject SpawnEnemy()
-        {
-            GameObject sceneInstance = _container.InstantiatePrefab(_prefab);
-            sceneInstance.transform.position = _spawnTransform.position;
-            return sceneInstance;
-        }
 
 
         private void SetTypeEnemy(GameObject enemyInstance)
