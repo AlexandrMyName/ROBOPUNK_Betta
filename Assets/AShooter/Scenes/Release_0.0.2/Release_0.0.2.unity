@@ -3265,6 +3265,9 @@ MonoBehaviour:
   _deathViewPrefab: {fileID: 6588995917222519346, guid: fa087c53736b858439b3f6493e3fb4ee, type: 3}
   _storeViewPrefab: {fileID: 5589194248133402397, guid: bf6d18f3b680e554bb68222a0263c5cb, type: 3}
   _dashViewPrefab: {fileID: 8883014059306586274, guid: afff7b4e6b4c22440ba5a86054e68eb3, type: 3}
+  _goldWalletViewPrefab: {fileID: 1655792292581680610, guid: ac35b910b41cc054099fb83c5dd29317, type: 3}
+  _experienceViewPrefab: {fileID: 3495722894623953418, guid: 155da69dc60565340b5d290d32521e96, type: 3}
+  _playerHpViewPrefab: {fileID: 2345708136945342174, guid: 207d4b4282039184486e48b1c2bdcb02, type: 3}
 --- !u!1 &550520363
 GameObject:
   m_ObjectHideFlags: 0
@@ -7641,6 +7644,10 @@ PrefabInstance:
       propertyPath: _playerHPConfig
       value: 
       objectReference: {fileID: 11400000, guid: 1da11eeaac5abab48934667bc435db89, type: 2}
+    - target: {fileID: 6041886409023221945, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
+      propertyPath: _storeItemsDataConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 87b3067110d0aa94f941062e2342d7ec, type: 2}
     - target: {fileID: 6495472897878780537, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: _prefab
       value: 
