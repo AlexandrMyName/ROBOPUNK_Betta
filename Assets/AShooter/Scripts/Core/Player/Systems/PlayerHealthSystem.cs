@@ -47,11 +47,7 @@ namespace Core
         }
 
 
-        private void UpdateDisplay(float healthValue)
-        {
-            _healthView.ChangeDisplay(healthValue);
-
-        }
+        private void UpdateDisplay(float healthValue) => _healthView.ChangeDisplay(healthValue);
 
 
         private void DeathCheck(float leftHealth)
