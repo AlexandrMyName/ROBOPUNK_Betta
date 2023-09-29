@@ -27,6 +27,7 @@ namespace DI.Spawn
         private DiContainer _diContainer;
 
         private ObjectPool<GameObject> _pool;
+        private Dictionary<EnemyType, ObjectPool<GameObject>> _enemyTypeObjectPolPairs;
         private List<GameObject> _enemyPrototypes;
         private List<int> _enemyNumberPrototypes;
 
@@ -45,6 +46,7 @@ namespace DI.Spawn
             _numberEnemiesInWave = 0;
             _enemyPrototypes = new List<GameObject>();
             _enemyNumberPrototypes = new List<int>();
+            _enemy—ounter = 0;
             //_pool.Clear();
             //_spawnDisposable.Dispose();
 
@@ -60,20 +62,22 @@ namespace DI.Spawn
                 _enemyNumberPrototypes.Add(item.numberEnemiesInWave);
             }
 
+            if (_pool == null)
+                _pool = new ObjectPool<GameObject>(
+                    createFunc: () => CreateEnemy(),
+                    actionOnGet: (obj) => OnTakeFromPool(obj),
+                    actionOnRelease: (obj) => OnReturnedToPool(obj),
+                    actionOnDestroy: (obj) => OnDestroyPoolObject(obj),
+                    collectionCheck: false,
+                    defaultCapacity: _numberEnemiesInWave,
+                    maxSize: _numberEnemiesInWave);
+            if (_spawnDisposable == null)
+                _spawnDisposable = Observable
+                    .Interval(TimeSpan.FromSeconds(_respawnEnemyInWaveDelay))
+                    .Where(_ => { return (_enemy—ounter < _numberEnemiesInWave); })
+                    .Subscribe(cnt => { Debug.Log($"_enemy—ounter -> {_enemy—ounter}"); _enemy—ounter++; _pool.Get(); });
 
-            _pool = new ObjectPool<GameObject>(
-                createFunc: () => CreateEnemy(), 
-                actionOnGet: (obj) => OnTakeFromPool(obj), 
-                actionOnRelease: (obj) => OnReturnedToPool(obj), 
-                actionOnDestroy: (obj) => OnDestroyPoolObject(obj), 
-                collectionCheck: false, 
-                defaultCapacity: _numberEnemiesInWave, 
-                maxSize: _numberEnemiesInWave);
             
-            _spawnDisposable = Observable
-                .Interval(TimeSpan.FromSeconds(_respawnEnemyInWaveDelay))
-                .Where(cnt => (cnt < _numberEnemiesInWave))
-                .Subscribe(cnt => { _enemy—ounter = (int)cnt; _pool.Get(); });
         }
 
 
