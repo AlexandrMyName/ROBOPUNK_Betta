@@ -47,7 +47,7 @@ MonoBehaviour:
         min: 3
         max: 6
       numberEnemiesInWave: 5
-    respawnEnemyInWaveDelay: 1
+    respawnEnemyInWaveDelay: 0.1
     spawnRadiusRelativeToPlayer: 20
   - Enemy:
     - description: 
@@ -65,7 +65,7 @@ MonoBehaviour:
       experienceRange:
         min: 4
         max: 6
-      numberEnemiesInWave: 5
+      numberEnemiesInWave: 10
     - description: 
       nameEnemy: 
       enemyType: 0
@@ -81,8 +81,8 @@ MonoBehaviour:
       experienceRange:
         min: 8
         max: 15
-      numberEnemiesInWave: 5
-    respawnEnemyInWaveDelay: 1
+      numberEnemiesInWave: 10
+    respawnEnemyInWaveDelay: 0.1
     spawnRadiusRelativeToPlayer: 20
   - Enemy:
     - description: 
@@ -100,7 +100,7 @@ MonoBehaviour:
       experienceRange:
         min: 8
         max: 15
-      numberEnemiesInWave: 5
+      numberEnemiesInWave: 15
     - description: 
       nameEnemy: 
       enemyType: 1
@@ -116,7 +116,7 @@ MonoBehaviour:
       experienceRange:
         min: 15
         max: 30
-      numberEnemiesInWave: 3
-    respawnEnemyInWaveDelay: 1
+      numberEnemiesInWave: 15
+    respawnEnemyInWaveDelay: 0.1
     spawnRadiusRelativeToPlayer: 25
-  respawnWaveDelay: 100
+  respawnWaveDelay: 2
