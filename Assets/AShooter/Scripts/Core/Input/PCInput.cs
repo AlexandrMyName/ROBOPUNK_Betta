@@ -27,12 +27,14 @@ namespace Core
         public ISubjectInputProxy<Unit> WeaponThird { get; }
 
         public ISubjectInputProxy<Unit> Explosion { get; }
-        
+
+        public ISubjectInputProxy<Unit> Interact { get; }
+
         public IObservableInputProxy<bool> MeleeHold { get; }
 
         public ISubjectInputProxy<Unit> DashClick { get; }
 
-        public PCInput( [NotNull] InputConfig config )
+        public PCInput([NotNull] InputConfig config, [NotNull] IInteractable interactable)
         {
 
             Horizontal = new PCInputHorizontal(config);
@@ -46,8 +48,7 @@ namespace Core
             Explosion = new PCExplosionInput(config);
             MeleeHold = new PCMeleeInput(config);
             DashClick = new PCDashInput(config);
+            Interact = new PCInteractInput(config, interactable);
         }
-        
-        
     }
 }

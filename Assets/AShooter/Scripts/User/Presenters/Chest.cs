@@ -1,11 +1,20 @@
+using System;
 using Abstracts;
 using UnityEngine;
 using User;
+using Random = UnityEngine.Random;
 
 
-public class Chest : MonoBehaviour, IChest
+public class Chest : MonoBehaviour, IChest, IInteractable
 {
     [SerializeField] private ChestDataConfig chestConfig;
+    
+    public object Interact()
+    {
+        Debug.Log("Chest is opened");
+        GetRandomItem();
+        return null;
+    }
 
     public object GetRandomItem()
     {
@@ -40,6 +49,5 @@ public class Chest : MonoBehaviour, IChest
         var rndGoldCoinValue = chestConfig.MettaCoinsPossibleGeneration[rndGoldCoinNumber];
         return new CoinMeta(rndGoldCoinValue);
     }
-
 
 }

@@ -1,4 +1,5 @@
-﻿using UniRx;
+﻿using Core;
+using UniRx;
 using UnityEngine;
 
 
@@ -27,6 +28,8 @@ namespace Abstracts
         ISubjectInputProxy<Unit> WeaponThird { get; }
 
         ISubjectInputProxy<Unit> Explosion { get; }
+        
+        ISubjectInputProxy<Unit> Interact { get; }
 
         IObservableInputProxy<bool> MeleeHold { get; }
 
