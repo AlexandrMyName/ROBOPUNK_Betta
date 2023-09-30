@@ -15,6 +15,7 @@ namespace Core
 
         [Inject] private IInput _input;
         [Inject] private readonly ExplosionAbilityConfig _explosionAbilityConfigs;
+        [Inject] private WeaponAbilityPresenter _weaponAbilityPresenter;
 
         private IGameComponents _components;
         private List<IDisposable> _disposables = new();
@@ -24,7 +25,6 @@ namespace Core
 
         protected override void Awake(IGameComponents components)
         {
-
             _components = components;
             _playerTransform = _components.BaseTransform;
         }
@@ -32,20 +32,22 @@ namespace Core
 
         protected override void Start()
         {
-
             InitializeExplosionAbility(_explosionAbilityConfigs);
 
             _disposables.AddRange(new List<IDisposable>{
                     _input.Explosion.AxisOnChange.Subscribe(_ => ProcessExplosion(_explosionAbility, _playerTransform))
-                }
-            );
+            });
+
+            _weaponAbilityPresenter.InitAbilities(_explosionAbility);
         }
-         
+
 
         private void InitializeExplosionAbility(ExplosionAbilityConfig config)
         {
             _explosionAbility = new ExplosionAbility(
                 config.ExplosionObject,
+                config.ExplosionIcon,
+                config.AbilityType,
                 config.Damage,
                 config.DamageOverTime,
                 config.DamageRate,
@@ -55,6 +57,8 @@ namespace Core
                 config.Lifetime,
                 config.UsageTimeout,
                 config.LayerMask,
+                config.DamageOverTimeEffect,
+                config.EffectNumPerTick,
                 config.Effect,
                 config.EffectDestroyDelay);
         }
@@ -62,17 +66,17 @@ namespace Core
 
         private void ProcessExplosion(ExplosionAbility explosionAbility, Transform playerTransform)
         {
-            if (explosionAbility.IsReady)
+            if (explosionAbility.IsReady.Value)
                 explosionAbility.Apply(playerTransform);
         }
 
 
         public void Dispose()
         {
-
             _disposables.ForEach(d => d.Dispose());
             _disposables.Clear();
         }
+
 
     }
 }

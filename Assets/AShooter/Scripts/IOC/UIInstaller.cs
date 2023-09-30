@@ -1,5 +1,6 @@
 using Abstracts;
 using UnityEngine;
+using User;
 using Zenject;
 
 
@@ -14,6 +15,7 @@ public class UIInstaller : MonoInstaller
     [SerializeField] private GameObject _goldWalletViewPrefab;
     [SerializeField] private GameObject _experienceViewPrefab;
     [SerializeField] private GameObject _playerHpViewPrefab;
+    [SerializeField] private GameObject _weaponAbilityViewPrefab;
 
 
     public override void InstallBindings()
@@ -48,6 +50,16 @@ public class UIInstaller : MonoInstaller
             .Bind<IHealthView>()
             .FromInstance(InstantiateView<IHealthView>(_playerHpViewPrefab))
             .AsCached();
+
+
+        var weaponAbilityPresenter = InstantiateView<WeaponAbilityPresenter>(_weaponAbilityViewPrefab);
+        IWeaponAbilityView weaponAbilityView = weaponAbilityPresenter.GetComponent<WeaponAbilityView>();
+
+        Container.Bind<IWeaponAbilityView>()
+            .FromInstance(weaponAbilityView)
+            .AsCached();
+
+        Container.Bind<WeaponAbilityPresenter>().FromInstance(weaponAbilityPresenter).AsCached();
 
     }
 

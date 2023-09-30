@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <WeaponId>k__BackingField: 2
   <WeaponObject>k__BackingField: {fileID: 2959598068477684390, guid: e18b2d9cfa5b3ae4cbe5cea27909fb29, type: 3}
+  <WeaponIcon>k__BackingField: {fileID: 21300000, guid: 675327c5bbe514e47a6d654317852c9b, type: 3}
   <ProjectileObject>k__BackingField: {fileID: 0}
   <ProjectileForce>k__BackingField: 0
   <WeaponType>k__BackingField: 2
@@ -28,5 +29,6 @@ MonoBehaviour:
   <LayerMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 129
-  <Effect>k__BackingField: {fileID: 265766274217486953, guid: 5d3d7a89e81960f439e9316c51c9eff6, type: 3}
+  <MuzzleEffect>k__BackingField: {fileID: 19800004, guid: cb9779a6e3aba524a9e630eb47be2e07, type: 3}
+  <Effect>k__BackingField: {fileID: 19800006, guid: e79caf639b59c854aa4069816db71cd9, type: 3}
   <EffectDestroyDelay>k__BackingField: 2

@@ -16,7 +16,9 @@ namespace User
         public int WeaponId { get; }
         
         public GameObject WeaponObject { get; }
-        
+
+        public Sprite WeaponIcon { get; }
+
         public WeaponType WeaponType { get; }
         
         public float Damage { get; }
@@ -37,12 +39,12 @@ namespace User
         private Collider[] _hitColliders;
 
 
-
-        public MeleeWeapon(int weaponId, GameObject weaponObject, WeaponType weaponType, float damage, 
+        public MeleeWeapon(int weaponId, GameObject weaponObject, Sprite weaponIcon, WeaponType weaponType, float damage, 
             LayerMask layerMask, ParticleSystem effect, float effectDestroyDelay, float attackTimeout)
         {
             WeaponId = weaponId;
             WeaponObject = weaponObject;
+            WeaponIcon = weaponIcon;
             WeaponType = weaponType;
             Damage = damage;
             LayerMask = layerMask;

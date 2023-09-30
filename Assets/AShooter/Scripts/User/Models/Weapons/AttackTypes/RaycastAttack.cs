@@ -28,6 +28,7 @@ namespace Core
         public void Attack()
         {
             FindTarget();
+            SpawnParticleEffectOnMuzzle();
         }
 
 
@@ -56,19 +57,6 @@ namespace Core
         }
 
 
-        private Vector3 CalculateSpread()
-        {
-            float _spreadFactor = _weapon.FireSpread;
-
-            return new Vector3
-            {
-                x = Random.Range(-_spreadFactor, _spreadFactor),
-                y = Random.Range(-_spreadFactor, _spreadFactor),
-                z = Random.Range(-_spreadFactor, _spreadFactor)
-            };
-        }
-
-
         private void SpawnParticleEffectOnHit(RaycastHit hitInfo)
         {
             if (_weapon.Effect != null)
@@ -78,10 +66,45 @@ namespace Core
                 var hitEffect = GameObject.Instantiate(
                     _weapon.Effect,
                     hitInfo.point,
-                    hitEffectRotation);
+                    hitEffectRotation,
+                    hitInfo.transform.TryGetComponent(out IEnemy enemy) ? hitInfo.transform : null);
 
                 GameObject.Destroy(hitEffect.gameObject, _weapon.EffectDestroyDelay);
             }
+        }
+
+
+        private void SpawnParticleEffectOnMuzzle()
+        {
+            if (_weapon.MuzzleEffect != null)
+            {
+                var muzzle = FindMuzzle(_weapon);
+
+                if (muzzle)
+                {
+                    var muzzleEffect = GameObject.Instantiate(
+                        _weapon.MuzzleEffect,
+                        muzzle);
+
+                    GameObject.Destroy(muzzleEffect.gameObject, _weapon.EffectDestroyDelay);
+                }
+            }
+        }
+
+
+        public Transform FindMuzzle(IWeapon weapon)
+        {
+            Transform muzzle = null;
+
+            foreach (Transform child in weapon.WeaponObject.transform)
+            {
+                if (child.CompareTag("Muzzle"))
+                {
+                    muzzle = child;
+                    break;
+                }
+            }
+            return muzzle;
         }
 
 

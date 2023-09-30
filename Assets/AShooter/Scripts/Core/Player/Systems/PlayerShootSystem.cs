@@ -69,7 +69,7 @@ namespace Core
             {
                 if (_currentRangeWeapon.IsShootReady)
                 {
-                    if (_currentRangeWeapon.LeftPatronsCount > 0)
+                    if (_currentRangeWeapon.LeftPatronsCount.Value > 0)
                         _currentRangeWeapon.Shoot(_components.BaseTransform, _camera, _mousePosition);
                     else
                         _currentRangeWeapon.ProcessReload();

@@ -10,6 +10,10 @@ namespace User
 
         [field: SerializeField] public Explosion ExplosionObject { get; private set; }
 
+        [field: SerializeField] public Sprite ExplosionIcon { get; private set; }
+
+        [field: SerializeField] public AbilityType AbilityType { get; private set; }
+
         [field: SerializeField, Min(0f)] public float Damage { get; private set; }
 
         [field: SerializeField, Min(0f)] public float DamageOverTime { get; private set; }
@@ -27,6 +31,10 @@ namespace User
         [field: SerializeField, Min(0f)] public float UsageTimeout { get; private set; }
 
         [field: SerializeField] public LayerMask LayerMask { get; private set; }
+
+        [field: SerializeField] public ParticleSystem DamageOverTimeEffect { get; private set; }
+
+        [field: SerializeField] public int EffectNumPerTick { get; private set; }
 
         [field: SerializeField] public ParticleSystem Effect { get; private set; }
 

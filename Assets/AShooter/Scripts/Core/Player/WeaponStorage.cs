@@ -1,6 +1,7 @@
 using Abstracts;
 using Core.DTO;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 using User;
 using Zenject;
@@ -62,13 +63,13 @@ namespace Core
             return new Sword(
                 config.WeaponId,
                 swordObject,
+                config.WeaponIcon,
                 config.WeaponType,
                 config.Damage,
                 config.LayerMask,
                 config.Effect,
                 config.EffectDestroyDelay,
-                config.ShootSpeed
-                );
+                config.ShootSpeed);
         }
 
 
@@ -79,16 +80,18 @@ namespace Core
             return new Pistol(
                 config.WeaponId,
                 pistolObject,
+                config.WeaponIcon,
                 null,
                 config.WeaponType,
                 config.Damage,
                 config.ClipSize,
-                config.LeftPatronsCount,
+                new ReactiveProperty<int>(config.LeftPatronsCount),
                 config.ReloadTime,
                 config.ShootDistance,
                 config.ShootSpeed,
                 config.FireSpread,
                 config.LayerMask,
+                config.MuzzleEffect,
                 config.Effect,
                 config.EffectDestroyDelay);
         }
@@ -101,17 +104,19 @@ namespace Core
             return new Shotgun(
                 config.WeaponId,
                 shotgunObject,
+                config.WeaponIcon,
                 null,
                 config.WeaponType,
                 config.Damage,
                 config.ClipSize,
-                config.LeftPatronsCount,
+                new ReactiveProperty<int>(config.LeftPatronsCount),
                 config.ReloadTime,
                 config.ShootDistance,
                 config.ShootSpeed,
                 config.FireSpread,
                 config.SpreadFactor,
                 config.LayerMask,
+                config.MuzzleEffect,
                 config.Effect,
                 config.EffectDestroyDelay);
         }
@@ -124,17 +129,19 @@ namespace Core
             return new RocketLauncher(
                 config.WeaponId,
                 rocketLauncherObject,
+                config.WeaponIcon,
                 config.ProjectileObject,
                 config.ProjectileForce,
                 config.WeaponType,
                 config.Damage,
                 config.ClipSize,
-                config.LeftPatronsCount,
+                new ReactiveProperty<int>(config.LeftPatronsCount),
                 config.ReloadTime,
                 config.ShootDistance,
                 config.ShootSpeed,
                 config.FireSpread,
                 config.LayerMask,
+                config.MuzzleEffect,
                 config.Effect,
                 config.EffectDestroyDelay);
         }

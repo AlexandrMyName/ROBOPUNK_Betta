@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: ExplosionAbilityConfig
   m_EditorClassIdentifier: 
   <ExplosionObject>k__BackingField: {fileID: 272371557409273288, guid: 90e8907af4fefc243a49eee6768e2e15, type: 3}
+  <ExplosionIcon>k__BackingField: {fileID: 21300000, guid: e17203397c1e765488076e2eacf65116, type: 3}
+  <AbilityType>k__BackingField: 0
   <Damage>k__BackingField: 50
   <DamageOverTime>k__BackingField: 2
   <DamageRate>k__BackingField: 1
@@ -23,6 +25,8 @@ MonoBehaviour:
   <UsageTimeout>k__BackingField: 4
   <LayerMask>k__BackingField:
     serializedVersion: 2
-    m_Bits: 193
-  <Effect>k__BackingField: {fileID: 265766274217486953, guid: 5d3d7a89e81960f439e9316c51c9eff6, type: 3}
+    m_Bits: 129
+  <DamageOverTimeEffect>k__BackingField: {fileID: 19800000, guid: f68094d600ff1ef41871c7c96dfd49ea, type: 3}
+  <EffectNumPerTick>k__BackingField: 10
+  <Effect>k__BackingField: {fileID: 19800006, guid: dfe2904d1d2ea794c8ebf2a448f18fbf, type: 3}
   <EffectDestroyDelay>k__BackingField: 2
