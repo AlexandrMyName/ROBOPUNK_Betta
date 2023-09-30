@@ -1,56 +1,63 @@
 using System;
 using UnityEngine;
 using UniRx;
-using Core;
 using Zenject;
-using System.Collections.Generic;
 using Abstracts;
-using Core.DTO;
-using UnityEngine.AI;
-using UnityEngine.Pool;
 using User;
-
+using Core;
 
 namespace DI.Spawn
 {
 
     public class EnemySpawnerController
     {
-
-        [Inject] private DiContainer _container;
-        [Inject(Id = "PlayerComponents")] private IComponentsStore _componentsPlayer;
-        [Inject(Id = "PlayerPosition")] private Vector3 _playerPosition;
-
         private EnemySpawnerDataConfig _enemySpawnerDataConfig;
+        private DiContainer _diContainer;
         private IDisposable _waveDisposable;
         private EnemySpawner _enemySpawner;
+        private Transform _playerPosition;
+        private IExperienceHandle _experienceHandle;
+        private IGoldWallet _goldWallet;
 
         private int _waveNumber;
         private bool _loopWave;
         private float _respawnWaveDelay;
 
-        private int _waveCount;
+        private int _waveCountInLoop;
 
-        internal EnemySpawnerController(EnemySpawnerDataConfig enemySpawnerDataConfig)
+        internal EnemySpawnerController(
+            EnemySpawnerDataConfig enemySpawnerDataConfig, 
+            DiContainer diContainer,
+            Transform playerPosition, 
+            IGoldWallet goldWallet,
+            IExperienceHandle experienceHandle)
         {
             _enemySpawnerDataConfig = enemySpawnerDataConfig;
-
+            _diContainer = diContainer;
             _waveNumber = _enemySpawnerDataConfig.Wave.Count;
-            Debug.Log($"___Wave number {_waveNumber}___");
             _loopWave = _enemySpawnerDataConfig.loop;
             _respawnWaveDelay = _enemySpawnerDataConfig.respawnWaveDelay;
+            _playerPosition = playerPosition;
+            _goldWallet = goldWallet;
+            _experienceHandle = experienceHandle;
         }
 
 
         internal void StartSpawnProcess()
         {
-            Debug.Log("___Start Spawn Process___");
+
             _waveDisposable = Observable
                 .Timer(TimeSpan.Zero, TimeSpan.FromSeconds(_respawnWaveDelay))
                 .Where(_ => (_loopWave ? LoppWaveTrue() : LoopWaveFalse()))
-                .Subscribe(_ => CallingWave());
+                .Subscribe(cnt => CallingWave((int)cnt));
 
-            _enemySpawner = new EnemySpawner(_container, _playerPosition);
+            int numberEnemiesInScene = 0;
+            foreach (var wave in _enemySpawnerDataConfig.Wave)
+            {
+                numberEnemiesInScene += wave.numberEnemiesInWave;
+            }
+
+            _enemySpawner = new EnemySpawner( _diContainer, _playerPosition, numberEnemiesInScene);
         }
 
 
@@ -61,18 +68,17 @@ namespace DI.Spawn
         }
 
 
-        private void CallingWave()
+        private void CallingWave(int cnt)
         {
-            Debug.Log($"____enemySpawnerDataConfig.Wave[{_waveCount-1}] {_enemySpawnerDataConfig.Wave[_waveCount - 1]}___");
-            _enemySpawner.StartSpawnProcess(_enemySpawnerDataConfig.Wave[_waveCount-1]);
+            _enemySpawner.StartSpawnWave(_enemySpawnerDataConfig.Wave[_waveCountInLoop-1], cnt);
         }
 
 
 
         private bool LoopWaveFalse()
         {
-            var value = (_waveCount < _waveNumber);
-            _waveCount++;
+            var value = (_waveCountInLoop < _waveNumber);
+            _waveCountInLoop++;
 
             return value;
         }
@@ -80,10 +86,10 @@ namespace DI.Spawn
 
         private bool LoppWaveTrue()
         {
-            if (_waveCount >= _waveNumber)
-                _waveCount = 0;
+            if (_waveCountInLoop >= _waveNumber)
+                _waveCountInLoop = 0;
 
-            _waveCount++;
+            _waveCountInLoop++;
 
             return true;
         }

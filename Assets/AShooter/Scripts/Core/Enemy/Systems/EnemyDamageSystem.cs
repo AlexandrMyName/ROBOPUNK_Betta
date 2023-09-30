@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using Abstracts;
 using UniRx;
+using UnityEngine;
+using User;
+
 
 namespace Core
 {
@@ -14,8 +17,7 @@ namespace Core
         private ReactiveProperty<bool> _isDead;
         private float _maxHealth;
 
-
-        public EnemyDamageSystem(float maxHealth)
+        public EnemyDamageSystem( float maxHealth)
         {
             _maxHealth = maxHealth;
         }
@@ -26,10 +28,12 @@ namespace Core
             _components = components;
             _isDead = _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.Attackable.IsDeadFlag;
         }
+        
 
 
         protected override void OnEnable()
         {
+            Debug.Log("OnEnable");
             _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.Attackable.SetMaxHealth(_maxHealth, OnSubscribe);
             _isDead = _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.Attackable.IsDeadFlag;
         }
@@ -52,6 +56,8 @@ namespace Core
                 _isDead.Value = true;
                 Dispose();
             }
+
+            Debug.Log($"_isDead.Value -> {_isDead.Value}");
         }
 
 

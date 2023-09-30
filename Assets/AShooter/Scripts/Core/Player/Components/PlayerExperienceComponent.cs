@@ -23,9 +23,6 @@ namespace Core
         public void AddExperience(float amountExp)
         {
             CurrentExperience.Value += amountExp;
-#if UNITY_EDITOR
-            Debug.Log($"Add Exp -> {amountExp}, Exp Account -> {CurrentExperience.Value}");
-#endif
         }
 
 
