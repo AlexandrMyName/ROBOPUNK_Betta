@@ -1,32 +1,35 @@
-﻿using Abstracts;
-using Unity.VisualScripting;
+﻿using System.Linq;
+using Abstracts;
 using UnityEngine;
-using User;
 
 
 namespace Core
 {
 
-    public sealed class RaycastAttack
+    public sealed class RaycastAttack : IRayAttack
     {
 
         private Camera _camera;
         private IRangeWeapon _weapon;
+        private Transform _muzzle;
+        
         private Vector3 _mousePosition;
-        private Transform _playerTransform;
+        private Vector3 _hitPointFromCamera;
+        private Vector3 _hitPointFromMuzzle;
 
 
-        public RaycastAttack(IRangeWeapon weapon, Transform playerTransform, Camera camera, Vector3 mousePosition)
+        public RaycastAttack(IRangeWeapon weapon, Camera camera)
         {
             _camera = camera;
-            _playerTransform = playerTransform;
             _weapon = weapon;
-            _mousePosition = mousePosition;
+
+            _muzzle = FindMuzzle(_weapon);
         }
 
 
-        public void Attack()
+        public void Attack(Vector3 mousePosition)
         {
+            _mousePosition = mousePosition;
             FindTarget();
             SpawnParticleEffectOnMuzzle();
         }
@@ -34,28 +37,35 @@ namespace Core
 
         private void FindTarget()
         {
-            var ray = _camera.ScreenPointToRay(_mousePosition);
+            var cameraRay = _camera.ScreenPointToRay(_mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, _weapon.LayerMask))
+            RaycastHit[] cameraHits = Physics.RaycastAll(cameraRay, Mathf.Infinity, _weapon.LayerMask);
+            bool isCameraHit = cameraHits.Select(h => !h.collider.isTrigger).FirstOrDefault();
+            
+            if (isCameraHit)
             {
-                Debug.DrawRay(ray.origin, ray.direction * hitInfo.distance, Color.green);
+                RaycastHit cameraHit = cameraHits.FirstOrDefault(h => !h.collider.isTrigger);
+                _hitPointFromCamera = cameraHit.point;
 
-                var hitCollider = hitInfo.collider;
+                var muzzleRay = new Ray(_muzzle.position, _hitPointFromCamera);
+                RaycastHit[] muzzleHits = Physics.RaycastAll(muzzleRay, _weapon.ShootDistance, _weapon.LayerMask);
 
-                if (hitCollider.TryGetComponent(out IEnemy unit))
+                bool isMuzzleHit = muzzleHits.Select(h => !h.collider.isTrigger).FirstOrDefault();
+
+                if (isMuzzleHit)
                 {
-                    Debug.Log($"Found target [{unit}] health {unit.ComponentsStore.Attackable.Health}");
-                    unit.ComponentsStore.Attackable.TakeDamage(_weapon.Damage);
+                    RaycastHit muzzleHit = muzzleHits.FirstOrDefault(h => !h.collider.isTrigger);
+                    var hitCollider = muzzleHit.collider;
+                    
+                    if (hitCollider.TryGetComponent(out IEnemy unit))
+                    {
+                        unit.ComponentsStore.Attackable.TakeDamage(_weapon.Damage);
+                    }
+                    SpawnParticleEffectOnHit(muzzleHit);
                 }
-                else
-                {
-                    Debug.Log($"{hitCollider} IAttackable is not found");
-                }
-
-                SpawnParticleEffectOnHit(hitInfo);
             }
         }
-
+        
 
         private void SpawnParticleEffectOnHit(RaycastHit hitInfo)
         {
@@ -92,10 +102,10 @@ namespace Core
         }
 
 
-        public Transform FindMuzzle(IWeapon weapon)
+        private Transform FindMuzzle(IWeapon weapon)
         {
             Transform muzzle = null;
-
+            
             foreach (Transform child in weapon.WeaponObject.transform)
             {
                 if (child.CompareTag("Muzzle"))
@@ -107,6 +117,6 @@ namespace Core
             return muzzle;
         }
 
-
+        
     }
 }
