@@ -100,10 +100,10 @@ namespace Core
                 if (hitCollider.TryGetComponent(out IEnemy unit))
                 {
                     unit.ComponentsStore.Attackable.TakeDamage(_weapon.Damage);
+                    Debug.Log($"DAMAGE [{hitCollider.name}] - LEFT [{unit.ComponentsStore.Attackable.Health.Value}]");
                 }
 
                 SpawnParticleEffectOnHit(muzzleHit);
-                
             }
         }
 
