@@ -10598,6 +10598,10 @@ PrefabInstance:
       propertyPath: _containerForUI
       value: 
       objectReference: {fileID: 696660040}
+    - target: {fileID: 6062975158636240938, guid: 623f97462ce0e0749a2e92abae34da23, type: 3}
+      propertyPath: _playerHpViewPrefab
+      value: 
+      objectReference: {fileID: 2345708136945342174, guid: 207d4b4282039184486e48b1c2bdcb02, type: 3}
     - target: {fileID: 9140865049341443586, guid: 623f97462ce0e0749a2e92abae34da23, type: 3}
       propertyPath: _camera
       value: 

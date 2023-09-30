@@ -100,6 +100,7 @@ namespace User
             ProcessShootTimeout();
 
             Debug.Log("SHOOT MTFCKR");
+            Laser.Blink(ShootSpeed);
         }
 
 

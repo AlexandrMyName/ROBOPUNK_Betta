@@ -1,11 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using UniRx;
 using UnityEngine;
 
 
 namespace User
 {
     
-    public sealed class Laser
+    public sealed class Laser : IDisposable
     {
 
         private GameObject _laserObject;
@@ -20,7 +23,9 @@ namespace User
 
         private bool _isLaserExist;
 
-        
+        private List<IDisposable> _disposables;
+
+
         public Laser(GameObject weaponObject)
         {
             if (FindLaserIfExists(weaponObject))
@@ -63,21 +68,40 @@ namespace User
 
         private Vector3 DrawRayUntilCollision()
         {
-  
+            _hitVector = _endLineVectorDefault;
+            
             var ray = new Ray(_laserTransform.position, _laserTransform.forward);
 
-            RaycastHit [] hits = Physics.RaycastAll(ray, _distance);
+            RaycastHit[] hits = Physics.RaycastAll(ray, _distance);
 
-            if (hits.Length == 0) return _endLineVectorDefault;
-            else
+            if (hits.Length > 0)
             {
-                bool isFindedCollider = hits.Select(hit => !hit.collider.isTrigger).First();
-                if(!isFindedCollider) return _endLineVectorDefault;
-
-                RaycastHit hit = hits.Where(hit => !hit.collider.isTrigger).FirstOrDefault();
-                return _laserTransform.InverseTransformPoint(hit.point);
+                bool isFoundCollider = hits
+                    .Select(hit => !hit.collider.isTrigger)
+                    .First();
+                
+                if (isFoundCollider)
+                {
+                    RaycastHit hit = hits.FirstOrDefault(hit => !hit.collider.isTrigger);
+                    _hitVector = _laserTransform.InverseTransformPoint(hit.point);
+                }
             }
+            return _hitVector;
+        }
 
+        
+        public void Blink(float time)
+        {
+            _laserObject.SetActive(false);
+            Observable
+                .Timer(TimeSpan.FromSeconds(time))
+                .Subscribe(_ => _laserObject.SetActive(true));
+        }
+
+
+        public void Dispose()
+        {
+            _disposables.ForEach(d => d.Dispose());
         }
         
         

@@ -38,6 +38,7 @@ namespace User
 
             var hitPoint = FindHitPoint(camera, mousePosition);
             PerformAttack(hitPoint);
+            Laser.Blink(ShootSpeed);
         }
 
 
