@@ -5,6 +5,7 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
+
 namespace Core
 {
 
@@ -13,33 +14,32 @@ namespace Core
 
         private List<IDisposable> _disposables = new();
         private IEnemy _enemy;
+        private float _attackDistance;
+        private float _attackFrequency;
+
 
         protected override void Awake(IGameComponents components)
         {
             _enemy = components.BaseObject.GetComponent<Enemy>();
+            _attackDistance = _enemy.ComponentsStore.Attackable.AttackDistance;
+            _attackFrequency = _enemy.ComponentsStore.Attackable.AttackFrequency;
 
-            var enemyRadiusAttack = _enemy.EnemyRadiusAttack;
+            var sphereCollider = components.BaseObject.AddComponent<SphereCollider>();
+            sphereCollider.radius = _attackDistance;
+            sphereCollider.isTrigger = true;
 
-            enemyRadiusAttack.OnTriggerStayAsObservable()
+            sphereCollider.OnTriggerStayAsObservable()
                 .Where(col => col.GetComponent<IPlayer>() != null)
-                .ThrottleFirst(TimeSpan.FromSeconds(GameLoopManager.EnemyAttackFrequency))
+                .ThrottleFirst(TimeSpan.FromSeconds(_attackFrequency))
                 .Subscribe(_hit => HandleTriggerCollider(_hit))
                 .AddTo(_disposables);
         }
-
-
-        protected override void OnEnable()
-            => _enemy.ComponentsStore.Attackable.SetAttackableDamage(GameLoopManager.EnemyDamageForce);
 
 
         private void HandleTriggerCollider(Collider collider)
         {
             var playerAttackableComponent = collider.GetComponent<IPlayer>().ComponentsStore.Attackable;
             playerAttackableComponent.TakeDamage(_enemy.ComponentsStore.Attackable.Damage);
-
-            #if UNITY_EDITOR
-            Debug.Log($"PLAYER: {playerAttackableComponent.Health}  ( HIT -{_enemy.ComponentsStore.Attackable.Damage}!)");
-            #endif
         }
 
 

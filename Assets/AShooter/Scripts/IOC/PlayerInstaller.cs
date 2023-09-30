@@ -17,15 +17,16 @@ namespace DI
     public class PlayerInstaller : MonoInstaller
     {
 
-        [Space(10), SerializeField] private bool _useMoveSystem;
+        [SerializeField] private StoreItemsDataConfig _storeItemsDataConfig;
         [SerializeField] private DashConfig _dashConfig;
         [SerializeField] private PlayerHPConfig _playerHPConfig;
         [SerializeField] private CinemachineVirtualCamera _camera;
         [SerializeField] private Spawner _spawner;
-        [SerializeField] private StoreItemsDataConfig _storeItemsDataConfig;
 
+        [Space(10), SerializeField] private bool _useMoveSystem;
         [SerializeField] private bool _useShootSystem;
         [SerializeField] private bool _useRotationSystem;
+
         [SerializeField] private float _maxPlayerHealth;
         [SerializeField] private float _speed;
         
@@ -186,11 +187,12 @@ namespace DI
 
             _camera.Follow = _player.transform;
             _camera.LookAt = _player.transform;
-            
+
             Container.Bind<Transform>()
                 .WithId("PlayerTransform")
                 .FromInstance(_player.transform)
                 .AsCached();
+
 
             Container.Bind<Player>()
                 .FromInstance(_player)

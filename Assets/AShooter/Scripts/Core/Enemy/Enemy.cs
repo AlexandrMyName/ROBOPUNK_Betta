@@ -12,10 +12,6 @@ namespace Core
     public class Enemy : StateMachine, IEnemy
     {
 
-        [field: SerializeField] public SphereCollider EnemyRadiusAttack { get; private set; }
-
-        [Inject(Id = "PlayerTransform")] public Transform PlayerTransform { get; private set; }
-
         public EnemyType EnemyType { get; set; }
 
         public EnemyState EnemyState { get; set; }
@@ -25,10 +21,9 @@ namespace Core
         private List<ISystem> _systems;
 
 
-        public void SetComponents(IEnemyComponentsStore components,  float rangeRadius)
+        public void SetComponents(IEnemyComponentsStore components)
         {
             ComponentsStore = components;
-            ComponentsStore.Attackable.InitComponent(rangeRadius);
         }
 
 
