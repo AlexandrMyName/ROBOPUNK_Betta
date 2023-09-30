@@ -15,15 +15,18 @@ namespace Core
 
         [Inject] public WeaponState WeaponState { get; private set; }
         [Inject] public List<WeaponConfig> WeaponConfigs { get; private set; }
-
-
+        
         public Dictionary<int, IWeapon> Weapons { get; }
 
-
+        private Camera _camera;
         private Transform _weaponContainer;
-
-
-        public WeaponStorage() => Weapons = new Dictionary<int, IWeapon>();
+        
+        
+        public WeaponStorage()
+        { 
+            Weapons = new Dictionary<int, IWeapon>();
+            _camera = Camera.main;
+        }
 
 
         public void InitializeWeapons(Transform weaponContainer)
@@ -93,7 +96,9 @@ namespace Core
                 config.LayerMask,
                 config.MuzzleEffect,
                 config.Effect,
-                config.EffectDestroyDelay);
+                config.EffectDestroyDelay,
+                _camera
+                );
         }
 
 
@@ -118,7 +123,8 @@ namespace Core
                 config.LayerMask,
                 config.MuzzleEffect,
                 config.Effect,
-                config.EffectDestroyDelay);
+                config.EffectDestroyDelay,
+                _camera);
         }
 
 
@@ -143,7 +149,8 @@ namespace Core
                 config.LayerMask,
                 config.MuzzleEffect,
                 config.Effect,
-                config.EffectDestroyDelay);
+                config.EffectDestroyDelay,
+                _camera);
         }
 
     }

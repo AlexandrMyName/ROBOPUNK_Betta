@@ -10641,5 +10641,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5363429e08b7f5249b4dd2fd7dda8893, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnOnStart: 1
+  _spawnOnStart: 0
   _enemySpawnerDataConfig: {fileID: 11400000, guid: 3818a38f325f39944b982ac2ee0c391b, type: 2}

@@ -12,11 +12,12 @@ namespace Core
         private Camera _camera;
         private IRangeWeapon _weapon;
         private Transform _muzzle;
-        
-        private Vector3 _mousePosition;
-        private Vector3 _hitPointFromCamera;
-        private Vector3 _hitPointFromMuzzle;
 
+        private RaycastHit _cameraHit;
+        
+        private Vector3 _hitPointFromMuzzle;
+        private Vector3 _cameraHitPoint;
+        
 
         public RaycastAttack(IRangeWeapon weapon, Camera camera)
         {
@@ -29,34 +30,44 @@ namespace Core
 
         public void Attack(Vector3 mousePosition)
         {
-            _mousePosition = mousePosition;
-            FindTarget();
+            if (FindCameraHitPoint(mousePosition))
+            {
+                for (int i = 0; i < _weapon.FireSpread; i++)
+                {
+                    PerformRayAttack(_cameraHit);
+                }
+            }
+            
             SpawnParticleEffectOnMuzzle();
         }
 
 
-        private void FindTarget()
+        private void PerformRayAttack(RaycastHit cameraHitPoint)
         {
-            var cameraRay = _camera.ScreenPointToRay(_mousePosition);
-
-            RaycastHit[] cameraHits = Physics.RaycastAll(cameraRay, Mathf.Infinity, _weapon.LayerMask);
-            bool isCameraHit = cameraHits.Select(h => !h.collider.isTrigger).FirstOrDefault();
             
-            if (isCameraHit)
+            var muzzleDirection = (cameraHitPoint.point - _muzzle.position).normalized;
+            var muzzleRay = new Ray(_muzzle.position, muzzleDirection);
+            var pointOnRayLimitedByDistance = muzzleRay.GetPoint(_weapon.ShootDistance);
+            
+            var pointWithError = _weapon.FireSpread <= 1 ? 
+                pointOnRayLimitedByDistance : 
+                pointOnRayLimitedByDistance + CalculateSpread();
+
+            muzzleDirection = (pointWithError - _muzzle.position).normalized;
+            muzzleRay = new Ray(_muzzle.position, muzzleDirection);
+            
+            RaycastHit[] muzzleHits = Physics.RaycastAll(muzzleRay, _weapon.ShootDistance, _weapon.LayerMask);
+
+            bool isMuzzleHit = muzzleHits.Select(h => !h.collider.isTrigger).FirstOrDefault();
+
+            if (isMuzzleHit)
             {
-                RaycastHit cameraHit = cameraHits.FirstOrDefault(h => !h.collider.isTrigger);
-                _hitPointFromCamera = cameraHit.point;
-
-                var muzzleRay = new Ray(_muzzle.position, _hitPointFromCamera);
-                RaycastHit[] muzzleHits = Physics.RaycastAll(muzzleRay, _weapon.ShootDistance, _weapon.LayerMask);
-
-                bool isMuzzleHit = muzzleHits.Select(h => !h.collider.isTrigger).FirstOrDefault();
-
-                if (isMuzzleHit)
+                if (Physics.Raycast(muzzleRay, out var muzzleHit, _weapon.ShootDistance, _weapon.LayerMask))
                 {
-                    RaycastHit muzzleHit = muzzleHits.FirstOrDefault(h => !h.collider.isTrigger);
+                    // RaycastHit muzzleHit = muzzleHits.LastOrDefault(h => !h.collider.isTrigger);
+                    Debug.DrawRay(_muzzle.position, muzzleDirection * _weapon.ShootDistance, Color.green, 20.0f);
                     var hitCollider = muzzleHit.collider;
-                    
+
                     if (hitCollider.TryGetComponent(out IEnemy unit))
                     {
                         unit.ComponentsStore.Attackable.TakeDamage(_weapon.Damage);
@@ -65,7 +76,24 @@ namespace Core
                 }
             }
         }
-        
+
+
+        private bool FindCameraHitPoint(Vector3 mousePosition)
+        {
+            bool isCameraHit = false;
+            var cameraRay = _camera.ScreenPointToRay(mousePosition);
+
+            RaycastHit[] cameraHits = Physics.RaycastAll(cameraRay, Mathf.Infinity, _weapon.LayerMask);
+            isCameraHit = cameraHits.Select(h => !h.collider.isTrigger).FirstOrDefault();
+
+            if (isCameraHit)
+            {
+                _cameraHit = cameraHits.FirstOrDefault(h => !h.collider.isTrigger);
+            }
+
+            return isCameraHit;
+        }
+
 
         private void SpawnParticleEffectOnHit(RaycastHit hitInfo)
         {
@@ -115,6 +143,17 @@ namespace Core
                 }
             }
             return muzzle;
+        }
+        
+        
+        private Vector3 CalculateSpread()
+        {
+            return new Vector3
+            {
+                x = Random.Range(-_weapon.SpreadFactor, _weapon.SpreadFactor),
+                y = Random.Range(-_weapon.SpreadFactor, _weapon.SpreadFactor),
+                z = Random.Range(-_weapon.SpreadFactor, _weapon.SpreadFactor)
+            };
         }
 
         

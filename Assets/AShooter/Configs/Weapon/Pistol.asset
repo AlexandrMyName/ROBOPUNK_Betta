@@ -18,17 +18,17 @@ MonoBehaviour:
   <ProjectileObject>k__BackingField: {fileID: 0}
   <ProjectileForce>k__BackingField: 0
   <WeaponType>k__BackingField: 1
-  <Damage>k__BackingField: 100
+  <Damage>k__BackingField: 20
   <ClipSize>k__BackingField: 8
   <LeftPatronsCount>k__BackingField: 8
   <ReloadTime>k__BackingField: 1
-  <ShootDistance>k__BackingField: 0
+  <ShootDistance>k__BackingField: 100
   <ShootSpeed>k__BackingField: 0.2
-  <FireSpread>k__BackingField: 0
+  <FireSpread>k__BackingField: 1
   <SpreadFactor>k__BackingField: 0
   <LayerMask>k__BackingField:
     serializedVersion: 2
-    m_Bits: 129
+    m_Bits: 137
   <MuzzleEffect>k__BackingField: {fileID: 19800004, guid: cb9779a6e3aba524a9e630eb47be2e07, type: 3}
   <Effect>k__BackingField: {fileID: 19800006, guid: e79caf639b59c854aa4069816db71cd9, type: 3}
   <EffectDestroyDelay>k__BackingField: 2

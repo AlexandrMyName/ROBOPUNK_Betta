@@ -11,21 +11,25 @@ namespace User
 
         private ProjectileAttack _projectileAttack;
         private Transform _muzzle;
+        private Camera _camera;
 
 
-        public RocketLauncher(int weaponId, GameObject weaponObject, Sprite weaponIcon, Projectile projectileObject, float projectileForce,
-            WeaponType weaponType, float damage, int clipSize, ReactiveProperty<int> leftPatronsCount, float reloadTime,
-            float shootDistance, float shootSpeed, float fireSpread, LayerMask layerMask, ParticleSystem muzzleEffect, ParticleSystem effect,
-            float effectDestroyDelay) : base(
+        public RocketLauncher(int weaponId, GameObject weaponObject, Sprite weaponIcon, Projectile projectileObject, 
+            float projectileForce, WeaponType weaponType, float damage, int clipSize, 
+            ReactiveProperty<int> leftPatronsCount, float reloadTime, float shootDistance, float shootSpeed,
+            float fireSpread, LayerMask layerMask, ParticleSystem muzzleEffect, ParticleSystem effect,
+            float effectDestroyDelay, Camera camera) : base(
             weaponId, weaponObject, weaponIcon, projectileObject, weaponType, damage, clipSize, leftPatronsCount,
-            reloadTime, shootDistance, shootSpeed, fireSpread, layerMask, muzzleEffect, effect, effectDestroyDelay)
+            reloadTime, shootDistance, shootSpeed, fireSpread, layerMask, muzzleEffect, effect, effectDestroyDelay, 
+            camera)
         {
             ProjectileForce = projectileForce;
             _muzzle = FindMuzzle();
+            _camera = camera;
         }
 
 
-        public override void Shoot(Transform playerTransform, Camera camera, Vector3 mousePosition)
+        public override void Shoot(Vector3 mousePosition)
         {
             Debug.Log("SHOOT MTFCKR");
 
@@ -37,7 +41,7 @@ namespace User
             IsShootReady = false;
             ProcessShootTimeout();
 
-            var hitPoint = FindHitPoint(camera, mousePosition);
+            var hitPoint = FindHitPoint(_camera, mousePosition);
             InstantiateProjectile(hitPoint);
             Laser.Blink(ShootSpeed);
         }
