@@ -73,7 +73,7 @@ namespace Core
                 
                 if (hitCollider.TryGetComponent<Rigidbody>(out var rb))
                 {
-                    rb.AddForce(muzzleDirection * _weapon.ProjectileForce, ForceMode.Impulse);
+                    rb.AddForce(muzzleDirection * _weapon.Damage / 2, ForceMode.Impulse);
                 }
 
                 if (hitCollider.TryGetComponent(out IEnemy unit))
