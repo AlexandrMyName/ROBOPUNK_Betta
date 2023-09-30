@@ -18,6 +18,7 @@ namespace Core
         private Transform _targetPosition;
         private float _attackFrequency;
 
+
         public EnemyDistantAttackSystem(Transform targetPosition)
         {
             _targetPosition = targetPosition;
@@ -30,6 +31,10 @@ namespace Core
             _enemy = components.BaseObject.GetComponent<IEnemy>();
             _enemy.ComponentsStore.Attackable.IsCameAttackPosition.Subscribe(SetPositionReadiness);
             _attackFrequency = _enemy.ComponentsStore.Attackable.AttackFrequency;
+
+            var sphereCollider = components.BaseObject.AddComponent<SphereCollider>();
+            sphereCollider.radius = 2f;
+            sphereCollider.isTrigger = true;
 
             var shootDisposable = Observable
                 .Interval(TimeSpan.FromSeconds(_attackFrequency))

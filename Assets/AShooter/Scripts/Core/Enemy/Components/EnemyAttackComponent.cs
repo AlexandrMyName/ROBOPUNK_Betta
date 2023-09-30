@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Abstracts;
 using UniRx;
 using System;
-using Zenject;
 
 namespace Core
 {
@@ -12,6 +8,7 @@ namespace Core
 
     public class EnemyAttackComponent : IEnemyAttackable
     {
+
         public ReactiveProperty<float> Health { get; private set; }
 
         public ReactiveProperty<bool> IsDeadFlag { get; set; }
@@ -24,12 +21,15 @@ namespace Core
 
         public float AttackFrequency { get; set; }
 
+        public ReactiveProperty<bool> IsRewardReadyFlag { get; set; }
+
 
         public EnemyAttackComponent(float health, float damage, float attackDistance, float attackFrequency)
         {
             Health = new ReactiveProperty<float>(health);
             IsDeadFlag = new ReactiveProperty<bool>(false);
             IsCameAttackPosition = new ReactiveProperty<bool>(false);
+            IsRewardReadyFlag = new ReactiveProperty<bool>(false);
             Damage = damage;
             AttackDistance = attackDistance;
             AttackFrequency = attackFrequency;
@@ -52,5 +52,7 @@ namespace Core
 
 
         public void TakeDamage(float amountHealth) => Health.Value -= amountHealth;
+
+
     }
 }

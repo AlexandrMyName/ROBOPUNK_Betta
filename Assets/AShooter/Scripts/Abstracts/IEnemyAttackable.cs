@@ -6,6 +6,7 @@ namespace Abstracts
 
     public interface IEnemyAttackable : IAttackable
     {
+        ReactiveProperty<bool> IsRewardReadyFlag { get; set; }
 
         float Damage { get; set; }
 

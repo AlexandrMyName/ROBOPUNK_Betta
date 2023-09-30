@@ -6,11 +6,9 @@ using Zenject;
 using System.Collections.Generic;
 using Abstracts;
 using Core.DTO;
-using UnityEngine.AI;
 using UnityEngine.Pool;
 using User;
 using Random = UnityEngine.Random;
-using Object = UnityEngine.Object;
 
 
 namespace DI.Spawn
@@ -29,6 +27,8 @@ namespace DI.Spawn
         private IDisposable _spawnDisposable;
         private Transform _targetPosition;
         private DiContainer _diContainer;
+        private IExperienceHandle _experienceHandle;
+        private IGoldWallet _goldWallet;
 
         private ObjectPool<GameObject> _pool;
         private List<float> _enemySpawnWeight;
@@ -41,12 +41,17 @@ namespace DI.Spawn
         public EnemySpawner(
             DiContainer diContainer, 
             Transform targetPosition, 
-            int maxNumberEnemy)
+            int maxNumberEnemy,
+            IExperienceHandle experienceHandle,  
+            IGoldWallet goldWallet)
         {
             _disposables = new();
 
             _diContainer = diContainer;
             _targetPosition = targetPosition;
+
+            _experienceHandle = experienceHandle;
+            _goldWallet = goldWallet;
 
             _disposables.Add(
                 _pool = new ObjectPool<GameObject>(
@@ -133,7 +138,6 @@ namespace DI.Spawn
 
         private GameObject EnemyCreation(EnemyConfig item)
         {
-            Debug.Log(_waveCount);
             var prefab = _diContainer.InstantiatePrefab(item.prefab, _waveGameObjects[_waveCount].transform);
 
             var enemy = prefab.GetComponent<Enemy>();
@@ -148,6 +152,7 @@ namespace DI.Spawn
         private List<ISystem> CreateSystems(EnemyConfig item)
         {
             var systems = new List<ISystem>();
+            systems.Add(new EnemyRewardSystem(_experienceHandle, _goldWallet));
             systems.Add(new EnemyDamageSystem(item.maxHealth));
             systems.Add(new EnemyMovementSystem(_targetPosition));
 
@@ -243,7 +248,7 @@ namespace DI.Spawn
         
 
         private void SetEnemyPosition(GameObject enemyInstance) {
-            
+
             enemyInstance.transform.position = _targetPosition.position + GetCircleIntersectionCoordinates() + Vector3.down;
         }
         

@@ -57,7 +57,7 @@ namespace DI.Spawn
                 numberEnemiesInScene += wave.numberEnemiesInWave;
             }
 
-            _enemySpawner = new EnemySpawner( _diContainer, _playerPosition, numberEnemiesInScene);
+            _enemySpawner = new EnemySpawner( _diContainer, _playerPosition, numberEnemiesInScene, _experienceHandle, _goldWallet);
         }
 
 

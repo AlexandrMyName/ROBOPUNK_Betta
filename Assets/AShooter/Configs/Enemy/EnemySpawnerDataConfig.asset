@@ -21,7 +21,7 @@ MonoBehaviour:
       prefab: {fileID: 3957541045528095213, guid: 5775e246580657045982392a26274915, type: 3}
       maxHealth: 100
       maxAttackDamage: 0
-      attackDistance: 2
+      attackDistance: 10
       attackFrequency: 2
       goldDropRate: 50
       goldValueRange:
@@ -34,7 +34,7 @@ MonoBehaviour:
     respawnEnemyInWaveDelay: 1
     spawnRadiusRelativeToPlayer: 20
     numberEnemiesInWave: 6
-    numberEnemiesInScene: 3
+    numberEnemiesInScene: 1
   - Enemy:
     - description: 
       nameEnemy: 
@@ -51,7 +51,7 @@ MonoBehaviour:
       experienceRange:
         min: 4
         max: 6
-      probabilityWeigh: 0.6
+      probabilityWeigh: 0.4
     - description: 
       nameEnemy: 
       enemyType: 1
@@ -67,7 +67,7 @@ MonoBehaviour:
       experienceRange:
         min: 3
         max: 6
-      probabilityWeigh: 0.4
+      probabilityWeigh: 0.6
     respawnEnemyInWaveDelay: 1
     spawnRadiusRelativeToPlayer: 20
     numberEnemiesInWave: 8
@@ -88,7 +88,7 @@ MonoBehaviour:
       experienceRange:
         min: 3
         max: 6
-      probabilityWeigh: 0.4
+      probabilityWeigh: 0.2
     - description: 
       nameEnemy: 
       enemyType: 1
@@ -104,7 +104,7 @@ MonoBehaviour:
       experienceRange:
         min: 3
         max: 6
-      probabilityWeigh: 0.3
+      probabilityWeigh: 0.2
     - description: 
       nameEnemy: 
       enemyType: 0
@@ -120,7 +120,7 @@ MonoBehaviour:
       experienceRange:
         min: 15
         max: 20
-      probabilityWeigh: 0.3
+      probabilityWeigh: 0.6
     respawnEnemyInWaveDelay: 1
     spawnRadiusRelativeToPlayer: 25
     numberEnemiesInWave: 12
@@ -178,7 +178,7 @@ MonoBehaviour:
       nameEnemy: 
       enemyType: 1
       prefab: {fileID: 5783359468839766296, guid: 09b8414b5daac0142abdd54089367d69, type: 3}
-      maxHealth: 250
+      maxHealth: 100
       maxAttackDamage: 40
       attackDistance: 18
       attackFrequency: 2
@@ -194,4 +194,4 @@ MonoBehaviour:
     spawnRadiusRelativeToPlayer: 25
     numberEnemiesInWave: 16
     numberEnemiesInScene: 8
-  respawnWaveDelay: 10
+  respawnWaveDelay: 20

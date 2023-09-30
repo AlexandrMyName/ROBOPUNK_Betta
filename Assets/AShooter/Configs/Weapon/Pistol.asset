@@ -17,7 +17,7 @@ MonoBehaviour:
   <ProjectileObject>k__BackingField: {fileID: 0}
   <ProjectileForce>k__BackingField: 0
   <WeaponType>k__BackingField: 1
-  <Damage>k__BackingField: 20
+  <Damage>k__BackingField: 100
   <ClipSize>k__BackingField: 8
   <LeftPatronsCount>k__BackingField: 8
   <ReloadTime>k__BackingField: 1
