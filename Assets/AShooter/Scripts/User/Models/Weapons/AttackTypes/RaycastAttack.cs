@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Abstracts;
 using UnityEngine;
+using User;
 
 
 namespace Core
@@ -16,7 +17,6 @@ namespace Core
         private RaycastHit _cameraHit;
         
         private Vector3 _hitPointFromMuzzle;
-        private Vector3 _cameraHitPoint;
         
 
         public RaycastAttack(IRangeWeapon weapon, Camera camera)
@@ -32,13 +32,34 @@ namespace Core
         {
             if (FindCameraHitPoint(mousePosition))
             {
-                for (int i = 0; i < _weapon.FireSpread; i++)
-                {
-                    PerformRayAttack(_cameraHit);
-                }
+                ResolveTypeByWeapon();
             }
             
             SpawnParticleEffectOnMuzzle();
+        }
+
+        
+        private void ResolveTypeByWeapon()
+        {
+            switch (_weapon.WeaponType)
+            {
+                case WeaponType.RocketLauncher:
+                    InstantiateProjectile(_cameraHit.point);
+                    break;
+                
+                default:
+                    PerformAttackBySpread();
+                    break;
+            }
+        }
+
+        
+        private void PerformAttackBySpread()
+        {
+            for (int i = 0; i < _weapon.FireSpread; i++)
+            {
+                PerformRayAttack(_cameraHit);
+            }
         }
 
 
@@ -89,11 +110,6 @@ namespace Core
 
         private bool FindCameraHitPoint(Vector3 mousePosition)
         {
-            GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            cube.transform.position = mousePosition;
-            cube.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-            cube.name = "InMousePosition";
-            
             bool isCameraHit = false;
             var cameraRay = _camera.ScreenPointToRay(mousePosition);
 
@@ -171,6 +187,18 @@ namespace Core
                 y = Random.Range(-_weapon.SpreadFactor, _weapon.SpreadFactor),
                 z = Random.Range(-_weapon.SpreadFactor, _weapon.SpreadFactor)
             };
+        }
+        
+        
+        private void InstantiateProjectile(Vector3 hitPoint)
+        {
+            var projectile = GameObject.Instantiate(_weapon.ProjectileObject, _muzzle.position, _muzzle.rotation);
+            projectile.Damage = _weapon.Damage;
+            projectile.Effect = _weapon.Effect;
+            projectile.EffectDestroyDelay = _weapon.EffectDestroyDelay;
+            var direction = (hitPoint - _muzzle.position).normalized;
+
+            projectile.Rigidbody.AddForce(direction * _weapon.ProjectileForce, ForceMode.Impulse);
         }
 
         

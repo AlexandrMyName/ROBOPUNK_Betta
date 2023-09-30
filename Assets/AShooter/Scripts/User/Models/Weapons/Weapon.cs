@@ -101,7 +101,6 @@ namespace User
             IsShootReady = false;
             ProcessShootTimeout();
 
-            Debug.Log("SHOOT MTFCKR");
             Laser.Blink(ShootSpeed);
         }
 
@@ -109,7 +108,6 @@ namespace User
         public void Reload()
         {
             LeftPatronsCount.Value = ClipSize;
-            Debug.Log("RELOAD MTFCKR");
             IsReloadProcessing.Value = false;
         }
 
