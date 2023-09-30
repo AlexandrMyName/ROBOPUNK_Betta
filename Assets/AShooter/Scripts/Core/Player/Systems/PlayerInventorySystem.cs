@@ -26,14 +26,14 @@ namespace Core
             _components = components;
             _goldWallet = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.GoldWallet;
             
-            /*_components.BaseObject.GetComponent<Collider>()
+            _components.BaseObject.GetComponent<Collider>()
                 .OnTriggerEnterAsObservable()
                     .Where(x => x.GetComponent<IChest>() != null)
                     .Subscribe(
                         collider =>
                         {
-                            ApplyGettingItem(collider.GetComponent<IInteractable>().Interact());
-                        }).AddTo(_disposables);*/
+                            ApplyGettingItem(collider.GetComponent<IChest>().GetRandomItem());
+                        }).AddTo(_disposables);
             
         }
 

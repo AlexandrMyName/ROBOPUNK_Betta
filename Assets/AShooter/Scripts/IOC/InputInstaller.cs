@@ -1,6 +1,7 @@
 using Zenject;
 using Core;
 using Abstracts;
+using UnityEngine;
 
 namespace DI
 {
@@ -10,12 +11,13 @@ namespace DI
         private IInteractable _interactable;
 
         public override void Start() => InputManager.EnableSystem();
-        
-        public override void InstallBindings() 
-        =>  Container
-            .Bind<IInput>()
-            .FromInstance(InitInputSystem()) 
-            .AsCached();
+
+        public override void InstallBindings()
+        {
+            GameObject chestObject = GameObject.FindGameObjectWithTag("Chest");
+            _interactable = chestObject.GetComponent<IInteractable>();          
+            Container.Bind<IInput>().FromInstance(InitInputSystem()).AsCached();
+        }
  
         private PCInput InitInputSystem()
         {

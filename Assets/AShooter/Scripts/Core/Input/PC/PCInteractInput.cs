@@ -16,7 +16,6 @@ namespace Core
         public PCInteractInput(InputConfig config, IInteractable interactable)
         {
             _interactable = interactable;
-            // ОШИБКА В СТРОЧКЕ НИЖЕ
             config.Interact.Key.performed += ctx => _interactable.Interact();
         }
 

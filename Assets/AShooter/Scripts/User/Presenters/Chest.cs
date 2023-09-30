@@ -1,5 +1,6 @@
 using System;
 using Abstracts;
+using Core;
 using UnityEngine;
 using User;
 using Random = UnityEngine.Random;
@@ -8,12 +9,22 @@ using Random = UnityEngine.Random;
 public class Chest : MonoBehaviour, IChest, IInteractable
 {
     [SerializeField] private ChestDataConfig chestConfig;
+    [SerializeField] private Player player;
+    [SerializeField] private float interactRadius = 1.87f;
     
-    public object Interact()
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("Chest is opened");
+            Interact();
+        }
+    }
+    
+    public void Interact()
     {
         Debug.Log("Chest is opened");
         GetRandomItem();
-        return null;
     }
 
     public object GetRandomItem()
