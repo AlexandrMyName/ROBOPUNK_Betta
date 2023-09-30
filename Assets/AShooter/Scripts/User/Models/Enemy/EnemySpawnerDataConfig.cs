@@ -44,6 +44,12 @@ namespace User
         [Space(10)]
         public float spawnRadiusRelativeToPlayer;
 
+
+        [Space(10)]
+        [Header("Number enemies in wave: ")]
+        public int numberEnemiesInWave;
+        public int numberEnemiesInScene;
+
     }
 
 
@@ -88,9 +94,9 @@ namespace User
 
 
         [Space(10)]
-        [Header("Number enemies in wave: ")]
-        public int numberEnemiesInWave;
-
+        [Range(0, 1)]
+        [Header("Install with the calculation of the remaining weights. The sum of all weights of each enemy type in a wave MUST be equal to [1] !!!")]
+        public float probabilityWeigh;
 
 
         [Serializable]

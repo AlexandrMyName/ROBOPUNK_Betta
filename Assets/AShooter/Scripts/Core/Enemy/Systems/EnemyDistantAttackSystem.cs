@@ -15,13 +15,12 @@ namespace Core
         private bool _isPositionReadiness;
         private IEnemy _enemy;
         private IGameComponents _components;
-        private Vector3 _targetPosition;
+        private Transform _targetPosition;
         private float _attackFrequency;
 
-        public EnemyDistantAttackSystem(Vector3 targetPosition, float attackFrequency)
+        public EnemyDistantAttackSystem(Transform targetPosition)
         {
             _targetPosition = targetPosition;
-            _attackFrequency = attackFrequency;
         }
 
 
@@ -30,6 +29,7 @@ namespace Core
             _components = components;
             _enemy = components.BaseObject.GetComponent<IEnemy>();
             _enemy.ComponentsStore.Attackable.IsCameAttackPosition.Subscribe(SetPositionReadiness);
+            _attackFrequency = _enemy.ComponentsStore.Attackable.AttackFrequency;
 
             var shootDisposable = Observable
                 .Interval(TimeSpan.FromSeconds(_attackFrequency))
@@ -55,7 +55,7 @@ namespace Core
 
         void ThrowPrimitive()
         {
-            Vector3 directionToPlayer = (_targetPosition - _components.BaseTransform.position).normalized;
+            Vector3 directionToPlayer = (_targetPosition.position - _components.BaseTransform.position).normalized;
 
             GameObject primitive = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             var rb = primitive.AddComponent<Rigidbody>();

@@ -11,6 +11,8 @@ namespace Abstracts
 
         float AttackDistance { get; set; }
 
+        float AttackFrequency { get; set; }
+
         ReactiveProperty<bool> IsCameAttackPosition { get; }
 
     }

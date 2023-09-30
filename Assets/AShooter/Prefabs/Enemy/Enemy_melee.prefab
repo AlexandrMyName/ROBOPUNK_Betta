@@ -20,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4221803273404836712
 Transform:
   m_ObjectHideFlags: 0
@@ -121,7 +121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e976d386fa3fb924b841a569fdfc17c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EnemyRadiusAttack>k__BackingField: {fileID: 0}
 --- !u!195 &3852475386510055720
 NavMeshAgent:
   m_ObjectHideFlags: 0
