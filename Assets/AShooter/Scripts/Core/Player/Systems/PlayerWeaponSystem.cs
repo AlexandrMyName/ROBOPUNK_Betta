@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Abstracts;
 using UniRx;
+using User;
 using Zenject;
 
 
@@ -12,6 +13,8 @@ namespace Core
     {
 
         [Inject] private IInput _input;
+        [Inject] private WeaponAbilityPresenter _weaponAbilityPresenter;
+
         private List<IDisposable> _disposables = new();
         private IWeaponStorage _weaponStorage;  
         private bool _isAlredyFalsed;
@@ -53,7 +56,10 @@ namespace Core
             );
 
             _weaponStorage.WeaponState.CurrentWeapon.Value = _weaponStorage.Weapons[1];
+            _weaponStorage.WeaponState.MainWeapon.Value = _weaponStorage.Weapons[1];
+            _weaponStorage.WeaponState.PickUpWeapon.Value = _weaponStorage.Weapons[2];
 
+            _weaponAbilityPresenter.InitWeapons(_weaponStorage);
         }
 
 
@@ -74,9 +80,22 @@ namespace Core
 
             _weaponStorage.Weapons[id].WeaponObject.SetActive(true);
             _weaponStorage.WeaponState.CurrentWeapon.Value = _weaponStorage.Weapons[id];
+
+            UpdatePickUpWeapon();
         }
-        
-        
+
+
+        private void UpdatePickUpWeapon()
+        {
+            var currentWeapon = _weaponStorage.WeaponState.CurrentWeapon.Value;
+
+            if ((currentWeapon.WeaponType != WeaponType.Pistol) && (currentWeapon.WeaponType != WeaponType.Sword))
+            {
+                _weaponStorage.WeaponState.PickUpWeapon.Value = currentWeapon;
+            }
+        }
+
+
         private void HandleMeleeButtonPressed(bool isPressing)
         {
             if (isPressing)
@@ -99,6 +118,7 @@ namespace Core
 
 
         public void Dispose() => _disposables.ForEach(d => d.Dispose());
+
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Abstracts;
+using UniRx;
 using UnityEngine;
 
 
@@ -9,15 +10,14 @@ namespace User
     {
 
         private Transform _muzzle;
-        
-        
-        
-        public Shotgun(int weaponId, GameObject weaponObject, Projectile projectileObject, WeaponType weaponType,
-            float damage, int clipSize, int leftPatronsCount, float reloadTime, float shootDistance, float shootSpeed,
-            float fireSpread, float spreadFactor, LayerMask layerMask, 
+
+
+        public Shotgun(int weaponId, GameObject weaponObject, Sprite weaponIcon, Projectile projectileObject, WeaponType weaponType,
+            float damage, int clipSize, ReactiveProperty<int> leftPatronsCount, float reloadTime, float shootDistance, float shootSpeed,
+            float fireSpread, float spreadFactor, LayerMask layerMask, ParticleSystem muzzleEffect,
             ParticleSystem effect, float effectDestroyDelay) : base(
-            weaponId, weaponObject, projectileObject, weaponType, damage, clipSize, leftPatronsCount,
-            reloadTime, shootDistance, shootSpeed, fireSpread, layerMask, effect, effectDestroyDelay)
+            weaponId, weaponObject, weaponIcon, projectileObject, weaponType, damage, clipSize, leftPatronsCount,
+            reloadTime, shootDistance, shootSpeed, fireSpread, layerMask, muzzleEffect, effect, effectDestroyDelay)
         {
             _muzzle = FindMuzzle();
             SpreadFactor = spreadFactor;
@@ -27,14 +27,20 @@ namespace User
         public override void Shoot(Transform playerTransform, Camera camera, Vector3 mousePosition)
         {
             Debug.Log("SHOOT MTFCKR");
-            LeftPatronsCount--;
+
+            LeftPatronsCount.Value--;
+
+            if (LeftPatronsCount.Value == 0)
+                ProcessReload();
+
             IsShootReady = false;
             ProcessShootTimeout();
+
             var hitPoint = FindHitPoint(camera, mousePosition);
             PerformAttack(hitPoint);
         }
-        
-        
+
+
         private Transform FindMuzzle()
         {
             Transform muzzle = null;
@@ -75,6 +81,8 @@ namespace User
             {
                 PerformRaycast(hitPoint);
             }
+
+            SpawnParticleEffectOnMuzzle();
         }
 
 
@@ -116,13 +124,30 @@ namespace User
                 var hitEffect = GameObject.Instantiate(
                     Effect,
                     hitInfo.point,
-                    hitEffectRotation);
+                    hitEffectRotation,
+                    hitInfo.transform.TryGetComponent(out IEnemy enemy) ? hitInfo.transform : null);
 
                 GameObject.Destroy(hitEffect.gameObject, EffectDestroyDelay);
             }
         }
-        
-        
+
+
+        private void SpawnParticleEffectOnMuzzle()
+        {
+            if (MuzzleEffect != null)
+            {
+                if (_muzzle)
+                {
+                    var muzzleEffect = GameObject.Instantiate(
+                        MuzzleEffect,
+                        _muzzle);
+
+                    GameObject.Destroy(muzzleEffect.gameObject, EffectDestroyDelay);
+                }
+            }
+        }
+
+
         private Vector3 CalculateSpread()
         {
             return new Vector3
@@ -132,10 +157,6 @@ namespace User
                 z = Random.Range(-SpreadFactor, SpreadFactor)
             };
         }
-        
-        
-        
-        
         
         
     }

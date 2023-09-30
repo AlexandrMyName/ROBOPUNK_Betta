@@ -18,5 +18,7 @@ namespace Abstracts
 
         IHealthView HealthView { get; }
 
+        IWeaponAbilityView WeaponAbility { get; }
+
     }
 }

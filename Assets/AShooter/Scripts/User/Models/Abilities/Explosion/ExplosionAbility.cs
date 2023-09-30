@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using Abstracts;
 
 
 namespace User
 {
 
-    public sealed class ExplosionAbility : IDisposable
+    public sealed class ExplosionAbility : IDisposable, IAbility
     {
 
         public Explosion ExplosionObject { get; private set; }
+
+        public Sprite ExplosionIcon { get; private set; }
+
+        public AbilityType AbilityType { get; private set; }
 
         public float Damage { get; private set; }
 
@@ -30,20 +35,27 @@ namespace User
 
         public LayerMask LayerMask { get; private set; }
 
+        public ParticleSystem DamageOverTimeEffect { get; private set; }
+
+        public int EffectNumPerTick { get; private set; }
+
         public ParticleSystem Effect { get; private set; }
 
         public float EffectDestroyDelay { get; private set; }
 
-        public bool IsReady { get; private set; }
+        public ReactiveProperty<bool> IsReady { get; private set; }
 
 
         private List<IDisposable> _disposables = new();
 
 
-        public ExplosionAbility(Explosion explosionObject, float damage, float damageOverTime, float damageRate, int radius, float force,
-            float upwardsModifier, float lifetime, float usageTimeout, LayerMask layerMask, ParticleSystem effect, float effectDestroyDelay)
+        public ExplosionAbility(Explosion explosionObject, Sprite explosionIcon, AbilityType abilityType, float damage, float damageOverTime, 
+            float damageRate, int radius, float force, float upwardsModifier, float lifetime, float usageTimeout, LayerMask layerMask, 
+            ParticleSystem damageOverTimeEffect, int effectNumPerTick, ParticleSystem effect, float effectDestroyDelay)
         {
             ExplosionObject = explosionObject;
+            ExplosionIcon = explosionIcon;
+            AbilityType = abilityType;
             Damage = damage;
             DamageOverTime = damageOverTime;
             DamageRate = damageRate;
@@ -53,9 +65,11 @@ namespace User
             Lifetime = lifetime;
             UsageTimeout = usageTimeout;
             LayerMask = layerMask;
+            DamageOverTimeEffect = damageOverTimeEffect;
+            EffectNumPerTick = effectNumPerTick;
             Effect = effect;
             EffectDestroyDelay = effectDestroyDelay;
-            IsReady = true;
+            IsReady = new ReactiveProperty<bool>(true);
         }
 
 
@@ -63,7 +77,7 @@ namespace User
         {
             InstantiateExplosion(playerTransform);
 
-            IsReady = false;
+            IsReady.Value = false;
             Cooldown();
         }
 
@@ -74,16 +88,7 @@ namespace User
             var spawnPoint = new Vector3(playerPosition.x, 0.2f, playerPosition.z);
 
             var explosion = GameObject.Instantiate(ExplosionObject, spawnPoint, Quaternion.identity);
-            explosion.Damage = Damage;
-            explosion.DamageOverTime = DamageOverTime;
-            explosion.DamageRate = DamageRate;
-            explosion.Radius = Radius;
-            explosion.Force = Force;
-            explosion.UpwardsModifier = UpwardsModifier;
-            explosion.Lifetime = Lifetime;
-            explosion.LayerMask = LayerMask;
-            explosion.Effect = Effect;
-            explosion.EffectDestroyDelay = EffectDestroyDelay;
+            explosion.Ability = this;
 
             GameObject.Destroy(explosion.gameObject, Lifetime);
         }
@@ -91,17 +96,17 @@ namespace User
 
         public void Cooldown()
         {
-            if (!IsReady)
+            if (!IsReady.Value)
             {
                 _disposables.Add(
                     Observable
                         .Timer(TimeSpan.FromSeconds(UsageTimeout))
-                        .Subscribe(_ => IsReady = true)
+                        .Subscribe(_ => IsReady.Value = true)
                 );
             }
         }
 
-        
+
         public void Dispose()
         {
             _disposables.ForEach(d => d.Dispose());
