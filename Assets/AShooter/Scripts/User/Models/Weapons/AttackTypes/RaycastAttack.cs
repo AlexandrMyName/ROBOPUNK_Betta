@@ -62,24 +62,38 @@ namespace Core
 
             if (isMuzzleHit)
             {
-                if (Physics.Raycast(muzzleRay, out var muzzleHit, _weapon.ShootDistance, _weapon.LayerMask))
-                {
-                    // RaycastHit muzzleHit = muzzleHits.LastOrDefault(h => !h.collider.isTrigger);
-                    Debug.DrawRay(_muzzle.position, muzzleDirection * _weapon.ShootDistance, Color.green, 20.0f);
-                    var hitCollider = muzzleHit.collider;
+                var muzzleHit = muzzleHits
+                    .Where(h => !h.collider.isTrigger)
+                    .OrderBy(h => Vector3.Distance(h.point, _muzzle.position))
+                    .First();
 
-                    if (hitCollider.TryGetComponent(out IEnemy unit))
-                    {
-                        unit.ComponentsStore.Attackable.TakeDamage(_weapon.Damage);
-                    }
-                    SpawnParticleEffectOnHit(muzzleHit);
+                Debug.DrawRay(_muzzle.position, muzzleDirection * _weapon.ShootDistance, Color.green, 20.0f);
+
+                var hitCollider = muzzleHit.collider;
+                
+                if (hitCollider.TryGetComponent<Rigidbody>(out var rb))
+                {
+                    rb.AddForce(muzzleDirection * _weapon.ProjectileForce, ForceMode.Impulse);
                 }
+
+                if (hitCollider.TryGetComponent(out IEnemy unit))
+                {
+                    unit.ComponentsStore.Attackable.TakeDamage(_weapon.Damage);
+                }
+
+                SpawnParticleEffectOnHit(muzzleHit);
+                
             }
         }
 
 
         private bool FindCameraHitPoint(Vector3 mousePosition)
         {
+            GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            cube.transform.position = mousePosition;
+            cube.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            cube.name = "InMousePosition";
+            
             bool isCameraHit = false;
             var cameraRay = _camera.ScreenPointToRay(mousePosition);
 
@@ -88,7 +102,10 @@ namespace Core
 
             if (isCameraHit)
             {
-                _cameraHit = cameraHits.FirstOrDefault(h => !h.collider.isTrigger);
+                _cameraHit = cameraHits
+                    .Where(h => !h.collider.isTrigger)
+                    .OrderBy(h => Vector3.Distance(h.point, cameraRay.origin))
+                    .First();
             }
 
             return isCameraHit;
