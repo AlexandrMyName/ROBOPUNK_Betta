@@ -34,7 +34,7 @@ namespace Core
 
         public ISubjectInputProxy<Unit> DashClick { get; }
 
-        public PCInput([NotNull] InputConfig config, [NotNull] IInteractable interactable)
+        public PCInput([NotNull] InputConfig config)
         {
 
             Horizontal = new PCInputHorizontal(config);
@@ -48,7 +48,7 @@ namespace Core
             Explosion = new PCExplosionInput(config);
             MeleeHold = new PCMeleeInput(config);
             DashClick = new PCDashInput(config);
-            Interact = new PCInteractInput(config, interactable);
+            Interact = new PCInteractInput(config);
         }
     }
 }

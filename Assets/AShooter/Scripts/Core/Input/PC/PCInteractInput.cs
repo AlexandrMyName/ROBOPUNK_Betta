@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Abstracts;
+﻿using Abstracts;
 using UniRx;
-using Zenject;
 
 
 namespace Core
@@ -11,14 +8,12 @@ namespace Core
     internal sealed class PCInteractInput : ISubjectInputProxy<Unit>
     {
 
-        private IInteractable _interactable;
+        public Subject<Unit> AxisOnChange { get; } = new();
 
-        public PCInteractInput(InputConfig config, IInteractable interactable)
-        {
-            _interactable = interactable;
-            config.Interact.Key.performed += ctx => _interactable.Interact();
-        }
+        public PCInteractInput(InputConfig config)
+        => config.Interact.Key.performed += ctx => AxisOnChange.OnNext(Unit.Default);
+        
 
-        public Subject<Unit> AxisOnChange { get; }
+     
     }
 }
