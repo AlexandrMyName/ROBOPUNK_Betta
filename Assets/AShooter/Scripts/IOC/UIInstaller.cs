@@ -16,6 +16,7 @@ public class UIInstaller : MonoInstaller
     [SerializeField] private GameObject _experienceViewPrefab;
     [SerializeField] private GameObject _shieldViewPrefab;
     [SerializeField] private GameObject _playerHpViewPrefab;
+    [SerializeField] private GameObject _interactViewPrefab;
     [SerializeField] private GameObject _weaponAbilityViewPrefab;
 
 
@@ -66,6 +67,12 @@ public class UIInstaller : MonoInstaller
             .AsCached();
 
         Container.Bind<WeaponAbilityPresenter>().FromInstance(weaponAbilityPresenter).AsCached();
+
+        
+        Container
+            .Bind<IInteractView>()
+            .FromInstance(InstantiateView<IInteractView>(_interactViewPrefab))
+            .AsCached();
 
     }
 

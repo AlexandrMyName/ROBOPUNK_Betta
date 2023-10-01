@@ -330,6 +330,34 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Interact"",
+            ""id"": ""ea8b427c-87cd-47c3-a933-b798d01b0956"",
+            ""actions"": [
+                {
+                    ""name"": ""Key"",
+                    ""type"": ""Button"",
+                    ""id"": ""a7f4d511-e6e4-406d-9d8f-93956d9a8618"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""98cff5fc-4b7a-4b5e-9027-cff2f991b435"",
+                    ""path"": ""<Keyboard>/E"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Key"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -359,6 +387,9 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
         // Dash
         m_Dash = asset.FindActionMap("Dash", throwIfNotFound: true);
         m_Dash_Key = m_Dash.FindAction("Key", throwIfNotFound: true);
+        // Interact
+        m_Interact = asset.FindActionMap("Interact", throwIfNotFound: true);
+        m_Interact_Key = m_Interact.FindAction("Key", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -678,6 +709,52 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
         }
     }
     public DashActions @Dash => new DashActions(this);
+
+    // Interact
+    private readonly InputActionMap m_Interact;
+    private List<IInteractActions> m_InteractActionsCallbackInterfaces = new List<IInteractActions>();
+    private readonly InputAction m_Interact_Key;
+    public struct InteractActions
+    {
+        private @InputConfig m_Wrapper;
+        public InteractActions(@InputConfig wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Key => m_Wrapper.m_Interact_Key;
+        public InputActionMap Get() { return m_Wrapper.m_Interact; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InteractActions set) { return set.Get(); }
+        public void AddCallbacks(IInteractActions instance)
+        {
+            if (instance == null || m_Wrapper.m_InteractActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_InteractActionsCallbackInterfaces.Add(instance);
+            @Key.started += instance.OnKey;
+            @Key.performed += instance.OnKey;
+            @Key.canceled += instance.OnKey;
+        }
+
+        private void UnregisterCallbacks(IInteractActions instance)
+        {
+            @Key.started -= instance.OnKey;
+            @Key.performed -= instance.OnKey;
+            @Key.canceled -= instance.OnKey;
+        }
+
+        public void RemoveCallbacks(IInteractActions instance)
+        {
+            if (m_Wrapper.m_InteractActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IInteractActions instance)
+        {
+            foreach (var item in m_Wrapper.m_InteractActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_InteractActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public InteractActions @Interact => new InteractActions(this);
     private int m_MoveSchemeIndex = -1;
     public InputControlScheme MoveScheme
     {
@@ -708,6 +785,10 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
         void OnExplosion(InputAction.CallbackContext context);
     }
     public interface IDashActions
+    {
+        void OnKey(InputAction.CallbackContext context);
+    }
+    public interface IInteractActions
     {
         void OnKey(InputAction.CallbackContext context);
     }

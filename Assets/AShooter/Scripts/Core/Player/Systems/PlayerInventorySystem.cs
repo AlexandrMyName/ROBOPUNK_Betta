@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Abstracts;
 using System;
+using AShooter.Scripts.User.Views;
 using UniRx.Triggers;
 using UniRx;
 using User;
-
+using Zenject;
 
 namespace Core
 {
@@ -13,33 +14,60 @@ namespace Core
     public class PlayerInventorySystem : BaseSystem, IDisposable
     {
 
+        [Inject] IInput _input;
         private IGameComponents _components;
         private List<IDisposable> _disposables;
         private IGoldWallet _goldWallet;
+        private IInteractView _interactView;
+
+        private bool _canOpenChest;
+
 
         public void Dispose() => _disposables.ForEach(disposable => disposable.Dispose());
 
 
         protected override void Awake(IGameComponents components)
         {
+
+            _interactView = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.InteractView;
+            _interactView.Hide();
             _disposables = new();
             _components = components;
             _goldWallet = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.GoldWallet;
+            _input.Interact.AxisOnChange.Subscribe(value => SwitchInteractInput()).AddTo(_disposables);
 
             _components.BaseObject.GetComponent<Collider>()
-                .OnTriggerEnterAsObservable()
+                .OnTriggerStayAsObservable()
                     .Where(x => x.GetComponent<IChest>() != null)
                     .Subscribe(
                         collider =>
                         {
-                            ApplyGettingItem(collider.GetComponent<IChest>().GetRandomItem());
+
+                            if(_canOpenChest)
+                                ApplyGettingItem(collider.GetComponent<IChest>().GetRandomItem());
+
+                            else  _interactView.Show();
+                               
+                            
                         }).AddTo(_disposables);
-            
+        }
+
+
+        private void SwitchInteractInput()
+        {
+            _canOpenChest = true;
+            Observable.Timer(TimeSpan.FromMilliseconds(200)).Subscribe(
+
+                timer => {
+                _canOpenChest = false;
+                    _interactView.Hide();
+                }).AddTo(_disposables);
         }
 
 
         private void ApplyGettingItem(object objItem)
         {
+             
             if(objItem == null)
             {
                 ApplayGettingEmpty();

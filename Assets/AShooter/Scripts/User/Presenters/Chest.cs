@@ -1,12 +1,14 @@
 using Abstracts;
+using Core;
 using UnityEngine;
 using User;
+using Random = UnityEngine.Random;
 
 
 public class Chest : MonoBehaviour, IChest
 {
-    [SerializeField] private ChestDataConfig chestConfig;
 
+    [SerializeField] private ChestDataConfig chestConfig;
     public object GetRandomItem()
     {
         int index = Random.Range(0, chestConfig.COUNT_POSSIBLE_OBJECTS - 1);
@@ -40,6 +42,5 @@ public class Chest : MonoBehaviour, IChest
         var rndGoldCoinValue = chestConfig.MettaCoinsPossibleGeneration[rndGoldCoinNumber];
         return new CoinMeta(rndGoldCoinValue);
     }
-
 
 }
