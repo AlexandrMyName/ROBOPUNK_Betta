@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Abstracts;
+using Core.DTO;
 using UniRx;
+using UnityEngine;
 using User;
 using Zenject;
 
@@ -16,7 +18,9 @@ namespace Core
         [Inject] private WeaponAbilityPresenter _weaponAbilityPresenter;
 
         private List<IDisposable> _disposables = new();
-        private IWeaponStorage _weaponStorage;  
+        private IWeaponStorage _weaponStorage;
+        private WeaponState _weaponState;
+
         private bool _isAlredyFalsed;
 
 
@@ -27,71 +31,80 @@ namespace Core
             _weaponStorage = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.WeaponStorage;
 
             _weaponStorage.InitializeWeapons(weaponContainer);
+            _weaponState = _weaponStorage.WeaponState;
         }
 
 
         protected override void Start()
         {
 
-            ChangeWeapon(1);
+            ChangeWeapon(WeaponType.Pistol);
             
             _disposables.AddRange(new List<IDisposable>{
                     _input.MeleeHold.AxisOnChange.Subscribe(b => HandleMeleeButtonPressed(b)),
-                    _input.WeaponFirst.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(1)),
-                    _input.WeaponSecond.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(2)),
-                    _input.WeaponThird.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(3)),
+                    _input.WeaponFirst.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(WeaponType.Pistol)),
+                    _input.WeaponSecond.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(WeaponType.Shotgun)),
+                    _input.WeaponThird.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(WeaponType.RocketLauncher)),
                     
-                    _input.LeftClick.AxisOnChange.Subscribe(_ =>
+                    _input.LeftClick.AxisOnChange.Subscribe(pressed =>
                     {
-                        if (!_weaponStorage.WeaponState.IsMeleeWeaponPressed.Value)
-                            HandleWeaponChangePress(1);
+                        if (pressed && !_weaponState.IsMeleeWeaponPressed.Value)
+                            HandleWeaponChangePress(WeaponType.Pistol);
                     }),
                     
-                    _input.RightClick.AxisOnChange.Subscribe(_ =>
+                    _input.RightClick.AxisOnChange.Subscribe(pressed =>
                     {
-                        if (!_weaponStorage.WeaponState.IsMeleeWeaponPressed.Value)
-                            HandleWeaponChangePress(2);
+                        if (pressed && !_weaponState.IsMeleeWeaponPressed.Value)
+                            HandleWeaponChangePress(WeaponType.Shotgun);
                     })
                 }
             );
 
-            _weaponStorage.WeaponState.CurrentWeapon.Value = _weaponStorage.Weapons[1];
-            _weaponStorage.WeaponState.MainWeapon.Value = _weaponStorage.Weapons[1];
-            _weaponStorage.WeaponState.PickUpWeapon.Value = _weaponStorage.Weapons[2];
+            _weaponState.MainWeapon.Value = _weaponStorage.Weapons[WeaponType.Pistol] as IRangeWeapon;
+            _weaponState.PickUpWeapon.Value = _weaponStorage.Weapons[WeaponType.Shotgun] as IRangeWeapon;
 
             _weaponAbilityPresenter.InitWeapons(_weaponStorage);
         }
 
 
-        private void HandleWeaponChangePress(int weaponId)
+        private void HandleWeaponChangePress(WeaponType weaponType)
         {
-            
-            if (!_weaponStorage.WeaponState.CurrentWeapon.Value.WeaponId.Equals(weaponId))
-                ChangeWeapon(weaponId);
+            if (!_weaponState.CurrentWeapon.WeaponType.Equals(weaponType))
+            {
+                ChangeWeapon(weaponType);
+            }
         }
 
 
-        private void ChangeWeapon(int id)
+        private void ChangeWeapon(WeaponType weaponType)
         {
             foreach (var weapon in _weaponStorage.Weapons)
             {
                 weapon.Value.WeaponObject.SetActive(false);
             }
 
-            _weaponStorage.Weapons[id].WeaponObject.SetActive(true);
-            _weaponStorage.WeaponState.CurrentWeapon.Value = _weaponStorage.Weapons[id];
+            _weaponStorage.Weapons[weaponType].WeaponObject.SetActive(true);
+            _weaponState.CurrentWeapon = _weaponStorage.Weapons[weaponType];
 
-            UpdatePickUpWeapon();
+            ResolveWeaponStateByType(weaponType);
         }
 
 
-        private void UpdatePickUpWeapon()
+        private void ResolveWeaponStateByType(WeaponType weaponType)
         {
-            var currentWeapon = _weaponStorage.WeaponState.CurrentWeapon.Value;
-
-            if ((currentWeapon.WeaponType != WeaponType.Pistol) && (currentWeapon.WeaponType != WeaponType.Sword))
+            switch (weaponType)
             {
-                _weaponStorage.WeaponState.PickUpWeapon.Value = currentWeapon;
+                case WeaponType.Sword:
+                    _weaponState.MeleeWeapon.Value = _weaponStorage.Weapons[WeaponType.Sword] as IMeleeWeapon;
+                    break;
+                
+                case WeaponType.Pistol:
+                    _weaponState.MainWeapon.Value = _weaponStorage.Weapons[WeaponType.Pistol] as IRangeWeapon;
+                    break;
+                    
+                default:
+                    _weaponState.PickUpWeapon.Value = _weaponStorage.Weapons[weaponType] as IRangeWeapon;
+                    break;
             }
         }
 
@@ -101,15 +114,15 @@ namespace Core
             if (isPressing)
             {
                 _isAlredyFalsed = false;
-                HandleWeaponChangePress(0);
-                _weaponStorage.WeaponState.IsMeleeWeaponPressed.Value = true;
+                HandleWeaponChangePress(WeaponType.Sword);
+                _weaponState.IsMeleeWeaponPressed.Value = true;
             }
             else
             {
                 if (!_isAlredyFalsed)
                 {
-                    _weaponStorage.WeaponState.IsMeleeWeaponPressed.Value = false;
-                    HandleWeaponChangePress(1);
+                    HandleWeaponChangePress(WeaponType.Pistol);
+                    _weaponState.IsMeleeWeaponPressed.Value = false;
                 }
 
                 _isAlredyFalsed = true;

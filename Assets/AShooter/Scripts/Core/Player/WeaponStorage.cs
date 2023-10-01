@@ -15,15 +15,18 @@ namespace Core
 
         [Inject] public WeaponState WeaponState { get; private set; }
         [Inject] public List<WeaponConfig> WeaponConfigs { get; private set; }
+        
+        public Dictionary<WeaponType, IWeapon> Weapons { get; }
 
-
-        public Dictionary<int, IWeapon> Weapons { get; }
-
-
+        private Camera _camera;
         private Transform _weaponContainer;
-
-
-        public WeaponStorage() => Weapons = new Dictionary<int, IWeapon>();
+        
+        
+        public WeaponStorage()
+        { 
+            Weapons = new Dictionary<WeaponType, IWeapon>();
+            _camera = Camera.main;
+        }
 
 
         public void InitializeWeapons(Transform weaponContainer)
@@ -38,21 +41,19 @@ namespace Core
                 switch (config.WeaponType)
                 {
                     case WeaponType.Sword:
-                        Weapons[config.WeaponId] = SwordInit(config);
+                        Weapons[WeaponType.Sword] = SwordInit(config);
                         break;
                     case WeaponType.Pistol:
-                        Weapons[config.WeaponId] = PistolInit(config);
+                        Weapons[WeaponType.Pistol] = PistolInit(config);
                         break;
                     case WeaponType.Shotgun:
-                        Weapons[config.WeaponId] = ShotgunInit(config);
+                        Weapons[WeaponType.Shotgun] = ShotgunInit(config);
                         break;
                     case WeaponType.RocketLauncher:
-                        Weapons[config.WeaponId] = RocketLauncherInit(config);
+                        Weapons[WeaponType.RocketLauncher] = RocketLauncherInit(config);
                         break;
                 }
             }
-
-
         }
 
 
@@ -93,7 +94,9 @@ namespace Core
                 config.LayerMask,
                 config.MuzzleEffect,
                 config.Effect,
-                config.EffectDestroyDelay);
+                config.EffectDestroyDelay,
+                _camera
+                );
         }
 
 
@@ -118,7 +121,8 @@ namespace Core
                 config.LayerMask,
                 config.MuzzleEffect,
                 config.Effect,
-                config.EffectDestroyDelay);
+                config.EffectDestroyDelay,
+                _camera);
         }
 
 
@@ -143,8 +147,10 @@ namespace Core
                 config.LayerMask,
                 config.MuzzleEffect,
                 config.Effect,
-                config.EffectDestroyDelay);
+                config.EffectDestroyDelay,
+                _camera);
         }
 
+        
     }
 }

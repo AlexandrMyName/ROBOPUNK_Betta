@@ -1911,7 +1911,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 285774737}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -5723,7 +5723,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1021281834}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -8398,7 +8398,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1576760132}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -10598,10 +10598,6 @@ PrefabInstance:
       propertyPath: _containerForUI
       value: 
       objectReference: {fileID: 696660040}
-    - target: {fileID: 6062975158636240938, guid: 623f97462ce0e0749a2e92abae34da23, type: 3}
-      propertyPath: _playerHpViewPrefab
-      value: 
-      objectReference: {fileID: 2345708136945342174, guid: 207d4b4282039184486e48b1c2bdcb02, type: 3}
     - target: {fileID: 9140865049341443586, guid: 623f97462ce0e0749a2e92abae34da23, type: 3}
       propertyPath: _camera
       value: 

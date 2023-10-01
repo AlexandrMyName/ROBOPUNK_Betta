@@ -27,20 +27,19 @@ namespace Core
         protected override void Awake(IGameComponents components)
         {
             _components = components;
-            //Debug.Log($"Initialized player melee attack system! ({components.BaseObject.name})");
         }
 
 
         protected override void Start()
         {
             _disposables.AddRange(new List<IDisposable>{
-                _input.LeftClick.AxisOnChange.Subscribe(_ =>
+                _input.LeftClick.AxisOnChange.Subscribe(pressed =>
                 {
-                    if (_weaponState.IsMeleeWeaponPressed.Value)
+                    if (pressed && _weaponState.IsMeleeWeaponPressed.Value)
                         TryAttackPerform();
                 }),
                 
-                _weaponState.CurrentWeapon.Subscribe(weapon => { UpdateCurrentWeapon(weapon); })
+                _weaponState.MeleeWeapon.Subscribe(weapon => { UpdateMeleeWeapon(weapon); })
             });
         }
         
@@ -54,26 +53,21 @@ namespace Core
         }
         
       
-        private void UpdateCurrentWeapon(IWeapon meleeWeapon)
+        private void UpdateMeleeWeapon(IMeleeWeapon meleeWeapon)
         {
-            if (meleeWeapon is IMeleeWeapon melee)
-                _currentMeleeWeapon = melee;
-            else
-                _currentMeleeWeapon = null;
+            _currentMeleeWeapon = meleeWeapon;
         }
 
 
         private void TryAttackPerform()
         {
-            if (_currentMeleeWeapon != null)
-            {
-                Debug.Log("MELEE PRESSED TRY PERFORM");
-                if (_currentMeleeWeapon.IsAttackReady)
-                    _currentMeleeWeapon.Attack();
-            }
+            if (_currentMeleeWeapon.IsAttackReady)
+                _currentMeleeWeapon.Attack();
         }
 
+        
         public void Dispose() => _disposables.ForEach(d => d.Dispose());
+        
 
     }
 }

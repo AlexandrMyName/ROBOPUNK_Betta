@@ -57,11 +57,13 @@ namespace User
 
         public Laser Laser { get; private set; }
 
+        private RaycastAttack _attackTypeProcess;
+
 
         public Weapon(int weaponId, GameObject weaponObject, Sprite weaponIcon, Projectile projectileObject,
             WeaponType weaponType, float damage, int clipSize, ReactiveProperty<int> leftPatronsCount,
             float reloadTime, float shootDistance, float shootSpeed, float fireSpread,
-            LayerMask layerMask, ParticleSystem muzzleEffect, ParticleSystem effect, float effectDestroyDelay)
+            LayerMask layerMask, ParticleSystem muzzleEffect, ParticleSystem effect, float effectDestroyDelay, Camera camera)
         {
             WeaponId = weaponId;
             WeaponObject = weaponObject;
@@ -83,13 +85,13 @@ namespace User
             IsReloadProcessing = new ReactiveProperty<bool>(false);
 
             Laser = new Laser(WeaponObject);
+            _attackTypeProcess = new RaycastAttack(this, camera);
         }
 
 
-        public virtual void Shoot(Transform playerTransform, Camera camera, Vector3 mousePosition)
+        public virtual void Shoot(Vector3 mousePosition)
         {
-            RaycastAttack simpleAttack = new RaycastAttack(this, playerTransform, camera, mousePosition);
-            simpleAttack.Attack();
+            _attackTypeProcess.Attack(mousePosition);
 
             LeftPatronsCount.Value--;
 
@@ -99,7 +101,6 @@ namespace User
             IsShootReady = false;
             ProcessShootTimeout();
 
-            Debug.Log("SHOOT MTFCKR");
             Laser.Blink(ShootSpeed);
         }
 
@@ -107,7 +108,6 @@ namespace User
         public void Reload()
         {
             LeftPatronsCount.Value = ClipSize;
-            Debug.Log("RELOAD MTFCKR");
             IsReloadProcessing.Value = false;
         }
 

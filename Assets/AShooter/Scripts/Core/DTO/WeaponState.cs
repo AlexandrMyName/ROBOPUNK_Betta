@@ -8,20 +8,22 @@ namespace Core.DTO
     public class WeaponState
     {
 
-        public ReactiveProperty<IWeapon> CurrentWeapon { get; }
+        public ReactiveProperty<IMeleeWeapon> MeleeWeapon { get; }
 
-        public ReactiveProperty<IWeapon> MainWeapon { get; }
+        public ReactiveProperty<IRangeWeapon> MainWeapon { get; }
 
-        public ReactiveProperty<IWeapon> PickUpWeapon { get; }
+        public ReactiveProperty<IRangeWeapon> PickUpWeapon { get; }
 
         public ReactiveProperty<bool> IsMeleeWeaponPressed { get; }
+
+        public IWeapon CurrentWeapon { get; set; }
 
 
         public WeaponState()
         {
-            CurrentWeapon = new ReactiveProperty<IWeapon>();
-            MainWeapon = new ReactiveProperty<IWeapon>();
-            PickUpWeapon = new ReactiveProperty<IWeapon>();
+            MeleeWeapon = new ReactiveProperty<IMeleeWeapon>();
+            MainWeapon = new ReactiveProperty<IRangeWeapon>();
+            PickUpWeapon = new ReactiveProperty<IRangeWeapon>();
             IsMeleeWeaponPressed = new ReactiveProperty<bool>();
         }
         

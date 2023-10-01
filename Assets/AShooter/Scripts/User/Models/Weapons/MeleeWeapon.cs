@@ -95,21 +95,20 @@ namespace User
                 Quaternion.identity,
                 LayerMask);
 
-            if (_hitColliders.Length > 0)
-            {
-                var instances = _hitColliders.Select(c => c.gameObject.GetInstanceID()).ToList();
-            }
-
-
+            _hitColliders = _hitColliders.Where(c => !c.isTrigger).ToArray();
+            
             for (int i = 0; i < _hitColliders.Length; i++)
             {
                 if (_hitColliders[i].TryGetComponent(out IEnemy unit))
                 {
-                    Debug.Log($"Found target [{unit}] health {unit.ComponentsStore.Attackable.Health}");
                     unit.ComponentsStore.Attackable.TakeDamage(Damage);
                 }
+
+                if (_hitColliders[i].TryGetComponent<Rigidbody>(out var rb))
+                {
+                    rb.AddForce(WeaponObject.transform.forward * Damage, ForceMode.Impulse);
+                }
             }
-            
         }
 
 
@@ -133,11 +132,8 @@ namespace User
         
         private void DrawRay(Ray ray, Vector3 hitPosition, float distance, Color color)
         {
-            
             Debug.DrawRay(ray.origin, ray.direction * distance, color);
-
             Gizmos.color = color;
-
             Gizmos.DrawWireCube(hitPosition, Vector3.one * 2.0f);
         }
         

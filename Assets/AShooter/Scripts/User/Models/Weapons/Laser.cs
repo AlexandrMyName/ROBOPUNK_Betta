@@ -82,8 +82,11 @@ namespace User
                 
                 if (isFoundCollider)
                 {
-                    RaycastHit hit = hits.FirstOrDefault(hit => !hit.collider.isTrigger);
-                    _hitVector = _laserTransform.InverseTransformPoint(hit.point);
+                    var closestHit = hits.Where(h => !h.collider.isTrigger)
+                        .OrderBy(h => Vector3.Distance(h.point, _laserTransform.position))
+                        .First();
+                    
+                    _hitVector = _laserTransform.InverseTransformPoint(closestHit.point);
                 }
             }
             return _hitVector;

@@ -32,7 +32,7 @@ namespace Abstracts
         ParticleSystem MuzzleEffect { get; }
 
 
-        void Shoot(Transform playerTransform, Camera camera, Vector3 mousePosition);
+        void Shoot(Vector3 mousePosition);
 
         void Reload();
 

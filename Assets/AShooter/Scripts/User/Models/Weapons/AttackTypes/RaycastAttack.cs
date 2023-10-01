@@ -1,5 +1,5 @@
-﻿using Abstracts;
-using Unity.VisualScripting;
+﻿using System.Linq;
+using Abstracts;
 using UnityEngine;
 using User;
 
@@ -7,53 +7,124 @@ using User;
 namespace Core
 {
 
-    public sealed class RaycastAttack
+    public sealed class RaycastAttack : IRayAttack
     {
 
         private Camera _camera;
         private IRangeWeapon _weapon;
-        private Vector3 _mousePosition;
-        private Transform _playerTransform;
+        private Transform _muzzle;
 
+        private RaycastHit _cameraHit;
+        
+        private Vector3 _hitPointFromMuzzle;
+        
 
-        public RaycastAttack(IRangeWeapon weapon, Transform playerTransform, Camera camera, Vector3 mousePosition)
+        public RaycastAttack(IRangeWeapon weapon, Camera camera)
         {
             _camera = camera;
-            _playerTransform = playerTransform;
             _weapon = weapon;
-            _mousePosition = mousePosition;
+
+            _muzzle = FindMuzzle(_weapon);
         }
 
 
-        public void Attack()
+        public void Attack(Vector3 mousePosition)
         {
-            FindTarget();
+            if (FindCameraHitPoint(mousePosition))
+            {
+                ResolveTypeByWeapon();
+            }
+            
             SpawnParticleEffectOnMuzzle();
         }
 
-
-        private void FindTarget()
+        
+        private void ResolveTypeByWeapon()
         {
-            var ray = _camera.ScreenPointToRay(_mousePosition);
-
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, _weapon.LayerMask))
+            switch (_weapon.WeaponType)
             {
-                Debug.DrawRay(ray.origin, ray.direction * hitInfo.distance, Color.green);
+                case WeaponType.RocketLauncher:
+                    InstantiateProjectile(_cameraHit.point);
+                    break;
+                
+                default:
+                    PerformAttackBySpread();
+                    break;
+            }
+        }
 
-                var hitCollider = hitInfo.collider;
+        
+        private void PerformAttackBySpread()
+        {
+            for (int i = 0; i < _weapon.FireSpread; i++)
+            {
+                PerformRayAttack(_cameraHit);
+            }
+        }
+
+
+        private void PerformRayAttack(RaycastHit cameraHitPoint)
+        {
+            
+            var muzzleDirection = (cameraHitPoint.point - _muzzle.position).normalized;
+            var muzzleRay = new Ray(_muzzle.position, muzzleDirection);
+            var pointOnRayLimitedByDistance = muzzleRay.GetPoint(_weapon.ShootDistance);
+            
+            var pointWithError = _weapon.FireSpread <= 1 ? 
+                pointOnRayLimitedByDistance : 
+                pointOnRayLimitedByDistance + CalculateSpread();
+
+            muzzleDirection = (pointWithError - _muzzle.position).normalized;
+            muzzleRay = new Ray(_muzzle.position, muzzleDirection);
+            
+            RaycastHit[] muzzleHits = Physics.RaycastAll(muzzleRay, _weapon.ShootDistance, _weapon.LayerMask);
+
+            bool isMuzzleHit = muzzleHits.Select(h => !h.collider.isTrigger).FirstOrDefault();
+
+            if (isMuzzleHit)
+            {
+                var muzzleHit = muzzleHits
+                    .Where(h => !h.collider.isTrigger)
+                    .OrderBy(h => Vector3.Distance(h.point, _muzzle.position))
+                    .First();
+
+                Debug.DrawRay(_muzzle.position, muzzleDirection * _weapon.ShootDistance, Color.green, 20.0f);
+
+                var hitCollider = muzzleHit.collider;
+                
+                if (hitCollider.TryGetComponent<Rigidbody>(out var rb))
+                {
+                    rb.AddForce(muzzleDirection * _weapon.Damage / 2, ForceMode.Impulse);
+                }
 
                 if (hitCollider.TryGetComponent(out IEnemy unit))
                 {
-                    Debug.Log($"Found target [{unit}] health {unit.ComponentsStore.Attackable.Health}");
                     unit.ComponentsStore.Attackable.TakeDamage(_weapon.Damage);
-                }
-                else
-                {
-                    Debug.Log($"{hitCollider} IAttackable is not found");
+                    Debug.Log($"DAMAGE [{hitCollider.name}] - LEFT [{unit.ComponentsStore.Attackable.Health.Value}]");
                 }
 
-                SpawnParticleEffectOnHit(hitInfo);
+                SpawnParticleEffectOnHit(muzzleHit);
             }
+        }
+
+
+        private bool FindCameraHitPoint(Vector3 mousePosition)
+        {
+            bool isCameraHit = false;
+            var cameraRay = _camera.ScreenPointToRay(mousePosition);
+
+            RaycastHit[] cameraHits = Physics.RaycastAll(cameraRay, Mathf.Infinity, _weapon.LayerMask);
+            isCameraHit = cameraHits.Select(h => !h.collider.isTrigger).FirstOrDefault();
+
+            if (isCameraHit)
+            {
+                _cameraHit = cameraHits
+                    .Where(h => !h.collider.isTrigger)
+                    .OrderBy(h => Vector3.Distance(h.point, cameraRay.origin))
+                    .First();
+            }
+
+            return isCameraHit;
         }
 
 
@@ -92,10 +163,10 @@ namespace Core
         }
 
 
-        public Transform FindMuzzle(IWeapon weapon)
+        private Transform FindMuzzle(IWeapon weapon)
         {
             Transform muzzle = null;
-
+            
             foreach (Transform child in weapon.WeaponObject.transform)
             {
                 if (child.CompareTag("Muzzle"))
@@ -106,7 +177,30 @@ namespace Core
             }
             return muzzle;
         }
+        
+        
+        private Vector3 CalculateSpread()
+        {
+            return new Vector3
+            {
+                x = Random.Range(-_weapon.SpreadFactor, _weapon.SpreadFactor),
+                y = Random.Range(-_weapon.SpreadFactor, _weapon.SpreadFactor),
+                z = Random.Range(-_weapon.SpreadFactor, _weapon.SpreadFactor)
+            };
+        }
+        
+        
+        private void InstantiateProjectile(Vector3 hitPoint)
+        {
+            var projectile = GameObject.Instantiate(_weapon.ProjectileObject, _muzzle.position, _muzzle.rotation);
+            projectile.Damage = _weapon.Damage;
+            projectile.Effect = _weapon.Effect;
+            projectile.EffectDestroyDelay = _weapon.EffectDestroyDelay;
+            var direction = (hitPoint - _muzzle.position).normalized;
 
+            projectile.Rigidbody.AddForce(direction * _weapon.ProjectileForce, ForceMode.Impulse);
+        }
 
+        
     }
 }

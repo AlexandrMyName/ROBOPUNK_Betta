@@ -12,9 +12,9 @@ namespace Abstracts
         
         IObservableInputProxy<float> Vertical { get; }
 
-        ISubjectInputProxy<Unit> LeftClick { get; }
+        IObservableInputProxy<bool> LeftClick { get; }
         
-        ISubjectInputProxy<Unit> RightClick { get; }
+        IObservableInputProxy<bool> RightClick { get; }
         
         ISubjectInputProxy<Unit> DashClick { get; }
 
