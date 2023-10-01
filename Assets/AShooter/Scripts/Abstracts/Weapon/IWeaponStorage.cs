@@ -12,7 +12,7 @@ namespace Abstracts
 
         List<WeaponConfig> WeaponConfigs { get; }
         WeaponState WeaponState { get; }
-        Dictionary<int, IWeapon> Weapons { get; }
+        Dictionary<WeaponType, IWeapon> Weapons { get; }
 
         void InitializeWeapons( Transform weaponContainer );
 

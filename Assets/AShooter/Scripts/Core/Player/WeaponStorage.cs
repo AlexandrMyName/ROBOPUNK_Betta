@@ -16,7 +16,7 @@ namespace Core
         [Inject] public WeaponState WeaponState { get; private set; }
         [Inject] public List<WeaponConfig> WeaponConfigs { get; private set; }
         
-        public Dictionary<int, IWeapon> Weapons { get; }
+        public Dictionary<WeaponType, IWeapon> Weapons { get; }
 
         private Camera _camera;
         private Transform _weaponContainer;
@@ -24,7 +24,7 @@ namespace Core
         
         public WeaponStorage()
         { 
-            Weapons = new Dictionary<int, IWeapon>();
+            Weapons = new Dictionary<WeaponType, IWeapon>();
             _camera = Camera.main;
         }
 
@@ -41,21 +41,19 @@ namespace Core
                 switch (config.WeaponType)
                 {
                     case WeaponType.Sword:
-                        Weapons[config.WeaponId] = SwordInit(config);
+                        Weapons[WeaponType.Sword] = SwordInit(config);
                         break;
                     case WeaponType.Pistol:
-                        Weapons[config.WeaponId] = PistolInit(config);
+                        Weapons[WeaponType.Pistol] = PistolInit(config);
                         break;
                     case WeaponType.Shotgun:
-                        Weapons[config.WeaponId] = ShotgunInit(config);
+                        Weapons[WeaponType.Shotgun] = ShotgunInit(config);
                         break;
                     case WeaponType.RocketLauncher:
-                        Weapons[config.WeaponId] = RocketLauncherInit(config);
+                        Weapons[WeaponType.RocketLauncher] = RocketLauncherInit(config);
                         break;
                 }
             }
-
-
         }
 
 
@@ -153,5 +151,6 @@ namespace Core
                 _camera);
         }
 
+        
     }
 }

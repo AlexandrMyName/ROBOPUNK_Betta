@@ -33,53 +33,53 @@ namespace Core
         protected override void Start()
         {
 
-            ChangeWeapon(1);
+            ChangeWeapon(WeaponType.Pistol);
             
             _disposables.AddRange(new List<IDisposable>{
                     _input.MeleeHold.AxisOnChange.Subscribe(b => HandleMeleeButtonPressed(b)),
-                    _input.WeaponFirst.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(1)),
-                    _input.WeaponSecond.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(2)),
-                    _input.WeaponThird.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(3)),
+                    _input.WeaponFirst.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(WeaponType.Pistol)),
+                    _input.WeaponSecond.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(WeaponType.Shotgun)),
+                    _input.WeaponThird.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(WeaponType.RocketLauncher)),
                     
                     _input.LeftClick.AxisOnChange.Subscribe(_ =>
                     {
                         if (!_weaponStorage.WeaponState.IsMeleeWeaponPressed.Value)
-                            HandleWeaponChangePress(1);
+                            HandleWeaponChangePress(WeaponType.Pistol);
                     }),
                     
                     _input.RightClick.AxisOnChange.Subscribe(_ =>
                     {
                         if (!_weaponStorage.WeaponState.IsMeleeWeaponPressed.Value)
-                            HandleWeaponChangePress(2);
+                            HandleWeaponChangePress(WeaponType.Shotgun);
                     })
                 }
             );
 
-            _weaponStorage.WeaponState.CurrentWeapon.Value = _weaponStorage.Weapons[1];
-            _weaponStorage.WeaponState.MainWeapon.Value = _weaponStorage.Weapons[1];
-            _weaponStorage.WeaponState.PickUpWeapon.Value = _weaponStorage.Weapons[2];
+            _weaponStorage.WeaponState.CurrentWeapon.Value = _weaponStorage.Weapons[WeaponType.Pistol];
+            _weaponStorage.WeaponState.MainWeapon.Value = _weaponStorage.Weapons[WeaponType.Pistol];
+            _weaponStorage.WeaponState.PickUpWeapon.Value = _weaponStorage.Weapons[WeaponType.Shotgun];
 
             _weaponAbilityPresenter.InitWeapons(_weaponStorage);
         }
 
 
-        private void HandleWeaponChangePress(int weaponId)
+        private void HandleWeaponChangePress(WeaponType weaponType)
         {
             
-            if (!_weaponStorage.WeaponState.CurrentWeapon.Value.WeaponId.Equals(weaponId))
-                ChangeWeapon(weaponId);
+            if (!_weaponStorage.WeaponState.CurrentWeapon.Value.WeaponType.Equals(weaponType))
+                ChangeWeapon(weaponType);
         }
 
 
-        private void ChangeWeapon(int id)
+        private void ChangeWeapon(WeaponType weaponType)
         {
             foreach (var weapon in _weaponStorage.Weapons)
             {
                 weapon.Value.WeaponObject.SetActive(false);
             }
 
-            _weaponStorage.Weapons[id].WeaponObject.SetActive(true);
-            _weaponStorage.WeaponState.CurrentWeapon.Value = _weaponStorage.Weapons[id];
+            _weaponStorage.Weapons[weaponType].WeaponObject.SetActive(true);
+            _weaponStorage.WeaponState.CurrentWeapon.Value = _weaponStorage.Weapons[weaponType];
 
             UpdatePickUpWeapon();
         }
@@ -101,7 +101,7 @@ namespace Core
             if (isPressing)
             {
                 _isAlredyFalsed = false;
-                HandleWeaponChangePress(0);
+                HandleWeaponChangePress(WeaponType.Sword);
                 _weaponStorage.WeaponState.IsMeleeWeaponPressed.Value = true;
             }
             else
@@ -109,7 +109,7 @@ namespace Core
                 if (!_isAlredyFalsed)
                 {
                     _weaponStorage.WeaponState.IsMeleeWeaponPressed.Value = false;
-                    HandleWeaponChangePress(1);
+                    HandleWeaponChangePress(WeaponType.Pistol);
                 }
 
                 _isAlredyFalsed = true;
