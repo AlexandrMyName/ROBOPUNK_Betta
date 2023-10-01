@@ -14,9 +14,9 @@ namespace Core
         
         public IObservableInputProxy<float> Vertical { get; }
         
-        public ISubjectInputProxy<Unit> LeftClick { get; }
+        public IObservableInputProxy<bool> LeftClick { get; }
         
-        public ISubjectInputProxy<Unit> RightClick { get; }
+        public IObservableInputProxy<bool> RightClick { get; }
         
         public IObservableInputProxy<Vector3> MousePosition { get; }
         

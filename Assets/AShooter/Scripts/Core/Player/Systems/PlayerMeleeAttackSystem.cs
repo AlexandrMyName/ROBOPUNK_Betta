@@ -33,9 +33,9 @@ namespace Core
         protected override void Start()
         {
             _disposables.AddRange(new List<IDisposable>{
-                _input.LeftClick.AxisOnChange.Subscribe(_ =>
+                _input.LeftClick.AxisOnChange.Subscribe(pressed =>
                 {
-                    if (_weaponState.IsMeleeWeaponPressed.Value)
+                    if (pressed && _weaponState.IsMeleeWeaponPressed.Value)
                         TryAttackPerform();
                 }),
                 

@@ -43,8 +43,16 @@ namespace Core
                 _weaponState.MainWeapon.Subscribe(weapon => UpdateMainWeapon(weapon)),
                 _weaponState.PickUpWeapon.Subscribe(weapon => UpdateSecondaryWeapon(weapon)),
                 
-                _input.LeftClick.AxisOnChange.Subscribe(_ => TryShootPerform(_mainRangeWeapon)),
-                _input.RightClick.AxisOnChange.Subscribe(_ => TryShootPerform(_pickupRangeWeapon))
+                _input.LeftClick.AxisOnChange.Subscribe(pressed =>
+                {
+                    if (pressed) 
+                        TryShootPerform(_mainRangeWeapon);
+                }),
+                _input.RightClick.AxisOnChange.Subscribe(pressed =>
+                {
+                    if (pressed)
+                        TryShootPerform(_pickupRangeWeapon);
+                })
             });
         }
 

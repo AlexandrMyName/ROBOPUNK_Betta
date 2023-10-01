@@ -1,19 +1,22 @@
-﻿using Abstracts;
+﻿using System;
+using Abstracts;
 using UniRx;
 
 
 namespace Core
 {
 
-    internal sealed class PCLMBInput : ISubjectInputProxy<Unit>
+    internal sealed class PCLMBInput : IObservableInputProxy<bool>
     {
 
-        public Subject<Unit> AxisOnChange { get; } = new();
+        public IObservable<bool> AxisOnChange { get; }
 
 
         public PCLMBInput(InputConfig config)
         {
-            config.Mouse.LBM.performed += context => AxisOnChange.OnNext(Unit.Default);
+            AxisOnChange = Observable
+                .EveryUpdate()
+                .Select(_ => config.Mouse.LBM.IsPressed());
         }
         
         

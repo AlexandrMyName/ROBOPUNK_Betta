@@ -46,15 +46,15 @@ namespace Core
                     _input.WeaponSecond.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(WeaponType.Shotgun)),
                     _input.WeaponThird.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(WeaponType.RocketLauncher)),
                     
-                    _input.LeftClick.AxisOnChange.Subscribe(_ =>
+                    _input.LeftClick.AxisOnChange.Subscribe(pressed =>
                     {
-                        if (!_weaponState.IsMeleeWeaponPressed.Value)
+                        if (pressed && !_weaponState.IsMeleeWeaponPressed.Value)
                             HandleWeaponChangePress(WeaponType.Pistol);
                     }),
                     
-                    _input.RightClick.AxisOnChange.Subscribe(_ =>
+                    _input.RightClick.AxisOnChange.Subscribe(pressed =>
                     {
-                        if (!_weaponState.IsMeleeWeaponPressed.Value)
+                        if (pressed && !_weaponState.IsMeleeWeaponPressed.Value)
                             HandleWeaponChangePress(WeaponType.Shotgun);
                     })
                 }
