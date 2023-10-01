@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Abstracts;
 using System;
+using AShooter.Scripts.User.Views;
 using UniRx.Triggers;
 using UniRx;
 using User;
@@ -17,6 +18,8 @@ namespace Core
         private IGameComponents _components;
         private List<IDisposable> _disposables;
         private IGoldWallet _goldWallet;
+        
+        private IInteractView _interactView;
 
         private bool _canOpenChest;
 
@@ -27,6 +30,8 @@ namespace Core
         protected override void Awake(IGameComponents components)
         {
 
+            _interactView = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.InteractView;
+            _interactView.Hide();
             _disposables = new();
             _components = components;
             _goldWallet = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.GoldWallet;
@@ -38,15 +43,12 @@ namespace Core
                     .Subscribe(
                         collider =>
                         {
-                            //эта переменная из инпута (кнопка нажата) 
-                           if(_canOpenChest)
+                            if(_canOpenChest)
                                 ApplyGettingItem(collider.GetComponent<IChest>().GetRandomItem());
                             else
                             {
-                                //Тебе здесь надо вывести view с кнопкой E (открыть сундук)
-
-                                // К сожалению я хз как вывести название кнопки из нашего инпута
-                                //Лучше все это вынести в метод (не анонимный) 
+                                
+                                _interactView.Show();
                                
                             }
                         }).AddTo(_disposables);
@@ -56,7 +58,6 @@ namespace Core
 
         private void SwitchInteractInput()
         {
-            //Тебе сюда не надо
             _canOpenChest = true;
             Observable.Timer(TimeSpan.FromMilliseconds(200)).Subscribe(
 

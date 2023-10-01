@@ -9,9 +9,6 @@ public class Chest : MonoBehaviour, IChest
 {
 
     [SerializeField] private ChestDataConfig chestConfig;
-    [SerializeField] private Player player;
-    
-   
     public object GetRandomItem()
     {
         int index = Random.Range(0, chestConfig.COUNT_POSSIBLE_OBJECTS - 1);

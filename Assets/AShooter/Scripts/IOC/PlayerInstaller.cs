@@ -7,6 +7,7 @@ using AShooter.Scripts.IOC;
 using DI.Spawn;
 using Cinemachine;
 using Core.Components;
+using TMPro;
 using UniRx;
 using User;
 using User.Components;

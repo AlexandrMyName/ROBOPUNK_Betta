@@ -19,6 +19,8 @@ namespace Abstracts
         IShieldView Shield { get; }
 
         IHealthView HealthView { get; }
+        
+        IInteractView InteractView { get; }
 
         IWeaponAbilityView WeaponAbility { get; }
 
