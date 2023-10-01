@@ -10,16 +10,32 @@ namespace User.View
     {
 
         [SerializeField] private TMP_Text _textUI;
-        [SerializeField] private Image _HP_Bar;
-
-
+        [SerializeField] private Slider _hP_Slider;
+        [SerializeField] private Image _colorReflectionFill;
         public void Show() => gameObject.SetActive(true);
 
-        public void ChangeDisplay(float healthValue)
+
+        public void ChangeDisplay(float healthValue, float maxValue)
         {
+
+            if (healthValue < 0)
+            {
+                gameObject.SetActive(false);
+                return;
+            }
+
             _textUI.text = $"Health : {healthValue}";
-            _HP_Bar.fillAmount = healthValue / 100;
-            
+           
+            if(_hP_Slider.maxValue != maxValue)
+            {
+                _hP_Slider.maxValue = maxValue;
+            }
+
+            _hP_Slider.value = healthValue;
+
+            var color = Color.Lerp(Color.red, Color.green, healthValue / maxValue);
+
+            _colorReflectionFill.color = color;
         }
 
 

@@ -19,10 +19,10 @@ MonoBehaviour:
       nameEnemy: Alyosha
       enemyType: 0
       prefab: {fileID: 3957541045528095213, guid: 5775e246580657045982392a26274915, type: 3}
-      maxHealth: 100
-      maxAttackDamage: 0
-      attackDistance: 10
-      attackFrequency: 2
+      maxHealth: 200
+      maxAttackDamage: 10
+      attackDistance: 1.5
+      attackFrequency: 1.71
       goldDropRate: 50
       goldValueRange:
         min: 5
@@ -40,10 +40,10 @@ MonoBehaviour:
       nameEnemy: 
       enemyType: 0
       prefab: {fileID: 3957541045528095213, guid: 5775e246580657045982392a26274915, type: 3}
-      maxHealth: 100
-      maxAttackDamage: 10
+      maxHealth: 250
+      maxAttackDamage: 35
       attackDistance: 2
-      attackFrequency: 2
+      attackFrequency: 3
       goldDropRate: 50
       goldValueRange:
         min: 5
@@ -56,9 +56,9 @@ MonoBehaviour:
       nameEnemy: 
       enemyType: 1
       prefab: {fileID: 3957541045528095213, guid: 121e617dee79e334aac211198583030d, type: 3}
-      maxHealth: 120
-      maxAttackDamage: 20
-      attackDistance: 10
+      maxHealth: 200
+      maxAttackDamage: 50
+      attackDistance: 4
       attackFrequency: 2
       goldDropRate: 60
       goldValueRange:
@@ -79,8 +79,8 @@ MonoBehaviour:
       prefab: {fileID: 3957541045528095213, guid: 5775e246580657045982392a26274915, type: 3}
       maxHealth: 100
       maxAttackDamage: 10
-      attackDistance: 2
-      attackFrequency: 2
+      attackDistance: 1
+      attackFrequency: 3.2
       goldDropRate: 50
       goldValueRange:
         min: 5
@@ -95,7 +95,7 @@ MonoBehaviour:
       prefab: {fileID: 3957541045528095213, guid: 121e617dee79e334aac211198583030d, type: 3}
       maxHealth: 120
       maxAttackDamage: 20
-      attackDistance: 10
+      attackDistance: 4
       attackFrequency: 2
       goldDropRate: 60
       goldValueRange:
@@ -109,10 +109,10 @@ MonoBehaviour:
       nameEnemy: 
       enemyType: 0
       prefab: {fileID: 5783359468839766296, guid: 60c4eb066a128fa4d866d28177faa2ee, type: 3}
-      maxHealth: 200
-      maxAttackDamage: 30
-      attackDistance: 3
-      attackFrequency: 2
+      maxHealth: 300
+      maxAttackDamage: 50
+      attackDistance: 2
+      attackFrequency: 4
       goldDropRate: 80
       goldValueRange:
         min: 15
@@ -130,9 +130,9 @@ MonoBehaviour:
       nameEnemy: 
       enemyType: 0
       prefab: {fileID: 3957541045528095213, guid: 5775e246580657045982392a26274915, type: 3}
-      maxHealth: 100
-      maxAttackDamage: 10
-      attackDistance: 2
+      maxHealth: 160
+      maxAttackDamage: 11
+      attackDistance: 1.3
       attackFrequency: 2
       goldDropRate: 50
       goldValueRange:
@@ -147,8 +147,8 @@ MonoBehaviour:
       enemyType: 1
       prefab: {fileID: 3957541045528095213, guid: 121e617dee79e334aac211198583030d, type: 3}
       maxHealth: 120
-      maxAttackDamage: 20
-      attackDistance: 15
+      maxAttackDamage: 55
+      attackDistance: 4
       attackFrequency: 2
       goldDropRate: 60
       goldValueRange:
@@ -162,8 +162,8 @@ MonoBehaviour:
       nameEnemy: 
       enemyType: 0
       prefab: {fileID: 5783359468839766296, guid: 60c4eb066a128fa4d866d28177faa2ee, type: 3}
-      maxHealth: 200
-      maxAttackDamage: 30
+      maxHealth: 500
+      maxAttackDamage: 20
       attackDistance: 3
       attackFrequency: 2
       goldDropRate: 80
@@ -179,8 +179,8 @@ MonoBehaviour:
       enemyType: 1
       prefab: {fileID: 5783359468839766296, guid: 09b8414b5daac0142abdd54089367d69, type: 3}
       maxHealth: 100
-      maxAttackDamage: 40
-      attackDistance: 18
+      maxAttackDamage: 100
+      attackDistance: 4
       attackFrequency: 2
       goldDropRate: 80
       goldValueRange:

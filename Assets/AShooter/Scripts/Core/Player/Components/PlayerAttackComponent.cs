@@ -15,6 +15,7 @@ namespace Core
         {
 
             HealthProtection = new ReactiveProperty<float>();
+            IsIgnoreDamage = false;
         }
 
         [Inject(Id = "PlayerHealth")] public ReactiveProperty<float> Health { get; }
@@ -34,24 +35,19 @@ namespace Core
 
         public void TakeDamage(float amountDamage)
         {
-
-            if (IsIgnoreDamage)
-            {
-                TakeProtectionDamage(amountDamage);
-                UnityEngine.Debug.LogWarning("Player Shield Damage");
-                return;
-            }
+            UnityEngine.Debug.Log(IsIgnoreDamage);
+            if (IsIgnoreDamage) return;
+            
             else
             {
-                UnityEngine.Debug.LogWarning("Player Damage");
-                Health.Value -= amountDamage;
+                TakeProtectionDamage(amountDamage);
             }
         }
 
 
         private void TakeProtectionDamage(float amounDamage)
         {
-
+            UnityEngine.Debug.LogWarning("Shield ");
             HealthProtection.Value -= amounDamage;
 
             if(HealthProtection.Value < 0)

@@ -10,6 +10,7 @@ namespace Core
         public IEnemyAttackable Attackable { get; }
         public IEnemyPrice EnemyPrice { get; }
 
+        
 
         public EnemyComponentsStore(IEnemyAttackable attackable, IEnemyPrice enemyPrice)
         {

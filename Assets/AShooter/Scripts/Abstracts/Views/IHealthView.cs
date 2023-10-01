@@ -6,7 +6,7 @@ namespace Abstracts
     public interface IHealthView : IView
     {
 
-        public void ChangeDisplay(float value);
+        public void ChangeDisplay(float value, float maxValue);
 
     }
 }

@@ -1,5 +1,6 @@
-using UniRx;
 
+
+using UniRx;
 
 namespace Abstracts
 {
@@ -7,15 +8,12 @@ namespace Abstracts
     public interface IShield
     {
 
+        ReactiveProperty<bool> IsRegeneration { get; }
+        float MaxRegenerationSeconds { get; }
         float MaxProtection { get; }
 
-        ReactiveProperty<bool> IsActivate { get; }
-
-        ReactiveProperty<float> ShieldProccessTime { get; }
-
-        void SetShield(float maxTime);
-
-        void RefreshProtection(float maxProtection);
+        void SetMaxProtection(float maxProtection);
+        void SetRegenerationTime(float seconds);
 
     }
 }

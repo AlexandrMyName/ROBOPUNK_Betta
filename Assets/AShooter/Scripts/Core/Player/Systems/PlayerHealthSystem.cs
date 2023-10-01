@@ -32,7 +32,7 @@ namespace Core
             var currentHealth = _components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Attackable.Health;
             _disposables.Add(_attackable.Health.Subscribe(UpdateDisplay));
             _healthView.Show();
-            _healthView.ChangeDisplay(currentHealth.Value);
+            _healthView.ChangeDisplay(currentHealth.Value,100);
 
             _loseView = _components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.Death;
             _disposables.Add(_attackable.Health.Subscribe(DeathCheck));
@@ -47,7 +47,7 @@ namespace Core
         }
 
 
-        private void UpdateDisplay(float healthValue) => _healthView.ChangeDisplay(healthValue);
+        private void UpdateDisplay(float healthValue) => _healthView.ChangeDisplay(healthValue, 100);//Add max health value 
 
 
         private void DeathCheck(float leftHealth)
@@ -67,10 +67,7 @@ namespace Core
                 _loseView.Show();
 
             }
-            else
-            {
-                Debug.LogWarning($"{_components.BaseObject.name} getting damage |DamageSystem|");
-            }
+           
         }
 
     }

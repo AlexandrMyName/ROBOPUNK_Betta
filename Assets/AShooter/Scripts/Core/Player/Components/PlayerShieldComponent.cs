@@ -1,39 +1,31 @@
 using Abstracts;
 using UniRx;
 
-
 namespace Core
 {
 
     public class PlayerShieldComponent : IShield
     {
 
-        public PlayerShieldComponent(float maxProtection)
+        public PlayerShieldComponent(float maxProtection, float maxRegenerationTime)
         {
 
             MaxProtection = maxProtection;
-
-            IsActivate = new ReactiveProperty<bool>(false);
-            ShieldProccessTime = new ReactiveProperty<float>(0);
+            MaxRegenerationSeconds = maxRegenerationTime;
+            IsRegeneration = new ReactiveProperty<bool>(false);
         }
 
-
-        public ReactiveProperty<bool> IsActivate { get; set; }
-
-        public ReactiveProperty<float> ShieldProccessTime { get; set; }
 
         public float MaxProtection {get; private set;}
 
+        public float MaxRegenerationSeconds { get; private set; }
 
-        public void RefreshProtection(float maxProtection) => MaxProtection = maxProtection;
+        public ReactiveProperty<bool> IsRegeneration {get; private set;}
 
 
-        public void SetShield(float maxTime)
-        {
+        public void SetMaxProtection(float maxProtection) => MaxProtection = maxProtection;
 
-            ShieldProccessTime.Value = maxTime;
-            IsActivate.Value = true;
-        }
-        
+        public void SetRegenerationTime(float seconds) => MaxRegenerationSeconds = seconds;
+       
     }
 }

@@ -16,9 +16,15 @@ namespace Core
         private IShieldView _view;
 
         private List<IDisposable> _disposables = new();
+        private List<IDisposable> _regenerationTimers = new();
 
 
-        public void Dispose() => _disposables.ForEach(disposable => disposable.Dispose());
+        public void Dispose()
+        {
+
+            _disposables.ForEach(disposable => disposable.Dispose());
+            StopRegenerationProccess();
+        }
         
 
         protected override void Awake(IGameComponents components)
@@ -29,52 +35,60 @@ namespace Core
 
             _view = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.Shield;
 
-            _shield.ShieldProccessTime.Subscribe(Deactivate).AddTo(_disposables);
-            _shield.IsActivate.Subscribe(Activate).AddTo(_disposables);
+            _attackable.HealthProtection.Subscribe(RefreshProtection).AddTo(_disposables);
+            _attackable.HealthProtection.Value = _shield.MaxProtection;
+            _attackable.HealthProtection.SkipLatestValueOnSubscribe();
+            _view.Show();
         }
 
 
-        private void Activate(bool isActivate)
+        protected void RefreshProtection(float protection)
         {
 
-            if (isActivate)
+            if (_shield.IsRegeneration.Value == true)
             {
-                _attackable.HealthProtection.Value = _shield.MaxProtection;
-                _view.Show();
+                StopRegenerationProccess();
+                _shield.IsRegeneration.Value = false;
             }
-
-            _attackable.IsIgnoreDamage = isActivate;
+            CheckProtection(protection);
         }
 
 
-        protected override void Update()
+        private void CheckProtection(float protection)
         {
 
-            if (_shield.IsActivate.Value)
+            if (protection > 0)
             {
-                _view.RefreshTime(_shield.ShieldProccessTime.Value);
-                _view.RefreshProtection(_attackable.HealthProtection.Value,  _shield.MaxProtection);
+                _view.RefreshProtection(_attackable.HealthProtection.Value, _shield.MaxProtection);
             }
-
+            else if (protection <= 0)
+            {
+                _view.Deactivate();
+                _view.RefreshProtection(0, _shield.MaxProtection);
+                StartRegenerationProccess();
+            }
         }
 
 
-        private void Deactivate(float maxTime)
+        private void StartRegenerationProccess()
         {
 
-            if(maxTime > 0)
-            Observable
-                .Timer(TimeSpan.FromSeconds(maxTime))
-                .Subscribe( _ =>
-                {
-                    UnityEngine.Debug.LogWarning("RegenerationShield");
-                    _attackable.IsIgnoreDamage = false;
-                    _shield.IsActivate.Value = false;
-                    _shield.ShieldProccessTime.Value = 0;
-                    _view.Deactivate();
-                })
-                .AddTo(_disposables);
+                Observable.Timer(TimeSpan.FromSeconds(_shield.MaxRegenerationSeconds)).Subscribe(
 
+                    value =>
+                    {
+                
+                        _attackable.HealthProtection.Value = _shield.MaxProtection;
+                        _shield.IsRegeneration.Value = false;
+                        _view.Show();
+
+                    }).AddTo(_regenerationTimers);
         }
+
+
+        private void StopRegenerationProccess()
+        => _regenerationTimers.ForEach(timer => timer.Dispose());
+
+        
     }
 }
