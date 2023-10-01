@@ -2,30 +2,39 @@ using Abstracts;
 using UniRx;
 using System;
 
+
 namespace Core
 {
-
 
     public class EnemyAttackComponent : IEnemyAttackable
     {
 
         public ReactiveProperty<float> Health { get; private set; }
 
+        public ReactiveProperty<float> HealthProtection { get; set; }
+
         public ReactiveProperty<bool> IsDeadFlag { get; set; }
 
         public ReactiveProperty<bool> IsCameAttackPosition { get;  set;}
 
-        public float Damage { get; set; }
+        public ReactiveProperty<bool> IsRewardReadyFlag { get; set; }
+        
 
         public float AttackDistance { get; set; }
 
         public float AttackFrequency { get; set; }
 
-        public ReactiveProperty<bool> IsRewardReadyFlag { get; set; }
+        public bool IsIgnoreDamage { get ; set; }
+
+        public float Damage { get; set; }
+
+         
 
 
         public EnemyAttackComponent(float health, float damage, float attackDistance, float attackFrequency)
         {
+
+            HealthProtection = new ReactiveProperty<float>(0);
             Health = new ReactiveProperty<float>(health);
             IsDeadFlag = new ReactiveProperty<bool>(false);
             IsCameAttackPosition = new ReactiveProperty<bool>(false);
@@ -41,6 +50,7 @@ namespace Core
 
         public void SetMaxHealth(float maxHealth, Action<ReactiveProperty<float>> onCompleted = null)
         {
+
             if (Health == null)
                 Health = new ReactiveProperty<float>(maxHealth);
             else
@@ -50,9 +60,23 @@ namespace Core
             onCompleted.Invoke(Health);
         }
 
+        
+        public void TakeDamage(float amountHealth)
+        {
 
-        public void TakeDamage(float amountHealth) => Health.Value -= amountHealth;
+            if (IsIgnoreDamage) return;
 
+            else
+            {
+                HealthProtection.Value -= amountHealth;
+
+                if (HealthProtection.Value < 0)
+                {
+                    Health.Value -= MathF.Abs(HealthProtection.Value);
+                    HealthProtection.Value = 0;
+                }
+            }
+        }
 
     }
 }

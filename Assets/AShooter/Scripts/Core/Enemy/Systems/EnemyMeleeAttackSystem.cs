@@ -38,8 +38,10 @@ namespace Core
 
         private void HandleTriggerCollider(Collider collider)
         {
+
             var playerAttackableComponent = collider.GetComponent<IPlayer>().ComponentsStore.Attackable;
             playerAttackableComponent.TakeDamage(_enemy.ComponentsStore.Attackable.Damage);
+
         }
 
 

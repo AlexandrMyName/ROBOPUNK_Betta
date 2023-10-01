@@ -28,6 +28,8 @@ namespace DI
         [SerializeField] private bool _useRotationSystem;
 
         [SerializeField] private float _maxPlayerHealth;
+        [SerializeField] private float _maxPlayerProtection = 50f;
+        [SerializeField] private float _protectionRegenerationTime = 7f;
         [SerializeField] private float _speed;
         
         [SerializeField] private GameObject _prefab;
@@ -81,13 +83,13 @@ namespace DI
             PlayerExperienceComponent exp = new PlayerExperienceComponent();
             WeaponStorage weapons = new WeaponStorage();
             PlayerStoreEnhancementComponent store = new PlayerStoreEnhancementComponent(_storeItemsDataConfig);
-
+            PlayerShieldComponent shield = new PlayerShieldComponent(_maxPlayerProtection, _protectionRegenerationTime);
             Container.QueueForInject(movable);
             Container.QueueForInject(attackable);
             Container.QueueForInject(views);
             Container.QueueForInject(weapons);
 
-            ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP, views, gold, exp, store, weapons);
+            ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP, views, gold, exp, store, weapons, shield);
 
             return components;
         }
@@ -137,6 +139,9 @@ namespace DI
             PlayerGoldWalletSystem playerGoldWalletSystem = new PlayerGoldWalletSystem();
             Container.QueueForInject(playerGoldWalletSystem);
 
+            PlayerShieldSystem playerShieldSystem = new PlayerShieldSystem();
+            Container.QueueForInject(playerShieldSystem);
+
             systems.Add(moveSystem);
             systems.Add(shootSystem);
             systems.Add(healthSystem);
@@ -150,6 +155,7 @@ namespace DI
             systems.Add(playerStoreSystem);
             systems.Add(playerExperienceSystem);
             systems.Add(playerGoldWalletSystem);
+            systems.Add(playerShieldSystem);
 
             return systems;
         }

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e3e26adbb0945e47964f5369ffc2558, type: 3}
   m_Name: DashConfig
   m_EditorClassIdentifier: 
-  ShieldTime: 1.09
-  RegenerationTime: 3.48
+  ShieldTime: 0.57
+  RegenerationTime: 3.65
   Force: 67

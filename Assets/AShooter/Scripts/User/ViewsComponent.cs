@@ -18,6 +18,8 @@ namespace User.Components
 
         [Inject] public IExperienceView ExperienceView { get; }
 
+        [Inject] public IShieldView Shield { get; }
+
         [Inject] public IHealthView HealthView { get; }
 
         [Inject] public IWeaponAbilityView WeaponAbility { get; }

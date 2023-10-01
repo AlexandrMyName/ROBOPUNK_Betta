@@ -16,6 +16,7 @@ namespace Core
         private IDash _dash;
         private IDashView _view;
         private IMovable _movable;
+        private IAttackable _attackable;
 
         private List<IDisposable> _inputsDisposables = new();
         private List<IDisposable> _timersDisposables = new();
@@ -27,6 +28,7 @@ namespace Core
             _dash = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Dash;
             _movable = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Movable;
             _view = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.Dash;
+            _attackable = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Attackable;
 
             _view.Regenerate(_dash.RegenerationTime);
             _view.Show();
@@ -39,7 +41,8 @@ namespace Core
 
             _input.DashClick.AxisOnChange
                 .Subscribe(value => {
-                    Dash(); 
+                    Dash();
+                     
                 }).AddTo(_inputsDisposables);
             
         }
@@ -73,11 +76,29 @@ namespace Core
 
             if (_dash.IsProccess) return;
  
+            IgnoreHealth();
+
             _dash.IsProccess = true;
+            
             _movable.Rigidbody.AddForce(_movable.MoveDirection * _dash.DashForce, ForceMode.Impulse);
 
             RegenerateDash();
         }
+
+
+        private void IgnoreHealth()
+        {
+
+            _attackable.IsIgnoreDamage = true;
+
+            Observable.Timer(TimeSpan.FromMilliseconds(700))
+                .Subscribe(val => {
+
+                _attackable.IsIgnoreDamage = false;
+
+            }).AddTo(_timersDisposables);
+        }
+
 
 
         public void Dispose()

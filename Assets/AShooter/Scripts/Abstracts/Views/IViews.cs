@@ -16,6 +16,8 @@ namespace Abstracts
 
         IExperienceView ExperienceView { get; }
 
+        IShieldView Shield { get; }
+
         IHealthView HealthView { get; }
 
         IWeaponAbilityView WeaponAbility { get; }
