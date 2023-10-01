@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Abstracts;
 using System;
-using AShooter.Scripts.User.Views;
 using UniRx.Triggers;
 using UniRx;
 using User;
@@ -49,6 +48,14 @@ namespace Core
                             else  _interactView.Show();
                                
                             
+                        }).AddTo(_disposables);
+
+            _components.BaseObject.GetComponent<Collider>()
+                .OnTriggerExitAsObservable()
+                    .Subscribe( collider =>{
+
+                            _interactView.Hide();
+
                         }).AddTo(_disposables);
         }
 
