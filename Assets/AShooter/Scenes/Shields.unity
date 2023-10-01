@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44051686, g: 0.48913074, b: 0.56928056, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3268,6 +3268,7 @@ MonoBehaviour:
   _goldWalletViewPrefab: {fileID: 1655792292581680610, guid: ac35b910b41cc054099fb83c5dd29317, type: 3}
   _experienceViewPrefab: {fileID: 3495722894623953418, guid: 155da69dc60565340b5d290d32521e96, type: 3}
   _shieldViewPrefab: {fileID: 8883014059306586274, guid: 51dd1a3d6ddf1764bb4152407aa49410, type: 3}
+  _playerHpViewPrefab: {fileID: 2345708136945342174, guid: 207d4b4282039184486e48b1c2bdcb02, type: 3}
 --- !u!1 &550520363
 GameObject:
   m_ObjectHideFlags: 0

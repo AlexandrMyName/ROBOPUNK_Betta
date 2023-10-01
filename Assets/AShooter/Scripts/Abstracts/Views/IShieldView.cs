@@ -7,6 +7,10 @@ namespace Abstracts
     {
 
         void Deactivate();
-        void Refresh(float maxTime);
+
+        void RefreshTime(float maxTime);
+
+        void RefreshProtection(float currentProtection, float maxProtection);
+
     }
 }

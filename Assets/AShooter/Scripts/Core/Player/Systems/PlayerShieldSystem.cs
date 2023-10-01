@@ -34,13 +34,16 @@ namespace Core
         }
 
 
-        private void Activate(bool activate)
+        private void Activate(bool isActivate)
         {
 
-            _attackable.IsIgnoreDamage = activate;
+            if (isActivate)
+            {
+                _attackable.HealthProtection.Value = _shield.MaxProtection;
+                _view.Show();
+            }
 
-            if (activate) _view.Show();
-          
+            _attackable.IsIgnoreDamage = isActivate;
         }
 
 
@@ -49,7 +52,8 @@ namespace Core
 
             if (_shield.IsActivate.Value)
             {
-                _view.Refresh(_shield.ShieldProccessTime.Value);
+                _view.RefreshTime(_shield.ShieldProccessTime.Value);
+                _view.RefreshProtection(_attackable.HealthProtection.Value,  _shield.MaxProtection);
             }
 
         }

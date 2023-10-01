@@ -7,13 +7,15 @@ namespace Abstracts
     public interface IShield
     {
 
-        float MaxConfigurationTime { get; }
+        float MaxProtection { get; }
 
         ReactiveProperty<bool> IsActivate { get; }
 
         ReactiveProperty<float> ShieldProccessTime { get; }
 
         void SetShield(float maxTime);
+
+        void RefreshProtection(float maxProtection);
 
     }
 }

@@ -8,10 +8,10 @@ namespace Core
     public class PlayerShieldComponent : IShield
     {
 
-        public PlayerShieldComponent(float maxConfigurationTime)
+        public PlayerShieldComponent(float maxProtection)
         {
 
-            MaxConfigurationTime = maxConfigurationTime;
+            MaxProtection = maxProtection;
 
             IsActivate = new ReactiveProperty<bool>(false);
             ShieldProccessTime = new ReactiveProperty<float>(0);
@@ -22,8 +22,10 @@ namespace Core
 
         public ReactiveProperty<float> ShieldProccessTime { get; set; }
 
+        public float MaxProtection {get; private set;}
 
-        public float MaxConfigurationTime {get; private set;}
+
+        public void RefreshProtection(float maxProtection) => MaxProtection = maxProtection;
 
 
         public void SetShield(float maxTime)

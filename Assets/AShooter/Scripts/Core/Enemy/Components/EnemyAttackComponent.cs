@@ -2,9 +2,9 @@ using Abstracts;
 using UniRx;
 using System;
 
+
 namespace Core
 {
-
 
     public class EnemyAttackComponent : IEnemyAttackable
     {
@@ -15,7 +15,7 @@ namespace Core
 
         public ReactiveProperty<bool> IsCameAttackPosition { get;  set;}
 
-        public float Damage { get; set; }
+        public ReactiveProperty<float> RangedAttackRange { get; private set; }
 
         public float AttackDistance { get; set; }
 
@@ -23,9 +23,9 @@ namespace Core
 
         public ReactiveProperty<bool> IsRewardReadyFlag { get; set; }
 
-        public ReactiveProperty<float> RangedAttackRange { get; private set; }
-
         public bool IsIgnoreDamage { get ; set; }
+
+        public float Damage { get; set; }
 
 
         public EnemyAttackComponent(float health, float damage, float attackDistance, float attackFrequency)
