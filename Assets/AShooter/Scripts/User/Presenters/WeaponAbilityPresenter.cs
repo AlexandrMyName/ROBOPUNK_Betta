@@ -84,7 +84,7 @@ namespace User
         }
 
 
-        private void RangeWeaponSubscribe(ReactiveProperty<IWeapon> weapon, WeaponAbilityItemView weaponItemView, List<IDisposable> disposables, bool clearDisposables)
+        private void RangeWeaponSubscribe(ReactiveProperty<IRangeWeapon> weapon, WeaponAbilityItemView weaponItemView, List<IDisposable> disposables, bool clearDisposables)
         {
             if (weapon.Value is IRangeWeapon rangeWeapon)
             {

@@ -21,12 +21,15 @@ namespace Core
         private Vector3 _mousePosition;
         private List<IDisposable> _disposables = new();
 
-        private IRangeWeapon _currentRangeWeapon;
+        private IRangeWeapon _mainRangeWeapon;
+        private IRangeWeapon _pickupRangeWeapon;
+
+        private bool _isMainWeaponAvailable;
+        private bool _isPickUpWeaponAvailable;
         
         
         protected override void Awake(IGameComponents components)
         {
-
             _components = components;
             _camera = _components.MainCamera;
         }
@@ -34,45 +37,59 @@ namespace Core
 
         protected override void Start()
         {
-
             _disposables.AddRange(new List<IDisposable>{
-                _input.LeftClick.AxisOnChange.Subscribe(_ => TryShootPerform()),
-                _input.RightClick.AxisOnChange.Subscribe(_ => TryShootPerform()),
                 _input.MousePosition.AxisOnChange.Subscribe(OnMousePositionChanged),
-                _weaponState.CurrentWeapon.Subscribe(weapon => { UpdateCurrentWeapon(weapon); })
+                
+                _weaponState.MainWeapon.Subscribe(weapon => UpdateMainWeapon(weapon)),
+                _weaponState.PickUpWeapon.Subscribe(weapon => UpdateSecondaryWeapon(weapon)),
+                
+                _input.LeftClick.AxisOnChange.Subscribe(_ => TryShootPerform(_mainRangeWeapon)),
+                _input.RightClick.AxisOnChange.Subscribe(_ => TryShootPerform(_pickupRangeWeapon))
             });
         }
 
-        
-        private void UpdateCurrentWeapon(IWeapon rangeWeapon)
-        {
 
-            if (rangeWeapon is IRangeWeapon weapon)
-                _currentRangeWeapon = weapon;
-            else
-                _currentRangeWeapon = null;
+        private void UpdateMainWeapon(IRangeWeapon rangeWeapon)
+        {
+            _mainRangeWeapon = rangeWeapon;
+            _isMainWeaponAvailable = true;
+        }
+
+
+        private void UpdateSecondaryWeapon(IRangeWeapon rangeWeapon)
+        {
+            _pickupRangeWeapon = rangeWeapon;
+            _isPickUpWeaponAvailable = true;
         }
         
         
         protected override void Update()
         {
             DrawDebugRayToMousePosition();
-            if (_currentRangeWeapon != null)
-                _currentRangeWeapon.Laser.Update();
+            UpdateWeaponLaser();
         }
 
         
-        private void TryShootPerform()
+        private void UpdateWeaponLaser()
         {
+            if (_isMainWeaponAvailable && _mainRangeWeapon.WeaponObject.activeSelf)
+                _mainRangeWeapon.Laser.Update();
+            
+            if (_isPickUpWeaponAvailable && _pickupRangeWeapon.WeaponObject.activeSelf)
+                _pickupRangeWeapon.Laser.Update();
+        }
 
-            if (_currentRangeWeapon != null)
+
+        private void TryShootPerform(IRangeWeapon weapon)
+        {
+            if ((_isMainWeaponAvailable || _isPickUpWeaponAvailable) && !_weaponState.IsMeleeWeaponPressed.Value)
             {
-                if (_currentRangeWeapon.IsShootReady)
+                if (weapon.IsShootReady)
                 {
-                    if (_currentRangeWeapon.LeftPatronsCount.Value > 0)
-                        _currentRangeWeapon.Shoot(_mousePosition);
+                    if (weapon.LeftPatronsCount.Value > 0)
+                        weapon.Shoot(_mousePosition);
                     else
-                        _currentRangeWeapon.ProcessReload();
+                        weapon.ProcessReload();
                 }
             }
         }
@@ -83,20 +100,17 @@ namespace Core
 
         private void DrawDebugRayToMousePosition()
         {
-
-            if (_currentRangeWeapon != null)
+            var ray = _camera.ScreenPointToRay(_mousePosition);
+            
+            if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, _mainRangeWeapon.LayerMask))
             {
-                var ray = _camera.ScreenPointToRay(_mousePosition);
-
-                if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, _currentRangeWeapon.LayerMask))
-                {
-                    Debug.DrawRay(ray.origin, ray.direction * hitInfo.distance, Color.red);
-                }
+                Debug.DrawRay(ray.origin, ray.direction * hitInfo.distance, Color.red);
             }
         }
-
+        
 
         public void Dispose() => _disposables.ForEach(d => d.Dispose());
 
+        
     }
 }
