@@ -12,6 +12,9 @@ namespace Core
 
         private IShield _shield;
         private IAttackable _attackable;
+
+        private IShieldView _view;
+
         private List<IDisposable> _disposables = new();
 
 
@@ -24,14 +27,34 @@ namespace Core
             _shield = components.BaseTransform.GetComponent<IPlayer>().ComponentsStore.Shield;
             _attackable = components.BaseTransform.GetComponent<IPlayer>().ComponentsStore.Attackable;
 
+            _view = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.Shield;
+
             _shield.ShieldProccessTime.Subscribe(Deactivate).AddTo(_disposables);
             _shield.IsActivate.Subscribe(Activate).AddTo(_disposables);
         }
 
 
-        private void Activate(bool activate) => _attackable.IsIgnoreDamage = activate;
-            
-        
+        private void Activate(bool activate)
+        {
+
+            _attackable.IsIgnoreDamage = activate;
+
+            if (activate) _view.Show();
+          
+        }
+
+
+        protected override void Update()
+        {
+
+            if (_shield.IsActivate.Value)
+            {
+                _view.Refresh(_shield.ShieldProccessTime.Value);
+            }
+
+        }
+
+
         private void Deactivate(float maxTime)
         {
 
@@ -44,6 +67,7 @@ namespace Core
                     _attackable.IsIgnoreDamage = false;
                     _shield.IsActivate.Value = false;
                     _shield.ShieldProccessTime.Value = 0;
+                    _view.Deactivate();
                 })
                 .AddTo(_disposables);
 

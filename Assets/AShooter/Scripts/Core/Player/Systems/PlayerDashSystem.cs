@@ -41,7 +41,7 @@ namespace Core
             _input.DashClick.AxisOnChange
                 .Subscribe(value => {
                     Dash();
-                    _shield.SetShield(_dash.ShieldActivateTime);
+                     
                 }).AddTo(_inputsDisposables);
             
         }
@@ -76,6 +76,7 @@ namespace Core
             if (_dash.IsProccess) return;
  
             _dash.IsProccess = true;
+            _shield.SetShield(_dash.ShieldActivateTime);
             _movable.Rigidbody.AddForce(_movable.MoveDirection * _dash.DashForce, ForceMode.Impulse);
 
             RegenerateDash();

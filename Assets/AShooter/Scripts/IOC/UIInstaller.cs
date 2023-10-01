@@ -14,6 +14,7 @@ public class UIInstaller : MonoInstaller
     [SerializeField] private GameObject _dashViewPrefab;
     [SerializeField] private GameObject _goldWalletViewPrefab;
     [SerializeField] private GameObject _experienceViewPrefab;
+    [SerializeField] private GameObject _shieldViewPrefab;
     [SerializeField] private GameObject _playerHpViewPrefab;
     [SerializeField] private GameObject _weaponAbilityViewPrefab;
 
@@ -57,6 +58,11 @@ public class UIInstaller : MonoInstaller
 
         Container.Bind<IWeaponAbilityView>()
             .FromInstance(weaponAbilityView)
+            .AsCached();
+
+        Container
+            .Bind<IShieldView>()
+            .FromInstance(InstantiateView<IShieldView>(_shieldViewPrefab))
             .AsCached();
 
         Container.Bind<WeaponAbilityPresenter>().FromInstance(weaponAbilityPresenter).AsCached();

@@ -3267,6 +3267,7 @@ MonoBehaviour:
   _dashViewPrefab: {fileID: 8883014059306586274, guid: afff7b4e6b4c22440ba5a86054e68eb3, type: 3}
   _goldWalletViewPrefab: {fileID: 1655792292581680610, guid: ac35b910b41cc054099fb83c5dd29317, type: 3}
   _experienceViewPrefab: {fileID: 3495722894623953418, guid: 155da69dc60565340b5d290d32521e96, type: 3}
+  _shieldViewPrefab: {fileID: 8883014059306586274, guid: 51dd1a3d6ddf1764bb4152407aa49410, type: 3}
 --- !u!1 &550520363
 GameObject:
   m_ObjectHideFlags: 0
