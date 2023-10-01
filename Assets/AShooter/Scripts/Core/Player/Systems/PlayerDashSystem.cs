@@ -16,7 +16,7 @@ namespace Core
         private IDash _dash;
         private IDashView _view;
         private IMovable _movable;
-
+        private IShield _shield;
         private List<IDisposable> _inputsDisposables = new();
         private List<IDisposable> _timersDisposables = new();
 
@@ -27,6 +27,7 @@ namespace Core
             _dash = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Dash;
             _movable = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Movable;
             _view = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.Dash;
+            _shield = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Shield;
 
             _view.Regenerate(_dash.RegenerationTime);
             _view.Show();
@@ -39,7 +40,8 @@ namespace Core
 
             _input.DashClick.AxisOnChange
                 .Subscribe(value => {
-                    Dash(); 
+                    Dash();
+                    _shield.SetShield(_dash.ShieldActivateTime);
                 }).AddTo(_inputsDisposables);
             
         }

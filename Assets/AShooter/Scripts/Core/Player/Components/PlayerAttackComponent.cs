@@ -2,7 +2,7 @@ using Abstracts;
 using UniRx;
 using System;
 using Zenject;
-
+using System.Diagnostics;
 
 namespace Core
 {
@@ -23,6 +23,7 @@ namespace Core
         {
 
             if (IsIgnoreDamage) return;
+            UnityEngine.Debug.LogWarning("Player Damage");
                 Health.Value -= amountDamage;
         }
     }

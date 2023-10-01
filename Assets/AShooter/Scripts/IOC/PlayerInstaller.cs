@@ -137,6 +137,9 @@ namespace DI
             PlayerGoldWalletSystem playerGoldWalletSystem = new PlayerGoldWalletSystem();
             Container.QueueForInject(playerGoldWalletSystem);
 
+            PlayerShieldSystem playerShieldSystem = new PlayerShieldSystem();
+            Container.QueueForInject(playerShieldSystem);
+
             systems.Add(moveSystem);
             systems.Add(shootSystem);
             systems.Add(healthSystem);
@@ -150,6 +153,7 @@ namespace DI
             systems.Add(playerStoreSystem);
             systems.Add(playerExperienceSystem);
             systems.Add(playerGoldWalletSystem);
+            systems.Add(playerShieldSystem);
 
             return systems;
         }

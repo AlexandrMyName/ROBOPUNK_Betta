@@ -29,16 +29,9 @@ namespace Core
         }
 
 
-        private void Activate(bool activate)
-        {
-
-            if (activate)
-            {
-                _attackable.IsIgnoreDamage = true;
-            }
-        }
-
-
+        private void Activate(bool activate) => _attackable.IsIgnoreDamage = activate;
+            
+        
         private void Deactivate(float maxTime)
         {
 
@@ -47,7 +40,9 @@ namespace Core
                 .Timer(TimeSpan.FromSeconds(maxTime))
                 .Subscribe( _ =>
                 {
+                    UnityEngine.Debug.LogWarning("RegenerationShield");
                     _attackable.IsIgnoreDamage = false;
+                    _shield.IsActivate.Value = false;
                     _shield.ShieldProccessTime.Value = 0;
                 })
                 .AddTo(_disposables);

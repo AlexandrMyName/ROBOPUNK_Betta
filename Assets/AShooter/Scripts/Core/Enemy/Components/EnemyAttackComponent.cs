@@ -23,6 +23,10 @@ namespace Core
 
         public ReactiveProperty<bool> IsRewardReadyFlag { get; set; }
 
+        public ReactiveProperty<float> RangedAttackRange { get; private set; }
+
+        public bool IsIgnoreDamage { get ; set; }
+
 
         public EnemyAttackComponent(float health, float damage, float attackDistance, float attackFrequency)
         {
