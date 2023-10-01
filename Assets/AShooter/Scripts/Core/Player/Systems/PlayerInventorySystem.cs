@@ -18,7 +18,6 @@ namespace Core
         private IGameComponents _components;
         private List<IDisposable> _disposables;
         private IGoldWallet _goldWallet;
-        
         private IInteractView _interactView;
 
         private bool _canOpenChest;
@@ -52,6 +51,15 @@ namespace Core
                                
                             }
                         }).AddTo(_disposables);
+            
+            _components.BaseObject.GetComponent<Collider>()
+                .OnTriggerExitAsObservable()
+                .Where(x => x.GetComponent<IChest>() != null)
+                .Subscribe(
+                    collider =>
+                    {
+                        _interactView.Hide();
+                    }).AddTo(_disposables);
             
         }
 
