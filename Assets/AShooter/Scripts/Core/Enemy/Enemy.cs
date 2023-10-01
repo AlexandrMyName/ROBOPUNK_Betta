@@ -1,8 +1,6 @@
 using Abstracts;
 using Core.DTO;
 using System.Collections.Generic;
-using UnityEngine;
-using Zenject;
 
 
 namespace Core

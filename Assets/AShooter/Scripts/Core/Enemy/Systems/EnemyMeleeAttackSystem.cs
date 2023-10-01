@@ -27,7 +27,7 @@ namespace Core
             var sphereCollider = components.BaseObject.AddComponent<SphereCollider>();
             sphereCollider.radius = _attackDistance;
             sphereCollider.isTrigger = true;
-
+            
             sphereCollider.OnTriggerStayAsObservable()
                 .Where(col => col.GetComponent<IPlayer>() != null)
                 .ThrottleFirst(TimeSpan.FromSeconds(_attackFrequency))
@@ -46,5 +46,4 @@ namespace Core
 
 
     }
-
 }

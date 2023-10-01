@@ -4,13 +4,14 @@ using UniRx;
 using Zenject;
 using Abstracts;
 using User;
-using Core;
+
 
 namespace DI.Spawn
 {
 
     public class EnemySpawnerController
     {
+
         private EnemySpawnerDataConfig _enemySpawnerDataConfig;
         private DiContainer _diContainer;
         private IDisposable _waveDisposable;
@@ -61,7 +62,6 @@ namespace DI.Spawn
         }
 
 
-
         internal void StopSpawnProcess()
         {
             _waveDisposable.Dispose();
@@ -72,7 +72,6 @@ namespace DI.Spawn
         {
             _enemySpawner.StartSpawnWave(_enemySpawnerDataConfig.Wave[_waveCountInLoop-1], cnt);
         }
-
 
 
         private bool LoopWaveFalse()
@@ -93,7 +92,6 @@ namespace DI.Spawn
 
             return true;
         }
-
 
 
     }

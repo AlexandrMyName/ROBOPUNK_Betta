@@ -1,9 +1,7 @@
 using Abstracts;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using UniRx;
-using UniRx.Triggers;
+
 
 namespace Core
 {
@@ -21,5 +19,4 @@ namespace Core
 
 
     }
-
 }
