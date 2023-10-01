@@ -106,7 +106,7 @@ namespace User
 
                 if (_hitColliders[i].TryGetComponent<Rigidbody>(out var rb))
                 {
-                    rb.AddForce(Vector3.one * Damage / 2, ForceMode.Impulse);
+                    rb.AddForce(WeaponObject.transform.forward * Damage, ForceMode.Impulse);
                 }
             }
         }
