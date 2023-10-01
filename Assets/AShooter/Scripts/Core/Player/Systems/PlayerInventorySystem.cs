@@ -42,25 +42,14 @@ namespace Core
                     .Subscribe(
                         collider =>
                         {
+
                             if(_canOpenChest)
                                 ApplyGettingItem(collider.GetComponent<IChest>().GetRandomItem());
-                            else
-                            {
-                                
-                                _interactView.Show();
+
+                            else  _interactView.Show();
                                
-                            }
+                            
                         }).AddTo(_disposables);
-            
-            _components.BaseObject.GetComponent<Collider>()
-                .OnTriggerExitAsObservable()
-                .Where(x => x.GetComponent<IChest>() != null)
-                .Subscribe(
-                    collider =>
-                    {
-                        _interactView.Hide();
-                    }).AddTo(_disposables);
-            
         }
 
 
@@ -71,6 +60,7 @@ namespace Core
 
                 timer => {
                 _canOpenChest = false;
+                    _interactView.Hide();
                 }).AddTo(_disposables);
         }
 
