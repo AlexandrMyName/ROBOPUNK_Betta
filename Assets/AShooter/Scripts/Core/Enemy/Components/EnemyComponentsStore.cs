@@ -8,6 +8,7 @@ namespace Core
     {
 
         public IEnemyAttackable Attackable { get; }
+
         public IEnemyPrice EnemyPrice { get; }
 
         

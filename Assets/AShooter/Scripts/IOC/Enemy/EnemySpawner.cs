@@ -16,7 +16,6 @@ namespace DI.Spawn
 
     public class EnemySpawner
     {
-        int i, j = 0;
 
         private float _respawnEnemyInWaveDelay;
         private float _spawnRadiusRelativeToPlayer;
@@ -34,6 +33,7 @@ namespace DI.Spawn
         private List<float> _enemySpawnWeight;
         private List<IDisposable> _disposables;
 
+        private GameObject _waves;
         private List<GameObject> _waveGameObjects;
         private int _waveCount;
 
@@ -64,6 +64,7 @@ namespace DI.Spawn
                     maxSize: maxNumberEnemy)
                 );
 
+            _waves = new GameObject("___WAVES_of_ENEMIES___");
             _waveGameObjects = new List<GameObject>();
         }
 
@@ -95,9 +96,9 @@ namespace DI.Spawn
                     .Subscribe(_ => { _pool.Get(); })
                 );
 
-            _waveGameObjects.Add(new GameObject($"Wave_[{waveCount}]"));
-
-
+            var goWave = new GameObject($"Wave_[{waveCount}]");
+            goWave.transform.SetParent(_waves.transform);
+            _waveGameObjects.Add(goWave);
         }
 
 
@@ -119,6 +120,7 @@ namespace DI.Spawn
             {
                 probSum[i] = probSum[i - 1] + _enemySpawnWeight[i];
             }
+
 
             float randomValue = Random.Range(0f, 1f);
             if (randomValue <= probSum[0])

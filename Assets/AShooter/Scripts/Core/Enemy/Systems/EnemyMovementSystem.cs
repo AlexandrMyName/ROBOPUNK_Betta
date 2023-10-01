@@ -5,11 +5,13 @@ using Abstracts;
 using System;
 using UniRx;
 
+
 namespace Core
 {
 
     public class EnemyMovementSystem : BaseSystem
     {
+
         private List<IDisposable> _disposables = new();
         private NavMeshAgent _navMeshAgent;
         private Transform _targetPosition;
@@ -74,5 +76,4 @@ namespace Core
 
 
     }
-
 }

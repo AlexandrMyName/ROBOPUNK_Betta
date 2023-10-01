@@ -7,6 +7,7 @@ namespace Core
 
     public class LegTarget : MonoBehaviour
     {
+
         [SerializeField] private float _stepSpeed;
         [SerializeField] private AnimationCurve _stepCurve;
 
@@ -15,6 +16,7 @@ namespace Core
         private Movement? _movement;
 
         public Vector3 Position => _position;
+
         public bool IsMoving => _movement != null;
 
 
@@ -40,6 +42,7 @@ namespace Core
                 };
             }
         }
+
         private struct Movement
         {
 
@@ -77,6 +80,7 @@ namespace Core
 
             _transform.position = _position;
         }
+
 
     }
 }

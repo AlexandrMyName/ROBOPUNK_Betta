@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Abstracts;
 using UniRx;
-using UnityEngine;
+
 
 namespace Core
 {
@@ -16,7 +16,8 @@ namespace Core
         private ReactiveProperty<bool> _isRewardReady;
         private float _maxHealth;
 
-        public EnemyDamageSystem( float maxHealth)
+
+        public EnemyDamageSystem(float maxHealth)
         {
             _maxHealth = maxHealth;
         }
@@ -66,5 +67,4 @@ namespace Core
 
 
     }
-
 }

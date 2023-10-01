@@ -32,10 +32,6 @@ namespace Core
             _enemy.ComponentsStore.Attackable.IsCameAttackPosition.Subscribe(SetPositionReadiness);
             _attackFrequency = _enemy.ComponentsStore.Attackable.AttackFrequency;
 
-            var sphereCollider = components.BaseObject.AddComponent<SphereCollider>();
-            sphereCollider.radius = 2f;
-            sphereCollider.isTrigger = true;
-
             var shootDisposable = Observable
                 .Interval(TimeSpan.FromSeconds(_attackFrequency))
                 .TakeUntilDestroy(_enemy as Component)
