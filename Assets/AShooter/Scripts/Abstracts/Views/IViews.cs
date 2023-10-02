@@ -24,5 +24,6 @@ namespace Abstracts
 
         IWeaponAbilityView WeaponAbility { get; }
 
+
     }
 }

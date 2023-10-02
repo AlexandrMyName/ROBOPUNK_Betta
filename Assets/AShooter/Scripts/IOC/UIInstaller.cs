@@ -22,37 +22,37 @@ public class UIInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-
-        Container
-            .Bind<IDeathView>()
-            .FromInstance(InstantiateView<IDeathView>(_deathViewPrefab))
-            .AsCached();
-
-        Container
-            .Bind<IStoreView>()
-            .FromInstance(InstantiateView<IStoreView>(_storeViewPrefab))
-            .AsCached();
-
-        Container
-            .Bind<IDashView>()
-            .FromInstance(InstantiateView<IDashView>(_dashViewPrefab))
-            .AsCached();
-
-        Container
-            .Bind<IExperienceView>()
-            .FromInstance(InstantiateView<IExperienceView>(_experienceViewPrefab))
-            .AsCached();
-
-        Container
-            .Bind<IGoldWalletView>()
-            .FromInstance(InstantiateView<IGoldWalletView>(_goldWalletViewPrefab))
-            .AsCached();
-
-        Container
-            .Bind<IHealthView>()
-            .FromInstance(InstantiateView<IHealthView>(_playerHpViewPrefab))
-            .AsCached();
-
+        
+            Container
+                .Bind<IDeathView>()
+                .FromInstance(InstantiateView<IDeathView>(_deathViewPrefab))
+                .AsCached();
+        
+            Container
+                .Bind<IStoreView>()
+                .FromInstance(InstantiateView<IStoreView>(_storeViewPrefab))
+                .AsCached();
+        
+            Container
+                .Bind<IDashView>()
+                .FromInstance(InstantiateView<IDashView>(_dashViewPrefab))
+                .AsCached();
+        
+            Container
+                .Bind<IExperienceView>()
+                .FromInstance(InstantiateView<IExperienceView>(_experienceViewPrefab))
+                .AsCached();
+        
+            Container
+                .Bind<IGoldWalletView>()
+                .FromInstance(InstantiateView<IGoldWalletView>(_goldWalletViewPrefab))
+                .AsCached();
+        
+            Container
+                .Bind<IHealthView>()
+                .FromInstance(InstantiateView<IHealthView>(_playerHpViewPrefab))
+                .AsCached();
+        
 
         var weaponAbilityPresenter = InstantiateView<WeaponAbilityPresenter>(_weaponAbilityViewPrefab);
         IWeaponAbilityView weaponAbilityView = weaponAbilityPresenter.GetComponent<WeaponAbilityView>();
@@ -68,7 +68,6 @@ public class UIInstaller : MonoInstaller
 
         Container.Bind<WeaponAbilityPresenter>().FromInstance(weaponAbilityPresenter).AsCached();
 
-        
         Container
             .Bind<IInteractView>()
             .FromInstance(InstantiateView<IInteractView>(_interactViewPrefab))
