@@ -30,5 +30,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 137
   <MuzzleEffect>k__BackingField: {fileID: 19800004, guid: cb9779a6e3aba524a9e630eb47be2e07, type: 3}
+  <MuzzleEffectDestroyDelay>k__BackingField: 2
   <Effect>k__BackingField: {fileID: 19800006, guid: e79caf639b59c854aa4069816db71cd9, type: 3}
-  <EffectDestroyDelay>k__BackingField: 2
+  <EffectDestroyDelay>k__BackingField: 10

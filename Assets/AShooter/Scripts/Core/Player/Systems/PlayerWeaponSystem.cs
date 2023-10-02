@@ -42,7 +42,7 @@ namespace Core
             
             _disposables.AddRange(new List<IDisposable>{
                     _input.MeleeHold.AxisOnChange.Subscribe(b => HandleMeleeButtonPressed(b)),
-                    _input.WeaponFirst.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(WeaponType.Pistol)),
+                    _input.WeaponFirst.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(WeaponType.Rifle)),
                     _input.WeaponSecond.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(WeaponType.Shotgun)),
                     _input.WeaponThird.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(WeaponType.RocketLauncher)),
                     
@@ -55,7 +55,7 @@ namespace Core
                     _input.RightClick.AxisOnChange.Subscribe(pressed =>
                     {
                         if (pressed && !_weaponState.IsMeleeWeaponPressed.Value)
-                            HandleWeaponChangePress(WeaponType.Shotgun);
+                            HandleWeaponChangePress(_weaponState.PickUpWeapon.Value.WeaponType);
                     })
                 }
             );

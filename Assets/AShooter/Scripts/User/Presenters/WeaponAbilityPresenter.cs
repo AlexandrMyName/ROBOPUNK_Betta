@@ -79,30 +79,33 @@ namespace User
         private void WeaponSubscribe(IWeaponStorage weaponStorage)
         {
             MeleeWeaponSubscribe(weaponStorage, _meleeWeaponItem);
-            RangeWeaponSubscribe(weaponStorage.WeaponState.MainWeapon, _mainWeaponItem, _disposables, false);
-            RangeWeaponSubscribe(weaponStorage.WeaponState.PickUpWeapon, _pickUpWeaponItem, _pickUpWeaponDisposables, true);
+
+            var weaponState = weaponStorage.WeaponState;
+
+            _disposables.AddRange(new List<IDisposable> {
+                weaponState.MainWeapon.Subscribe(_ => { RangeWeaponSubscribe(weaponState.MainWeapon, _mainWeaponItem, _disposables, false); }),
+                weaponState.PickUpWeapon.Subscribe(_ => { RangeWeaponSubscribe(weaponState.PickUpWeapon, _pickUpWeaponItem, _pickUpWeaponDisposables, true); })
+            });
         }
 
 
-        private void RangeWeaponSubscribe(ReactiveProperty<IRangeWeapon> weapon, WeaponAbilityItemView weaponItemView, List<IDisposable> disposables, bool clearDisposables)
+        private void RangeWeaponSubscribe(ReactiveProperty<IRangeWeapon> rangeWeapon, WeaponAbilityItemView weaponItemView, List<IDisposable> disposables, bool clearDisposables)
         {
-            if (weapon.Value is IRangeWeapon rangeWeapon)
-            {
-                if (clearDisposables)
-                    disposables.ForEach(d => d.Dispose());
+            if (clearDisposables)
+                disposables.ForEach(d => d.Dispose());
 
-                disposables.AddRange(new List<IDisposable> {
-                    weapon.Subscribe(_ => weaponItemView.SetItemIcon(rangeWeapon.WeaponIcon)),
-                    rangeWeapon.LeftPatronsCount.Subscribe(count => weaponItemView.SetPatronsCount(count)),
-                    rangeWeapon.IsReloadProcessing.Subscribe(isReload => OnReload(weaponItemView, rangeWeapon.ReloadTime, isReload))
-                });
-            }
+            weaponItemView.SetItemIcon(rangeWeapon.Value.WeaponIcon);
+
+            disposables.AddRange(new List<IDisposable> {
+                rangeWeapon.Value.LeftPatronsCount.Subscribe(count => weaponItemView.SetPatronsCount(count)),
+                rangeWeapon.Value.IsReloadProcessing.Subscribe(isReload => OnReload(weaponItemView, rangeWeapon.Value.ReloadTime, isReload))
+            });
         }
 
 
         private void MeleeWeaponSubscribe(IWeaponStorage weaponStorage, WeaponAbilityItemView weaponItemView)
         {
-            var weapon = weaponStorage.Weapons[0];
+            var weapon = weaponStorage.Weapons[WeaponType.Sword];
 
             if (weapon is IMeleeWeapon meleeWeapon)
             {

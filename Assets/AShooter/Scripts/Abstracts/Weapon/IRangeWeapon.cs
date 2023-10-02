@@ -31,6 +31,8 @@ namespace Abstracts
 
         ParticleSystem MuzzleEffect { get; }
 
+        float MuzzleEffectDestroyDelay { get; }
+
 
         void Shoot(Vector3 mousePosition);
 

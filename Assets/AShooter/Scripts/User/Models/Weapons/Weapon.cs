@@ -9,7 +9,7 @@ using UnityEngine;
 namespace User
 {
 
-    public abstract class Weapon : IRangeWeapon, IDisposable
+    public class Weapon : IRangeWeapon, IDisposable
     {
         
         public int WeaponId { get; protected set; }
@@ -44,12 +44,11 @@ namespace User
 
         public ParticleSystem MuzzleEffect { get; protected set; }
 
+        public float MuzzleEffectDestroyDelay { get; protected set; }
+
         public ParticleSystem Effect { get; protected set; }
 
         public float EffectDestroyDelay { get; protected set; }
-
-
-        private List<IDisposable> _disposables = new();
 
         public ReactiveProperty<bool> IsReloadProcessing { get; protected set; }
 
@@ -57,18 +56,22 @@ namespace User
 
         public Laser Laser { get; private set; }
 
+
+        private List<IDisposable> _disposables = new();
+
         private RaycastAttack _attackTypeProcess;
 
 
         public Weapon(int weaponId, GameObject weaponObject, Sprite weaponIcon, Projectile projectileObject,
-            WeaponType weaponType, float damage, int clipSize, ReactiveProperty<int> leftPatronsCount,
-            float reloadTime, float shootDistance, float shootSpeed, float fireSpread,
-            LayerMask layerMask, ParticleSystem muzzleEffect, ParticleSystem effect, float effectDestroyDelay, Camera camera)
+            float projectileForce, WeaponType weaponType, float damage, int clipSize, ReactiveProperty<int> leftPatronsCount,
+            float reloadTime, float shootDistance, float shootSpeed, float fireSpread, float spreadFactor, LayerMask layerMask,
+            ParticleSystem muzzleEffect, float muzzleEffectDestroyDelay, ParticleSystem effect, float effectDestroyDelay, Camera camera)
         {
             WeaponId = weaponId;
             WeaponObject = weaponObject;
             WeaponIcon = weaponIcon;
             ProjectileObject = projectileObject;
+            ProjectileForce = projectileForce;
             WeaponType = weaponType;
             Damage = damage;
             ClipSize = clipSize;
@@ -77,8 +80,10 @@ namespace User
             ShootDistance = shootDistance;
             ShootSpeed = shootSpeed;
             FireSpread = fireSpread;
+            SpreadFactor = spreadFactor;
             LayerMask = layerMask;
             MuzzleEffect = muzzleEffect;
+            MuzzleEffectDestroyDelay = muzzleEffectDestroyDelay;
             Effect = effect;
             EffectDestroyDelay = effectDestroyDelay;
             IsShootReady = true;

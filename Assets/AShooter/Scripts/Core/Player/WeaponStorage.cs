@@ -41,98 +41,33 @@ namespace Core
                 switch (config.WeaponType)
                 {
                     case WeaponType.Sword:
-                        Weapons[WeaponType.Sword] = SwordInit(config);
+                        Weapons[WeaponType.Sword] = CreateMeleeWeapon(config);
                         break;
                     case WeaponType.Pistol:
-                        Weapons[WeaponType.Pistol] = PistolInit(config);
+                        Weapons[WeaponType.Pistol] = CreateRangeWeapon(config);
                         break;
                     case WeaponType.Shotgun:
-                        Weapons[WeaponType.Shotgun] = ShotgunInit(config);
+                        Weapons[WeaponType.Shotgun] = CreateRangeWeapon(config);
                         break;
                     case WeaponType.RocketLauncher:
-                        Weapons[WeaponType.RocketLauncher] = RocketLauncherInit(config);
+                        Weapons[WeaponType.RocketLauncher] = CreateRangeWeapon(config);
+                        break;
+                    case WeaponType.Rifle:
+                        Weapons[WeaponType.Rifle] = CreateRangeWeapon(config);
                         break;
                 }
             }
         }
 
 
-        private IWeapon SwordInit(WeaponConfig config)
+        private IWeapon CreateRangeWeapon(WeaponConfig config)
         {
-            var swordObject = GameObject.Instantiate(config.WeaponObject, _weaponContainer);
-            swordObject.SetActive(false);
-            return new Sword(
+            var weaponObject = GameObject.Instantiate(config.WeaponObject, _weaponContainer);
+            weaponObject.SetActive(false);
+
+            return new Weapon(
                 config.WeaponId,
-                swordObject,
-                config.WeaponIcon,
-                config.WeaponType,
-                config.Damage,
-                config.LayerMask,
-                config.Effect,
-                config.EffectDestroyDelay,
-                config.ShootSpeed);
-        }
-
-
-        private IWeapon PistolInit(WeaponConfig config)
-        {
-            var pistolObject = GameObject.Instantiate(config.WeaponObject, _weaponContainer);
-            pistolObject.SetActive(false);
-            return new Pistol(
-                config.WeaponId,
-                pistolObject,
-                config.WeaponIcon,
-                null,
-                config.WeaponType,
-                config.Damage,
-                config.ClipSize,
-                new ReactiveProperty<int>(config.LeftPatronsCount),
-                config.ReloadTime,
-                config.ShootDistance,
-                config.ShootSpeed,
-                config.FireSpread,
-                config.LayerMask,
-                config.MuzzleEffect,
-                config.Effect,
-                config.EffectDestroyDelay,
-                _camera
-                );
-        }
-
-
-        private IWeapon ShotgunInit(WeaponConfig config)
-        {
-            var shotgunObject = GameObject.Instantiate(config.WeaponObject, _weaponContainer);
-            shotgunObject.SetActive(false);
-            return new Shotgun(
-                config.WeaponId,
-                shotgunObject,
-                config.WeaponIcon,
-                null,
-                config.WeaponType,
-                config.Damage,
-                config.ClipSize,
-                new ReactiveProperty<int>(config.LeftPatronsCount),
-                config.ReloadTime,
-                config.ShootDistance,
-                config.ShootSpeed,
-                config.FireSpread,
-                config.SpreadFactor,
-                config.LayerMask,
-                config.MuzzleEffect,
-                config.Effect,
-                config.EffectDestroyDelay,
-                _camera);
-        }
-
-
-        private IWeapon RocketLauncherInit(WeaponConfig config)
-        {
-            var rocketLauncherObject = GameObject.Instantiate(config.WeaponObject, _weaponContainer);
-            rocketLauncherObject.SetActive(false);
-            return new RocketLauncher(
-                config.WeaponId,
-                rocketLauncherObject,
+                weaponObject,
                 config.WeaponIcon,
                 config.ProjectileObject,
                 config.ProjectileForce,
@@ -144,11 +79,33 @@ namespace Core
                 config.ShootDistance,
                 config.ShootSpeed,
                 config.FireSpread,
+                config.SpreadFactor,
                 config.LayerMask,
                 config.MuzzleEffect,
+                config.MuzzleEffectDestroyDelay,
                 config.Effect,
                 config.EffectDestroyDelay,
-                _camera);
+                _camera
+            );
+        }
+
+
+        private IWeapon CreateMeleeWeapon(WeaponConfig config)
+        {
+            var meleeWeaponObject = GameObject.Instantiate(config.WeaponObject, _weaponContainer);
+            meleeWeaponObject.SetActive(false);
+
+            return new MeleeWeapon(
+                config.WeaponId,
+                meleeWeaponObject,
+                config.WeaponIcon,
+                config.WeaponType,
+                config.Damage,
+                config.LayerMask,
+                config.Effect,
+                config.EffectDestroyDelay,
+                config.ShootSpeed
+            );
         }
 
         
