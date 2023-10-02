@@ -21,6 +21,9 @@ namespace User.Components
         [Inject] public IShieldView Shield { get; }
 
         [Inject] public IHealthView HealthView { get; }
+
+        [Inject] public IMainMenuView MainMenuView { get; }
+
         
         [Inject] public IInteractView InteractView { get; }
 

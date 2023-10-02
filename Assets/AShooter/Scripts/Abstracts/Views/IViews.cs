@@ -24,5 +24,7 @@ namespace Abstracts
 
         IWeaponAbilityView WeaponAbility { get; }
 
+        IMainMenuView MainMenuView { get; }
+
     }
 }
