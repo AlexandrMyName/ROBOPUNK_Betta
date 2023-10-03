@@ -3,11 +3,12 @@ using UnityEngine;
 using Abstracts;
 using System;
 using UniRx;
+using UnityEngine.AI;
 
 namespace Core
 {
 
-    public class AnimatorIK : MonoBehaviour
+    public class AnimatorIK : MonoBehaviour, IAnimatorIK
     {
 
         [Header("This contains data of RB && animations with IK")]
@@ -32,28 +33,23 @@ namespace Core
         public void ActivateDeathAnimation(RaycastHit hitPoint, Vector3 attackDirection)
         {
 
-            if (hitPoint.collider.GetComponent<Rigidbody>() == null)
-                throw new NullReferenceException("Rigidbody is null (AnimatorIK on prefab") ;
-
-            if (_animType != TypeOfAnimation.None)
-            {
-                GetComponent<Collider>().isTrigger = true;
-                GetComponent<Rigidbody>().isKinematic = true;
-
-            }
-
+            //if (hitPoint.collider.GetComponent<Rigidbody>() == null)
+            //    throw new NullReferenceException("Rigidbody is null (AnimatorIK on prefab") ;
+            
             switch (_animType)
             {
                 case TypeOfAnimation.Humanoid:
                     ActivateHumanoidDeath(hitPoint, attackDirection);
+                    SetDeactivateTimer(10);
                     break;
 
                 case TypeOfAnimation.NonHumanoid:
-
+                    ActivateNoneHumanoidDeath(attackDirection);
+                    SetDeactivateTimer(10);
                     break;
 
                 default:
-                    gameObject.SetActive(false);
+                    SetDeactivateTimer(default);
                     break;
             }
 
@@ -76,8 +72,14 @@ namespace Core
 
 
         public void SetLookAtPosition(Vector3 lookAt) => _lookAtIKpos = lookAt;
+
         public void SetTrigger(string keyID) => _animator.SetTrigger(keyID);
+
         public void SetFloat(string keyID, float value) => _animator.SetFloat(keyID, value);
+
+        public void SetFloat(string keyID, float value,float delta) 
+        => _animator.SetFloat(keyID, value,.0f, delta);
+
         public void SetBool(string keyID, bool value) => _animator.SetBool(keyID, value);
 
 
@@ -92,14 +94,8 @@ namespace Core
         private void ActivateHumanoidDeath(RaycastHit hitPoint, Vector3 attackDirection)
         {
 
-            _ragdoll.ForEach(rb =>
-            {
-
-                var collider = rb.gameObject.GetComponent<Collider>();
-                collider.isTrigger = false;
-                rb.isKinematic = false;
-
-            });
+            SetActiveAnimator(false);
+            SetActiveRagdoll(true);
 
             hitPoint.collider
                 .GetComponent<Rigidbody>()
@@ -107,6 +103,27 @@ namespace Core
                     attackDirection,
                     ForceMode.Impulse
             );
+        }
+
+
+        private void ActivateNoneHumanoidDeath(Vector3 attackDirection)
+        {
+
+            TrySetActiveSpiderIK(false);
+            SetActiveAnimator(false);
+            SetActiveRagdoll(true);
+             
+            
+             
+
+            GetComponent<Rigidbody>()
+                .AddForce(
+                    attackDirection * 4,
+                    ForceMode.Impulse
+            );
+
+            
+            
         }
 
         private void Awake() => _animator = GetComponent<Animator>();
@@ -122,13 +139,16 @@ namespace Core
 
         private int? TryGetRagDoll()
         {
+
             var rbs = GetComponentsInChildren<Rigidbody>();
             for (int i = 0; i < rbs.Length; i++)
             {
                 var rb = rbs[i];
-                if (rb.gameObject.layer == _rbLayer)
+                if ( rb.gameObject.layer == 10)
                     _ragdoll.Add(rb);
             }
+            Debug.LogWarning(rbs.Length);
+            Debug.LogWarning(LayerMask.GetMask("Ragdoll"));
             return _ragdoll.Count;
         }
 
@@ -136,16 +156,88 @@ namespace Core
         private void SetDeactivateTimer(float seconds = default)
         {
 
-            if(seconds != default)
+            if (seconds != default)
             {
                 Observable.Timer(TimeSpan.FromSeconds(seconds)).Subscribe(
-                    
-                    val=>
+
+                    val =>
                     {
-                        gameObject.SetActive(false);
+                        SetActiveRagdoll(false);
+
+                        SetActiveAnimator(true);
+
+                        TrySetActiveSpiderIK(true);
+
+                        TryCompletelyDeath();
+
                     });
             }
-            else gameObject.SetActive(false);
+            else TryCompletelyDeath();
+        }
+
+
+        private void TryCompletelyDeath()
+        {
+
+            IEnemy enemy = GetComponent<IEnemy>();
+
+            if (enemy != null)
+                enemy
+                    .ComponentsStore
+                    .Attackable
+                    .IsDeadFlag.Value = true;
+            else
+            {
+                gameObject.SetActive(false);
+            }
+        }
+
+
+        private void SetActiveRagdoll(bool isActive)
+        {
+
+            _ragdoll.ForEach(rb =>
+            {
+
+                var collider = rb.gameObject.GetComponent<Collider>();
+                collider.isTrigger = !isActive;
+                rb.isKinematic = !isActive;
+                Debug.LogError("RegDoll");
+
+            });
+        }
+
+
+        private void SetActiveAnimator(bool isActive)
+        {
+
+            if (_animator == null)
+                Debug.LogWarning("You try use animator in AnimatorIK , check this script ");
+            else _animator.enabled = isActive;
+
+        }
+
+
+        private void TrySetActiveSpiderIK(bool isActive)
+        {
+            
+            var spiderIK = GetComponentInChildren<SpiderMec>();
+            if(spiderIK == null)
+                spiderIK =  GetComponent<SpiderMec>();
+
+          
+            if(spiderIK != null)
+            {
+                spiderIK.enabled = isActive;
+                var agent = GetComponent<NavMeshAgent>().enabled = isActive;
+                var rb = GetComponent<Rigidbody>().isKinematic = isActive;
+                var collider = GetComponent<Collider>().isTrigger = isActive;
+               
+            }
+            else
+            {
+                //Not spider
+            }
         }
     }
 }

@@ -20,7 +20,11 @@ namespace Abstracts
         {
             _systems = GetSystems();
 
-            ObjectStack stack = new ObjectStack(Camera.main, this.gameObject);
+            ObjectStack stack = new ObjectStack(
+                Camera.main, 
+                this.gameObject,
+                gameObject.GetComponent<IAnimatorIK>()
+                );
 
             for (int i = 0; i < _systems.Count; i++)
             {

@@ -44,6 +44,9 @@ namespace Core
 
         protected override void Update()
         {
+
+            if (!_navMeshAgent.isActiveAndEnabled) return;
+
             Moving(_targetPosition.position);
 
             if (_navMeshAgent.remainingDistance <= _indentFromTarget)

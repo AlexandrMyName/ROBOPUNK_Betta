@@ -1,5 +1,5 @@
 using UniRx;
-
+using UnityEngine;
 
 namespace Abstracts
 {
@@ -16,6 +16,10 @@ namespace Abstracts
 
         ReactiveProperty<bool> IsCameAttackPosition { get; }
 
+        void TakeDamage(float amountHealth, RaycastHit hit, Vector3 direction);
+
+        RaycastHit CachedHitDamage { get; set; }
+        Vector3 CachedDirectionDamage { get; set; }
     }
 
 }

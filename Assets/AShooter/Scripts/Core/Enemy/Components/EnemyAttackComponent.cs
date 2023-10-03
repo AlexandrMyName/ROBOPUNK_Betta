@@ -1,7 +1,7 @@
 using Abstracts;
 using UniRx;
 using System;
-
+using UnityEngine;
 
 namespace Core
 {
@@ -27,8 +27,8 @@ namespace Core
         public bool IsIgnoreDamage { get ; set; }
 
         public float Damage { get; set; }
-
-         
+        public RaycastHit CachedHitDamage { get; set; }
+        public Vector3 CachedDirectionDamage { get; set; }
 
 
         public EnemyAttackComponent(float health, float damage, float attackDistance, float attackFrequency)
@@ -60,7 +60,8 @@ namespace Core
             onCompleted.Invoke(Health);
         }
 
-        
+
+        [Obsolete]
         public void TakeDamage(float amountHealth)
         {
 
@@ -78,5 +79,24 @@ namespace Core
             }
         }
 
+
+        public void TakeDamage(float amountHealth, RaycastHit hit, Vector3 direction)
+        {
+
+            if (IsIgnoreDamage) return;
+
+            else
+            {
+                HealthProtection.Value -= amountHealth;
+
+                if (HealthProtection.Value < 0)
+                {
+                    CachedDirectionDamage = direction;
+                    CachedHitDamage = hit;
+                    Health.Value -= MathF.Abs(HealthProtection.Value);
+                    HealthProtection.Value = 0;
+                }
+            }
+        }
     }
 }

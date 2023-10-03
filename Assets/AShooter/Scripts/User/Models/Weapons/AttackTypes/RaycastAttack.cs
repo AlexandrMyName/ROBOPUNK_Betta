@@ -99,7 +99,11 @@ namespace Core
 
                 if (hitCollider.TryGetComponent(out IEnemy unit))
                 {
-                    unit.ComponentsStore.Attackable.TakeDamage(_weapon.Damage);
+                    // unit.ComponentsStore.Attackable.TakeDamage(_weapon.Damage);
+                    unit.ComponentsStore
+                        .Attackable
+                        .TakeDamage(_weapon.Damage,muzzleHit,Vector3.back);
+
                     Debug.Log($"DAMAGE [{hitCollider.name}] - LEFT [{unit.ComponentsStore.Attackable.Health.Value}]");
                 }
 

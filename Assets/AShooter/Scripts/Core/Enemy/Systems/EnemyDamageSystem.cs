@@ -11,6 +11,7 @@ namespace Core
     {
 
         private IGameComponents _components;
+        private IEnemyAttackable _attackable;
         private List<IDisposable> _disposables = new();
         private ReactiveProperty<bool> _isDead;
         private ReactiveProperty<bool> _isRewardReady;
@@ -27,6 +28,7 @@ namespace Core
         {
             _components = components;
             _isDead = _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.Attackable.IsDeadFlag;
+            _attackable = _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.Attackable;
         }
 
 
@@ -52,7 +54,16 @@ namespace Core
         {
             if (healthCompleted <= 0)
             {
-                _isDead.Value = true;
+ 
+                if (_components.Animator != null)
+                    _components.Animator
+                        .ActivateDeathAnimation(
+                        _attackable.CachedHitDamage,
+                        _attackable.CachedDirectionDamage);
+                else
+                {
+                    _isDead.Value = true;
+                }
                 _isRewardReady.Value = true;
                 Dispose();
             }

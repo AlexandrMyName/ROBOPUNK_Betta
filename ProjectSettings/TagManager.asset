@@ -7,6 +7,10 @@ TagManager:
   - Weapon
   - Muzzle
   - Chest
+  - ExplosionAbility
+  - PickUpWeapon
+  - MeeleWeapon
+  - MainWeapon
   layers:
   - Default
   - TransparentFX
@@ -18,7 +22,7 @@ TagManager:
   - Enemy
   - Projectile
   - Weapon
-  - 
+  - Ragdoll
   - 
   - 
   - 
