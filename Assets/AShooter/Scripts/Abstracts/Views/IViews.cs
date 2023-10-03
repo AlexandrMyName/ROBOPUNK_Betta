@@ -1,5 +1,7 @@
 
 
+using System.Collections.Generic;
+
 namespace Abstracts
 {
 
@@ -10,7 +12,7 @@ namespace Abstracts
 
         IDashView Dash { get; }
 
-        IStoreView Store { get; }
+        IPauseMenuView PauseMenu { get; }
 
         IGoldWalletView GoldWallet { get; }
 
@@ -24,6 +26,7 @@ namespace Abstracts
 
         IWeaponAbilityView WeaponAbility { get; }
 
+        public List<IView> GetListView();
 
     }
 }

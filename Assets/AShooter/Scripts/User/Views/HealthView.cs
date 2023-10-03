@@ -6,13 +6,27 @@ using UnityEngine.UI;
 namespace User.View
 {
     
-    public class HealthView : MonoBehaviour, IHealthView // Test View
+    public class HealthView : MonoBehaviour, IHealthView 
     {
 
         [SerializeField] private TMP_Text _textUI;
         [SerializeField] private Slider _hP_Slider;
         [SerializeField] private Image _colorReflectionFill;
+
+
         public void Show() => gameObject.SetActive(true);
+
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+
+
+        public bool GetActivityState()
+        {
+            return gameObject.activeSelf;
+        }
 
 
         public void ChangeDisplay(float healthValue, float maxValue)

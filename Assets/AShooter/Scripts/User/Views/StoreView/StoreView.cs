@@ -26,6 +26,12 @@ namespace User.Presenters
         }
 
 
+        public bool GetActivityState()
+        {
+            return gameObject.activeSelf;
+        }
+
+
         public void SetInscriptions(StoreItemConfig storeHealthDataConfig, StoreItemConfig storeSpeedDataConfig, StoreItemConfig storeDamageDataConfig)
         {
             _healthEnhancement.SetInscription(storeHealthDataConfig);
