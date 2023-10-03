@@ -10,7 +10,7 @@ using UnityEngine;
 namespace User
 {
 
-    public abstract class MeleeWeapon : IMeleeWeapon, IDisposable
+    public class MeleeWeapon : IMeleeWeapon, IDisposable
     {
         
         public int WeaponId { get; }

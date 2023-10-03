@@ -40,6 +40,8 @@ namespace User
 
         [field: SerializeField] public ParticleSystem MuzzleEffect { get; private set; }
 
+        [field: SerializeField, Min(0f)] public float MuzzleEffectDestroyDelay { get; private set; }
+
         [field: SerializeField] public ParticleSystem Effect { get; private set; }
 
         [field: SerializeField, Min(0f)] public float EffectDestroyDelay { get; private set; }

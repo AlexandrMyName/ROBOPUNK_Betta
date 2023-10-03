@@ -27,6 +27,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 129
   <DamageOverTimeEffect>k__BackingField: {fileID: 19800000, guid: f68094d600ff1ef41871c7c96dfd49ea, type: 3}
-  <EffectNumPerTick>k__BackingField: 10
+  <EffectNumPerTick>k__BackingField: 20
   <Effect>k__BackingField: {fileID: 19800006, guid: dfe2904d1d2ea794c8ebf2a448f18fbf, type: 3}
   <EffectDestroyDelay>k__BackingField: 2

@@ -6,6 +6,7 @@
         Sword,
         Pistol,
         Shotgun,
-        RocketLauncher
+        RocketLauncher,
+        Rifle
     }
 }

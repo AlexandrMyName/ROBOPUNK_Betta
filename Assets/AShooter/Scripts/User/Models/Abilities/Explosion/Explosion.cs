@@ -81,7 +81,7 @@ namespace User
                         transform.position + new Vector3(randomPos.x, 0.2f, randomPos.y),
                         Ability.DamageOverTimeEffect.transform.rotation);
 
-                    Destroy(effect, Ability.EffectDestroyDelay);
+                    Destroy(effect.gameObject, Ability.EffectDestroyDelay);
                 }
             }
         }

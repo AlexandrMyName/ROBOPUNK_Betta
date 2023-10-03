@@ -157,7 +157,7 @@ namespace Core
                         _weapon.MuzzleEffect,
                         muzzle);
 
-                    GameObject.Destroy(muzzleEffect.gameObject, _weapon.EffectDestroyDelay);
+                    GameObject.Destroy(muzzleEffect.gameObject, _weapon.MuzzleEffectDestroyDelay);
                 }
             }
         }
