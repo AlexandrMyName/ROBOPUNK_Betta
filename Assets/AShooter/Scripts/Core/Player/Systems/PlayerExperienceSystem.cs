@@ -18,7 +18,7 @@ namespace Core
         {
             _disposables = new();
 
-            _experienceView = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.ExperienceView;
+            _experienceView = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.Experience;
 
             var currentExperience = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.ExperienceHandle.CurrentExperience;
 

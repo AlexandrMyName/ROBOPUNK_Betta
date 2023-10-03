@@ -5,36 +5,37 @@ using UnityEngine;
 using User.Presenters;
 using Zenject;
 using UniRx;
-using UnityEngine.Events;
 
 
 namespace Core
 {
 
-    public class PlayerStoreSystem : BaseSystem , IDisposable
+    public class PlayerMenuSystem : BaseSystem , IDisposable
     {
 
         [Inject] private IInput _input;
 
-        private List<IDisposable> _disposables;
         private IComponentsStore _componentsStore;
+        private List<IDisposable> _disposables;
+        private List<IView> _activeViews;
+
         private IPauseMenuView _pauseMenu;
-        private IStoreView _store;
+        private IStoreView _storeMenu;
+
         private bool _ShowPauseMenu;
 
-        private List<IView> _activeViews;
 
         protected override void Awake(IGameComponents components)
         {
             _disposables = new();
+            _activeViews = new List<IView>();
+            _ShowPauseMenu = false;
 
             _input.PauseMenu.AxisOnChange.Subscribe(_ => OnMenuButtonPressed());
-
-            _ShowPauseMenu = false;
+            
             _componentsStore = components.BaseObject.GetComponent<IPlayer>().ComponentsStore;
-            _pauseMenu = _componentsStore.Views.PauseMenu;
-            _store = _pauseMenu.StoreView;
 
+            _pauseMenu = _componentsStore.Views.PauseMenu;
             _pauseMenu.SubscribeClickButtons(
                 onClickButtonSaveGame,
                 onClickButtonInventory,
@@ -42,43 +43,56 @@ namespace Core
                 onClickButtonStore,
                 onClickButtonGame,
                 onClickButtonExitMainMenu);
+
+            _storeMenu = _componentsStore.Views.StoreMenu;
+            _storeMenu.SubscribeClickButtons(
+                onClickButtonBack);
+        }
+
+
+        private void onClickButtonBack()
+        {
+            _storeMenu.Hide();
+            _componentsStore.Views.GoldWallet.Hide();
+            _pauseMenu.Show();
         }
 
 
         private void onClickButtonExitMainMenu()
         {
-            throw new NotImplementedException();
+            //SceneManager.LoadSceneAsync(0);
         }
 
 
         private void onClickButtonGame()
         {
-            Debug.Log("____");
             HidePauseMenu();
         }
 
 
         private void onClickButtonStore()
         {
-            _store.Show();
+            _pauseMenu.Hide();
+            _componentsStore.Views.GoldWallet.Show();
+            _storeMenu.Show();
         }
 
 
         private void onClickButtonJournal()
         {
-            throw new NotImplementedException();
+            Debug.Log("onClickButtonJournal");
         }
 
 
         private void onClickButtonInventory()
         {
-            throw new NotImplementedException();
+            Debug.Log("onClickButtonInventory");
         }
 
 
         private void onClickButtonSaveGame()
         {
-            throw new NotImplementedException();
+            Debug.Log("onClickButtonSaveGame");
         }
 
 
@@ -95,6 +109,14 @@ namespace Core
         private void HidePauseMenu()
         {
             Time.timeScale = 1;
+
+            foreach (var view in _activeViews)
+            {
+                view.Show();
+            }
+
+            _activeViews.Clear();
+
             _pauseMenu.Hide();
         }
 
@@ -107,8 +129,11 @@ namespace Core
 
             foreach (var view in listView)
             {
-                //if (view.GetActivityState())
-                view.Hide();
+                if (view.GetActivityState())
+                {
+                    _activeViews.Add(view);
+                    view.Hide();
+                }
             }
 
             _pauseMenu.Show();

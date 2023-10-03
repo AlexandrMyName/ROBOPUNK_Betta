@@ -131,7 +131,7 @@ namespace DI
             PlayerDashSystem dashSystem = new PlayerDashSystem();
             Container.QueueForInject(dashSystem);
 
-            PlayerStoreSystem playerStoreSystem = new PlayerStoreSystem();
+            PlayerMenuSystem playerStoreSystem = new PlayerMenuSystem();
             Container.QueueForInject(playerStoreSystem);
 
             PlayerExperienceSystem playerExperienceSystem = new PlayerExperienceSystem();

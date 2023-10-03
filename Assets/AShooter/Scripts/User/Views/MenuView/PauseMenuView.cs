@@ -17,10 +17,6 @@ namespace User.Presenters
         [SerializeField] private Button _gameButton;
         [SerializeField] private Button _exitMainMenuButton;
 
-        [SerializeField] private StoreView _storeView;
-
-        public IStoreView StoreView { get { return _storeView; } }
-
 
         public void Show()
         {

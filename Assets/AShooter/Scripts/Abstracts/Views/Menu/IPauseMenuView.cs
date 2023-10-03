@@ -8,12 +8,6 @@ namespace Abstracts
     public interface IPauseMenuView : IView
     {
 
-        public IStoreView StoreView { get; }
-
-
-        public void Hide();
-
-
         public void SubscribeClickButtons(
             UnityAction onClickButtonSaveGame,
             UnityAction onClickButtonInventory,
@@ -21,7 +15,6 @@ namespace Abstracts
             UnityAction onClickButtonStore,
             UnityAction onClickButtonGame,
             UnityAction onClickButtonExitMainMenu);
-
 
     }
 
