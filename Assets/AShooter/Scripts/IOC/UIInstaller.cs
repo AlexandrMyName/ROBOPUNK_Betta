@@ -10,7 +10,7 @@ public class UIInstaller : MonoInstaller
     [SerializeField] private Transform _containerForUI;
 
     [SerializeField] private GameObject _deathViewPrefab;
-    [SerializeField] private GameObject _storeViewPrefab;
+    [SerializeField] private GameObject _pauseMenuViewPrefab;
     [SerializeField] private GameObject _dashViewPrefab;
     [SerializeField] private GameObject _goldWalletViewPrefab;
     [SerializeField] private GameObject _experienceViewPrefab;
@@ -29,8 +29,8 @@ public class UIInstaller : MonoInstaller
                 .AsCached();
         
             Container
-                .Bind<IStoreView>()
-                .FromInstance(InstantiateView<IStoreView>(_storeViewPrefab))
+                .Bind<IPauseMenuView>()
+                .FromInstance(InstantiateView<IPauseMenuView>(_pauseMenuViewPrefab))
                 .AsCached();
         
             Container

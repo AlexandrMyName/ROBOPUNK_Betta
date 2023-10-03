@@ -25,5 +25,17 @@ namespace User
         }
 
 
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+
+
+        public bool GetActivityState()
+        {
+            return gameObject.activeSelf;
+        }
+
+
     }
 }

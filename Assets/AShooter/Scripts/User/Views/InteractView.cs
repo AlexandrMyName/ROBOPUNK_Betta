@@ -8,9 +8,21 @@ namespace AShooter.Scripts.User.Views
     
     public class InteractView: MonoBehaviour, IInteractView
     {
+
         [SerializeField] private GameObject _viewPrefab;
         
+
         public void Show() => gameObject.SetActive(true);
+
+
         public void Hide() => gameObject.SetActive(false);
+
+
+        public bool GetActivityState()
+        {
+            return gameObject.activeSelf;
+        }
+
+
     }
 }

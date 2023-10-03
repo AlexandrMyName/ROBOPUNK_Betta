@@ -26,15 +26,23 @@ namespace User.View
         }
 
 
-        private void Update()
-        {
-            //Rotate to camera
-        }
-
-
         public void Show()
         {
             gameObject.SetActive(true);
         }
+
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+
+
+        public bool GetActivityState()
+        {
+            return gameObject.activeSelf;
+        }
+
+
     }
 }
