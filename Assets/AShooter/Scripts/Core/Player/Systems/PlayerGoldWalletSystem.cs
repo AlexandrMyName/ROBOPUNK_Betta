@@ -12,7 +12,6 @@ namespace Core
         
         private List<IDisposable> _disposables;
         private IGoldWalletView _goldWaletView;
-        private IStoreView _store;
 
 
         protected override void Awake(IGameComponents components)

@@ -13,19 +13,21 @@ namespace User.Components
 
         [Inject] public IDashView Dash { get; }
 
-        [Inject] public IPauseMenuView PauseMenu { get; }
-
         [Inject] public IGoldWalletView GoldWallet { get; }
 
-        [Inject] public IExperienceView ExperienceView { get; }
+        [Inject] public IExperienceView Experience { get; }
 
         [Inject] public IShieldView Shield { get; }
 
-        [Inject] public IHealthView HealthView { get; }
+        [Inject] public IHealthView Health { get; }
      
-        [Inject] public IInteractView InteractView { get; }
+        [Inject] public IInteractView Interact { get; }
 
         [Inject] public IWeaponAbilityView WeaponAbility { get; }
+
+        [Inject] public IPauseMenuView PauseMenu { get; }
+
+        [Inject] public IStoreView StoreMenu { get; }
 
 
         public List<IView> GetListView()
@@ -36,11 +38,12 @@ namespace User.Components
             views.Add(Dash);
             views.Add(PauseMenu);
             views.Add(GoldWallet);
-            views.Add(ExperienceView);
+            views.Add(Experience);
             views.Add(Shield);
-            views.Add(HealthView);
-            views.Add(InteractView);
+            views.Add(Health);
+            views.Add(Interact);
             views.Add(WeaponAbility);
+            views.Add(StoreMenu);
 
             return views;
         }

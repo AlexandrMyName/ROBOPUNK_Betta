@@ -7,6 +7,7 @@ using UniRx;
 using User;
 using Zenject;
 
+
 namespace Core
 {
 
@@ -28,7 +29,7 @@ namespace Core
         protected override void Awake(IGameComponents components)
         {
 
-            _interactView = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.InteractView;
+            _interactView = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.Interact;
             _interactView.Hide();
             _disposables = new();
             _components = components;

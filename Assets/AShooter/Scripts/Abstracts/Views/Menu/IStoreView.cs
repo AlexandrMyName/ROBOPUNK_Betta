@@ -1,4 +1,4 @@
-using User.Presenters;
+using UnityEngine.Events;
 
 
 namespace Abstracts
@@ -6,9 +6,8 @@ namespace Abstracts
 
     public interface IStoreView : IView
     {
-
-        public void Hide();
-
+        public void SubscribeClickButtons(
+            UnityAction onClickButtonBack);
     }
 
 }

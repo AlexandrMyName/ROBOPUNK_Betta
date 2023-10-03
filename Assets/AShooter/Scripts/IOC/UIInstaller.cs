@@ -10,7 +10,6 @@ public class UIInstaller : MonoInstaller
     [SerializeField] private Transform _containerForUI;
 
     [SerializeField] private GameObject _deathViewPrefab;
-    [SerializeField] private GameObject _pauseMenuViewPrefab;
     [SerializeField] private GameObject _dashViewPrefab;
     [SerializeField] private GameObject _goldWalletViewPrefab;
     [SerializeField] private GameObject _experienceViewPrefab;
@@ -19,39 +18,48 @@ public class UIInstaller : MonoInstaller
     [SerializeField] private GameObject _interactViewPrefab;
     [SerializeField] private GameObject _weaponAbilityViewPrefab;
 
+    [Space(10)]
+    [Header("Menu:")]
+    [SerializeField] private GameObject _pauseMenuViewPrefab;
+    [SerializeField] private GameObject _storeMenuViewPrefab;
 
     public override void InstallBindings()
     {
         
-            Container
-                .Bind<IDeathView>()
-                .FromInstance(InstantiateView<IDeathView>(_deathViewPrefab))
-                .AsCached();
+        Container
+            .Bind<IDeathView>()
+            .FromInstance(InstantiateView<IDeathView>(_deathViewPrefab))
+            .AsCached();
         
-            Container
-                .Bind<IPauseMenuView>()
-                .FromInstance(InstantiateView<IPauseMenuView>(_pauseMenuViewPrefab))
-                .AsCached();
-        
-            Container
+        Container
+            .Bind<IPauseMenuView>()
+            .FromInstance(InstantiateView<IPauseMenuView>(_pauseMenuViewPrefab))
+            .AsCached();
+
+        Container
+            .Bind<IStoreView>()
+            .FromInstance(InstantiateView<IStoreView>(_storeMenuViewPrefab))
+            .AsCached();
+
+        Container
                 .Bind<IDashView>()
                 .FromInstance(InstantiateView<IDashView>(_dashViewPrefab))
                 .AsCached();
         
-            Container
-                .Bind<IExperienceView>()
-                .FromInstance(InstantiateView<IExperienceView>(_experienceViewPrefab))
-                .AsCached();
+        Container
+            .Bind<IExperienceView>()
+            .FromInstance(InstantiateView<IExperienceView>(_experienceViewPrefab))
+            .AsCached();
         
-            Container
-                .Bind<IGoldWalletView>()
-                .FromInstance(InstantiateView<IGoldWalletView>(_goldWalletViewPrefab))
-                .AsCached();
+        Container
+            .Bind<IGoldWalletView>()
+            .FromInstance(InstantiateView<IGoldWalletView>(_goldWalletViewPrefab))
+            .AsCached();
         
-            Container
-                .Bind<IHealthView>()
-                .FromInstance(InstantiateView<IHealthView>(_playerHpViewPrefab))
-                .AsCached();
+        Container
+            .Bind<IHealthView>()
+            .FromInstance(InstantiateView<IHealthView>(_playerHpViewPrefab))
+            .AsCached();
         
 
         var weaponAbilityPresenter = InstantiateView<WeaponAbilityPresenter>(_weaponAbilityViewPrefab);

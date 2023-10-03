@@ -12,19 +12,21 @@ namespace Abstracts
 
         IDashView Dash { get; }
 
-        IPauseMenuView PauseMenu { get; }
-
         IGoldWalletView GoldWallet { get; }
 
-        IExperienceView ExperienceView { get; }
+        IExperienceView Experience { get; }
 
         IShieldView Shield { get; }
 
-        IHealthView HealthView { get; }
+        IHealthView Health { get; }
         
-        IInteractView InteractView { get; }
+        IInteractView Interact { get; }
 
         IWeaponAbilityView WeaponAbility { get; }
+
+        IPauseMenuView PauseMenu { get; }
+
+        IStoreView StoreMenu { get; }
 
         public List<IView> GetListView();
 
