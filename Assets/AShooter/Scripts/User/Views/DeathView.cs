@@ -18,9 +18,20 @@ namespace User
 
         public void Show()
         {
-
             gameObject.SetActive(true);
             _onReloadLevel.onClick.AddListener(() => SceneManager.LoadScene(0));
+        }
+
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+
+
+        public bool GetActivityState()
+        {
+            return gameObject.activeSelf;
         }
 
 
