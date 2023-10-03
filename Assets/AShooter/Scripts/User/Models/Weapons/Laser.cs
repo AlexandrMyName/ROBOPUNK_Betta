@@ -76,9 +76,7 @@ namespace User
 
             if (hits.Length > 0)
             {
-                bool isFoundCollider = hits
-                    .Select(hit => !hit.collider.isTrigger)
-                    .First();
+                bool isFoundCollider = hits.Count(hit => !hit.collider.isTrigger) > 0;
                 
                 if (isFoundCollider)
                 {

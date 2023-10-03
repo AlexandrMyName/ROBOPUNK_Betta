@@ -79,7 +79,7 @@ namespace Core
             
             RaycastHit[] muzzleHits = Physics.RaycastAll(muzzleRay, _weapon.ShootDistance, _weapon.LayerMask);
 
-            bool isMuzzleHit = muzzleHits.Select(h => !h.collider.isTrigger).FirstOrDefault();
+            bool isMuzzleHit = muzzleHits.Count(h => !h.collider.isTrigger) > 0;
 
             if (isMuzzleHit)
             {
@@ -114,7 +114,7 @@ namespace Core
             var cameraRay = _camera.ScreenPointToRay(mousePosition);
 
             RaycastHit[] cameraHits = Physics.RaycastAll(cameraRay, Mathf.Infinity, _weapon.LayerMask);
-            isCameraHit = cameraHits.Select(h => !h.collider.isTrigger).FirstOrDefault();
+            isCameraHit = cameraHits.Count(h => !h.collider.isTrigger) > 0;
 
             if (isCameraHit)
             {
