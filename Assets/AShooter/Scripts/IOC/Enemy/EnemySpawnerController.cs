@@ -26,13 +26,15 @@ namespace DI.Spawn
 
         private int _waveCountInLoop;
 
+
         internal EnemySpawnerController(
             EnemySpawnerDataConfig enemySpawnerDataConfig, 
             DiContainer diContainer,
             Transform playerPosition, 
             IGoldWallet goldWallet,
-            IExperienceHandle experienceHandle)
-        {
+            IExperienceHandle experienceHandle){
+            ////[CONSTRUCT]\\\\
+            
             _enemySpawnerDataConfig = enemySpawnerDataConfig;
             _diContainer = diContainer;
             _waveNumber = _enemySpawnerDataConfig.Wave.Count;
@@ -44,7 +46,7 @@ namespace DI.Spawn
         }
 
 
-        internal void StartSpawnProcess()
+        internal void StartSpawnProcess(GameObject viewsPrefab)
         {
 
             _waveDisposable = Observable
@@ -58,7 +60,14 @@ namespace DI.Spawn
                 numberEnemiesInScene += wave.numberEnemiesInWave;
             }
 
-            _enemySpawner = new EnemySpawner( _diContainer, _playerPosition, numberEnemiesInScene, _experienceHandle, _goldWallet);
+            _enemySpawner = new EnemySpawner( 
+                _diContainer,
+                _playerPosition, 
+                numberEnemiesInScene, 
+                _experienceHandle, 
+                _goldWallet,
+                viewsPrefab
+                );
         }
 
 

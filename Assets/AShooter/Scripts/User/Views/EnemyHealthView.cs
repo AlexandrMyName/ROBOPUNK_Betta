@@ -10,7 +10,7 @@ namespace User.View
     {
 
         [SerializeField] private Slider _healthSlider;
-
+        [SerializeField] private Image _fillImage;
 
         public void Deactivate() => gameObject.SetActive(false);
 
@@ -23,6 +23,10 @@ namespace User.View
                 _healthSlider.maxValue = maxHealth;
             }
             _healthSlider.value = currentHealth;
+
+            Color color = Color.Lerp(Color.red, Color.green, currentHealth/maxHealth);
+            _fillImage.color = color;
+
         }
 
 
