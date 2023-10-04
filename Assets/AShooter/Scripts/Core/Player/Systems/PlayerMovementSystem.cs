@@ -14,7 +14,7 @@ namespace Core
 
         [Inject] private IInput _input;
 
-        private PlayerAnimator _animator;
+        private AnimatorIK _animator;
         
         private Vector3 _direction;
         private IMovable _movable;
@@ -25,7 +25,7 @@ namespace Core
         protected override void Awake(IGameComponents components)
         {
              
-            _animator = components.BaseObject.GetComponent<PlayerAnimator>();
+            _animator = components.BaseObject.GetComponent<AnimatorIK>();
 
             _movable = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Movable;
         }

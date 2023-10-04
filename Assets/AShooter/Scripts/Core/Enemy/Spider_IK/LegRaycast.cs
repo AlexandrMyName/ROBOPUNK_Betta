@@ -7,6 +7,7 @@ namespace Core
     public class LegRaycast : MonoBehaviour
     {
 
+        [SerializeField] private LayerMask _layersForIK;
         private Transform _transform;
         private RaycastHit _hit;
 
@@ -27,7 +28,7 @@ namespace Core
         {
 
             Ray ray = new Ray(_transform.position, -_transform.up);
-            Physics.Raycast(ray, out _hit);
+            Physics.Raycast(ray, out _hit, 3, _layersForIK);
         }
 
 

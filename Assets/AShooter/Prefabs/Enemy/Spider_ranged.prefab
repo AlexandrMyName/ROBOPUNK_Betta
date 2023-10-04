@@ -314,6 +314,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c42a25e69c1c042a73e33ff93f8099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _layersForIK:
+    serializedVersion: 2
+    m_Bits: 9
   NormalLeg: {x: 0, y: 0, z: 0}
 --- !u!1 &3124066450310959471
 GameObject:
@@ -666,6 +669,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c42a25e69c1c042a73e33ff93f8099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _layersForIK:
+    serializedVersion: 2
+    m_Bits: 9
   NormalLeg: {x: 0, y: 0, z: 0}
 --- !u!1 &5169066950799681024
 GameObject:
@@ -925,6 +931,7 @@ GameObject:
   - component: {fileID: 8999724285796895933}
   - component: {fileID: -9138883804264969296}
   - component: {fileID: 3516392106788182953}
+  - component: {fileID: -4855745926551457102}
   m_Layer: 7
   m_Name: Spider_ranged
   m_TagString: Untagged
@@ -1065,6 +1072,27 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.83
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-4855745926551457102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5783359468839766296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1f65ca7179382142b8ac235bf8fcee1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weight: 0
+  _body: 0
+  _head: 0
+  _eyes: 0
+  _clamp: 0
+  _rbLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  _animType: 2
 --- !u!1 &7095494555653067845
 GameObject:
   m_ObjectHideFlags: 0
@@ -1202,6 +1230,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c42a25e69c1c042a73e33ff93f8099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _layersForIK:
+    serializedVersion: 2
+    m_Bits: 9
   NormalLeg: {x: 0, y: 0, z: 0}
 --- !u!1 &8358580908603048623
 GameObject:
@@ -1298,6 +1329,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c42a25e69c1c042a73e33ff93f8099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _layersForIK:
+    serializedVersion: 2
+    m_Bits: 9
   NormalLeg: {x: 0, y: 0, z: 0}
 --- !u!1 &8535890156184870164
 GameObject:

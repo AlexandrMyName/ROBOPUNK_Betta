@@ -857,7 +857,7 @@ GameObject:
   - component: {fileID: 6434042650377245413}
   - component: {fileID: -2771447466034023738}
   m_Layer: 7
-  m_Name: Spider_melee
+  m_Name: Spider_melee_IK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1015,8 +1015,6 @@ MonoBehaviour:
   _animType: 2
   _baseCollider: {fileID: 6434042650377245413}
   _baseRigidbody: {fileID: 0}
-  _resetableTransforms:
-  - {fileID: 3893828076569368673}
 --- !u!1 &7095494555653067845
 GameObject:
   m_ObjectHideFlags: 0
