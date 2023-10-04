@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 254906f2cdd7b004d8aace9e0192471e, type: 3}
+  m_Name: EnemySpawnerDataConfigIK
+  m_EditorClassIdentifier: 
+  loop: 0
+  Wave:
+  - Enemy:
+    - description: 
+      nameEnemy: 
+      enemyType: 0
+      prefab: {fileID: 3957541045528095213, guid: 5775e246580657045982392a26274915, type: 3}
+      maxHealth: 1000
+      maxAttackDamage: 10
+      attackDistance: 2
+      attackFrequency: 2
+      goldDropRate: 60
+      goldValueRange:
+        min: 5
+        max: 10
+      experienceRange:
+        min: 3
+        max: 6
+      probabilityWeigh: 1
+    respawnEnemyInWaveDelay: 1
+    spawnRadiusRelativeToPlayer: 20
+    numberEnemiesInWave: 8
+    numberEnemiesInScene: 1
+  - Enemy:
+    - description: 
+      nameEnemy: 
+      enemyType: 1
+      prefab: {fileID: 3957541045528095213, guid: 121e617dee79e334aac211198583030d, type: 3}
+      maxHealth: 1000
+      maxAttackDamage: 15
+      attackDistance: 8
+      attackFrequency: 2
+      goldDropRate: 50
+      goldValueRange:
+        min: 5
+        max: 10
+      experienceRange:
+        min: 3
+        max: 6
+      probabilityWeigh: 1
+    respawnEnemyInWaveDelay: 1
+    spawnRadiusRelativeToPlayer: 25
+    numberEnemiesInWave: 12
+    numberEnemiesInScene: 1
+  - Enemy:
+    - description: 
+      nameEnemy: 
+      enemyType: 0
+      prefab: {fileID: 5783359468839766296, guid: 8f3fadc111657d24d9e58737c1f0d1f5, type: 3}
+      maxHealth: 1000
+      maxAttackDamage: 20
+      attackDistance: 3
+      attackFrequency: 2
+      goldDropRate: 50
+      goldValueRange:
+        min: 5
+        max: 10
+      experienceRange:
+        min: 5
+        max: 10
+      probabilityWeigh: 1
+    respawnEnemyInWaveDelay: 1
+    spawnRadiusRelativeToPlayer: 25
+    numberEnemiesInWave: 16
+    numberEnemiesInScene: 35
+  - Enemy:
+    - description: 
+      nameEnemy: 
+      enemyType: 1
+      prefab: {fileID: 5783359468839766296, guid: 93b91b651f70a9642aca21f4dd45c5fe, type: 3}
+      maxHealth: 1000
+      maxAttackDamage: 25
+      attackDistance: 10
+      attackFrequency: 2
+      goldDropRate: 50
+      goldValueRange:
+        min: 5
+        max: 10
+      experienceRange:
+        min: 5
+        max: 10
+      probabilityWeigh: 1
+    respawnEnemyInWaveDelay: 1
+    spawnRadiusRelativeToPlayer: 25
+    numberEnemiesInWave: 16
+    numberEnemiesInScene: 20
+  respawnWaveDelay: 10

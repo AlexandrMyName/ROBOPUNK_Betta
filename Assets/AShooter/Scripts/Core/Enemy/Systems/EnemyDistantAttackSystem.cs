@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using UnityEngine.AI;
 
 
 namespace Core
@@ -17,7 +18,7 @@ namespace Core
         private IGameComponents _components;
         private Transform _targetPosition;
         private float _attackFrequency;
-
+        private NavMeshAgent _navMeshAgent ;
 
         public EnemyDistantAttackSystem(Transform targetPosition)
         {
@@ -29,6 +30,7 @@ namespace Core
         {
             _components = components;
             _enemy = components.BaseObject.GetComponent<IEnemy>();
+            _navMeshAgent = components.BaseObject.GetComponent<NavMeshAgent>();
             _enemy.ComponentsStore.Attackable.IsCameAttackPosition.Subscribe(SetPositionReadiness);
             _attackFrequency = _enemy.ComponentsStore.Attackable.AttackFrequency;
 
@@ -47,13 +49,16 @@ namespace Core
         private void DoShoot()
         {
 
-            if (!_components.BaseObject.activeSelf) return;
+            if (!_components.BaseObject.activeSelf 
+                ||
+                !_navMeshAgent.isActiveAndEnabled) return;
 
-            if (_isPositionReadiness) ThrowPrimitive();
+            if (_isPositionReadiness) ThrowPrimitive();//Not correct
 
         }
 
 
+        // to obsolete
         void ThrowPrimitive()
         {
             Vector3 directionToPlayer = (_targetPosition.position - _components.BaseTransform.position).normalized;

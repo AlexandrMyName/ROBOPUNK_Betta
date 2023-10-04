@@ -5,6 +5,7 @@ using System;
 using UniRx;
 using UnityEngine.AI;
 
+
 namespace Core
 {
 
@@ -15,13 +16,15 @@ namespace Core
         [Space]
         [SerializeField, Range(0, 1f)] float _weight, _body, _head, _eyes, _clamp;
 
-        [SerializeField] private LayerMask _rbLayer;
+        [SerializeField] private int _indexLayerOfRagdoll = 10;
         [SerializeField] private TypeOfAnimation _animType;
+        [SerializeField] private Collider _baseCollider;
+        [SerializeField] private Rigidbody _baseRigidbody;
 
         private Animator _animator;
         private Vector3 _lookAtIKpos;
 
-        private List<Rigidbody> _ragdoll = new();
+        private List<RagdollData> _ragdoll = new();
 
 
         /// <summary>
@@ -33,9 +36,6 @@ namespace Core
         public void ActivateDeathAnimation(RaycastHit hitPoint, Vector3 attackDirection)
         {
 
-            //if (hitPoint.collider.GetComponent<Rigidbody>() == null)
-            //    throw new NullReferenceException("Rigidbody is null (AnimatorIK on prefab") ;
-            
             switch (_animType)
             {
                 case TypeOfAnimation.Humanoid:
@@ -85,6 +85,7 @@ namespace Core
 
         private void OnAnimatorIK(int layerIndex)
         {
+
             _animator.SetLookAtWeight(_weight, _body, _head, _eyes, _clamp);
             if (_lookAtIKpos != null)
                 _animator.SetLookAtPosition(_lookAtIKpos);
@@ -97,34 +98,36 @@ namespace Core
             SetActiveAnimator(false);
             SetActiveRagdoll(true);
 
-            hitPoint.collider
-                .GetComponent<Rigidbody>()
-                .AddForce(
-                    attackDirection,
-                    ForceMode.Impulse
-            );
+            if (hitPoint.rigidbody != null)
+            {
+
+                hitPoint.collider
+                    .GetComponent<Rigidbody>()
+                    .AddForce(
+                        attackDirection,
+                        ForceMode.Impulse
+                );
+
+            }
         }
 
 
         private void ActivateNoneHumanoidDeath(Vector3 attackDirection)
         {
-
+            
             TrySetActiveSpiderIK(false);
             SetActiveAnimator(false);
             SetActiveRagdoll(true);
-             
-            
-             
-
-            GetComponent<Rigidbody>()
-                .AddForce(
-                    attackDirection * 4,
-                    ForceMode.Impulse
-            );
-
-            
-            
+ 
         }
+
+
+        private void OnValidate()
+        {
+            _baseCollider ??= GetComponent<Collider>();
+            _baseRigidbody ??= GetComponent<Rigidbody>();
+        }
+
 
         private void Awake() => _animator = GetComponent<Animator>();
 
@@ -144,11 +147,15 @@ namespace Core
             for (int i = 0; i < rbs.Length; i++)
             {
                 var rb = rbs[i];
-                if ( rb.gameObject.layer == 10)
-                    _ragdoll.Add(rb);
+                if ( _indexLayerOfRagdoll == rb.gameObject.layer )
+                    _ragdoll.Add(
+                        new RagdollData(
+                            rb.gameObject.transform.localPosition,
+                            rb.gameObject.transform.localRotation,
+                            rb)
+                        );
             }
-            Debug.LogWarning(rbs.Length);
-            Debug.LogWarning(LayerMask.GetMask("Ragdoll"));
+
             return _ragdoll.Count;
         }
 
@@ -176,7 +183,7 @@ namespace Core
         }
 
 
-        private void TryCompletelyDeath()
+        private void TryCompletelyDeath()// agent should be here
         {
 
             IEnemy enemy = GetComponent<IEnemy>();
@@ -196,14 +203,16 @@ namespace Core
         private void SetActiveRagdoll(bool isActive)
         {
 
-            _ragdoll.ForEach(rb =>
+            _ragdoll.ForEach(data =>
             {
 
-                var collider = rb.gameObject.GetComponent<Collider>();
+                var collider = data.Rb.gameObject.GetComponent<Collider>();
+                 
                 collider.isTrigger = !isActive;
-                rb.isKinematic = !isActive;
-                Debug.LogError("RegDoll");
-
+                data.Rb.isKinematic = !isActive;
+                data.Rb.gameObject.transform.localPosition =  data.CachedPosition;
+                data.Rb.gameObject.transform.localRotation =  data.CachedRotation;
+              
             });
         }
 
@@ -225,14 +234,12 @@ namespace Core
             if(spiderIK == null)
                 spiderIK =  GetComponent<SpiderMec>();
 
-          
+
             if(spiderIK != null)
             {
                 spiderIK.enabled = isActive;
                 var agent = GetComponent<NavMeshAgent>().enabled = isActive;
-                var rb = GetComponent<Rigidbody>().isKinematic = isActive;
-                var collider = GetComponent<Collider>().isTrigger = isActive;
-               
+                _baseCollider.isTrigger = !isActive;
             }
             else
             {

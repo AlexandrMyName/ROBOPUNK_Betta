@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
+using UnityEngine.AI;
 
 
 namespace Core
@@ -16,11 +17,15 @@ namespace Core
         private IEnemy _enemy;
         private float _attackDistance;
         private float _attackFrequency;
+        private NavMeshAgent _navMeshAgent;
+        private IGameComponents _components;
 
 
         protected override void Awake(IGameComponents components)
         {
+            _components = components;
             _enemy = components.BaseObject.GetComponent<Enemy>();
+            _navMeshAgent = components.BaseObject.GetComponent<NavMeshAgent>();
             _attackDistance = _enemy.ComponentsStore.Attackable.AttackDistance;
             _attackFrequency = _enemy.ComponentsStore.Attackable.AttackFrequency;
 
@@ -39,6 +44,9 @@ namespace Core
         private void HandleTriggerCollider(Collider collider)
         {
 
+            if (!_components.BaseObject.activeSelf
+               ||
+               !_navMeshAgent.isActiveAndEnabled) return;
             var playerAttackableComponent = collider.GetComponent<IPlayer>().ComponentsStore.Attackable;
             playerAttackableComponent.TakeDamage(_enemy.ComponentsStore.Attackable.Damage);
 
