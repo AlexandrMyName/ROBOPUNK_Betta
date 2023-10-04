@@ -1,25 +1,26 @@
 ﻿using Abstracts;
+using System.Collections.Generic;
 using User;
 
 
 namespace Core.Components
 {
-    
+
     public sealed class PlayerStoreEnhancementComponent : IStoreEnhancement
     {
 
-        public StoreItemConfig HealthEnhancement { get; }
+        public List<StoreItemConfig> PassiveUpgradeItems { get; private set; }
 
-        public StoreItemConfig SpeedEnhancement { get; }
-
-        public StoreItemConfig DamageEnhancement { get; }
+        public List<StoreItemConfig> AssistUpgradeItems { get; private set; }
 
 
-        public PlayerStoreEnhancementComponent(StoreItemsDataConfig storeItemsDataConfig)
+        public PlayerStoreEnhancementComponent(StoreItemsDataConfigs storeItemsDataConfig)
         {
-            HealthEnhancement = storeItemsDataConfig.HealthEnhancement;
-            SpeedEnhancement = storeItemsDataConfig.SpeedEnhancement;
-            DamageEnhancement = storeItemsDataConfig.DamageEnhancement;
+            PassiveUpgradeItems = new List<StoreItemConfig>();
+            PassiveUpgradeItems = storeItemsDataConfig.PassiveUpgradeItemsConfigs;
+
+            AssistUpgradeItems = new List<StoreItemConfig>();
+            AssistUpgradeItems = storeItemsDataConfig.AssistUpgradeItemsConfigs;
         }
 
 

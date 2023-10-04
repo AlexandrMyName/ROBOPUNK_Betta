@@ -684,7 +684,6 @@ MonoBehaviour:
   _storeButton: {fileID: 8421232754237653985}
   _gameButton: {fileID: 8793670623611200970}
   _exitMainMenuButton: {fileID: 4158684952403078979}
-  _storeView: {fileID: 4738745425286860343, guid: cd9f33c92f474ea438be682c87dbfa5a, type: 3}
 --- !u!1 &5981141956881224905
 GameObject:
   m_ObjectHideFlags: 0
