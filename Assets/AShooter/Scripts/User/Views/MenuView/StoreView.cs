@@ -10,6 +10,7 @@ namespace User.Presenters
 
     public class StoreView : MonoBehaviour, IStoreView
     {
+
         [Space(10)]
         [Header("Buttons:")]
         [SerializeField] private Button _backButton;
@@ -19,70 +20,52 @@ namespace User.Presenters
         [SerializeField] private Button _armorButton;
 
         [Space(10)]
-        [Header("TradingPanels:")]
-        [SerializeField] private GameObject _papassiveSkillsTradingPanels;
-        [SerializeField] private GameObject _assistTradingPanels;
-        [SerializeField] private GameObject _weaponTradingPanels;
-        [SerializeField] private GameObject _armorTradingPanels;
+        [Header("VerticalLayoutGroup:")]
+        [SerializeField] private GameObject _passiveSkillsGroupUI;
+        [SerializeField] private GameObject _assistItemGroupUI;
+        [SerializeField] private GameObject _weaponGroupUI;
+        [SerializeField] private GameObject _armorGroupUI;
 
-        [Space(10)]
-        [Header("PassiveCharacteristics:")]
-        [SerializeField] private TMP_Text _textSpeedUI;
-        [SerializeField] private TMP_Text _textDashUI;
-        [SerializeField] private TMP_Text _textShieldUI;
-        [SerializeField] private TMP_Text _textRateOfFireUI;
-        [SerializeField] private TMP_Text _textMaxHealthUI;
 
-        [Space(10)]
-        [Header("AssistCharacteristics:")]
-        [SerializeField] private TMP_Text _textHealthUI;
-
-        [Space(10)]
-        [Header("PassivePanel:")]
-        [SerializeField] private Button _speedButton;
-        [SerializeField] private Button _dashButton;
-        [SerializeField] private Button _shieldButton;
-        [SerializeField] private Button _rateOfFireButton;
-        [SerializeField] private Button _maxHealthButton;
-
-        [Space(10)]
-        [Header("AssistPanel:")]
-        [SerializeField] private Button _firstAidKitButton;
+        public GameObject PassiveSkillsGroupUI { get { return _passiveSkillsGroupUI; } }
+        public GameObject AssistItemGroupUI { get { return _assistItemGroupUI; } }
+        public GameObject WeaponGroupUI { get { return _weaponGroupUI; } }
+        public GameObject ArmorGroupUI { get { return _armorGroupUI; } }
 
 
         public void OnClickPassiveSkills()
         {
-            _papassiveSkillsTradingPanels.SetActive(true);
-            _assistTradingPanels.SetActive(false);
-            _weaponTradingPanels.SetActive(false);
-            _armorTradingPanels.SetActive(false);
+            _passiveSkillsGroupUI.SetActive(true);
+            _assistItemGroupUI.SetActive(false);
+            _weaponGroupUI.SetActive(false);
+            _armorGroupUI.SetActive(false);
         }
 
 
         public void OnClickAssist()
         {
-            _papassiveSkillsTradingPanels.SetActive(false);
-            _assistTradingPanels.SetActive(true);
-            _weaponTradingPanels.SetActive(false);
-            _armorTradingPanels.SetActive(false);
+            _passiveSkillsGroupUI.SetActive(false);
+            _assistItemGroupUI.SetActive(true);
+            _weaponGroupUI.SetActive(false);
+            _armorGroupUI.SetActive(false);
         }
 
 
         public void OnClickWeapon()
         {
-            _papassiveSkillsTradingPanels.SetActive(false);
-            _assistTradingPanels.SetActive(false);
-            _weaponTradingPanels.SetActive(true);
-            _armorTradingPanels.SetActive(false);
+            _passiveSkillsGroupUI.SetActive(false);
+            _assistItemGroupUI.SetActive(false);
+            _weaponGroupUI.SetActive(true);
+            _armorGroupUI.SetActive(false);
         }
 
 
         public void OnClickArmor()
         {
-            _papassiveSkillsTradingPanels.SetActive(false);
-            _assistTradingPanels.SetActive(false);
-            _weaponTradingPanels.SetActive(false);
-            _armorTradingPanels.SetActive(true);
+            _passiveSkillsGroupUI.SetActive(false);
+            _assistItemGroupUI.SetActive(false);
+            _weaponGroupUI.SetActive(false);
+            _armorGroupUI.SetActive(true);
         }
 
 
@@ -104,36 +87,9 @@ namespace User.Presenters
         }
 
 
-        public void SetInscriptionsCharacteristics(
-            string textSpeedUI, 
-            string textDashUI, 
-            string textShieldUI,
-            string textRateOfFireUI,
-            string textMaxHealthUI,
-            string textHealth)
-        {
-            _textSpeedUI.text = textSpeedUI;
-            _textDashUI.text = textDashUI;
-            _textShieldUI.text = textShieldUI;
-            _textRateOfFireUI.text = textRateOfFireUI;
-            _textMaxHealthUI.text = textMaxHealthUI;
-            _textHealthUI.text = textHealth;
-        }
-
-
-        public void SubscribeClickButtons(
-            UnityAction onClickButtonBack,
-
-            UnityAction onClickSpeedButton,
-            UnityAction onClickDashButton,
-            UnityAction onClickShieldButton,
-            UnityAction onClickRateOfFireButton,
-            UnityAction onClickMaxHealthButton,
-
-            UnityAction onClickFirstAidKitButton)
+        public void SubscribeClickButtons(UnityAction onClickButtonBack)
         {
             _backButton.onClick.AddListener(onClickButtonBack);
-            _speedButton.onClick.AddListener(onClickSpeedButton);
         }
 
 
