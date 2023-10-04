@@ -3,9 +3,9 @@
     public enum PassiveUpgradeItems
     {
         SpeedUpgrade = 0,
-        DashUpgrade = 1,
+        DashForceUpgrade = 1,
         ShieldUpgrade = 2,
-        RateOfFireUpgrade = 3,
+        DashRechargeUpgrade = 3,
         MaxHealthUpgrade = 4
     }
 }

@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.Events;
 
 
@@ -7,22 +8,16 @@ namespace Abstracts
     public interface IStoreView : IView
     {
 
-        public void SetInscriptionsCharacteristics(
-            string textSpeedUI,
-            string textDashUI,
-            string textShieldUI,
-            string textRateOfFireUI,
-            string textMaxHealthUI,
-            string textHealth);
+        public GameObject PassiveSkillsGroupUI { get; }
 
-        public void SubscribeClickButtons(
-            UnityAction onClickButtonBack,
-            UnityAction onClickSpeedButton,
-            UnityAction onClickDashButton,
-            UnityAction onClickShieldButton,
-            UnityAction onClickRateOfFireButton,
-            UnityAction onClickMaxHealthButton,
-            UnityAction onClickFirstAidKitButton);
+        public GameObject AssistItemGroupUI { get; }
+
+        public GameObject WeaponGroupUI { get; }
+
+        public GameObject ArmorGroupUI { get; }
+
+        public void SubscribeClickButtons(UnityAction onClickButtonBack);
+
     }
 
 }

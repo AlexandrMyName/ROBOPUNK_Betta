@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace User
@@ -13,6 +14,8 @@ namespace User
         public List<StoreItemConfig> AssistUpgradeItemsConfigs;
         public List<StoreWeaponConfig> WeaponItemsConfigs;
         public List<StoreWeaponConfig> ArmorItemsConfigs;
+
+        public GameObject StoreItemPrefab;
     }
 
     [Serializable]

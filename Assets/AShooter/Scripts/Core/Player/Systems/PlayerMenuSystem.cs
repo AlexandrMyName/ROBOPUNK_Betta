@@ -7,6 +7,9 @@ using Zenject;
 using UniRx;
 using Core.DTO;
 using User;
+using Object = UnityEngine.Object;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 
 namespace Core
@@ -27,13 +30,18 @@ namespace Core
         private bool _ShowPauseMenu;
 
         private List<StoreItemConfig> _passiveUpgradeItemsData;
-        private List<StoreItemConfig> _assistUpgradeItemsData;
-
+        private List<UnityAction<StoreItemView>> _functionActionPassiveUpgrade;
+        private List<string> _passiveUpgradeStats;
+        private GameObject _storeItemPrefab;
 
         protected override void Awake(IGameComponents components)
         {
             _disposables = new();
             _activeViews = new List<IView>();
+
+            _functionActionPassiveUpgrade = new List<UnityAction<StoreItemView>>();
+            _passiveUpgradeStats = new List<string>();
+
             _ShowPauseMenu = false;
 
             _input.PauseMenu.AxisOnChange.Subscribe(_ => OnMenuButtonPressed());
@@ -50,53 +58,79 @@ namespace Core
                 onClickButtonExitMainMenu);
 
             _storeMenu = _componentsStore.Views.StoreMenu;
-            _storeMenu.SubscribeClickButtons(
-                onClickButtonBack,
-                onClickSpeedButton,
-                onClickDashButton,
-                onClickShieldButton,
-                onClickRateOfFireButton,
-                onClickMaxHealthButton,
-                onClickFirstAidKitButton);
+            _storeMenu.SubscribeClickButtons(onClickButtonBack);
 
 
             _passiveUpgradeItemsData = _componentsStore.StoreEnhancement.PassiveUpgradeItems;
-            _assistUpgradeItemsData = _componentsStore.StoreEnhancement.AssistUpgradeItems;
+            _storeItemPrefab = _componentsStore.StoreEnhancement.StoreItemPrefab;
+
+            CreatingListPassiveUpgradeClickFunctions();
+            CreatingListPassiveStats();
+
+            for (int i = 0; i < _passiveUpgradeItemsData.Count; i++)
+            {
+                var itemData = _passiveUpgradeItemsData[i];
+
+                GameObject item = Object.Instantiate(_storeItemPrefab, _storeMenu.PassiveSkillsGroupUI.transform);
+                var itemView = item.GetComponent<StoreItemView>();
+
+                itemView.SubscribeClickButton(_functionActionPassiveUpgrade[i]);
+                itemView.Characteristic.text = $"{itemData.nameItem}: {_passiveUpgradeStats[i]}";
+                itemView.Description.text = $"{itemData.description}: {itemData.upgradeCoefficient}{itemData.unitImprovementCoefficient}";
+                itemView.Price.text = $"${itemData.price}";
+
+                itemView.Button.image.sprite = itemData.Icon;
+            }
         }
 
 
-        private void onClickSpeedButton()
+        private void CreatingListPassiveStats()
         {
-            Debug.Log("onClickSpeedButton");
-            BuySpeedUpgrade(null);
-            UpdatePlayerCharacteristicsInStoreMenu();
+            _passiveUpgradeStats.Add(_componentsStore.Movable.Speed.Value.ToString());
+            _passiveUpgradeStats.Add(_componentsStore.Dash.DashForce.ToString());
+            _passiveUpgradeStats.Add(_componentsStore.Shield.MaxProtection.ToString());
+            _passiveUpgradeStats.Add(_componentsStore.Dash.RegenerationTime.ToString());
+            _passiveUpgradeStats.Add(_componentsStore.Attackable.Health.Value.ToString());
         }
 
 
-        private void onClickFirstAidKitButton()
+        private void CreatingListPassiveUpgradeClickFunctions()
         {
-            throw new NotImplementedException();
-        }
-
-        private void onClickMaxHealthButton()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void onClickRateOfFireButton()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void onClickShieldButton()
-        {
-            throw new NotImplementedException();
+            _functionActionPassiveUpgrade.Add(onClickSpeedButton);
+            _functionActionPassiveUpgrade.Add(onClickDashButton);
+            _functionActionPassiveUpgrade.Add(onClickShieldButton);
+            _functionActionPassiveUpgrade.Add(onClickDashRechargeButton);
+            _functionActionPassiveUpgrade.Add(onClickMaxHealthButton);
         }
 
 
-        private void onClickDashButton()
+        private void onClickSpeedButton(StoreItemView storeItemView)
         {
-            throw new NotImplementedException();
+            BuySpeedUpgrade(storeItemView);
+        }
+
+
+        private void onClickDashButton(StoreItemView storeItemView)
+        {
+            BuyDashForceUpgrade(storeItemView);
+        }
+
+
+        private void onClickShieldButton(StoreItemView storeItemView)
+        {
+            BuyShieldUpgrade(storeItemView);
+        }
+
+
+        private void onClickDashRechargeButton(StoreItemView storeItemView)
+        {
+            BuyDashRechargeUpgrade(storeItemView);
+        }
+
+
+        private void onClickMaxHealthButton(StoreItemView storeItemView)
+        {
+            BuyMaxHealthUpgrade(storeItemView);
         }
 
 
@@ -123,8 +157,6 @@ namespace Core
         private void onClickButtonStore()
         {
             _pauseMenu.Hide();
-
-            UpdatePlayerCharacteristicsInStoreMenu();
 
             _componentsStore.Views.GoldWallet.Show();
             _storeMenu.Show();
@@ -171,6 +203,7 @@ namespace Core
             _activeViews.Clear();
 
             _pauseMenu.Hide();
+            _storeMenu.Hide();
         }
 
 
@@ -192,19 +225,51 @@ namespace Core
             _pauseMenu.Show();
         }
 
-
-        private void UpdatePlayerCharacteristicsInStoreMenu()
+        private void BuyDashForceUpgrade(StoreItemView obj)
         {
-            _storeMenu.SetInscriptionsCharacteristics(
-                $"{(int)_componentsStore.Movable.Speed.Value}", 
-                $"{0}", 
-                $"{0}", 
-                $"{0}", 
-                $"{0}", 
-                $"{0}");
+            var price = _passiveUpgradeItemsData[(int)PassiveUpgradeItems.DashForceUpgrade].price;
+            var upgradeCoefficient = _passiveUpgradeItemsData[(int)PassiveUpgradeItems.DashForceUpgrade].upgradeCoefficient;
+
+            if (_componentsStore.GoldWallet.CurrentGold.Value >= price)
+            {
+                _componentsStore.Movable.Speed.Value *= ConversionToDecimalFromPercentage(upgradeCoefficient);
+                _componentsStore.GoldWallet.DeductGold(price);
+
+                obj.Characteristic.text = $"Dash Force: {_componentsStore.Dash.DashForce}";
+            }
         }
-        
-        
+
+
+        private void BuyDashRechargeUpgrade(StoreItemView obj)
+        {
+            var price = _passiveUpgradeItemsData[(int)PassiveUpgradeItems.DashRechargeUpgrade].price;
+            var upgradeCoefficient = _passiveUpgradeItemsData[(int)PassiveUpgradeItems.DashRechargeUpgrade].upgradeCoefficient;
+
+            if (_componentsStore.GoldWallet.CurrentGold.Value >= price)
+            {
+                _componentsStore.Movable.Speed.Value *= ConversionToDecimalFromPercentage(upgradeCoefficient);
+                _componentsStore.GoldWallet.DeductGold(price);
+
+                obj.Characteristic.text = $"Dash Recharge: {_componentsStore.Dash.RegenerationTime}";
+            }
+        }
+
+
+        private void BuyShieldUpgrade(StoreItemView obj)
+        {
+            var price = _passiveUpgradeItemsData[(int)PassiveUpgradeItems.ShieldUpgrade].price;
+            var upgradeCoefficient = _passiveUpgradeItemsData[(int)PassiveUpgradeItems.ShieldUpgrade].upgradeCoefficient;
+
+            if (_componentsStore.GoldWallet.CurrentGold.Value >= price)
+            {
+                _componentsStore.Movable.Speed.Value *= ConversionToDecimalFromPercentage(upgradeCoefficient);
+                _componentsStore.GoldWallet.DeductGold(price);
+
+                obj.Characteristic.text = $"Shield Size: {_componentsStore.Shield.MaxProtection}";
+            }
+        }
+
+
         private void BuySpeedUpgrade(StoreItemView obj)
         {
             var price = _passiveUpgradeItemsData[(int)PassiveUpgradeItems.SpeedUpgrade].price;
@@ -214,18 +279,24 @@ namespace Core
             {
                 _componentsStore.Movable.Speed.Value *= ConversionToDecimalFromPercentage(upgradeCoefficient);
                 _componentsStore.GoldWallet.DeductGold(price);
+
+                obj.Characteristic.text = $"Speed: {_componentsStore.Movable.Speed.Value}";
             }
         }
         
         
         private void BuyMaxHealthUpgrade(StoreItemView obj)
         {
-            
-           // if (_componentsStore.GoldWallet.CurrentGold.Value >= _componentsStore.StoreEnhancement.HealthEnhancement.price)
-           // {
-           //     _componentsStore.Attackable.Health.Value += _componentsStore.StoreEnhancement.HealthEnhancement.improvementCoefficient;
-           //     _componentsStore.GoldWallet.DeductGold(_componentsStore.StoreEnhancement.HealthEnhancement.price);
-           // }
+            var price = _passiveUpgradeItemsData[(int)PassiveUpgradeItems.MaxHealthUpgrade].price;
+            var upgradeCoefficient = _passiveUpgradeItemsData[(int)PassiveUpgradeItems.MaxHealthUpgrade].upgradeCoefficient;
+
+            if (_componentsStore.GoldWallet.CurrentGold.Value >= price)
+            {
+                _componentsStore.Attackable.Health.Value += upgradeCoefficient;
+                _componentsStore.GoldWallet.DeductGold(price);
+
+                obj.Characteristic.text = $"Max Health: {_componentsStore.Attackable.Health.Value}";
+            }
         }
 
 
