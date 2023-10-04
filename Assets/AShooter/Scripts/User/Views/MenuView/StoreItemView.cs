@@ -11,18 +11,14 @@ namespace User.Presenters
     {
 
         [SerializeField] private Button _button;
-        
+        [SerializeField] private TMP_Text _description;
+        [SerializeField] private TMP_Text _price;
+        [SerializeField] private TMP_Text _characteristic;
+
 
         public void SubscribeClickButton(UnityAction<StoreItemView> onClickButton)
         {
             _button.onClick.AddListener(() => onClickButton(this));
-        }
-
-
-        public void SetInscription(StoreItemConfig itemConfigs)
-        {
-            var txt = _button.GetComponentInChildren<TMP_Text>();
-            txt.text = $"+{itemConfigs.improvementCoefficient}{itemConfigs.unitImprovementCoefficient} {itemConfigs.nameItem} -> {itemConfigs.price}g";
         }
         
         

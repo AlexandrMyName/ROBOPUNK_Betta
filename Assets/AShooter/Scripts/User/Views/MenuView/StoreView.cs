@@ -2,6 +2,7 @@ using Abstracts;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using TMPro;
 
 
 namespace User.Presenters
@@ -25,11 +26,23 @@ namespace User.Presenters
         [SerializeField] private GameObject _armorTradingPanels;
 
         [Space(10)]
+        [Header("PassiveCharacteristics:")]
+        [SerializeField] private TMP_Text _textSpeedUI;
+        [SerializeField] private TMP_Text _textDashUI;
+        [SerializeField] private TMP_Text _textShieldUI;
+        [SerializeField] private TMP_Text _textRateOfFireUI;
+        [SerializeField] private TMP_Text _textMaxHealthUI;
+
+        [Space(10)]
+        [Header("AssistCharacteristics:")]
+        [SerializeField] private TMP_Text _textHealthUI;
+
+        [Space(10)]
         [Header("PassivePanel:")]
         [SerializeField] private Button _speedButton;
         [SerializeField] private Button _dashButton;
         [SerializeField] private Button _shieldButton;
-        [SerializeField] private Button _RateOfFireButton;
+        [SerializeField] private Button _rateOfFireButton;
         [SerializeField] private Button _maxHealthButton;
 
         [Space(10)]
@@ -91,14 +104,36 @@ namespace User.Presenters
         }
 
 
-        public void SetInscriptions(StoreItemConfig storeHealthDataConfig, StoreItemConfig storeSpeedDataConfig, StoreItemConfig storeDamageDataConfig)
+        public void SetInscriptionsCharacteristics(
+            string textSpeedUI, 
+            string textDashUI, 
+            string textShieldUI,
+            string textRateOfFireUI,
+            string textMaxHealthUI,
+            string textHealth)
         {
+            _textSpeedUI.text = textSpeedUI;
+            _textDashUI.text = textDashUI;
+            _textShieldUI.text = textShieldUI;
+            _textRateOfFireUI.text = textRateOfFireUI;
+            _textMaxHealthUI.text = textMaxHealthUI;
+            _textHealthUI.text = textHealth;
         }
 
 
-        public void SubscribeClickButtons(UnityAction onClickButtonBack)
+        public void SubscribeClickButtons(
+            UnityAction onClickButtonBack,
+
+            UnityAction onClickSpeedButton,
+            UnityAction onClickDashButton,
+            UnityAction onClickShieldButton,
+            UnityAction onClickRateOfFireButton,
+            UnityAction onClickMaxHealthButton,
+
+            UnityAction onClickFirstAidKitButton)
         {
             _backButton.onClick.AddListener(onClickButtonBack);
+            _speedButton.onClick.AddListener(onClickSpeedButton);
         }
 
 

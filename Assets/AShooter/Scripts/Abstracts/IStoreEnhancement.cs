@@ -1,4 +1,5 @@
-﻿using User;
+﻿using System.Collections.Generic;
+using User;
 
 
 namespace Abstracts
@@ -7,11 +8,9 @@ namespace Abstracts
     public interface IStoreEnhancement
     {
 
-        public StoreItemConfig HealthEnhancement { get; }
+        public List<StoreItemConfig> PassiveUpgradeItems { get; }
 
-        public StoreItemConfig SpeedEnhancement { get; }
-
-        public StoreItemConfig DamageEnhancement { get; }
+        public List<StoreItemConfig> AssistUpgradeItems { get; }
 
     }
 }
