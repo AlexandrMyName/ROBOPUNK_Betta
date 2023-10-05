@@ -7659,10 +7659,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 280755900960097624, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
-      propertyPath: _autoRun
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 280755900960097624, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: _monoInstallers.Array.size
       value: 7
       objectReference: {fileID: 0}
@@ -7725,10 +7721,6 @@ PrefabInstance:
     - target: {fileID: 5007015147164041087, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: m_Name
       value: '[DI] '
-      objectReference: {fileID: 0}
-    - target: {fileID: 5007015147164041087, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
-      propertyPath: m_TagString
-      value: DI
       objectReference: {fileID: 0}
     - target: {fileID: 6041886409023221945, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: _camera

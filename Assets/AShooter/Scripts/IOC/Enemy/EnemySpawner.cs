@@ -259,7 +259,7 @@ namespace DI.Spawn
         }
 
 
-        public void Dispose() => _disposables.ForEach(disposable => disposable.Dispose());
+        public void Dispose() => _disposables?.ForEach(disposable => disposable.Dispose());
 
 
         private void SetDeadFlagInFalse(GameObject enemy) {
