@@ -17,7 +17,7 @@ namespace DI
 
         [SerializeField] private bool _spawnOnStart;
         [SerializeField] private EnemySpawnerDataConfig _enemySpawnerDataConfig;
-
+        [SerializeField] private GameObject _enemyViews_Prefab;
         private EnemySpawnerController _spawner;
 
 
@@ -39,7 +39,7 @@ namespace DI
                     _componentsPlayer.Movable.Rigidbody.transform,
                     _componentsPlayer.GoldWallet,
                     _componentsPlayer.ExperienceHandle);
-                _spawner.StartSpawnProcess();
+                _spawner.StartSpawnProcess(_enemyViews_Prefab);
                 
             }
         }

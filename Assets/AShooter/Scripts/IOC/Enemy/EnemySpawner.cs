@@ -34,6 +34,7 @@ namespace DI.Spawn
         private List<IDisposable> _disposables;
 
         private GameObject _waves;
+        private GameObject _enemyViews_Prefab;
         private List<GameObject> _waveGameObjects;
         private int _waveCount;
 
@@ -43,8 +44,11 @@ namespace DI.Spawn
             Transform targetPosition, 
             int maxNumberEnemy,
             IExperienceHandle experienceHandle,  
-            IGoldWallet goldWallet)
-        {
+            IGoldWallet goldWallet,
+            GameObject enemyViews){
+            ////[CONSTRUCT]\\\\
+
+            _enemyViews_Prefab = enemyViews;
             _disposables = new();
 
             _diContainer = diContainer;
@@ -141,13 +145,23 @@ namespace DI.Spawn
         private GameObject EnemyCreation(EnemyConfig item)
         {
             var prefab = _diContainer.InstantiatePrefab(item.prefab, _waveGameObjects[_waveCount].transform);
-
+            ViewsCreation(prefab.transform);
             var enemy = prefab.GetComponent<Enemy>();
             enemy.EnemyType = item.enemyType;
             enemy.SetComponents(CreateComponents(item));
             enemy.SetSystems(CreateSystems(item));
 
             return prefab;
+        }
+
+
+        private void ViewsCreation(Transform parent)
+        {
+
+           var viewsInstance =  GameObject.Instantiate(_enemyViews_Prefab,parent);
+
+            viewsInstance.transform.position = Vector3.zero + Vector3.up * 1.5f;
+            viewsInstance.GetComponent<IEnemyViews>().InitViews();
         }
 
 

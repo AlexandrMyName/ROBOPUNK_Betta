@@ -15,7 +15,7 @@ MonoBehaviour:
   <ExplosionObject>k__BackingField: {fileID: 272371557409273288, guid: 90e8907af4fefc243a49eee6768e2e15, type: 3}
   <ExplosionIcon>k__BackingField: {fileID: 21300000, guid: e17203397c1e765488076e2eacf65116, type: 3}
   <AbilityType>k__BackingField: 0
-  <Damage>k__BackingField: 50
+  <Damage>k__BackingField: 800
   <DamageOverTime>k__BackingField: 2
   <DamageRate>k__BackingField: 1
   <Radius>k__BackingField: 10
