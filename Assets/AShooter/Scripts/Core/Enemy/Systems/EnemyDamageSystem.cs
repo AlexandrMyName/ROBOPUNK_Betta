@@ -44,6 +44,7 @@ namespace Core
             {
                 _healthView.RefreshHealth(_attackable.Health.Value, _maxHealth);
             }).AddTo(_disposables);
+            _healthView.Show();
         }
 
 
@@ -61,7 +62,7 @@ namespace Core
         {
             if (healthCompleted <= 0)
             {
- 
+                    _healthView.Deactivate();
                 if (_components.Animator != null)
                     _components.Animator
                         .ActivateDeathAnimation(

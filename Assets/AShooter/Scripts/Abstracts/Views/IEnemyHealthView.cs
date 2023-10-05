@@ -11,7 +11,8 @@ namespace Abstracts
 
         void Deactivate();
 
-        void RefreshHealth(float currentHealth, float maxHealth);   
+        void RefreshHealth(float currentHealth, float maxHealth);
 
+ 
     }
 }

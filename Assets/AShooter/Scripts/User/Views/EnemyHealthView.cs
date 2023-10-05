@@ -30,6 +30,8 @@ namespace User.View
         }
 
 
+        public void Show() => gameObject.SetActive(true);
+        
         public void Show()
         {
             gameObject.SetActive(true);
