@@ -3314,6 +3314,7 @@ MonoBehaviour:
   _playerHpViewPrefab: {fileID: 614481602410479457, guid: a0d6f93b9736f8440a5c6847dd82db80, type: 3}
   _interactViewPrefab: {fileID: 5828510425389693978, guid: 45c171eb53e18d24596b869c37b1dd09, type: 3}
   _weaponAbilityViewPrefab: {fileID: 3010169044236182043, guid: 6fea3b772d9849541a363aac049b0d36, type: 3}
+  _winViewPrefab: {fileID: 1445234457471142472, guid: 37963f51ead40ab49a389aedbc0e5f3c, type: 3}
 --- !u!1 &550520363
 GameObject:
   m_ObjectHideFlags: 0

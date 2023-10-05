@@ -29,6 +29,8 @@ namespace Abstracts
         IStoreView StoreMenu { get; }
 
         public List<IView> GetListView();
+        IWinView WinView { get; }
+
 
     }
 }

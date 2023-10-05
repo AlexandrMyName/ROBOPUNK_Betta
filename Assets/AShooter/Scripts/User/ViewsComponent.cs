@@ -49,5 +49,9 @@ namespace User.Components
         }
 
 
+
+        [Inject] public IWinView WinView { get; }
+        
+        
     }
 }
