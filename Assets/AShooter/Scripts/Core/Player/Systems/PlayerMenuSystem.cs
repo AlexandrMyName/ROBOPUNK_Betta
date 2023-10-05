@@ -9,7 +9,7 @@ using Core.DTO;
 using User;
 using Object = UnityEngine.Object;
 using UnityEngine.Events;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 namespace Core
@@ -144,7 +144,7 @@ namespace Core
 
         private void onClickButtonExitMainMenu()
         {
-            //SceneManager.LoadSceneAsync(0);
+            SceneManager.LoadScene(0);// Перевести на SceneLoader (Alexandr)
         }
 
 
