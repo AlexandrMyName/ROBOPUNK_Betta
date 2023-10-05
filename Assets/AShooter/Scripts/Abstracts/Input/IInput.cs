@@ -1,5 +1,4 @@
-﻿using Core;
-using UniRx;
+﻿using UniRx;
 using UnityEngine;
 
 
@@ -33,6 +32,7 @@ namespace Abstracts
 
         IObservableInputProxy<bool> MeleeHold { get; }
 
+        ISubjectInputProxy<Unit> PauseMenu { get; }
 
     }
 }

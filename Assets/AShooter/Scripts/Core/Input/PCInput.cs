@@ -34,6 +34,9 @@ namespace Core
 
         public ISubjectInputProxy<Unit> DashClick { get; }
 
+        public ISubjectInputProxy<Unit> PauseMenu { get; }
+
+
         public PCInput([NotNull] InputConfig config)
         {
 
@@ -49,6 +52,7 @@ namespace Core
             MeleeHold = new PCMeleeInput(config);
             DashClick = new PCDashInput(config);
             Interact = new PCInteractInput(config);
+            PauseMenu = new PCPauseMenu(config);
         }
     }
 }

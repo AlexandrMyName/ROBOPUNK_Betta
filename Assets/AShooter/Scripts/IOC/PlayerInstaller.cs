@@ -18,7 +18,7 @@ namespace DI
     public class PlayerInstaller : MonoInstaller
     {
 
-        [SerializeField] private StoreItemsDataConfig _storeItemsDataConfig;
+        [SerializeField] private StoreItemsDataConfigs _storeItemsDataConfigs;
         [SerializeField] private DashConfig _dashConfig;
         [SerializeField] private PlayerHPConfig _playerHPConfig;
         [SerializeField] private CinemachineVirtualCamera _camera;
@@ -83,7 +83,7 @@ namespace DI
             PlayerGoldWalletComponent gold = new PlayerGoldWalletComponent();
             PlayerExperienceComponent exp = new PlayerExperienceComponent();
             WeaponStorage weapons = new WeaponStorage();
-            PlayerStoreEnhancementComponent store = new PlayerStoreEnhancementComponent(_storeItemsDataConfig);
+            PlayerStoreEnhancementComponent store = new PlayerStoreEnhancementComponent(_storeItemsDataConfigs);
             PlayerShieldComponent shield = new PlayerShieldComponent(_maxPlayerProtection, _protectionRegenerationTime);
             Container.QueueForInject(movable);
             Container.QueueForInject(attackable);
@@ -131,7 +131,7 @@ namespace DI
             PlayerDashSystem dashSystem = new PlayerDashSystem();
             Container.QueueForInject(dashSystem);
 
-            PlayerStoreSystem playerStoreSystem = new PlayerStoreSystem();
+            PlayerMenuSystem playerStoreSystem = new PlayerMenuSystem();
             Container.QueueForInject(playerStoreSystem);
 
             PlayerExperienceSystem playerExperienceSystem = new PlayerExperienceSystem();

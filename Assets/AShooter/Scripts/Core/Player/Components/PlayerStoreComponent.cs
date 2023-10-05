@@ -1,25 +1,28 @@
 ﻿using Abstracts;
+using System.Collections.Generic;
+using UnityEngine;
 using User;
 
 
 namespace Core.Components
 {
-    
+
     public sealed class PlayerStoreEnhancementComponent : IStoreEnhancement
     {
 
-        public StoreItemConfig HealthEnhancement { get; }
+        public List<StoreItemConfig> PassiveUpgradeItems { get; private set; }
 
-        public StoreItemConfig SpeedEnhancement { get; }
+        public List<StoreItemConfig> AssistUpgradeItems { get; private set; }
 
-        public StoreItemConfig DamageEnhancement { get; }
+        public GameObject StoreItemPrefab { get; private set; }
 
 
-        public PlayerStoreEnhancementComponent(StoreItemsDataConfig storeItemsDataConfig)
+        public PlayerStoreEnhancementComponent(StoreItemsDataConfigs storeItemsDataConfig)
         {
-            HealthEnhancement = storeItemsDataConfig.HealthEnhancement;
-            SpeedEnhancement = storeItemsDataConfig.SpeedEnhancement;
-            DamageEnhancement = storeItemsDataConfig.DamageEnhancement;
+            PassiveUpgradeItems = storeItemsDataConfig.PassiveUpgradeItemsConfigs;
+            AssistUpgradeItems = storeItemsDataConfig.AssistUpgradeItemsConfigs;
+
+            StoreItemPrefab = storeItemsDataConfig.StoreItemPrefab;
         }
 
 

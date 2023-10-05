@@ -28,7 +28,7 @@ namespace Core
             _attackable = _components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Attackable;
             _playerHP = _components.BaseObject.GetComponent<IPlayer>().ComponentsStore.PlayerHP;
 
-            _healthView = _components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.HealthView;
+            _healthView = _components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.Health;
             var currentHealth = _components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Attackable.Health;
             _disposables.Add(_attackable.Health.Subscribe(UpdateDisplay));
             _healthView.Show();

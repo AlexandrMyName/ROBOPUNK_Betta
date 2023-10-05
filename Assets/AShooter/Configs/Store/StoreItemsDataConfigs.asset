@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 826b49d7eb7a71b48bc21e8d02cdf5e5, type: 3}
+  m_Name: StoreItemsDataConfigs
+  m_EditorClassIdentifier: 
+  PassiveUpgradeItemsConfigs:
+  - id: 0
+    description: Speed Upgrade
+    nameItem: Speed
+    Icon: {fileID: 21300000, guid: bcef3bb3e863a0b47bc29230664c187c, type: 3}
+    price: 100
+    upgradeCoefficient: 5
+    unitImprovementCoefficient: '%'
+  - id: 1
+    description: Dash Force Upgrade
+    nameItem: Dash Force
+    Icon: {fileID: 21300000, guid: b1ca7598084e20445b98996a45b9d87f, type: 3}
+    price: 80
+    upgradeCoefficient: 3
+    unitImprovementCoefficient: '%'
+  - id: 2
+    description: Shield Size Upgrade
+    nameItem: Shield Size
+    Icon: {fileID: 21300000, guid: d6e0c61226318b64db8f2ca9069b2dae, type: 3}
+    price: 120
+    upgradeCoefficient: 5
+    unitImprovementCoefficient: '%'
+  - id: 3
+    description: Dash Recharge Upgrade
+    nameItem: Dash Recharge
+    Icon: {fileID: 21300000, guid: c7384df5b0c9fe3479aacb650ec9068d, type: 3}
+    price: 150
+    upgradeCoefficient: 4
+    unitImprovementCoefficient: '%'
+  - id: 4
+    description: Maximum Health Upgrade
+    nameItem: Max Health
+    Icon: {fileID: 21300000, guid: 4f61544908dd21c4b8398ba50b63a0d5, type: 3}
+    price: 100
+    upgradeCoefficient: 10
+    unitImprovementCoefficient: u.
+  AssistUpgradeItemsConfigs:
+  - id: 0
+    description: Replenishing current health
+    nameItem: Medication
+    Icon: {fileID: 21300000, guid: 2c36633b3f4616d429aaef19f8e28ca4, type: 3}
+    price: 50
+    upgradeCoefficient: 5
+    unitImprovementCoefficient: u.
+  WeaponItemsConfigs: []
+  ArmorItemsConfigs: []
+  StoreItemPrefab: {fileID: 7254147764770633463, guid: 8bdf300d9d5271945aa4368cf9cef328, type: 3}

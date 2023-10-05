@@ -10,8 +10,20 @@ namespace User.Presenters
     public class StoreItemView : MonoBehaviour
     {
 
+        public Button Button { get { return _button; } }
+
+        public TMP_Text Description { get { return _description; } }
+
+        public TMP_Text Price { get { return _price; } }
+
+        public TMP_Text Characteristic { get { return _characteristic; } }
+
+
         [SerializeField] private Button _button;
-        
+        [SerializeField] private TMP_Text _description;
+        [SerializeField] private TMP_Text _price;
+        [SerializeField] private TMP_Text _characteristic;
+
 
         public void SubscribeClickButton(UnityAction<StoreItemView> onClickButton)
         {
@@ -19,12 +31,6 @@ namespace User.Presenters
         }
 
 
-        public void SetInscription(StoreItemConfig itemConfigs)
-        {
-            var txt = _button.GetComponentInChildren<TMP_Text>();
-            txt.text = $"+{itemConfigs.improvementCoefficient}{itemConfigs.unitImprovementCoefficient} {itemConfigs.nameItem} -> {itemConfigs.price}g";
-        }
-        
         
         private void OnDestroy()
         {

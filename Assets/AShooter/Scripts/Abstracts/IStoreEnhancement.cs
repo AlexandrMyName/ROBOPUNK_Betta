@@ -1,4 +1,6 @@
-﻿using User;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using User;
 
 
 namespace Abstracts
@@ -7,11 +9,11 @@ namespace Abstracts
     public interface IStoreEnhancement
     {
 
-        public StoreItemConfig HealthEnhancement { get; }
+        public List<StoreItemConfig> PassiveUpgradeItems { get; }
 
-        public StoreItemConfig SpeedEnhancement { get; }
+        public List<StoreItemConfig> AssistUpgradeItems { get; }
 
-        public StoreItemConfig DamageEnhancement { get; }
+        public GameObject StoreItemPrefab { get; }
 
     }
 }
