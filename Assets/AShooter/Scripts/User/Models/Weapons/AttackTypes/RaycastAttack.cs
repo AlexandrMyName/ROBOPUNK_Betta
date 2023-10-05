@@ -89,6 +89,7 @@ namespace Core
                     .First();
 
                 Debug.DrawRay(_muzzle.position, muzzleDirection * _weapon.ShootDistance, Color.green, 20.0f);
+                InstantiateProjectile(muzzleHit.point);
 
                 var hitCollider = muzzleHit.collider;
                 
@@ -103,8 +104,6 @@ namespace Core
                     unit.ComponentsStore
                         .Attackable
                         .TakeDamage(_weapon.Damage,muzzleHit,Vector3.back);
-
-                    Debug.Log($"DAMAGE [{hitCollider.name}] - LEFT [{unit.ComponentsStore.Attackable.Health.Value}]");
                 }
 
                 SpawnParticleEffectOnHit(muzzleHit);
