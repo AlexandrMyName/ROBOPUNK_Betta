@@ -144,7 +144,11 @@ namespace Core
 
         private void onClickButtonExitMainMenu()
         {
+
+            InputManager.EnableSystem();
+            HidePauseMenu();
             SceneManager.LoadScene(0);// Перевести на SceneLoader (Alexandr)
+      
         }
 
 

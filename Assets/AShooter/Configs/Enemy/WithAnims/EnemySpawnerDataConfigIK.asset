@@ -33,16 +33,16 @@ MonoBehaviour:
       probabilityWeigh: 1
     respawnEnemyInWaveDelay: 1
     spawnRadiusRelativeToPlayer: 20
-    numberEnemiesInWave: 8
+    numberEnemiesInWave: 1
     numberEnemiesInScene: 1
   - Enemy:
     - description: 
       nameEnemy: 
       enemyType: 1
       prefab: {fileID: 3957541045528095213, guid: 121e617dee79e334aac211198583030d, type: 3}
-      maxHealth: 1000
-      maxAttackDamage: 15
-      attackDistance: 8
+      maxHealth: 300
+      maxAttackDamage: 40
+      attackDistance: 5
       attackFrequency: 2
       goldDropRate: 50
       goldValueRange:
@@ -54,17 +54,17 @@ MonoBehaviour:
       probabilityWeigh: 1
     respawnEnemyInWaveDelay: 1
     spawnRadiusRelativeToPlayer: 25
-    numberEnemiesInWave: 12
+    numberEnemiesInWave: 1
     numberEnemiesInScene: 1
   - Enemy:
     - description: 
       nameEnemy: 
       enemyType: 0
       prefab: {fileID: 5783359468839766296, guid: 8f3fadc111657d24d9e58737c1f0d1f5, type: 3}
-      maxHealth: 1000
-      maxAttackDamage: 20
-      attackDistance: 3
-      attackFrequency: 2
+      maxHealth: 550
+      maxAttackDamage: 15
+      attackDistance: 2.5
+      attackFrequency: 0.5
       goldDropRate: 50
       goldValueRange:
         min: 5
@@ -75,14 +75,14 @@ MonoBehaviour:
       probabilityWeigh: 1
     respawnEnemyInWaveDelay: 1
     spawnRadiusRelativeToPlayer: 25
-    numberEnemiesInWave: 16
-    numberEnemiesInScene: 35
+    numberEnemiesInWave: 2
+    numberEnemiesInScene: 15
   - Enemy:
     - description: 
       nameEnemy: 
       enemyType: 1
       prefab: {fileID: 5783359468839766296, guid: 93b91b651f70a9642aca21f4dd45c5fe, type: 3}
-      maxHealth: 1000
+      maxHealth: 550
       maxAttackDamage: 25
       attackDistance: 10
       attackFrequency: 2
@@ -96,6 +96,6 @@ MonoBehaviour:
       probabilityWeigh: 1
     respawnEnemyInWaveDelay: 1
     spawnRadiusRelativeToPlayer: 25
-    numberEnemiesInWave: 16
-    numberEnemiesInScene: 20
+    numberEnemiesInWave: 2
+    numberEnemiesInScene: 15
   respawnWaveDelay: 10

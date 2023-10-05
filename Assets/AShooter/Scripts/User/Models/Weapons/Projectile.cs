@@ -10,7 +10,7 @@ namespace User
 {
 
     [RequireComponent(typeof(Rigidbody))]
-    public sealed class Projectile : MonoBehaviour
+    public sealed class Projectile : MonoBehaviour, IDisposable
     {
 
         [SerializeField] private Rigidbody _projectileRigidbody;
@@ -32,6 +32,7 @@ namespace User
         public float Damage { get; set; }
         public ParticleSystem Effect { get; set; }
         public float EffectDestroyDelay { get; set; }
+        public List<IDisposable> _disposables = new();
 
 
         private void Start()
@@ -40,7 +41,7 @@ namespace User
             {
                 if (!IsProjectileDisposed)
                     Destroy(gameObject);
-            });
+            }).AddTo(_disposables);
         }
 
 
@@ -91,6 +92,14 @@ namespace User
             unit.ComponentsStore.Attackable.TakeDamage(Damage);
         }
 
+        public void Dispose()
+        {
+            _disposables.ForEach(disp => disp.Dispose());
+        }
 
+        private void OnDestroy()
+        {
+            Dispose();
+        }
     }
 }

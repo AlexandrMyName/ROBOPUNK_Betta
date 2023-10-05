@@ -10,7 +10,7 @@ namespace Core
     public class PlayerExperienceSystem : BaseSystem , IDisposable
     {
         
-        private List<IDisposable> _disposables;
+        private List<IDisposable> _disposables = new();
         private IExperienceView _experienceView;
 
 

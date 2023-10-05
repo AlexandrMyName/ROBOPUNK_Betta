@@ -23,7 +23,7 @@ namespace User
 
         private bool _isLaserExist;
 
-        private List<IDisposable> _disposables;
+        private List<IDisposable> _disposables = new();
 
 
         public Laser(GameObject weaponObject)
@@ -93,10 +93,12 @@ namespace User
         
         public void Blink(float time)
         {
+
             _laserObject.SetActive(false);
             Observable
                 .Timer(TimeSpan.FromSeconds(time))
-                .Subscribe(_ => _laserObject.SetActive(true));
+                .Subscribe(_ => _laserObject.SetActive(true))
+                .AddTo(_disposables);
         }
 
 

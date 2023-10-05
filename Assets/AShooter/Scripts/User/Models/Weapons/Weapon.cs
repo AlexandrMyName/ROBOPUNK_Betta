@@ -9,7 +9,7 @@ using UnityEngine;
 namespace User
 {
 
-    public class Weapon : IRangeWeapon, IDisposable
+    public class Weapon : IRangeWeapon
     {
         
         public int WeaponId { get; protected set; }
@@ -127,6 +127,7 @@ namespace User
                     Observable
                         .Timer(TimeSpan.FromSeconds(ReloadTime))
                         .Subscribe(_ => Reload())
+                            .AddTo(_disposables)
                 );
             }
         }
@@ -140,6 +141,7 @@ namespace User
                     Observable
                         .Timer(TimeSpan.FromSeconds(ShootSpeed))
                         .Subscribe(_ => IsShootReady = true)
+                        .AddTo(_disposables)
                 );
             }
         }
@@ -147,6 +149,7 @@ namespace User
 
         public void Dispose()
         {
+            Laser.Dispose();
             _disposables.ForEach(d => d.Dispose());
         }
         

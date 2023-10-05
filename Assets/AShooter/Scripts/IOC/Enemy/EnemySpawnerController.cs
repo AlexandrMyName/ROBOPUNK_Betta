@@ -73,7 +73,9 @@ namespace DI.Spawn
 
         internal void StopSpawnProcess()
         {
+            
             _waveDisposable.Dispose();
+            _enemySpawner.Dispose();
         }
 
 

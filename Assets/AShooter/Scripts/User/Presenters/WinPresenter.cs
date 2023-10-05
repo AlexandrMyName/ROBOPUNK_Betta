@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using User;
-
+using Zenject;
 
 namespace AShooter.Scripts.User.Presenters
 {
@@ -28,7 +28,7 @@ namespace AShooter.Scripts.User.Presenters
         private TimeSpan _time;
 
         private SceneLoader _sceneLoader;
-
+        private bool _isInit;
         
         private void Awake()
         {
@@ -55,12 +55,17 @@ namespace AShooter.Scripts.User.Presenters
         
         public void Show()
         {
+            
             Timer.gameObject.SetActive(true);
         }
 
 
         private void ShowFullWinPanel()
         {
+            if (_isInit) return;
+            _isInit = true;
+            Time.timeScale = 0.0f;
+            InputManager.DisableSystem();
             WinLabel.SetActive(true);
             ButtonsPanel.SetActive(true);
         }
@@ -68,20 +73,28 @@ namespace AShooter.Scripts.User.Presenters
 
         private void SwitchOnMainMenu()
         {
-            SceneManager.UnloadSceneAsync(1);
-            SceneManager.LoadSceneAsync(0);
-        }
+            InputManager.EnableSystem();
+            Time.timeScale = 1.0f;
+            SceneManager.LoadScene(0);
 
+        }
 
         private void ReloadGameAgain()
         {
-            SceneManager.UnloadSceneAsync(1);
-            SceneManager.LoadSceneAsync(1);
+            InputManager.EnableSystem();
+            Time.timeScale = 1.0f;
+            SceneManager.LoadScene(1);
+
+
+
         }
-        
-        
-        
-        
-        
+        public void Hide()
+        {
+
+            gameObject.SetActive(false);
+
+        }
+
+        public bool GetActivityState() => gameObject.activeSelf;
     }
 }

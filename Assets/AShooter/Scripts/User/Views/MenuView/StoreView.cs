@@ -13,7 +13,7 @@ namespace User.Presenters
 
         [Space(10)]
         [Header("Buttons:")]
-        [SerializeField] private Button _backButton;
+        [SerializeField] private Button _backButton; 
         [SerializeField] private Button _passiveSkillsButton;
         [SerializeField] private Button _assistButton;
         [SerializeField] private Button _weaponButton;

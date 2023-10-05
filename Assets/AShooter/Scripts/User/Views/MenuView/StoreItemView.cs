@@ -21,7 +21,7 @@ namespace User.Presenters
 
         [SerializeField] private Button _button;
         [SerializeField] private TMP_Text _description;
-        [SerializeField] private TMP_Text _price;
+        [SerializeField] private TMP_Text _price; 
         [SerializeField] private TMP_Text _characteristic;
 
 

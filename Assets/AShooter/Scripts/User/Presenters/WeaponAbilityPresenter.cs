@@ -159,6 +159,7 @@ namespace User
             _pickUpWeaponDisposables.ForEach(d => d.Dispose());
         }
 
-
+        private void OnDestroy() => Dispose();
+        
     }
 }

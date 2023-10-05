@@ -130,7 +130,14 @@ namespace Core
         }
 
 
-        public void Dispose() => _disposables.ForEach(d => d.Dispose());
+        public void Dispose()
+        {
+            _disposables.ForEach(d => d.Dispose());
+            foreach (var weapon in _weaponStorage.Weapons)
+            {
+                weapon.Value.Dispose();
+            }
+        }
 
 
     }

@@ -10,7 +10,7 @@ namespace Core
     public class PlayerGoldWalletSystem : BaseSystem , IDisposable
     {
         
-        private List<IDisposable> _disposables;
+        private List<IDisposable> _disposables = new();
         private IGoldWalletView _goldWaletView;
 
 
