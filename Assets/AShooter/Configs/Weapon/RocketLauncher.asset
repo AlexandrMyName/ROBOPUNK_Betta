@@ -15,7 +15,7 @@ MonoBehaviour:
   <WeaponId>k__BackingField: 3
   <WeaponObject>k__BackingField: {fileID: 2128533289924598121, guid: 8c966cb7b9951b745ba686418d279253, type: 3}
   <WeaponIcon>k__BackingField: {fileID: 21300000, guid: ae9ee4160ab42c14dab4bf0a18b625bd, type: 3}
-  <ProjectileObject>k__BackingField: {fileID: 2759587474139382199, guid: c1680656887a28340840a682c5abdad3, type: 3}
+  <ProjectileObject>k__BackingField: {fileID: 2759587474139382199, guid: cfa0edafdae50c745acdbfab15549caa, type: 3}
   <ProjectileForce>k__BackingField: 15
   <WeaponType>k__BackingField: 3
   <Damage>k__BackingField: 100

@@ -4,10 +4,13 @@ using User;
 using Zenject;
 
 
-public class UIInstaller : MonoInstaller
+namespace DI
 {
+    
+    public class UIInstaller : MonoInstaller
+    {
 
-    [SerializeField] private Transform _containerForUI;
+        [SerializeField] private Transform _containerForUI;
 
     [SerializeField] private GameObject _deathViewPrefab;
     [SerializeField] private GameObject _dashViewPrefab;
@@ -62,34 +65,39 @@ public class UIInstaller : MonoInstaller
             .AsCached();
         
 
-        var weaponAbilityPresenter = InstantiateView<WeaponAbilityPresenter>(_weaponAbilityViewPrefab);
-        IWeaponAbilityView weaponAbilityView = weaponAbilityPresenter.GetComponent<WeaponAbilityView>();
+            var weaponAbilityPresenter = InstantiateView<WeaponAbilityPresenter>(_weaponAbilityViewPrefab);
+            IWeaponAbilityView weaponAbilityView = weaponAbilityPresenter.GetComponent<WeaponAbilityView>();
 
-        Container.Bind<IWeaponAbilityView>()
-            .FromInstance(weaponAbilityView)
-            .AsCached();
+            Container.Bind<IWeaponAbilityView>()
+                .FromInstance(weaponAbilityView)
+                .AsCached();
 
-        Container
-            .Bind<IShieldView>()
-            .FromInstance(InstantiateView<IShieldView>(_shieldViewPrefab))
-            .AsCached();
+            Container
+                .Bind<IShieldView>()
+                .FromInstance(InstantiateView<IShieldView>(_shieldViewPrefab))
+                .AsCached();
 
-        Container.Bind<WeaponAbilityPresenter>().FromInstance(weaponAbilityPresenter).AsCached();
+            Container.Bind<WeaponAbilityPresenter>().FromInstance(weaponAbilityPresenter).AsCached();
 
-        Container
-            .Bind<IInteractView>()
-            .FromInstance(InstantiateView<IInteractView>(_interactViewPrefab))
-            .AsCached();
+            Container
+                .Bind<IInteractView>()
+                .FromInstance(InstantiateView<IInteractView>(_interactViewPrefab))
+                .AsCached();
+
+            Container
+                .Bind<IWinView>()
+                .FromInstance(InstantiateView<IWinView>(_winViewPrefab))
+                .AsCached();
+        }
+
+
+        private T InstantiateView<T>(GameObject prefab)
+        {
+            GameObject viewInstance = Instantiate(prefab, _containerForUI);
+            T view = viewInstance.GetComponent<T>();
+            return view;
+        }
+
 
     }
-
-
-    private  T InstantiateView <T>(GameObject prefab)
-    {
-        GameObject viewInstance = Instantiate(prefab, _containerForUI);
-        T view = viewInstance.GetComponent<T>();
-        return view;
-    }
-
-
 }
