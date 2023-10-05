@@ -205,7 +205,11 @@ namespace DI.Spawn
             SetEnemyPosition(obj);
 
             var enemy = obj.GetComponent<Enemy>();
-            enemy.ComponentsStore.Attackable.IsDeadFlag.Subscribe(isDead => { CheckingWaveMembership(isDead, obj); });
+            enemy.ComponentsStore
+                .Attackable
+                .IsDeadFlag
+                .Subscribe(isDead => { CheckingWaveMembership(isDead, obj); });
+              //  .AddTo(_disposables);
 
             obj.SetActive(true);
         }

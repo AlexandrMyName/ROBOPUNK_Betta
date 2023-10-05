@@ -51,5 +51,7 @@ namespace Core
             this.enabled = false;
         }
 
+        private void OnDestroy() => Dispose();
+        
     }
 }

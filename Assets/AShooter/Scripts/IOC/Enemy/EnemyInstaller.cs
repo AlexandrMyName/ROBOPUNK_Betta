@@ -43,7 +43,10 @@ namespace DI
                 
             }
         }
-
+        private void OnDestroy()
+        {
+            _spawner.StopSpawnProcess();
+        }
 
     }
 }

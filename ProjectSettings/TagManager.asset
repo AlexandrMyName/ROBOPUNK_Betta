@@ -11,6 +11,7 @@ TagManager:
   - PickUpWeapon
   - MeeleWeapon
   - MainWeapon
+  - DI
   layers:
   - Default
   - TransparentFX

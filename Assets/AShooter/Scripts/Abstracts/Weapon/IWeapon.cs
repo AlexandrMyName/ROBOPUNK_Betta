@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using User;
 
 
 namespace Abstracts
 {
 
-    public interface IWeapon
+    public interface IWeapon : IDisposable
     {
         
         int WeaponId { get; }

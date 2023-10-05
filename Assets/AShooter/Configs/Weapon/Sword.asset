@@ -18,7 +18,7 @@ MonoBehaviour:
   <ProjectileObject>k__BackingField: {fileID: 0}
   <ProjectileForce>k__BackingField: 20
   <WeaponType>k__BackingField: 0
-  <Damage>k__BackingField: 45
+  <Damage>k__BackingField: 90
   <ClipSize>k__BackingField: 0
   <LeftPatronsCount>k__BackingField: 0
   <ReloadTime>k__BackingField: 0
@@ -30,5 +30,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 129
   <MuzzleEffect>k__BackingField: {fileID: 0}
+  <MuzzleEffectDestroyDelay>k__BackingField: 0
   <Effect>k__BackingField: {fileID: 0}
   <EffectDestroyDelay>k__BackingField: 0

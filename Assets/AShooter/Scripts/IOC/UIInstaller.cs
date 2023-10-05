@@ -25,6 +25,8 @@ namespace DI
     [Header("Menu:")]
     [SerializeField] private GameObject _pauseMenuViewPrefab;
     [SerializeField] private GameObject _storeMenuViewPrefab;
+    [SerializeField] private GameObject _winView_Prefab;
+
 
     public override void InstallBindings()
     {
@@ -86,7 +88,7 @@ namespace DI
 
             Container
                 .Bind<IWinView>()
-                .FromInstance(InstantiateView<IWinView>(_winViewPrefab))
+                .FromInstance(InstantiateView<IWinView>(_winView_Prefab))
                 .AsCached();
         }
 

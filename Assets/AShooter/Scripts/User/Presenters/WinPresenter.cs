@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using User;
-
+using Zenject;
 
 namespace AShooter.Scripts.User.Presenters
 {
@@ -68,20 +68,21 @@ namespace AShooter.Scripts.User.Presenters
 
         private void SwitchOnMainMenu()
         {
-            SceneManager.UnloadSceneAsync(1);
+            SceneContext.DestroyImmediate(GameObject.FindWithTag("DI"));
             SceneManager.LoadSceneAsync(0);
-        }
 
+        }
 
         private void ReloadGameAgain()
         {
-            SceneManager.UnloadSceneAsync(1);
-            SceneManager.LoadSceneAsync(1);
+            SceneContext.DestroyImmediate(GameObject.FindWithTag("DI"));
+            SceneManager.LoadScene(1);
+
+
+
         }
-        
-        
-        
-        
-        
+        public void Hide() => gameObject.SetActive(false);
+
+        public bool GetActivityState() => gameObject.activeSelf;
     }
 }
