@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,46 +20,41 @@ namespace User
         public SceneLoader(SceneLoaderView view) => _view = view;
 
 
-        public IEnumerator SceneLoad(int sceneIndex)
+        public async Task SceneLoad(int sceneIndex)
         {
-
             _view.Show();
             _asyncScene = SceneManager.LoadSceneAsync(sceneIndex);
             _asyncScene.allowSceneActivation = false;
             _isLoading = true;
 
-            yield return _asyncScene;
+            while (!_asyncScene.isDone)
+            {
+                await Task.Delay(100);
+            }
         }
 
 
         public void UpdateLoadingBar()
         {
-
             if (!_isLoading || _asyncScene == null) return;
 
             _targetValueLoading = _asyncScene.progress;
 
-            if (_targetValueLoading != _view.LoadProgressSlider.value)
+            if (_view.LoadProgressSlider.value != _targetValueLoading)
             {
-
                 _view.LoadProgressSlider.value = Mathf.Lerp(
-                    _view.LoadProgressSlider.value,
-                    _targetValueLoading, 
-                    Time.deltaTime);
-
-                if (Mathf.Abs(_view.LoadProgressSlider.value - _targetValueLoading) < 0.01f)
-                {
-                    _view.LoadProgressSlider.value = _targetValueLoading;
-                }
+                    0.0f,
+                    1.0f, 
+                    _targetValueLoading);
             }
 
-            if ((int)(_view.LoadProgressSlider.value * 100) >= 89)
+            if (_asyncScene.progress > 0.8f)
             {
                 _asyncScene.allowSceneActivation = true;
                 _isLoading = false;
             }
-
         }
 
+        
     }
 }

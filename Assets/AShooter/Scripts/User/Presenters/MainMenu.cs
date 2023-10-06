@@ -48,10 +48,10 @@ namespace User.View
         public void Show() => gameObject.SetActive(true);
         
 
-        private void OnButtonClickStart(){
+        private async void OnButtonClickStart(){
 
             _mainMenuPanel.SetActive(false);
-           StartCoroutine(_sceneLoader.SceneLoad(_sceneIndexToLoad));
+           await _sceneLoader.SceneLoad(_sceneIndexToLoad);
         }
 
 
