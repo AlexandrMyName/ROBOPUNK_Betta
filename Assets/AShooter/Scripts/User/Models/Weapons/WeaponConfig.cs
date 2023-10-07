@@ -46,6 +46,10 @@ namespace User
 
         [field: SerializeField, Min(0f)] public float EffectDestroyDelay { get; private set; }
 
+        [field: SerializeField] public GameObject FakeWeaponObject { get; private set; }
+
+        [field: SerializeField] public GameObject FakeBulletsObject { get; private set; }
+
 
     }
 }

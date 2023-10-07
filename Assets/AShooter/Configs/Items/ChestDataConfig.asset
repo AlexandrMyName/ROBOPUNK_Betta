@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: ChestDataConfig
   m_EditorClassIdentifier: 
   <WeaponsPossibleGeneration>k__BackingField:
+  - {fileID: 11400000, guid: 3b6538afe21c486458721f12758b87e4, type: 2}
   - {fileID: 11400000, guid: 7d4d0cf09ac337e43a27ab9bb23748f7, type: 2}
+  - {fileID: 11400000, guid: ae13d1e5ccf1b8947a35cdba8a13a70b, type: 2}
+  - {fileID: 11400000, guid: 79ddbc45dcc944546843cd1b88ead445, type: 2}
   ImprovableItemsPossibleGeneration:
   - Icon: {fileID: 0}
     ImprovableType: 0

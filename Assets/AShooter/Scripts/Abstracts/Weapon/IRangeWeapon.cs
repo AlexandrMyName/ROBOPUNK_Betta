@@ -33,6 +33,10 @@ namespace Abstracts
 
         float MuzzleEffectDestroyDelay { get; }
 
+        GameObject FakeWeaponObject { get;  }
+
+        GameObject FakeBulletsObject { get; }
+
 
         void Shoot(Vector3 mousePosition);
 

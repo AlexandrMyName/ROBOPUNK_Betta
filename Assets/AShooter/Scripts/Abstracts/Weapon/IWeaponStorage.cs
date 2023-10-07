@@ -15,6 +15,7 @@ namespace Abstracts
         Dictionary<WeaponType, IWeapon> Weapons { get; }
 
         void InitializeWeapons( Transform weaponContainer );
+        void GetPickUpItem(PickUpItemModel pickUpItemModel);
 
     }
 }

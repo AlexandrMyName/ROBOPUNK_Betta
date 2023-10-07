@@ -33,3 +33,5 @@ MonoBehaviour:
   <MuzzleEffectDestroyDelay>k__BackingField: 2
   <Effect>k__BackingField: {fileID: 19800006, guid: e79caf639b59c854aa4069816db71cd9, type: 3}
   <EffectDestroyDelay>k__BackingField: 10
+  <FakeWeaponObject>k__BackingField: {fileID: 8023954343411060724, guid: 24a4bcf1d4e69824f8dd9387b2307a1a, type: 3}
+  <FakeBulletsObject>k__BackingField: {fileID: 1468281649871228830, guid: 95d4050ef020a2d4dbe79a3255d26b4d, type: 3}

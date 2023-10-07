@@ -50,6 +50,10 @@ namespace User
 
         public float EffectDestroyDelay { get; protected set; }
 
+        public GameObject FakeWeaponObject { get; protected set; }
+
+        public GameObject FakeBulletsObject { get; protected set; }
+
         public ReactiveProperty<bool> IsReloadProcessing { get; protected set; }
 
         public bool IsShootReady { get; protected set; }
@@ -65,7 +69,8 @@ namespace User
         public Weapon(int weaponId, GameObject weaponObject, Sprite weaponIcon, Projectile projectileObject,
             float projectileForce, WeaponType weaponType, float damage, int clipSize, ReactiveProperty<int> leftPatronsCount,
             float reloadTime, float shootDistance, float shootSpeed, float fireSpread, float spreadFactor, LayerMask layerMask,
-            ParticleSystem muzzleEffect, float muzzleEffectDestroyDelay, ParticleSystem effect, float effectDestroyDelay, Camera camera)
+            ParticleSystem muzzleEffect, float muzzleEffectDestroyDelay, ParticleSystem effect, float effectDestroyDelay,
+            GameObject fakeWeaponObject, GameObject fakeBulletsObject, Camera camera)
         {
             WeaponId = weaponId;
             WeaponObject = weaponObject;
@@ -86,6 +91,8 @@ namespace User
             MuzzleEffectDestroyDelay = muzzleEffectDestroyDelay;
             Effect = effect;
             EffectDestroyDelay = effectDestroyDelay;
+            FakeWeaponObject = fakeWeaponObject;
+            FakeBulletsObject = fakeBulletsObject;
             IsShootReady = true;
             IsReloadProcessing = new ReactiveProperty<bool>(false);
 
