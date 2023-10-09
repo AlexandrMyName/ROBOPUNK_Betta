@@ -9,11 +9,14 @@ public class Chest : MonoBehaviour, IChest
 {
 
     [SerializeField] private ChestDataConfig chestConfig;
+    [SerializeField] private Animator chestAnimator;
     public object GetRandomItem()
     {
         int index = Random.Range(0, chestConfig.COUNT_POSSIBLE_OBJECTS - 1);
 
         GetComponent<SphereCollider>().enabled = false;
+
+        OpenChest();
 
         switch (index)
         {
@@ -41,6 +44,11 @@ public class Chest : MonoBehaviour, IChest
         var rndGoldCoinNumber = Random.Range(0, chestConfig.MettaCoinsPossibleGeneration.Count - 1);
         var rndGoldCoinValue = chestConfig.MettaCoinsPossibleGeneration[rndGoldCoinNumber];
         return new CoinMeta(rndGoldCoinValue);
+    }
+    
+    private void OpenChest()
+    {
+        chestAnimator.SetTrigger("OpenChest");
     }
 
 }
