@@ -31,5 +31,7 @@ MonoBehaviour:
     m_Bits: 137
   <MuzzleEffect>k__BackingField: {fileID: 19800004, guid: cb9779a6e3aba524a9e630eb47be2e07, type: 3}
   <MuzzleEffectDestroyDelay>k__BackingField: 2
-  <Effect>k__BackingField: {fileID: 19800006, guid: e79caf639b59c854aa4069816db71cd9, type: 3}
+  <Effect>k__BackingField: {fileID: 19800006, guid: 4d384e9afdf06104dae3e7125feae2a1, type: 3}
   <EffectDestroyDelay>k__BackingField: 10
+  <FakeWeaponObject>k__BackingField: {fileID: 2082415515657028472, guid: 8e6c7da40ed278241a359376bbd827b4, type: 3}
+  <FakeBulletsObject>k__BackingField: {fileID: 2517991532731992015, guid: 834bfe61bb777c2438c801fcca22e2db, type: 3}

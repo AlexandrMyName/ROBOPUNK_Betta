@@ -16,7 +16,7 @@ MonoBehaviour:
   <ExplosionIcon>k__BackingField: {fileID: 21300000, guid: e17203397c1e765488076e2eacf65116, type: 3}
   <AbilityType>k__BackingField: 0
   <Damage>k__BackingField: 800
-  <DamageOverTime>k__BackingField: 2
+  <DamageOverTime>k__BackingField: 5
   <DamageRate>k__BackingField: 1
   <Radius>k__BackingField: 10
   <Force>k__BackingField: 10
@@ -25,7 +25,7 @@ MonoBehaviour:
   <UsageTimeout>k__BackingField: 4
   <LayerMask>k__BackingField:
     serializedVersion: 2
-    m_Bits: 129
+    m_Bits: 137
   <DamageOverTimeEffect>k__BackingField: {fileID: 19800000, guid: f68094d600ff1ef41871c7c96dfd49ea, type: 3}
   <EffectNumPerTick>k__BackingField: 20
   <Effect>k__BackingField: {fileID: 19800006, guid: dfe2904d1d2ea794c8ebf2a448f18fbf, type: 3}

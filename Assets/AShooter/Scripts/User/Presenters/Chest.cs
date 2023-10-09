@@ -1,5 +1,7 @@
 using Abstracts;
 using Core;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using User;
 using Random = UnityEngine.Random;
@@ -22,16 +24,16 @@ public class Chest : MonoBehaviour, IChest
         {
             case 0:
                 if (chestConfig.WeaponsPossibleGeneration == null) return null;
-                return chestConfig.WeaponsPossibleGeneration[Random.Range(0, chestConfig.WeaponsPossibleGeneration.Count - 1)];
+                return GetRandomPickUpItem();
             case 1:
                 if (chestConfig.ImprovableItemsPossibleGeneration == null) return null;
-                return chestConfig.ImprovableItemsPossibleGeneration[Random.Range(0, chestConfig.WeaponsPossibleGeneration.Count - 1)];
+                return chestConfig.ImprovableItemsPossibleGeneration[Random.Range(0, chestConfig.ImprovableItemsPossibleGeneration.Count - 1)];
             case 2:
                 if (chestConfig.MettaCoinsPossibleGeneration == null) return null;
                 return GetRandomGoldCoin();
             case 3:
                 if (chestConfig.HealthPossibleGeneration == null) return null;
-                return chestConfig.HealthPossibleGeneration[Random.Range(0, chestConfig.WeaponsPossibleGeneration.Count - 1)];
+                return chestConfig.HealthPossibleGeneration[Random.Range(0, chestConfig.HealthPossibleGeneration.Count - 1)];
             default: 
                 
                 return null;
@@ -50,5 +52,16 @@ public class Chest : MonoBehaviour, IChest
     {
         chestAnimator.SetTrigger("OpenChest");
     }
+
+
+    private object GetRandomPickUpItem()
+    {
+        var configIndex = Random.Range(0, chestConfig.WeaponsPossibleGeneration.Count - 1);
+        var config = chestConfig.WeaponsPossibleGeneration[configIndex];
+        var pickUpItemTypeIndex = Random.Range(0, Enum.GetNames(typeof(PickUpItemType)).Length);
+
+        return new PickUpItemModel(config, (PickUpItemType)pickUpItemTypeIndex, transform.position);
+    }
+
 
 }

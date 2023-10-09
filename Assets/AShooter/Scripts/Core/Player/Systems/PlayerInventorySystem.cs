@@ -18,6 +18,7 @@ namespace Core
         private IGameComponents _components;
         private List<IDisposable> _disposables;
         private IGoldWallet _goldWallet;
+        private IWeaponStorage _weaponStorage;
         private IInteractView _interactView;
 
         private bool _canOpenChest;
@@ -34,6 +35,7 @@ namespace Core
             _disposables = new();
             _components = components;
             _goldWallet = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.GoldWallet;
+            _weaponStorage = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.WeaponStorage;
             _input.Interact.AxisOnChange.Subscribe(value => SwitchInteractInput()).AddTo(_disposables);
 
             _components.BaseObject.GetComponent<Collider>()
@@ -92,9 +94,9 @@ namespace Core
                 ApplayGettingMedicineChest();
             }
 
-            if (objItem.GetType() == typeof(WeaponConfig))
+            if (objItem.GetType() == typeof(PickUpItemModel))
             {
-                ApplayGettingWeapon();
+                ApplayGettingWeapon((PickUpItemModel)objItem);
             }
 
             if (objItem.GetType() == typeof(ImprovableItemConfig))
@@ -120,10 +122,12 @@ namespace Core
         }
 
 
-        private void ApplayGettingWeapon()
+        private void ApplayGettingWeapon(PickUpItemModel pickUpItemModel)
         {
+            _weaponStorage.GetPickUpItem(pickUpItemModel);
+
 #if UNITY_EDITOR
-            Debug.Log("Get Weapon");
+            Debug.Log($"Get {pickUpItemModel.PickUpItemType} {pickUpItemModel.WeaponConfig.WeaponType}");
 #endif
         }
 

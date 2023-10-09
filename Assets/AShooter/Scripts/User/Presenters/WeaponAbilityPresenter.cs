@@ -25,7 +25,7 @@ namespace User
 
         public void InitWeapons(IWeaponStorage weaponStorage)
         {
-            _meleeWeaponItem = CreateWeaponView(weaponStorage.Weapons[0], _weaponAbilityView.MeleeWeaponContainer, "Shift");
+            _meleeWeaponItem = CreateWeaponView(weaponStorage.Weapons[WeaponType.Sword], _weaponAbilityView.MeleeWeaponContainer, "Shift");
             _mainWeaponItem = CreateWeaponView(weaponStorage.WeaponState.MainWeapon.Value, _weaponAbilityView.MainWeaponContainer, "ЛКМ");
             _pickUpWeaponItem = CreateWeaponView(weaponStorage.WeaponState.PickUpWeapon.Value, _weaponAbilityView.PickUpWeaponContainer, "ПКМ");
 

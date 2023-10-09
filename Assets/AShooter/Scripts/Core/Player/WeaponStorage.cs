@@ -85,6 +85,8 @@ namespace Core
                 config.MuzzleEffectDestroyDelay,
                 config.Effect,
                 config.EffectDestroyDelay,
+                config.FakeWeaponObject,
+                config.FakeBulletsObject,
                 _camera
             );
         }
@@ -106,6 +108,25 @@ namespace Core
                 config.EffectDestroyDelay,
                 config.ShootSpeed
             );
+        }
+
+
+        public void GetPickUpItem(PickUpItemModel pickUpItemModel)
+        {
+            var config = pickUpItemModel.WeaponConfig;
+
+            var pickUpObject = pickUpItemModel.PickUpItemType switch
+            {
+                PickUpItemType.Weapon => config.FakeWeaponObject,
+                PickUpItemType.Bullet => config.FakeBulletsObject,
+                _ => config.WeaponObject
+            };
+
+            var weaponObject = GameObject.Instantiate(pickUpObject, pickUpItemModel.ParentPoint + Vector3.forward, Quaternion.identity);
+
+            PickUpItem pickUpItem = weaponObject.AddComponent<PickUpItem>();
+            pickUpItem.WeaponType = config.WeaponType;
+            pickUpItem.PickUpItemType = pickUpItemModel.PickUpItemType;
         }
 
         
