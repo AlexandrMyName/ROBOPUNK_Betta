@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using User;
 using Zenject;
 
+
 namespace AShooter.Scripts.User.Presenters
 {
     
@@ -28,7 +29,10 @@ namespace AShooter.Scripts.User.Presenters
         private TimeSpan _time;
 
         private SceneLoader _sceneLoader;
+        
         private bool _isInit;
+        private bool _isNeedBarUpdate;
+        
         
         private void Awake()
         {
@@ -50,12 +54,14 @@ namespace AShooter.Scripts.User.Presenters
             
             if (WinTimerSecs <= 0)
                 ShowFullWinPanel();
+            
+            if (_isNeedBarUpdate)
+                _sceneLoader.UpdateLoadingBar();
         }
         
         
         public void Show()
         {
-            
             Timer.gameObject.SetActive(true);
         }
 
@@ -71,30 +77,33 @@ namespace AShooter.Scripts.User.Presenters
         }
 
 
-        private void SwitchOnMainMenu()
+        private async void SwitchOnMainMenu()
         {
             InputManager.EnableSystem();
+            _isNeedBarUpdate = true;
+            await _sceneLoader.SceneLoad(0);
             Time.timeScale = 1.0f;
-            SceneManager.LoadScene(0);
-
         }
 
-        private void ReloadGameAgain()
+        
+        private async void ReloadGameAgain()
         {
             InputManager.EnableSystem();
+            
+            _isNeedBarUpdate = true;
+            await _sceneLoader.SceneLoad(1);
             Time.timeScale = 1.0f;
-            SceneManager.LoadScene(1);
-
-
-
         }
+        
+        
         public void Hide()
         {
-
             gameObject.SetActive(false);
-
         }
 
+        
         public bool GetActivityState() => gameObject.activeSelf;
+        
+        
     }
 }
