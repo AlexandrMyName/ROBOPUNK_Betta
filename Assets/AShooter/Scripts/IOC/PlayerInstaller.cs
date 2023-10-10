@@ -41,6 +41,7 @@ namespace DI
         private SpawnPlayerFactory _spawnPlayerFactory;
         
         private Player _player;
+ 
 
         [Space,SerializeField, Header("Test (can be bull)")]
         private World _world;
@@ -48,6 +49,8 @@ namespace DI
 
         public override void InstallBindings()
         {
+
+           
             SetHealth(_maxPlayerHealth);
             SetSpeed(_speed);
 
@@ -71,6 +74,8 @@ namespace DI
                 .Bind<CinemachineVirtualCamera>()
                 .FromInstance(_camera)
                 .AsCached();
+
+            
         }
         
 
@@ -217,10 +222,13 @@ namespace DI
                 .FromInstance(_player.transform)
                 .AsCached();
 
+         
 
             Container.Bind<Player>()
                 .FromInstance(_player)
                 .AsCached();
+
+             
 
             if (_world) _world.Init(_player.transform);
         }

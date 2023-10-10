@@ -18,7 +18,7 @@ MonoBehaviour:
     - description: 
       nameEnemy: 
       enemyType: 0
-      prefab: {fileID: 3957541045528095213, guid: 5775e246580657045982392a26274915, type: 3}
+      prefab: {fileID: 5521032368774563715, guid: e03c9257cd1d56248bcd645243d52cea, type: 3}
       maxHealth: 1000
       maxAttackDamage: 10
       attackDistance: 2

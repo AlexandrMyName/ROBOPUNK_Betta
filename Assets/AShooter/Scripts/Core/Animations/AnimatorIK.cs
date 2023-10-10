@@ -4,7 +4,8 @@ using Abstracts;
 using System;
 using UniRx;
 using UnityEngine.AI;
-
+using UnityEngine.Animations.Rigging;
+using Zenject;
 
 namespace Core
 {
@@ -21,6 +22,13 @@ namespace Core
         [SerializeField] private Collider _baseCollider;
         [SerializeField] private Rigidbody _baseRigidbody;
 
+        [Header("IK can be null, data of Aiming"),Space(5)]
+        [SerializeField] private MultiAimConstraint _aimConstraint;
+        [SerializeField] private RigBuilder _rigBuilder;
+        [SerializeField] private List<WeaponIK> _weaponIK;
+        [SerializeField] private bool _isEnemy;
+
+        private IEnemy _enemy;
         private Animator _animator;
         private Vector3 _lookAtIKpos;
 
@@ -82,16 +90,7 @@ namespace Core
 
         public void SetBool(string keyID, bool value) => _animator.SetBool(keyID, value);
 
-
-        private void OnAnimatorIK(int layerIndex)
-        {
-
-            _animator.SetLookAtWeight(_weight, _body, _head, _eyes, _clamp);
-            if (_lookAtIKpos != null)
-                _animator.SetLookAtPosition(_lookAtIKpos);
-        }
-
-
+  
         private void ActivateHumanoidDeath(RaycastHit hitPoint, Vector3 attackDirection)
         {
 
@@ -129,7 +128,44 @@ namespace Core
         }
 
 
-        private void Awake() => _animator = GetComponent<Animator>();
+        private void Awake()
+        {
+
+            if (_isEnemy)
+            {
+                _enemy = GetComponent<IEnemy>();
+            }
+
+            _animator = GetComponent<Animator>();
+
+            var ragdolls = GetComponentsInChildren<Collider>();
+ 
+            foreach(var collider in ragdolls)
+            {
+               
+                if (collider.gameObject.layer == LayerMask.NameToLayer("Ragdoll"))
+                {
+                    
+                  //  collider.GetComponent<Rigidbody>().isKinematic = false;
+                }
+            }
+            
+            if(_aimConstraint != null)
+            {
+                
+                WeightedTransformArray ikArray = new WeightedTransformArray(0);
+
+                Transform playerTarget = GameObject.Find("Player").GetComponent<Transform>();// Zenject  ++
+                 
+                ikArray.Add(new WeightedTransform( playerTarget , 1f));
+
+                _aimConstraint
+                   .data
+                    .sourceObjects = ikArray;
+                
+                _rigBuilder.Build();
+            }
+        }
 
 
         private void Start()
@@ -138,7 +174,13 @@ namespace Core
             if (TryGetRagDoll() == null)
                 Debug.LogWarning("Ragdoll is empty , please look for layer in plrefab");
         }
-
+        private void Update()
+        {
+            if(_isEnemy == true && _animType == TypeOfAnimation.Humanoid)
+            {
+                _animator.SetBool("Move", _enemy.EnemyState == DTO.EnemyState.Walk ? true : false);
+            }
+        }
 
         private int? TryGetRagDoll()
         {
