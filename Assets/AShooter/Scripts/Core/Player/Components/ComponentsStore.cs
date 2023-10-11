@@ -26,6 +26,8 @@ namespace Core
         public IStoreEnhancement StoreEnhancement { get; private set; }
 
         public IShield Shield { get; private set; }
+        
+        public IPlayerStats PlayerStats { get; private set; }
 
 
         public ComponentsStore(
@@ -38,7 +40,8 @@ namespace Core
             IExperienceHandle exp, 
             IStoreEnhancement store,
             IWeaponStorage weapons,
-            IShield shield)
+            IShield shield,
+            IPlayerStats playerStats)
         {
 
             /////[Construct]\\\\\
@@ -52,6 +55,7 @@ namespace Core
             WeaponStorage = weapons;
             StoreEnhancement = store;
             Shield = shield;
+            PlayerStats = playerStats;
         } 
 
 

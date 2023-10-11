@@ -81,7 +81,7 @@ namespace AShooter.Scripts.User.Presenters
         {
             InputManager.EnableSystem();
             _isNeedBarUpdate = true;
-            await _sceneLoader.SceneLoad(0);
+            await _sceneLoader.SceneLoad(2);
             Time.timeScale = 1.0f;
         }
 
