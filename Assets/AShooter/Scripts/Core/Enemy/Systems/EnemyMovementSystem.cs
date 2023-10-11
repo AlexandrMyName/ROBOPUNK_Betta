@@ -17,6 +17,7 @@ namespace Core
         private Transform _targetPosition;
         private float _indentFromTarget;
         private IEnemy _enemy;
+        private IAnimatorIK _animator;
         private ReactiveProperty<bool> _isCameAttackPosition;
 
 
@@ -28,8 +29,10 @@ namespace Core
 
         protected override void Awake(IGameComponents components)
         {
+
             _navMeshAgent = components.BaseObject.GetComponent<NavMeshAgent>();
             _enemy = components.BaseObject.GetComponent<IEnemy>();
+            _animator = components.BaseObject.GetComponent<IAnimatorIK>();
             _isCameAttackPosition = _enemy.ComponentsStore.Attackable.IsCameAttackPosition;
             _indentFromTarget = _enemy.ComponentsStore.Attackable.AttackDistance;
         }
@@ -52,12 +55,24 @@ namespace Core
             if (_navMeshAgent.remainingDistance <= _indentFromTarget)
             {
                 if (!_isCameAttackPosition.Value)
+                {
                     _isCameAttackPosition.Value = true;
+                    _enemy.EnemyState = DTO.EnemyState.Stunned;
+                }
             }
             else
             {
                 if (_isCameAttackPosition.Value)
+                {
                     _isCameAttackPosition.Value = false;
+                    _enemy.EnemyState = DTO.EnemyState.Walk;
+                }
+            }
+
+
+            if(_animator != null)
+            {
+                _animator.SetAimingAnimation(_isCameAttackPosition.Value, default);
             }
         }
 
