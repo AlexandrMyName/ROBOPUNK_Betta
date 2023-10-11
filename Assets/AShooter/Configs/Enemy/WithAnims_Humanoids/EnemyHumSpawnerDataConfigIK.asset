@@ -56,4 +56,25 @@ MonoBehaviour:
     spawnRadiusRelativeToPlayer: 25
     numberEnemiesInWave: 16
     numberEnemiesInScene: 20
+  - Enemy:
+    - description: 
+      nameEnemy: 
+      enemyType: 1
+      prefab: {fileID: 5783359468839766296, guid: 93b91b651f70a9642aca21f4dd45c5fe, type: 3}
+      maxHealth: 450
+      maxAttackDamage: 40
+      attackDistance: 10
+      attackFrequency: 2
+      goldDropRate: 50
+      goldValueRange:
+        min: 5
+        max: 10
+      experienceRange:
+        min: 3
+        max: 6
+      probabilityWeigh: 1
+    respawnEnemyInWaveDelay: 1
+    spawnRadiusRelativeToPlayer: 25
+    numberEnemiesInWave: 16
+    numberEnemiesInScene: 20
   respawnWaveDelay: 10

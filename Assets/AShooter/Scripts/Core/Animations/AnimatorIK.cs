@@ -23,7 +23,7 @@ namespace Core
         [SerializeField] private Rigidbody _baseRigidbody;
 
         [Header("IK can be null, data of Aiming"),Space(5)]
-        [SerializeField] private MultiAimConstraint _aimConstraint;
+        [SerializeField] private List<MultiAimConstraint> _aimConstraints;
         [SerializeField] private RigBuilder _rigBuilder;
         [SerializeField] private List<WeaponIK> _weaponIK;
         [SerializeField] private bool _isEnemy;
@@ -49,7 +49,7 @@ namespace Core
             {
                 case TypeOfAnimation.Humanoid:
                     ActivateHumanoidDeath(hitPoint, attackDirection);
-                    SetDeactivateTimer(5);
+                    SetDeactivateTimer(14);
                     break;
 
                 case TypeOfAnimation.NonHumanoid:
@@ -83,7 +83,8 @@ namespace Core
   
         public void ShootIK()
         {
-            _currentWeapon.Muzzle.Shoot();
+            if(_currentWeapon != null)
+                _currentWeapon.Muzzle.Shoot();
         }
 
 
@@ -162,20 +163,24 @@ namespace Core
 
             _animator = GetComponent<Animator>();
              
-            if(_aimConstraint != null)
+            if(_aimConstraints != null)
             {
-                
-                WeightedTransformArray ikArray = new WeightedTransformArray(0);
+                foreach (var aim in _aimConstraints)
+                {
+                    WeightedTransformArray ikArray = new WeightedTransformArray(0);
 
-                Transform playerTarget = GameObject.Find("Player").GetComponent<Transform>();// Zenject  ++
-                 
-                ikArray.Add(new WeightedTransform( playerTarget , 1f));
+                    Transform playerTarget = GameObject.Find("Player").GetComponent<Transform>();// Zenject  ++
 
-                _aimConstraint
-                   .data
-                    .sourceObjects = ikArray;
-                
-                _rigBuilder.Build();
+                    ikArray.Add(new WeightedTransform(playerTarget, 1f));
+
+                    aim
+                       .data
+                        .sourceObjects = ikArray;
+
+
+                }
+                if(_rigBuilder != null)
+                    _rigBuilder.Build();
             }
         }
 

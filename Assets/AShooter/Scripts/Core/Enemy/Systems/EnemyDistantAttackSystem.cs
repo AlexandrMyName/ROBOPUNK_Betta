@@ -71,7 +71,7 @@ namespace Core
         }
 
 
-        // to obsolete
+        [Obsolete]
         void ThrowPrimitive()
         {
             Vector3 directionToPlayer = (_targetPosition.position - _components.BaseTransform.position).normalized;

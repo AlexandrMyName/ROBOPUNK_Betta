@@ -16,8 +16,11 @@ namespace Core
         private NavMeshAgent _navMeshAgent;
         private Transform _targetPosition;
         private float _indentFromTarget;
+
+        private IGameComponents _components;    
         private IEnemy _enemy;
         private IAnimatorIK _animator;
+
         private ReactiveProperty<bool> _isCameAttackPosition;
 
 
@@ -29,6 +32,8 @@ namespace Core
 
         protected override void Awake(IGameComponents components)
         {
+
+            _components = components;
 
             _navMeshAgent = components.BaseObject.GetComponent<NavMeshAgent>();
             _enemy = components.BaseObject.GetComponent<IEnemy>();
@@ -73,6 +78,14 @@ namespace Core
             if(_animator != null)
             {
                 _animator.SetAimingAnimation(_isCameAttackPosition.Value, default);
+
+
+                if (_enemy.EnemyState == DTO.EnemyState.Stunned)
+                {
+                 
+                    _navMeshAgent.updateRotation = true;
+                    _navMeshAgent.updateUpAxis = true;
+                }
             }
         }
 
