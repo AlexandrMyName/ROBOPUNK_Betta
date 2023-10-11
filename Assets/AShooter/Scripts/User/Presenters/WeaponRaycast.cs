@@ -63,6 +63,7 @@ public class WeaponRaycast
                 _hitEffect.Emit(1);
                 trail.transform.position = hit.point;
 
+            if (hit.collider == null) return;
 
               hit.collider.TryGetComponent<IPlayer>( out var player);
 

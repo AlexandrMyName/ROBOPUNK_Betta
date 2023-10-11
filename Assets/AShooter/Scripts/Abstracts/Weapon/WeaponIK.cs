@@ -24,8 +24,8 @@ namespace Abstracts
 
         public void InitWeapon()
         {
-
-            Muzzle.InitEffects(TrailRendererPrefab, Config.Effect, Config.Damage);
+            if(Muzzle != null && TrailRendererPrefab && Config)
+                Muzzle.InitEffects(TrailRendererPrefab, Config.Effect, Config.Damage);
         }
     }
 }

@@ -81,8 +81,8 @@ namespace Core
         public void SetBool(string keyID, bool value) => _animator.SetBool(keyID, value);
 
   
-        public void ShootIK()
-        {
+        public void ShootIK() {
+
             if(_currentWeapon != null)
                 _currentWeapon.Muzzle.Shoot();
         }
@@ -107,10 +107,12 @@ namespace Core
 
             foreach (var weapon in _weaponIK)
             {
-
-                weapon.DefaultRig.weight = noneAiming;
-                weapon.AimingRig.weight = aimingWeight;
-                weapon.HandsRig.weight = handsWeight;
+                if(weapon.DefaultRig)
+                    weapon.DefaultRig.weight = noneAiming;
+                if (weapon.AimingRig)
+                    weapon.AimingRig.weight = aimingWeight;
+                if (weapon.HandsRig)
+                    weapon.HandsRig.weight = handsWeight;
 
                  weapon.InternalObjectWithCollider.SetActive(!isDisable);
             }
@@ -136,16 +138,19 @@ namespace Core
 
         private void ActivateNoneHumanoidDeath(Vector3 attackDirection)
         {
-            
+
+            SetRigsWeight(0, 0, 0);
             TrySetActiveSpiderIK(false);
             SetActiveAnimator(false);
             SetActiveRagdoll(true);
  
         }
 
+        #region Unity_Methods
 
         private void OnValidate()
         {
+
             _baseCollider ??= GetComponent<Collider>();
             _baseRigidbody ??= GetComponent<Rigidbody>();
         }
@@ -176,8 +181,7 @@ namespace Core
                     aim
                        .data
                         .sourceObjects = ikArray;
-
-
+                     
                 }
                 if(_rigBuilder != null)
                     _rigBuilder.Build();
@@ -215,9 +219,13 @@ namespace Core
                 UpdateAimingState();
         }
 
+        #endregion
 
         private void UpdateAimingState()
         {
+
+            if (_currentWeapon.AimingRig == null) return;
+
             if (_isAimingAnimation)
             {
 

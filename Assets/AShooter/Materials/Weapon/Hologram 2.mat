@@ -8,8 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Hologram 2
-  m_Shader: {fileID: 4800000, guid: e6b3be341f77ab2468b86c1f09a81e74, type: 3}
-  m_Parent: {fileID: 2100000, guid: acc749e2a8ce1b94a8ee6162d2af964b, type: 2}
+  m_Shader: {fileID: 203, guid: 0000000000000000f000000000000000, type: 0}
+  m_Parent: {fileID: 2100000, guid: 1ca1ed6983f656945bc738d12b9423d2, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
