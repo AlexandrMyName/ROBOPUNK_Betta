@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Abstracts;
 using AShooter.Scripts.Core.Player.Components;
 using UnityEngine;
@@ -7,6 +8,7 @@ using User;
 using User.Components.Repository;
 using User.Presenters;
 using User.View;
+using Random = UnityEngine.Random;
 
 
 namespace AShooter.Scripts.User.Presenters
@@ -42,14 +44,29 @@ namespace AShooter.Scripts.User.Presenters
 
         private void InitBoard()
         {
+            var playerLeader = GameObject.Instantiate(_leaderBoardEntryViewPrefab);
+            playerLeader.Name.text = _playerStats.Name;
+            playerLeader.Score.text = _playerStats.Score.ToString();
+            _leaders.Add(playerLeader);
+            
             for (int i = 0; i < _leadersCount; i++)
             {
-                _leaders.Add(GameObject.Instantiate(_leaderBoardEntryViewPrefab, LeaderBoardView.Content.transform));
-                
+                var leader = GameObject.Instantiate(_leaderBoardEntryViewPrefab);
+                leader.Name.text = $"{_playerStats.Name}_{i}";
+                leader.Score.text = Random.Range(_playerStats.Score - 200, _playerStats.Score + 200).ToString();
+                _leaders.Add(leader);
             }
+            
+            var sortedLeaders = _leaders.OrderBy(l => Int64.Parse(l.Score.text)).ToArray();
 
-            _leaders[0].Name.text = _playerStats.Name;
-            _leaders[0].Score.text = _playerStats.Score.ToString();
+            for (int i = 0; i < sortedLeaders.Length; i++)
+            {
+                sortedLeaders[i].Rank.text = (i+1).ToString();
+                sortedLeaders[i].transform.SetParent(LeaderBoardView.Content.gameObject.transform);
+                sortedLeaders[i].transform.localScale = Vector3.one;
+                sortedLeaders[i].transform.localPosition = Vector3.zero;
+                sortedLeaders[i].transform.localRotation = Quaternion.identity;
+            }
         }
         
         
