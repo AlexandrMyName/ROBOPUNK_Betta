@@ -17,7 +17,15 @@ namespace Abstracts
         public Rig HandsRig;
         public Rig AimingRig;
         public Rig DefaultRig;
-
+        public WeaponRaycast Muzzle;
+        public TrailRenderer TrailRendererPrefab;
         [Range(.1f,1f)] public float AimingDuration;
+
+
+        public void InitWeapon()
+        {
+
+            Muzzle.InitEffects(TrailRendererPrefab, Config.Effect, Config.Damage);
+        }
     }
 }

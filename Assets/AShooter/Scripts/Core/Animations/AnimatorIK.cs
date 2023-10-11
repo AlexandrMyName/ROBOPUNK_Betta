@@ -5,8 +5,8 @@ using System;
 using UniRx;
 using UnityEngine.AI;
 using UnityEngine.Animations.Rigging;
-using Zenject;
 using User;
+
 
 namespace Core
 {
@@ -81,6 +81,12 @@ namespace Core
         public void SetBool(string keyID, bool value) => _animator.SetBool(keyID, value);
 
   
+        public void ShootIK()
+        {
+            _currentWeapon.Muzzle.Shoot();
+        }
+
+
         private void ActivateHumanoidDeath(RaycastHit hitPoint, Vector3 attackDirection)
         {
 
@@ -89,18 +95,7 @@ namespace Core
             SetActiveAnimator(false);
             SetRigsWeight(0,0,0);
             SetActiveRagdoll(true);
-
-            //if (hitPoint.rigidbody != null)
-            //{
-
-            //    hitPoint.collider
-            //        .GetComponent<Rigidbody>()
-            //        .AddForce(
-            //            attackDirection,
-            //            ForceMode.Impulse
-            //    );
-
-            //}
+ 
         }
 
 
@@ -136,10 +131,7 @@ namespace Core
 
             _isAimingAnimation = isActive;
         }
-
-
-    
-
+         
 
         private void ActivateNoneHumanoidDeath(Vector3 attackDirection)
         {
@@ -160,6 +152,8 @@ namespace Core
 
         private void Awake()
         {
+
+            _weaponIK.ForEach(weapon => weapon.InitWeapon());
 
             if (_isEnemy)
             {
@@ -249,7 +243,7 @@ namespace Core
                         );
                // rb.mass = weight;
             }
-            Debug.LogWarning(rbs.Length);
+           
             return _ragdoll.Count;
         }
 

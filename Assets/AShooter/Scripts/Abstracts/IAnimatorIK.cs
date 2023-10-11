@@ -15,5 +15,6 @@ namespace Abstracts
         void SetFloat(string keyID, float value,float delta);
         void SetBool(string keyID, bool value);
         void SetAimingAnimation(bool isActive, WeaponType weaponType);
+        void ShootIK();
     }
 }

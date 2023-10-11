@@ -15,6 +15,7 @@ namespace Core
         private List<IDisposable> _disposables = new();
         private bool _isPositionReadiness;
         private IEnemy _enemy;
+        private IAnimatorIK _animator;
         private IGameComponents _components;
         private Transform _targetPosition;
         private float _attackFrequency;
@@ -28,8 +29,10 @@ namespace Core
 
         protected override void Awake(IGameComponents components)
         {
+
             _components = components;
             _enemy = components.BaseObject.GetComponent<IEnemy>();
+            _animator = components.BaseObject.GetComponent<IAnimatorIK>();
             _navMeshAgent = components.BaseObject.GetComponent<NavMeshAgent>();
             _enemy.ComponentsStore.Attackable.IsCameAttackPosition.Subscribe(SetPositionReadiness);
             _attackFrequency = _enemy.ComponentsStore.Attackable.AttackFrequency;
@@ -53,7 +56,17 @@ namespace Core
                 ||
                 !_navMeshAgent.isActiveAndEnabled) return;
 
-            if (_isPositionReadiness) ThrowPrimitive();//Not correct
+            if (_isPositionReadiness)
+            {
+                if(_animator != null)
+                {
+                    _animator.ShootIK();
+                }
+                else
+                {
+                    ThrowPrimitive();
+                }
+            }
 
         }
 
