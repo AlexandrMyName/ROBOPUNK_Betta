@@ -8,8 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Hologram 2
-  m_Shader: {fileID: 4800000, guid: e6b3be341f77ab2468b86c1f09a81e74, type: 3}
-  m_Parent: {fileID: 0}
+  m_Shader: {fileID: 203, guid: 0000000000000000f000000000000000, type: 0}
+  m_Parent: {fileID: 2100000, guid: 1ca1ed6983f656945bc738d12b9423d2, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -22,86 +22,13 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs:
-    - _BumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailAlbedoMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailMask:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailNormalMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _EmissionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _NoiseMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _OcclusionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _ParallaxMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+    m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _BumpScale: 1
-    - _Cutoff: 0.5
-    - _DetailNormalMapScale: 1
-    - _DstBlend: 0
-    - _EmissionMultiplier: 1.4
-    - _GlitchDensity: 15.36
-    - _GlitchEffectPeriod: -1.25
-    - _GlitchEffectStrength: 1
-    - _GlitchPeriod: 27.22
-    - _GlitchStrength: 0.0033
-    - _GlitchX: -0.14
-    - _GlitchY: 40.53
-    - _GlossMapScale: 1
-    - _Glossiness: 0.5
-    - _GlossyReflections: 1
-    - _HoloCrowdness: 2
     - _HoloDistance: 0.143
-    - _HoloGap: 0.23
-    - _HoloSpeed: 0
     - _HoloValue: 10
-    - _Metallic: 0
-    - _Mode: 0
-    - _OcclusionStrength: 1
-    - _Parallax: 0.02
-    - _RimPower: 1.38
-    - _SmoothnessTextureChannel: 0
-    - _SpecularHighlights: 1
-    - _SrcBlend: 1
-    - _UVSec: 0
-    - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0, g: 0.5665026, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _GlitchDirection: {r: 1, g: 1, b: 1, a: 0}
-    - _GlitchValue: {r: 0, g: 0, b: 0, a: 0}
     - _HoloColor: {r: 0.23064256, g: 0.51587594, b: 0.6698113, a: 0.105882354}
-    - _HoloDir: {r: 0, g: 1, b: 0, a: 1}
     - _HoloDirection: {r: -1, g: 1, b: 0, a: 0}
-    - _RimColor: {r: 0.5477066, g: 0, b: 1, a: 1}
   m_BuildTextureStacks: []

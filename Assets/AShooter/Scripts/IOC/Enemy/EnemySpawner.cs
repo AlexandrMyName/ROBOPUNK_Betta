@@ -158,9 +158,10 @@ namespace DI.Spawn
         private void ViewsCreation(Transform parent)
         {
 
-           var viewsInstance =  GameObject.Instantiate(_enemyViews_Prefab,parent);
+           var viewsInstance =  GameObject.Instantiate(_enemyViews_Prefab, parent, false);
+           // viewsInstance.transform.localScale = Vector3.one;
 
-            viewsInstance.transform.position = Vector3.zero + Vector3.up * 1.5f;
+            viewsInstance.transform.localPosition = Vector3.zero + Vector3.up * 1.5f;
             viewsInstance.GetComponent<IEnemyViews>().InitViews();
         }
 

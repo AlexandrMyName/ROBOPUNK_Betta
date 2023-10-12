@@ -40,9 +40,9 @@ MonoBehaviour:
       nameEnemy: 
       enemyType: 1
       prefab: {fileID: 3957541045528095213, guid: 121e617dee79e334aac211198583030d, type: 3}
-      maxHealth: 300
+      maxHealth: 1000
       maxAttackDamage: 40
-      attackDistance: 5
+      attackDistance: 10
       attackFrequency: 2
       goldDropRate: 50
       goldValueRange:

@@ -23,6 +23,7 @@ namespace Core
 
         protected override void Awake(IGameComponents components)
         {
+
             _components = components;
             _enemy = components.BaseObject.GetComponent<Enemy>();
             _navMeshAgent = components.BaseObject.GetComponent<NavMeshAgent>();

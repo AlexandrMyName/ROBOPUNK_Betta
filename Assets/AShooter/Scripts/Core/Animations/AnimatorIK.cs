@@ -4,6 +4,8 @@ using Abstracts;
 using System;
 using UniRx;
 using UnityEngine.AI;
+using UnityEngine.Animations.Rigging;
+using User;
 
 
 namespace Core
@@ -14,16 +16,23 @@ namespace Core
 
         [Header("This contains data of RB && animations with IK")]
         [Space]
-        [SerializeField, Range(0, 1f)] float _weight, _body, _head, _eyes, _clamp;
-
+       
         [SerializeField] private int _indexLayerOfRagdoll = 10;
         [SerializeField] private TypeOfAnimation _animType;
         [SerializeField] private Collider _baseCollider;
         [SerializeField] private Rigidbody _baseRigidbody;
 
+        [Header("IK can be null, data of Aiming"),Space(5)]
+        [SerializeField] private List<MultiAimConstraint> _aimConstraints;
+        [SerializeField] private RigBuilder _rigBuilder;
+        [SerializeField] private List<WeaponIK> _weaponIK;
+        [SerializeField] private bool _isEnemy;
+
+        private IEnemy _enemy;
         private Animator _animator;
         private Vector3 _lookAtIKpos;
-
+        private WeaponIK _currentWeapon;
+        private bool _isAimingAnimation;
         private List<RagdollData> _ragdoll = new();
 
 
@@ -40,7 +49,7 @@ namespace Core
             {
                 case TypeOfAnimation.Humanoid:
                     ActivateHumanoidDeath(hitPoint, attackDirection);
-                    SetDeactivateTimer(10);
+                    SetDeactivateTimer(14);
                     break;
 
                 case TypeOfAnimation.NonHumanoid:
@@ -59,18 +68,7 @@ namespace Core
         public void SetLayerWeight(int indexLayer, float weight)
         => _animator.SetLayerWeight(indexLayer, weight);
         
-
-        public void SetLookAtWeight(float weight, float body, float head, float eyes, float clamp)
-        {
-
-            _weight = weight;
-            _body = body;
-            _head = head;
-            _eyes = eyes;
-            _clamp = clamp;
-        }
-
-
+         
         public void SetLookAtPosition(Vector3 lookAt) => _lookAtIKpos = lookAt;
 
         public void SetTrigger(string keyID) => _animator.SetTrigger(keyID);
@@ -82,65 +80,167 @@ namespace Core
 
         public void SetBool(string keyID, bool value) => _animator.SetBool(keyID, value);
 
+  
+        public void ShootIK() {
 
-        private void OnAnimatorIK(int layerIndex)
-        {
-
-            _animator.SetLookAtWeight(_weight, _body, _head, _eyes, _clamp);
-            if (_lookAtIKpos != null)
-                _animator.SetLookAtPosition(_lookAtIKpos);
+            if(_currentWeapon != null)
+                _currentWeapon.Muzzle.Shoot();
         }
 
 
         private void ActivateHumanoidDeath(RaycastHit hitPoint, Vector3 attackDirection)
         {
 
+            GetComponent<NavMeshAgent>().enabled = false;
+
             SetActiveAnimator(false);
+            SetRigsWeight(0,0,0);
             SetActiveRagdoll(true);
+ 
+        }
 
-            if (hitPoint.rigidbody != null)
+
+        private void SetRigsWeight(float noneAiming = 0, float aimingWeight = 0, float handsWeight = 0)
+        {
+
+            bool isDisable = noneAiming == 0 && aimingWeight == 0 && handsWeight == 0;
+
+            foreach (var weapon in _weaponIK)
             {
+                if(weapon.DefaultRig)
+                    weapon.DefaultRig.weight = noneAiming;
+                if (weapon.AimingRig)
+                    weapon.AimingRig.weight = aimingWeight;
+                if (weapon.HandsRig)
+                    weapon.HandsRig.weight = handsWeight;
 
-                hitPoint.collider
-                    .GetComponent<Rigidbody>()
-                    .AddForce(
-                        attackDirection,
-                        ForceMode.Impulse
-                );
-
+                 weapon.InternalObjectWithCollider.SetActive(!isDisable);
             }
         }
 
 
+        public void SetAimingAnimation(bool isActive, WeaponType weaponType)
+        {
+
+            if (_weaponIK == null || _weaponIK.Count == 0) return;
+
+            if (weaponType == default)
+                 _currentWeapon = _weaponIK[0];
+            else
+            {
+                _currentWeapon = _weaponIK.Find(weapon => weapon.Type == weaponType);
+            } 
+             
+
+            _isAimingAnimation = isActive;
+        }
+         
+
         private void ActivateNoneHumanoidDeath(Vector3 attackDirection)
         {
-            
+
+            SetRigsWeight(0, 0, 0);
             TrySetActiveSpiderIK(false);
             SetActiveAnimator(false);
             SetActiveRagdoll(true);
  
         }
 
+        #region Unity_Methods
 
         private void OnValidate()
         {
+
             _baseCollider ??= GetComponent<Collider>();
             _baseRigidbody ??= GetComponent<Rigidbody>();
         }
 
 
-        private void Awake() => _animator = GetComponent<Animator>();
+        private void Awake()
+        {
+
+            _weaponIK.ForEach(weapon => weapon.InitWeapon());
+
+            if (_isEnemy)
+            {
+                _enemy = GetComponent<IEnemy>();
+            }
+
+            _animator = GetComponent<Animator>();
+             
+            if(_aimConstraints != null)
+            {
+                foreach (var aim in _aimConstraints)
+                {
+                    WeightedTransformArray ikArray = new WeightedTransformArray(0);
+
+                    Transform playerTarget = GameObject.Find("Player").GetComponent<Transform>();// Zenject  ++
+
+                    ikArray.Add(new WeightedTransform(playerTarget, 1f));
+
+                    aim
+                       .data
+                        .sourceObjects = ikArray;
+                     
+                }
+                if(_rigBuilder != null)
+                    _rigBuilder.Build();
+            }
+        }
 
 
         private void Start()
         {
 
-            if (TryGetRagDoll() == null)
+            if (TryGetRagDoll(20) == null)
                 Debug.LogWarning("Ragdoll is empty , please look for layer in plrefab");
+
+            if(_animType == TypeOfAnimation.Humanoid)
+            {
+                foreach(var ragdollData in _ragdoll)
+                {
+                    ragdollData.Rb.isKinematic = true;
+                    ragdollData.Rb.GetComponent<Collider>().isTrigger = true;
+                }
+            }
         }
 
 
-        private int? TryGetRagDoll()
+        private void Update()
+        {
+
+            if (_isEnemy == true && _animType == TypeOfAnimation.Humanoid)
+            {
+                _animator.SetBool("Move", _enemy.EnemyState == DTO.EnemyState.Walk ? true : false);
+            }
+
+
+            if (_currentWeapon == null) return;
+                UpdateAimingState();
+        }
+
+        #endregion
+
+        private void UpdateAimingState()
+        {
+
+            if (_currentWeapon.AimingRig == null) return;
+
+            if (_isAimingAnimation)
+            {
+
+                _currentWeapon.AimingRig.weight += Time.deltaTime / _currentWeapon.AimingDuration;
+                _currentWeapon.DefaultRig.weight -= Time.deltaTime / _currentWeapon.AimingDuration;
+            }
+            else
+            {
+                _currentWeapon.AimingRig.weight -= Time.deltaTime / _currentWeapon.AimingDuration;
+                _currentWeapon.DefaultRig.weight += Time.deltaTime / _currentWeapon.AimingDuration;
+            }
+        }
+
+
+        private int? TryGetRagDoll(float weight = 1)
         {
 
             var rbs = GetComponentsInChildren<Rigidbody>();
@@ -154,8 +254,9 @@ namespace Core
                             rb.gameObject.transform.localRotation,
                             rb)
                         );
+               // rb.mass = weight;
             }
-
+           
             return _ragdoll.Count;
         }
 
@@ -183,11 +284,14 @@ namespace Core
         }
 
 
-        private void TryCompletelyDeath()// agent should be here
+        private void TryCompletelyDeath() 
         {
 
             IEnemy enemy = GetComponent<IEnemy>();
+             
+            GetComponent<NavMeshAgent>().enabled = true;
 
+            SetRigsWeight(0,1,1);
             if (enemy != null)
                 enemy
                     .ComponentsStore

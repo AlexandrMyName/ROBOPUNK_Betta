@@ -1,7 +1,9 @@
 using Abstracts;
 using Core.DTO;
+using System;
 using System.Collections.Generic;
-
+using UnityEngine;
+using Zenject;
 
 namespace Core
 {
@@ -9,7 +11,7 @@ namespace Core
 
     public class Enemy : StateMachine, IEnemy
     {
-
+        
         public EnemyType EnemyType { get; set; }
 
         public EnemyState EnemyState { get; set; }
@@ -22,6 +24,7 @@ namespace Core
         public void SetComponents(IEnemyComponentsStore components)
         {
             ComponentsStore = components;
+            
         }
 
 

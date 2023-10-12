@@ -8229,7 +8229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnOnStart: 1
-  _enemySpawnerDataConfig: {fileID: 11400000, guid: 79c73e54b306ef04c88bd5ddbc447a8d, type: 2}
+  _enemySpawnerDataConfig: {fileID: 11400000, guid: 94752348de014c3458dc855144b6ba14, type: 2}
   _enemyViews_Prefab: {fileID: 5632509733137239380, guid: d944d64d1ac535e49a0ce9efe5975819, type: 3}
 --- !u!1001 &1363624188
 PrefabInstance:

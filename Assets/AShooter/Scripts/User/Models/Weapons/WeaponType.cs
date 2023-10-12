@@ -7,6 +7,7 @@
         Pistol,
         Shotgun,
         RocketLauncher,
-        Rifle
+        Rifle,
+        Saw
     }
 }
