@@ -21176,7 +21176,7 @@ MonoBehaviour:
   _rigBuilder: {fileID: 4493381488348978234}
   _weaponIK:
   - InternalObjectWithCollider: {fileID: 3858211632011565792}
-    Config: {fileID: 11400000, guid: ae13d1e5ccf1b8947a35cdba8a13a70b, type: 2}
+    Config: {fileID: 11400000, guid: 1534309657762a846b68fc94029493c4, type: 2}
     Type: 4
     HandsRig: {fileID: 0}
     AimingRig: {fileID: 7189740742310766421}

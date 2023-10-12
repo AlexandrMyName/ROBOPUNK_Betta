@@ -211,6 +211,10 @@ namespace Core
 
             if (_animator != null)
             {
+
+                if (_currentWeapon == null) return;
+                UpdateAimingState();
+
                 if (_animator.runtimeAnimatorController == null) return;
 
 
@@ -220,8 +224,7 @@ namespace Core
                 }
 
 
-                if (_currentWeapon == null) return;
-                UpdateAimingState();
+              
             }
         }
 
