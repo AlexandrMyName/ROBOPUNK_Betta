@@ -33,8 +33,8 @@ MonoBehaviour:
       probabilityWeigh: 1
     respawnEnemyInWaveDelay: 1
     spawnRadiusRelativeToPlayer: 20
-    numberEnemiesInWave: 4
-    numberEnemiesInScene: 14
+    numberEnemiesInWave: 2
+    numberEnemiesInScene: 5
   - Enemy:
     - description: 
       nameEnemy: 
@@ -54,8 +54,8 @@ MonoBehaviour:
       probabilityWeigh: 1
     respawnEnemyInWaveDelay: 1
     spawnRadiusRelativeToPlayer: 25
-    numberEnemiesInWave: 16
-    numberEnemiesInScene: 20
+    numberEnemiesInWave: 4
+    numberEnemiesInScene: 3
   - Enemy:
     - description: 
       nameEnemy: 
@@ -75,8 +75,8 @@ MonoBehaviour:
       probabilityWeigh: 1
     respawnEnemyInWaveDelay: 1
     spawnRadiusRelativeToPlayer: 25
-    numberEnemiesInWave: 16
-    numberEnemiesInScene: 20
+    numberEnemiesInWave: 11
+    numberEnemiesInScene: 5
   - Enemy:
     - description: 
       nameEnemy: 
@@ -96,6 +96,6 @@ MonoBehaviour:
       probabilityWeigh: 1
     respawnEnemyInWaveDelay: 1
     spawnRadiusRelativeToPlayer: 25
-    numberEnemiesInWave: 16
-    numberEnemiesInScene: 20
+    numberEnemiesInWave: 5
+    numberEnemiesInScene: 3
   respawnWaveDelay: 10
