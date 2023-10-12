@@ -147,7 +147,7 @@ namespace Core
         {
             InputManager.EnableSystem();
             HidePauseMenu();
-            SceneManager.LoadScene(2);//  SceneLoader (Alexandr)
+            SceneManager.LoadScene(0);//  SceneLoader (Alexandr)
         }
 
 
