@@ -209,14 +209,20 @@ namespace Core
         private void Update()
         {
 
-            if (_isEnemy == true && _animType == TypeOfAnimation.Humanoid)
+            if (_animator != null)
             {
-                _animator.SetBool("Move", _enemy.EnemyState == DTO.EnemyState.Walk ? true : false);
-            }
+                if (_animator.runtimeAnimatorController == null) return;
 
 
-            if (_currentWeapon == null) return;
+                if (_isEnemy == true && _animType == TypeOfAnimation.Humanoid)
+                {
+                    _animator.SetBool("Move", _enemy.EnemyState == DTO.EnemyState.Walk ? true : false);
+                }
+
+
+                if (_currentWeapon == null) return;
                 UpdateAimingState();
+            }
         }
 
         #endregion
@@ -347,7 +353,9 @@ namespace Core
             }
             else
             {
-                //Not spider
+
+                var agent = GetComponent<NavMeshAgent>().enabled = isActive;
+                _baseCollider.isTrigger = !isActive;
             }
         }
     }

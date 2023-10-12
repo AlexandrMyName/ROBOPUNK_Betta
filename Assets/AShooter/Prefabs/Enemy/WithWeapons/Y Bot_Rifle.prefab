@@ -8742,7 +8742,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _indexLayerOfRagdoll: 10
   _animType: 1
-  _baseCollider: {fileID: 0}
+  _baseCollider: {fileID: 6500475959386234823}
   _baseRigidbody: {fileID: 0}
   _aimConstraints:
   - {fileID: 8560879080884430410}

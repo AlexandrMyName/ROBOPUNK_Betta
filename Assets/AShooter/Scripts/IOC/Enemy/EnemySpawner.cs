@@ -260,8 +260,8 @@ namespace DI.Spawn
         }
 
 
-        public void Dispose() => _disposables?.ForEach(disposable => disposable.Dispose());
-
+        public void Dispose()/* => _disposables?.ForEach(disposable => disposable.Dispose());*/
+        { }
 
         private void SetDeadFlagInFalse(GameObject enemy) {
             enemy.GetComponent<Enemy>().ComponentsStore.Attackable.IsDeadFlag = new ReactiveProperty<bool>(false);
