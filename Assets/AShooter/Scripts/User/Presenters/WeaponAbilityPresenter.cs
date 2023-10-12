@@ -1,6 +1,8 @@
 ﻿using Abstracts;
 using System.Collections.Generic;
 using System;
+using Core;
+using Core.DTO;
 using UniRx;
 using UnityEngine;
 
@@ -16,20 +18,48 @@ namespace User
 
         private WeaponAbilityItemView _meleeWeaponItem;
         private WeaponAbilityItemView _mainWeaponItem;
-        private WeaponAbilityItemView _pickUpWeaponItem;
+        private WeaponAbilityItemView _secondaryWeaponItem;
         private WeaponAbilityItemView _explosionAbilityItem;
 
         private List<IDisposable> _disposables = new();
         private List<IDisposable> _pickUpWeaponDisposables = new();
 
+        private IWeaponStorage _weaponStorage;
+        private WeaponState _weaponState;
 
-        public void InitWeapons(IWeaponStorage weaponStorage)
+        
+        public void Init(IWeaponStorage weaponStorage)
         {
-            _meleeWeaponItem = CreateWeaponView(weaponStorage.Weapons[WeaponType.Sword], _weaponAbilityView.MeleeWeaponContainer, "Shift");
-            _mainWeaponItem = CreateWeaponView(weaponStorage.WeaponState.MainWeapon.Value, _weaponAbilityView.MainWeaponContainer, "ЛКМ");
-            _pickUpWeaponItem = CreateWeaponView(weaponStorage.WeaponState.PickUpWeapon.Value, _weaponAbilityView.PickUpWeaponContainer, "ПКМ");
+            _weaponStorage = weaponStorage;
+            _weaponState = weaponStorage.WeaponState;
+        }
 
-            WeaponSubscribe(weaponStorage);
+
+        public void InitWeapons()
+        {
+            foreach (var weaponPair in _weaponStorage.Weapons)
+            {
+                var weapon = weaponPair.Value;
+
+                if (weapon.WeaponType == WeaponType.Sword)
+                {
+                    _meleeWeaponItem = CreateWeaponView(weapon, _weaponAbilityView.MeleeWeaponContainer, "Shift");
+                    WeaponSubscribe(weapon);
+                }
+
+                if (weapon.WeaponType == WeaponType.Pistol)
+                {
+                    _secondaryWeaponItem = CreateWeaponView(weapon, _weaponAbilityView.SecondaryWeaponContainer, "ПКМ");
+                    WeaponSubscribe(weapon);
+                }
+
+
+                if (weapon.WeaponType != WeaponType.Pistol && weapon.WeaponType != WeaponType.Sword)
+                {
+                    _mainWeaponItem = CreateWeaponView(weapon, _weaponAbilityView.MainWeaponContainer, "ЛКМ");
+                    WeaponSubscribe(weapon);
+                }
+            }
         }
 
 
@@ -76,16 +106,37 @@ namespace User
         }
 
 
-        private void WeaponSubscribe(IWeaponStorage weaponStorage)
+        private void WeaponSubscribe(IWeapon weapon)
         {
-            MeleeWeaponSubscribe(weaponStorage, _meleeWeaponItem);
+            if (weapon.WeaponType == WeaponType.Sword)
+            {
+                MeleeWeaponSubscribe(weapon as IMeleeWeapon, _meleeWeaponItem);
+            }
 
-            var weaponState = weaponStorage.WeaponState;
+            if (weapon.WeaponType == WeaponType.Pistol)
+            {
+                _weaponState.SecondaryWeapon.Subscribe(_ =>
+                {
+                    RangeWeaponSubscribe(
+                        _weaponState.SecondaryWeapon, 
+                        _secondaryWeaponItem, 
+                        _disposables,
+                        false
+                        );
+                }).AddTo(_disposables);
+            }
 
-            _disposables.AddRange(new List<IDisposable> {
-                weaponState.MainWeapon.Subscribe(_ => { RangeWeaponSubscribe(weaponState.MainWeapon, _mainWeaponItem, _disposables, false); }),
-                weaponState.PickUpWeapon.Subscribe(_ => { RangeWeaponSubscribe(weaponState.PickUpWeapon, _pickUpWeaponItem, _pickUpWeaponDisposables, true); })
-            });
+            if (weapon.WeaponType != WeaponType.Pistol && weapon.WeaponType != WeaponType.Sword)
+            {
+                _weaponState.MainWeapon.Subscribe(_ =>
+                {
+                    RangeWeaponSubscribe(
+                        _weaponState.MainWeapon, 
+                        _mainWeaponItem, 
+                        _pickUpWeaponDisposables, 
+                        true);
+                }).AddTo(_disposables);
+            }
         }
 
 
@@ -103,17 +154,16 @@ namespace User
         }
 
 
-        private void MeleeWeaponSubscribe(IWeaponStorage weaponStorage, WeaponAbilityItemView weaponItemView)
+        private void MeleeWeaponSubscribe(IMeleeWeapon weapon, WeaponAbilityItemView weaponItemView)
         {
-            var weapon = weaponStorage.Weapons[WeaponType.Sword];
-
-            if (weapon is IMeleeWeapon meleeWeapon)
-            {
-                _disposables.Add(
-                    weaponStorage.WeaponState.IsMeleeWeaponPressed.Subscribe(isPressed => { weaponItemView.gameObject.SetActive(isPressed); })
-                );
-            }
+            _disposables.Add(
+                _weaponStorage.WeaponState.IsMeleeWeaponPressed.Subscribe(isPressed =>
+                {
+                    weaponItemView.gameObject.SetActive(isPressed);
+                })
+            );
         }
+        
 
 
         private void AbilitySubscribe(IAbility ability, WeaponAbilityItemView weaponItemView)

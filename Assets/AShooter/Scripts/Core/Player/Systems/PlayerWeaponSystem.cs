@@ -32,12 +32,12 @@ namespace Core
 
             _weaponStorage.InitializeWeapons(weaponContainer);
             _weaponState = _weaponStorage.WeaponState;
+            _weaponAbilityPresenter.Init(_weaponStorage);
         }
 
 
         protected override void Start()
         {
-
             ChangeWeapon(WeaponType.Pistol);
             
             _disposables.AddRange(new List<IDisposable>{
@@ -46,24 +46,25 @@ namespace Core
                     _input.WeaponSecond.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(WeaponType.Shotgun)),
                     _input.WeaponThird.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(WeaponType.RocketLauncher)),
                     
-                    _input.LeftClick.AxisOnChange.Subscribe(pressed =>
+                    _input.RightClick.AxisOnChange.Subscribe(pressed =>
                     {
                         if (pressed && !_weaponState.IsMeleeWeaponPressed.Value)
                             HandleWeaponChangePress(WeaponType.Pistol);
                     }),
                     
-                    _input.RightClick.AxisOnChange.Subscribe(pressed =>
+                    _input.LeftClick.AxisOnChange.Subscribe(pressed =>
                     {
-                        if (pressed && !_weaponState.IsMeleeWeaponPressed.Value)
-                            HandleWeaponChangePress(_weaponState.PickUpWeapon.Value.WeaponType);
+                        if (pressed && !_weaponState.IsMeleeWeaponPressed.Value && _weaponState.MainWeapon.Value != null)
+                            HandleWeaponChangePress(_weaponState.MainWeapon.Value.WeaponType);
                     })
                 }
             );
 
-            _weaponState.MainWeapon.Value = _weaponStorage.Weapons[WeaponType.Pistol] as IRangeWeapon;
-            _weaponState.PickUpWeapon.Value = _weaponStorage.Weapons[WeaponType.Shotgun] as IRangeWeapon;
+            // _weaponState.MainWeapon.Value = _weaponStorage.Weapons[WeaponType.Shotgun] as IRangeWeapon;
+            _weaponState.SecondaryWeapon.Value = _weaponStorage.Weapons[WeaponType.Pistol] as IRangeWeapon;
 
-            _weaponAbilityPresenter.InitWeapons(_weaponStorage);
+            
+            _weaponAbilityPresenter.InitWeapons();
         }
 
 
@@ -99,11 +100,11 @@ namespace Core
                     break;
                 
                 case WeaponType.Pistol:
-                    _weaponState.MainWeapon.Value = _weaponStorage.Weapons[WeaponType.Pistol] as IRangeWeapon;
+                    _weaponState.SecondaryWeapon.Value = _weaponStorage.Weapons[WeaponType.Pistol] as IRangeWeapon;
                     break;
                     
                 default:
-                    _weaponState.PickUpWeapon.Value = _weaponStorage.Weapons[weaponType] as IRangeWeapon;
+                    _weaponState.MainWeapon.Value = _weaponStorage.Weapons[weaponType] as IRangeWeapon;
                     break;
             }
         }
