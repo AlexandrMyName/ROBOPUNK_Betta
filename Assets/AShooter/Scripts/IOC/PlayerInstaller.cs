@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Core;
 using Abstracts;
+using AShooter.Scripts.Core.Player.Components;
 using AShooter.Scripts.IOC;
 using DI.Spawn;
 using Cinemachine;
@@ -11,6 +12,7 @@ using TMPro;
 using UniRx;
 using User;
 using User.Components;
+using User.Components.Repository;
 
 namespace DI
 {
@@ -85,12 +87,27 @@ namespace DI
             WeaponStorage weapons = new WeaponStorage();
             PlayerStoreEnhancementComponent store = new PlayerStoreEnhancementComponent(_storeItemsDataConfigs);
             PlayerShieldComponent shield = new PlayerShieldComponent(_maxPlayerProtection, _protectionRegenerationTime);
+
+            var repository = new Repository();
+            IPlayerStats playerStatsSaved = repository.Load();
+            gold.CurrentGold.Value = playerStatsSaved.Money;
+            exp.CurrentExperience.Value = playerStatsSaved.Experience;
+            IPlayerStats playerStatsRuntime = new PlayerStatsComponent(
+                playerStatsSaved.Name,
+                playerStatsSaved.Money,
+                playerStatsSaved.Experience,
+                0,
+                gold.CurrentGold,
+                exp.CurrentExperience);
+            
             Container.QueueForInject(movable);
             Container.QueueForInject(attackable);
             Container.QueueForInject(views);
             Container.QueueForInject(weapons);
+            Container.QueueForInject(playerStatsRuntime);
 
-            ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP, views, gold, exp, store, weapons, shield);
+            ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP, 
+                views, gold, exp, store, weapons, shield, playerStatsRuntime);
 
             return components;
         }

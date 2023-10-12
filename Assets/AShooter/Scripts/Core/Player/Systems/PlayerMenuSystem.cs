@@ -10,6 +10,7 @@ using User;
 using Object = UnityEngine.Object;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using User.Components.Repository;
 
 
 namespace Core
@@ -144,11 +145,9 @@ namespace Core
 
         private void onClickButtonExitMainMenu()
         {
-
             InputManager.EnableSystem();
             HidePauseMenu();
-            SceneManager.LoadScene(0);// Перевести на SceneLoader (Alexandr)
-      
+            SceneManager.LoadScene(2);//  SceneLoader (Alexandr)
         }
 
 
