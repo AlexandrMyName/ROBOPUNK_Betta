@@ -10,7 +10,10 @@ namespace User.View
     {
 
         [SerializeField] private Slider _healthSlider;
-        [SerializeField] private Image _fillImage;
+        [SerializeField] private Image _fillImageHealth;
+
+        [SerializeField] private Slider _healthProtectionSlider;
+        [SerializeField] private Image _fillImageProtection;
 
         public void Deactivate() => gameObject.SetActive(false);
 
@@ -25,7 +28,7 @@ namespace User.View
             _healthSlider.value = currentHealth;
 
             Color color = Color.Lerp(Color.red, Color.green, currentHealth/maxHealth);
-            _fillImage.color = color;
+            _fillImageHealth.color = color;
 
         }
 
@@ -44,6 +47,24 @@ namespace User.View
             return gameObject.activeSelf;
         }
 
+        public void RefreshHealthProtection(float currentProtection, float maxProtection)
+        {
 
+            if(currentProtection <= 0)
+            {
+                _healthProtectionSlider.gameObject.SetActive(false);
+                return;
+            }
+
+            if (_healthProtectionSlider.maxValue != maxProtection)
+            {
+                _healthProtectionSlider.maxValue = maxProtection;
+            }
+            _healthProtectionSlider.value = currentProtection;
+
+            Color color = Color.Lerp(Color.red, Color.green, currentProtection / maxProtection);
+            _fillImageProtection.color = color;
+
+        }
     }
 }

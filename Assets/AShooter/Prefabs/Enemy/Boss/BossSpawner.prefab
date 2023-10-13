@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &548945831295417300
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3256414897094556690}
+  - component: {fileID: 3281667720241192294}
+  m_Layer: 0
+  m_Name: BossSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3256414897094556690
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548945831295417300}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.8854634, y: 0.78052557, z: 15.526117}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3281667720241192294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548945831295417300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9653d8b064f11624f8fb7daf96460185, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canAttackForOtherEnemies: 1
+  _enableDistantAttackSystem: 1
+  _enemyBossComponent:
+    <HealTrail>k__BackingField: {fileID: 5813249375450545439, guid: f7f90e72e9fd1d9439d0b2d1392fcb15, type: 3}
+  _config:
+    description: SpiderBoss
+    nameEnemy: Boss_Spider
+    enemyType: 2
+    prefab: {fileID: 6753984060383874401, guid: d176f1975b9667944a0bdf383e392fb9, type: 3}
+    maxHealth: 8000
+    maxProtection: 20000
+    maxAttackDamage: 1198.7
+    attackDistance: 1.4
+    attackFrequency: 0.05
+    goldDropRate: 100
+    goldValueRange:
+      min: 200
+      max: 200
+    experienceRange:
+      min: 200
+      max: 200
+    probabilityWeigh: 0.505
+  _enemyViews_Prefab: {fileID: 5632509733137239380, guid: d944d64d1ac535e49a0ce9efe5975819, type: 3}

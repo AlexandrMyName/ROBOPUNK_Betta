@@ -168,9 +168,10 @@ namespace DI.Spawn
 
         private List<ISystem> CreateSystems(EnemyConfig item)
         {
+
             var systems = new List<ISystem>();
             systems.Add(new EnemyRewardSystem(_experienceHandle, _goldWallet));
-            systems.Add(new EnemyDamageSystem(item.maxHealth));
+            systems.Add(new EnemyDamageSystem(item.maxHealth,item.maxProtection));
             systems.Add(new EnemyMovementSystem(_targetPosition));
 
             switch (item.enemyType)
@@ -193,7 +194,7 @@ namespace DI.Spawn
 
         private IEnemyComponentsStore CreateComponents(EnemyConfig item)
         {
-            EnemyAttackComponent attackable = new EnemyAttackComponent(item.maxHealth, item.maxAttackDamage, item.attackDistance, item.attackFrequency);
+            EnemyAttackComponent attackable = new EnemyAttackComponent(item.maxHealth, item.maxProtection, item.maxAttackDamage, item.attackDistance, item.attackFrequency);
             EnemyPriceComponent enemyPrice = new EnemyPriceComponent(item.goldDropRate, item.goldValueRange, item.experienceRange);
 
             return new EnemyComponentsStore(attackable, enemyPrice);
