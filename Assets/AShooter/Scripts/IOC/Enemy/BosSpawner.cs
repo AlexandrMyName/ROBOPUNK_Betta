@@ -83,7 +83,7 @@ public class BosSpawner : MonoBehaviour
                    _componentsPlayer.Movable.Rigidbody.transform.position.x - 25,
                    _componentsPlayer.Movable.Rigidbody.transform.position.x + 25
                ),
-               _componentsPlayer.Movable.Rigidbody.transform.position.y
+               1
                 ,
                Random.Range(
                    _componentsPlayer.Movable.Rigidbody.transform.position.z - 25,

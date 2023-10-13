@@ -83,7 +83,7 @@ namespace AShooter.Scripts.User.Presenters
         {
             if (_isInit) return;
             _isInit = true;
-            Time.timeScale = 0.0f;
+            //Time.timeScale = 0.0f;
             InputManager.DisableSystem();
             WinLabel.SetActive(true);
             ButtonsPanel.SetActive(true);
