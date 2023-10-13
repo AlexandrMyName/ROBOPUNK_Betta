@@ -1,62 +1,97 @@
 using Abstracts;
 using Core;
 using Core.DTO;
+using Random = UnityEngine.Random;
+using DI.Spawn;
 using System.Collections.Generic;
-using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 using User;
 using Zenject;
+using System;
+using UniRx;
 
 
 public class BosSpawner : MonoBehaviour
 {
-  
+
+    [SerializeField] private bool _canAttackForOtherEnemies;
+    [SerializeField] private bool _enableDistantAttackSystem;
+    [SerializeField] private EnemyBossComponent _enemyBossComponent;
     [SerializeField] private EnemyConfig _config;
     [SerializeField] private GameObject _enemyViews_Prefab;
+    private static EnemySpawnerController _enemiesSpawner;
     [Inject(Id = "PlayerComponents")] private IComponentsStore _componentsPlayer;
-    [Inject] DiContainer _container;
+    [Inject] private DiContainer _container;
+
+    private Action _onBossDeath;
 
 
-    private void Start()
+    private void Awake() => Boss.BossSpawner = this;
+     
+
+    public static void Init(EnemySpawnerController spawnerOfEnemies)
+    => _enemiesSpawner = spawnerOfEnemies;
+        
+
+    public void Spawn(Action onBossDeath)
     {
 
-        SpawnBoss();
-    }
-
-
-    private void SpawnBoss()
-    {
-
+        Boss.IsBossDead = false;
+        _onBossDeath = onBossDeath;
+        _enemiesSpawner.StopSpawnProcess();
         var bossInstance = _container.InstantiatePrefab(_config.prefab);
+
+        SetRandomPosition(bossInstance);
         IEnemy enemy = bossInstance.GetComponent<IEnemy>();
 
-        enemy.SetComponents(
-
-            new EnemyComponentsStore(
-
-                new EnemyAttackComponent(
+        var attackable = new EnemyAttackComponent(
                     _config.maxHealth,
                     _config.maxProtection,
                     _config.maxAttackDamage,
                     _config.attackDistance,
-                    _config.attackFrequency),
+                    _config.attackFrequency);
 
-                new EnemyPriceComponent(
+        attackable
+            .Health
+                .Subscribe( val => {if(val <= 0 ) _onBossDeath?.Invoke(); });
+
+        var price = new EnemyPriceComponent(
                     _config.goldDropRate,
                     _config.goldValueRange,
-                    _config.experienceRange)));
+                    _config.experienceRange);
 
-        enemy.SetSystems( CreateSystems(_config) );
+        enemy.SetComponents(
+
+            new EnemyComponentsStore( attackable, price));
+
+        enemy.SetSystems(CreateSystems(_config));
 
         ViewsCreation(bossInstance.transform);
         bossInstance.SetActive(true);
 
 
-       
+
     }
 
-     
+
+    private void SetRandomPosition(GameObject bossInstance)
+    {
+
+        bossInstance.transform.position =
+            new Vector3(
+               Random.Range(
+                   _componentsPlayer.Movable.Rigidbody.transform.position.x - 25,
+                   _componentsPlayer.Movable.Rigidbody.transform.position.x + 25
+               ),
+               _componentsPlayer.Movable.Rigidbody.transform.position.y
+                ,
+               Random.Range(
+                   _componentsPlayer.Movable.Rigidbody.transform.position.z - 25,
+                   _componentsPlayer.Movable.Rigidbody.transform.position.z + 25
+               ));
+    }
+
+
     private void ViewsCreation(Transform parent)
     {
 
@@ -69,18 +104,21 @@ public class BosSpawner : MonoBehaviour
 
     private List<ISystem> CreateSystems(EnemyConfig item)
     {
-
-        Debug.LogWarning(_componentsPlayer == null);
+         
         var systems = new List<ISystem>();
 
         systems.Add(new EnemyRewardSystem(_componentsPlayer.ExperienceHandle, _componentsPlayer.GoldWallet));
         systems.Add(new EnemyDamageSystem(item.maxHealth, item.maxProtection));
         systems.Add(new EnemyMovementSystem(_componentsPlayer.Movable.Rigidbody.transform));
 
+        if (_enableDistantAttackSystem)
+            systems.Add(new EnemyBossDistantAttackSystem(_enemyBossComponent, _componentsPlayer.Movable.Rigidbody.transform));  
+         
+
         switch (item.enemyType)
         {
             case EnemyType.MeleeEnemy:
-                systems.Add(new EnemyBossMeleeAttackSystem());
+                systems.Add(new EnemyBossMeleeAttackSystem(_canAttackForOtherEnemies));
                 break;
 
             case EnemyType.DistantEnemy:
@@ -88,9 +126,16 @@ public class BosSpawner : MonoBehaviour
                 break;
 
             default:
-                systems.Add(new EnemyBossMeleeAttackSystem());
+                systems.Add(new EnemyBossMeleeAttackSystem(_canAttackForOtherEnemies));
                 break;
         }
         return systems;
     }
+}
+ 
+public static class Boss { 
+    
+    public static BosSpawner BossSpawner { get; set; }
+    public static bool IsBossDead { get; set; }
+
 }

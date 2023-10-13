@@ -19,7 +19,11 @@ namespace Core
         private float _attackFrequency;
         private NavMeshAgent _navMeshAgent;
         private IGameComponents _components;
+        private bool _canAttackOtherEnemies;
 
+        public EnemyBossMeleeAttackSystem(bool isAttackOtherEnemies)
+        => _canAttackOtherEnemies = isAttackOtherEnemies;
+       
 
         protected override void Awake(IGameComponents components)
         {
@@ -43,14 +47,15 @@ namespace Core
              
         }
 
+         
 
         private void HandleTriggerCollider(Collider collider )
         {
-             
+
             bool isPlayer = collider.GetComponent<IPlayer>() != null;
             bool isEnemy = collider.GetComponent<IEnemy>() != null;
 
-           
+
             if (!_components.BaseObject.activeSelf
                  || !_navMeshAgent.isActiveAndEnabled) return;
 
@@ -58,35 +63,39 @@ namespace Core
             if (isPlayer)
             {
 
-                Debug.LogWarning("ENEENENENENE  1 player" );
                 var playerAttackableComponent = collider.GetComponent<IPlayer>().ComponentsStore.Attackable;
 
                 playerAttackableComponent.TakeDamage(_enemy.ComponentsStore.Attackable.Damage);
             }
 
+            if (_canAttackOtherEnemies)
+                AttackForEnemies(collider, isEnemy);
+
+        }
+
+        private void AttackForEnemies(Collider collider, bool isEnemy)
+        {
+
             if (isEnemy)
             {
 
                 RaycastHit hit = new();
-                Debug.LogWarning("ENEENENENENE");
+
                 var enemyAttackableComponent = collider.GetComponent<IEnemy>().ComponentsStore.Attackable;
 
                 enemyAttackableComponent.TakeDamage(2000, hit, Vector3.zero);
             }
             else
             {
-                Debug.Log(collider.gameObject.name);
-                var mainObject =  collider.GetComponentInParent<IEnemy>();
+
+                var mainObject = collider.GetComponentInParent<IEnemy>();
 
                 if (mainObject != null)
                 {
-                    if(mainObject != _enemy)
+                    if (mainObject != _enemy)
                         mainObject.ComponentsStore.Attackable.TakeDamage(2000);
                 }
             }
-
         }
-
-
     }
 }

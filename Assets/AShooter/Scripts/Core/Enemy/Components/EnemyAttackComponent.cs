@@ -42,12 +42,14 @@ namespace Core
             HealthProtection = new ReactiveProperty<float>(helthProtection);
             HealthProtection.SkipLatestValueOnSubscribe();
             Health = new ReactiveProperty<float>(health);
+           
             IsDeadFlag = new ReactiveProperty<bool>(false);
             IsCameAttackPosition = new ReactiveProperty<bool>(false);
             IsRewardReadyFlag = new ReactiveProperty<bool>(false);
             Damage = damage;
             AttackDistance = attackDistance;
             AttackFrequency = attackFrequency;
+            
         }
 
 

@@ -32,7 +32,7 @@ namespace AShooter.Scripts.User.Presenters
         
         private bool _isInit;
         private bool _isNeedBarUpdate;
-        
+        private bool _isBoss;
         
         private void Awake()
         {
@@ -48,12 +48,25 @@ namespace AShooter.Scripts.User.Presenters
 
         private void Update()
         {
+
             WinTimerSecs -= Time.deltaTime;
             _time = TimeSpan.FromSeconds(WinTimerSecs);
             Timer.text = $"{_time.Minutes:D2}:{_time.Seconds:D2}";
+
             
+
+
             if (WinTimerSecs <= 0)
-                ShowFullWinPanel();
+            {
+
+                Timer.gameObject.SetActive(false);
+                 
+                if(!_isBoss)
+                Boss.BossSpawner.Spawn(()=>ShowFullWinPanel());
+
+                _isBoss = true;
+
+            }
             
             if (_isNeedBarUpdate)
                 _sceneLoader.UpdateLoadingBar();

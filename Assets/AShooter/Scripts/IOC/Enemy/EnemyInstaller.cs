@@ -14,7 +14,6 @@ namespace DI
 
         [Inject] private DiContainer _container;
         [Inject(Id = "PlayerComponents")] private IComponentsStore _componentsPlayer;
-
         [SerializeField] private bool _spawnOnStart;
         [SerializeField] private EnemySpawnerDataConfig _enemySpawnerDataConfig;
         [SerializeField] private GameObject _enemyViews_Prefab;
@@ -40,7 +39,8 @@ namespace DI
                     _componentsPlayer.GoldWallet,
                     _componentsPlayer.ExperienceHandle);
                 _spawner.StartSpawnProcess(_enemyViews_Prefab);
-                
+
+                BosSpawner.Init(_spawner);
             }
         }
         private void OnDestroy()

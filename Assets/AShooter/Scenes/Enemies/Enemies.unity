@@ -1114,6 +1114,10 @@ PrefabInstance:
       value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 3281667720241192294, guid: 0c73415a04bc3b049afe3ca150ef16b4, type: 3}
+      propertyPath: _canHealForOtherEnemies
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3281667720241192294, guid: 0c73415a04bc3b049afe3ca150ef16b4, type: 3}
       propertyPath: _config.attackFrequency
       value: 0.05
       objectReference: {fileID: 0}
@@ -1121,6 +1125,18 @@ PrefabInstance:
       propertyPath: _config.maxAttackDamage
       value: 1198.7
       objectReference: {fileID: 0}
+    - target: {fileID: 3281667720241192294, guid: 0c73415a04bc3b049afe3ca150ef16b4, type: 3}
+      propertyPath: _canAttackForOtherEnemies
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3281667720241192294, guid: 0c73415a04bc3b049afe3ca150ef16b4, type: 3}
+      propertyPath: _enableDistantAttackSystem
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3281667720241192294, guid: 0c73415a04bc3b049afe3ca150ef16b4, type: 3}
+      propertyPath: _enemyBossComponent.<HealTrail>k__BackingField
+      value: 
+      objectReference: {fileID: 5813249375450545439, guid: f7f90e72e9fd1d9439d0b2d1392fcb15, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6528,11 +6544,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7154681999141088422, guid: dfef54581946e1241879a76cb3b21796, type: 3}
       propertyPath: m_FollowOffset.y
-      value: 19.51
+      value: 24.37
       objectReference: {fileID: 0}
     - target: {fileID: 7154681999141088422, guid: dfef54581946e1241879a76cb3b21796, type: 3}
       propertyPath: m_FollowOffset.z
-      value: -3.81
+      value: -2.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
