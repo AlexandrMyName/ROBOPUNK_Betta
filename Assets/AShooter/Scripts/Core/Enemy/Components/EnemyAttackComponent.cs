@@ -31,10 +31,16 @@ namespace Core
         public Vector3 CachedDirectionDamage { get; set; }
 
 
-        public EnemyAttackComponent(float health, float damage, float attackDistance, float attackFrequency)
-        {
+        public EnemyAttackComponent(
+            float health,
+            float helthProtection,
+            float damage,
+            float attackDistance,
+            float attackFrequency
+            ){
 
-            HealthProtection = new ReactiveProperty<float>(0);
+            HealthProtection = new ReactiveProperty<float>(helthProtection);
+            HealthProtection.SkipLatestValueOnSubscribe();
             Health = new ReactiveProperty<float>(health);
             IsDeadFlag = new ReactiveProperty<bool>(false);
             IsCameAttackPosition = new ReactiveProperty<bool>(false);
@@ -57,7 +63,7 @@ namespace Core
                 Health.Value = maxHealth;
 
             Health.SkipLatestValueOnSubscribe();
-            onCompleted.Invoke(Health);
+            onCompleted?.Invoke(Health);
         }
 
 

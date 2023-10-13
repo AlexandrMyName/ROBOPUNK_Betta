@@ -71,7 +71,7 @@ namespace User
         [Space(10)]
         [Header("Health configs: ")]
         public float maxHealth;
-
+        public float maxProtection = 0f;
 
         [Space(10)]
         [Header("Attack configs: ")]

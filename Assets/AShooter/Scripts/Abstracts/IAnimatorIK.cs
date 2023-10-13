@@ -16,5 +16,6 @@ namespace Abstracts
         void SetBool(string keyID, bool value);
         void SetAimingAnimation(bool isActive, WeaponType weaponType);
         void ShootIK();
+        void UpdateShieldObject(bool isActive);
     }
 }

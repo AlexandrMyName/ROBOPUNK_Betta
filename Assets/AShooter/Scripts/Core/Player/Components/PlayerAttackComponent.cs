@@ -35,7 +35,7 @@ namespace Core
 
         public void TakeDamage(float amountDamage)
         {
-            UnityEngine.Debug.Log(IsIgnoreDamage);
+          
             if (IsIgnoreDamage) return;
             
             else
@@ -47,12 +47,12 @@ namespace Core
 
         private void TakeProtectionDamage(float amounDamage)
         {
-            UnityEngine.Debug.LogWarning("Shield ");
+           
             HealthProtection.Value -= amounDamage;
 
             if(HealthProtection.Value < 0)
             {
-                UnityEngine.Debug.LogWarning("Shield bricked");
+               
                 Health.Value -= Math.Abs(HealthProtection.Value);
             }
         }

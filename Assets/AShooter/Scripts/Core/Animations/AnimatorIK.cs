@@ -26,7 +26,9 @@ namespace Core
         [SerializeField] private List<MultiAimConstraint> _aimConstraints;
         [SerializeField] private RigBuilder _rigBuilder;
         [SerializeField] private List<WeaponIK> _weaponIK;
+        [SerializeField] private GameObject _inernalShield;
         [SerializeField] private bool _isEnemy;
+
 
         private IEnemy _enemy;
         private Animator _animator;
@@ -62,6 +64,27 @@ namespace Core
                     break;
             }
 
+        }
+
+
+        public void UpdateShieldObject(bool isActive)
+        {
+
+            if (_inernalShield != null)
+            {
+
+                // Can be animation || effects
+
+
+                var hitEffets = gameObject.GetComponentsInChildren<ParticleSystem>();
+
+                foreach(var hitEffet in hitEffets)
+                {
+                    Destroy(hitEffet.gameObject);
+                }
+
+                _inernalShield.SetActive(isActive);
+            }
         }
 
 
@@ -352,14 +375,19 @@ namespace Core
             {
                 spiderIK.enabled = isActive;
                 var agent = GetComponent<NavMeshAgent>().enabled = isActive;
-                _baseCollider.isTrigger = !isActive;
+                if(_baseCollider != null)
+                    _baseCollider.isTrigger = !isActive;
             }
             else
             {
 
                 var agent = GetComponent<NavMeshAgent>().enabled = isActive;
-                _baseCollider.isTrigger = !isActive;
+                if (_baseCollider != null)
+                    _baseCollider.isTrigger = !isActive;
             }
         }
+
+
+      
     }
 }

@@ -13,6 +13,7 @@ namespace Abstracts
 
         void RefreshHealth(float currentHealth, float maxHealth);
 
- 
+        void RefreshHealthProtection(float currentProtection, float maxProtection);
+
     }
 }
