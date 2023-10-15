@@ -21,7 +21,7 @@ namespace User
 
         public WeaponType WeaponType { get; }
         
-        public float Damage { get; }
+        public float Damage { get; set; }
         
         public LayerMask LayerMask { get; }
         
