@@ -227,7 +227,7 @@ namespace Core
 
         private void ShieldStrengthUpgrade(float upgradeCoefficient)
         {
-            _componentsStore.Movable.Speed.Value *= ConversionToDecimalFromPercentage(upgradeCoefficient);
+            _componentsStore.Shield.MaxProtection *= ConversionToDecimalFromPercentage(upgradeCoefficient);
         }
 
 
@@ -253,7 +253,7 @@ namespace Core
         {
             foreach (var weapon in _componentsStore.WeaponStorage.Weapons)
             {
-                weapon.Value.Damage *= upgradeCoefficient;
+                weapon.Value.Damage *= ConversionToDecimalFromPercentage(upgradeCoefficient);
             }
         }
 
