@@ -20,7 +20,7 @@ namespace DI
     public class PlayerInstaller : MonoInstaller
     {
 
-        [SerializeField] private StoreItemsDataConfigs _storeItemsDataConfigs;
+        [SerializeField] private LevelRewardItemsConfigs _levelRewardItemsConfigs;
         [SerializeField] private DashConfig _dashConfig;
         [SerializeField] private PlayerHPConfig _playerHPConfig;
         [SerializeField] private CinemachineVirtualCamera _camera;
@@ -90,13 +90,12 @@ namespace DI
             PlayerGoldWalletComponent gold = new PlayerGoldWalletComponent();
             PlayerExperienceComponent exp = new PlayerExperienceComponent();
             WeaponStorage weapons = new WeaponStorage();
-            PlayerStoreEnhancementComponent store = new PlayerStoreEnhancementComponent(_storeItemsDataConfigs);
+            PlayerLevelRewardComponent levelReward = new PlayerLevelRewardComponent(_levelRewardItemsConfigs);
             PlayerShieldComponent shield = new PlayerShieldComponent(_maxPlayerProtection, _protectionRegenerationTime);
 
             var repository = new Repository();
             IPlayerStats playerStatsSaved = repository.Load();
-            gold.CurrentGold.Value = playerStatsSaved.Money;
-            exp.CurrentExperience.Value = playerStatsSaved.Experience;
+
             IPlayerStats playerStatsRuntime = new PlayerStatsComponent(
                 playerStatsSaved.Name,
                 playerStatsSaved.Money,
@@ -112,7 +111,7 @@ namespace DI
             Container.QueueForInject(playerStatsRuntime);
 
             ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP, 
-                views, gold, exp, store, weapons, shield, playerStatsRuntime);
+                views, gold, exp, levelReward, weapons, shield, playerStatsRuntime);
 
             return components;
         }
@@ -165,6 +164,9 @@ namespace DI
             PlayerShieldSystem playerShieldSystem = new PlayerShieldSystem();
             Container.QueueForInject(playerShieldSystem);
 
+            PlayeLevelRewardSystem playeRewardSystem = new PlayeLevelRewardSystem();
+            Container.QueueForInject(playeRewardSystem);
+
             systems.Add(moveSystem);
             systems.Add(shootSystem);
             systems.Add(healthSystem);
@@ -179,6 +181,7 @@ namespace DI
             systems.Add(playerExperienceSystem);
             systems.Add(playerGoldWalletSystem);
             systems.Add(playerShieldSystem);
+            systems.Add(playeRewardSystem);
 
             return systems;
         }

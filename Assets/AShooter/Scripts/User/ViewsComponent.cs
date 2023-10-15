@@ -29,6 +29,7 @@ namespace User.Components
 
         [Inject] public IStoreView StoreMenu { get; }
 
+        [Inject] public IRewardMenuView RewardMenu { get; }
 
         public List<IView> GetListView()
         {
@@ -44,6 +45,7 @@ namespace User.Components
             views.Add(Interact);
             views.Add(WeaponAbility);
             views.Add(StoreMenu);
+            views.Add(RewardMenu);
 
             return views;
         }

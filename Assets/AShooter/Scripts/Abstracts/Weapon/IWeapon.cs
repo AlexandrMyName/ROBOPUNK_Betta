@@ -17,7 +17,7 @@ namespace Abstracts
 
         WeaponType WeaponType { get; }
 
-        float Damage { get; }
+        float Damage { get; set; }
         
         LayerMask LayerMask { get; }
 

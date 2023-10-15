@@ -24,7 +24,7 @@ namespace User
         
         public WeaponType WeaponType { get; protected set; }
         
-        public float Damage { get; protected set; }
+        public float Damage { get; set; }
 
         public int ClipSize { get; protected set; }
 
