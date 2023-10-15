@@ -38,8 +38,6 @@ namespace Core
 
         protected override void Start()
         {
-            ChangeWeapon(WeaponType.Pistol);
-            
             _disposables.AddRange(new List<IDisposable>{
                     _input.MeleeHold.AxisOnChange.Subscribe(b => HandleMeleeButtonPressed(b)),
                     _input.WeaponFirst.AxisOnChange.Subscribe(_ => HandleWeaponChangePress(WeaponType.Rifle)),
@@ -60,11 +58,13 @@ namespace Core
                 }
             );
 
-            // _weaponState.MainWeapon.Value = _weaponStorage.Weapons[WeaponType.Shotgun] as IRangeWeapon;
             _weaponState.SecondaryWeapon.Value = _weaponStorage.Weapons[WeaponType.Pistol] as IRangeWeapon;
+            _weaponState.MeleeWeapon.Value = _weaponStorage.Weapons[WeaponType.Sword] as IMeleeWeapon;
 
+            _weaponAbilityPresenter.MeleeWeaponSubscribe(_weaponState.MeleeWeapon.Value);
+            _weaponAbilityPresenter.SecondaryWeaponSubscribe(_weaponState.SecondaryWeapon.Value);
             
-            _weaponAbilityPresenter.InitWeapons();
+            ChangeWeapon(WeaponType.Pistol);
         }
 
 
@@ -105,6 +105,7 @@ namespace Core
                     
                 default:
                     _weaponState.MainWeapon.Value = _weaponStorage.Weapons[weaponType] as IRangeWeapon;
+                    _weaponAbilityPresenter.MainWeaponSubscribe(_weaponState.MainWeapon.Value);
                     break;
             }
         }

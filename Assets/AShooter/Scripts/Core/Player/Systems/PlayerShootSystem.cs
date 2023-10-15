@@ -59,37 +59,45 @@ namespace Core
 
         private void UpdateMainWeapon(IRangeWeapon rangeWeapon)
         {
-            _mainRangeWeapon = rangeWeapon;
-            _isMainWeaponAvailable = true;
+            if (rangeWeapon != null)
+            {
+                _mainRangeWeapon = rangeWeapon;
+                _isMainWeaponAvailable = true;
+            }
         }
 
 
         private void UpdateSecondaryWeapon(IRangeWeapon rangeWeapon)
         {
-            _secondaryRangeWeapon = rangeWeapon;
-            _isSecondaryWeaponAvailable = true;
+            if (rangeWeapon != null)
+            {
+                _secondaryRangeWeapon = rangeWeapon;
+                _isSecondaryWeaponAvailable = true;
+            }
         }
         
         
         protected override void Update()
         {
             DrawDebugRayToMousePosition();
-            // UpdateWeaponLaser();
+            UpdateWeaponLaser();
         }
 
         
-        // private void UpdateWeaponLaser()
-        // {
-        //     if (_isMainWeaponAvailable && _mainRangeWeapon.WeaponObject.activeSelf)
-        //         _mainRangeWeapon.Laser.Update();
-        //     
-        //     if (_isSecondaryWeaponAvailable && _secondaryRangeWeapon.WeaponObject.activeSelf)
-        //         _secondaryRangeWeapon.Laser.Update();
-        // }
+        private void UpdateWeaponLaser()
+        {
+            if (_isMainWeaponAvailable && _mainRangeWeapon.WeaponObject.activeSelf)
+                _mainRangeWeapon.Laser.Update();
+            
+            if (_isSecondaryWeaponAvailable && _secondaryRangeWeapon.WeaponObject.activeSelf)
+                _secondaryRangeWeapon.Laser.Update();
+        }
 
 
         private void TryShootPerform(IRangeWeapon weapon)
         {
+            if (weapon == null) return;
+            
             if ((_isMainWeaponAvailable || _isSecondaryWeaponAvailable) && !_weaponState.IsMeleeWeaponPressed.Value)
             {
                 if (weapon.IsShootReady)

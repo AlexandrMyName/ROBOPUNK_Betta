@@ -38,7 +38,7 @@ namespace Core
                     _input.Explosion.AxisOnChange.Subscribe(_ => ProcessExplosion(_explosionAbility, _playerTransform))
             });
 
-            _weaponAbilityPresenter.InitAbilities(_explosionAbility);
+             _weaponAbilityPresenter.SubscribeAbility(_explosionAbility);
         }
 
 
