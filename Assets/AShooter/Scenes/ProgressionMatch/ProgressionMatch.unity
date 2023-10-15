@@ -8101,6 +8101,10 @@ PrefabInstance:
       propertyPath: _levelRewardItemsConfigs
       value: 
       objectReference: {fileID: 11400000, guid: 87b3067110d0aa94f941062e2342d7ec, type: 2}
+    - target: {fileID: 6041886409023221945, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
+      propertyPath: requiredExperienceForNextLevel
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6495472897878780537, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: _prefab
       value: 

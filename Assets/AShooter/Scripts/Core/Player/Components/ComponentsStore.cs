@@ -26,6 +26,8 @@ namespace Core
 
         public ILevelReward LevelReward { get; private set; }
 
+        public ILevelProgress LevelProgress { get; private set; }
+
         public IShield Shield { get; private set; }
         
         public IPlayerStats PlayerStats { get; private set; }
@@ -40,6 +42,7 @@ namespace Core
             IGoldWallet gold, 
             IExperienceHandle exp,
             ILevelReward levelReward,
+            ILevelProgress levelProgress,
             IWeaponStorage weapons,
             IShield shield,
             IPlayerStats playerStats)
@@ -55,6 +58,7 @@ namespace Core
             ExperienceHandle = exp;
             WeaponStorage = weapons;
             LevelReward = levelReward;
+            LevelProgress = levelProgress;
             Shield = shield;
             PlayerStats = playerStats;
         } 

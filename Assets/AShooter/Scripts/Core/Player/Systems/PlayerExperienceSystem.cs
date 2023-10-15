@@ -14,20 +14,23 @@ namespace Core
         private IExperienceView _experienceView;
         private IExperienceHandle _experienceHandle;
 
-        private float requiredExperienceForNextLevel = 10f;
-        private float progressRate = 2.0f;
+        private float _requiredExperienceForNextLevel;
+        private float _progressRate;
 
 
         protected override void Awake(IGameComponents components)
         {
-            _experienceView = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.Experience;
-            _experienceHandle = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.ExperienceHandle;
+            var componentsStore = components.BaseObject.GetComponent<IPlayer>().ComponentsStore;
+            _experienceView = componentsStore.Views.Experience;
+            _experienceHandle = componentsStore.ExperienceHandle;
+            _requiredExperienceForNextLevel = componentsStore.LevelProgress.RequiredExperienceForNextLevel;
+            _progressRate = componentsStore.LevelProgress.ProgressRate;
 
             SubscribeToExperienceChanges();
             SubscribeToLevelChanges();
 
             _experienceView.Show();
-            UpdateDisplay(_experienceHandle.CurrentExperience.Value, _experienceHandle.CurrentLevel.Value, requiredExperienceForNextLevel);
+            UpdateDisplay(_experienceHandle.CurrentExperience.Value, _experienceHandle.CurrentLevel.Value, _requiredExperienceForNextLevel);
         }
 
 
@@ -45,20 +48,20 @@ namespace Core
 
         private void OnLevelChanged(int valueLevel)
         {
-            UpdateDisplay(_experienceHandle.CurrentExperience.Value, valueLevel, requiredExperienceForNextLevel);
+            UpdateDisplay(_experienceHandle.CurrentExperience.Value, valueLevel, _requiredExperienceForNextLevel);
         }
 
 
         private void OnExperienceChanged(float valueExperience)
         {
-            if (valueExperience >= requiredExperienceForNextLevel)
+            if (valueExperience >= _requiredExperienceForNextLevel)
             {
                 MakeLevelUp();
 
-                requiredExperienceForNextLevel = requiredExperienceForNextLevel * progressRate;
+                _requiredExperienceForNextLevel = _requiredExperienceForNextLevel * _progressRate;
             }
 
-            UpdateDisplay(valueExperience, _experienceHandle.CurrentLevel.Value, requiredExperienceForNextLevel);
+            UpdateDisplay(valueExperience, _experienceHandle.CurrentLevel.Value, _requiredExperienceForNextLevel);
         }
 
 

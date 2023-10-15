@@ -20,7 +20,7 @@ namespace DI
     public class PlayerInstaller : MonoInstaller
     {
 
-        [SerializeField] private LevelRewardItemsConfigs _levelRewardItemsConfigs;
+
         [SerializeField] private DashConfig _dashConfig;
         [SerializeField] private PlayerHPConfig _playerHPConfig;
         [SerializeField] private CinemachineVirtualCamera _camera;
@@ -41,7 +41,13 @@ namespace DI
         private SpawnPlayerFactory _spawnPlayerFactory;
         
         private Player _player;
- 
+
+        [Space(10)]
+        [Header("Progress Configs:")]
+        [SerializeField] private LevelRewardItemsConfigs _levelRewardItemsConfigs;
+        [SerializeField] private float requiredExperienceForNextLevel = 10f;
+        [SerializeField] private float _progressRate = 2.0f;
+
 
         [Space,SerializeField, Header("Test (can be bull)")]
         private World _world;
@@ -91,6 +97,7 @@ namespace DI
             PlayerExperienceComponent exp = new PlayerExperienceComponent();
             WeaponStorage weapons = new WeaponStorage();
             PlayerLevelRewardComponent levelReward = new PlayerLevelRewardComponent(_levelRewardItemsConfigs);
+            PlayerLevelProgressComponent levelProgress = new PlayerLevelProgressComponent(requiredExperienceForNextLevel, _progressRate);
             PlayerShieldComponent shield = new PlayerShieldComponent(_maxPlayerProtection, _protectionRegenerationTime);
 
             var repository = new Repository();
@@ -111,7 +118,7 @@ namespace DI
             Container.QueueForInject(playerStatsRuntime);
 
             ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP, 
-                views, gold, exp, levelReward, weapons, shield, playerStatsRuntime);
+                views, gold, exp, levelReward, levelProgress, weapons, shield, playerStatsRuntime);
 
             return components;
         }

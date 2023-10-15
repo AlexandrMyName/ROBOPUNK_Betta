@@ -22,9 +22,12 @@ namespace Abstracts
 
         ILevelReward LevelReward { get; }
 
+        ILevelProgress LevelProgress { get; }
+
         IShield Shield { get; }
 
         IPlayerStats PlayerStats { get; }
+
 
     }
 }
