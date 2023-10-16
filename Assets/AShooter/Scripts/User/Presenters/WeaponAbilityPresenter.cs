@@ -47,7 +47,7 @@ namespace User
         public void SubscribeAbility(IAbility ability)
         {
             _explosionAbilityItem.SetItemIcon(ability.ExplosionIcon);
-            _explosionAbilityItem.SetPatronsCount(-1);
+            _explosionAbilityItem.SetPatronsCount(-1, -1);
             
             _disposables.Add(
                 ability.IsReady.Subscribe(isReady =>
@@ -62,7 +62,7 @@ namespace User
         public void MeleeWeaponSubscribe(IMeleeWeapon weapon)
         {
             _meleeWeaponItem.SetItemIcon(weapon.WeaponIcon);
-            _meleeWeaponItem.SetPatronsCount(-1);
+            _meleeWeaponItem.SetPatronsCount(-1, -1);
             
             _disposables.Add(
                 _weaponStorage.WeaponState.IsMeleeWeaponPressed.Subscribe(isPressed =>
@@ -78,7 +78,7 @@ namespace User
             var patronsCount = weapon.LeftPatronsCount.Value;
             
             _secondaryWeaponItem.SetItemIcon(weapon.WeaponIcon);
-            _secondaryWeaponItem.SetPatronsCount(patronsCount);
+            _secondaryWeaponItem.SetPatronsCount(patronsCount, weapon.LeftPatronsCount.Value);
             
             _weaponState.SecondaryWeapon.Subscribe(_ =>
             {
@@ -97,7 +97,7 @@ namespace User
             var patronsCount = weapon.LeftPatronsCount.Value;
             
             _mainWeaponItem.SetItemIcon(weapon.WeaponIcon);
-            _mainWeaponItem.SetPatronsCount(patronsCount);
+            _mainWeaponItem.SetPatronsCount(patronsCount, weapon.LeftPatronsCount.Value);
             
             _weaponState.MainWeapon.Subscribe(_ =>
             {
@@ -115,8 +115,8 @@ namespace User
         {
             var itemObject = Instantiate(_itemViewPrefab, itemContainer);
             WeaponAbilityItemView itemView = itemObject.GetComponent<WeaponAbilityItemView>();
-            
             itemView.SetButtonName(buttonName);
+
             return itemView;
         }
 
@@ -129,7 +129,8 @@ namespace User
             weaponItemView.SetItemIcon(rangeWeapon.Value.WeaponIcon);
 
             disposables.AddRange(new List<IDisposable> {
-                rangeWeapon.Value.LeftPatronsCount.Subscribe(count => weaponItemView.SetPatronsCount(count)),
+                rangeWeapon.Value.LeftPatronsCount.Subscribe(count => weaponItemView.SetPatronsCount(count, rangeWeapon.Value.TotalPatrons.Value)),
+                rangeWeapon.Value.TotalPatrons.Subscribe(count => weaponItemView.SetPatronsCount(rangeWeapon.Value.LeftPatronsCount.Value, count)),
                 rangeWeapon.Value.IsReloadProcessing.Subscribe(isReload => OnReload(weaponItemView, rangeWeapon.Value.ReloadTime, isReload))
             });
         }

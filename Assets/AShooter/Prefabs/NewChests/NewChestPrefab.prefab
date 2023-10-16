@@ -98,6 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chestConfig: {fileID: 11400000, guid: 41de564c220c8bc43a2f5d137a8f4a8f, type: 2}
   chestAnimator: {fileID: 5752364602504785770}
+  _falling: 0
 --- !u!95 &5752364602504785770
 Animator:
   serializedVersion: 5

@@ -491,7 +491,7 @@ MonoBehaviour:
   <PlayAgainButton>k__BackingField: {fileID: 2657971828687811324}
   <MainMenuButton>k__BackingField: {fileID: 7712951802971474189}
   <SceneLoaderView>k__BackingField: {fileID: 2162483865333189283}
-  <WinTimerSecs>k__BackingField: 60
+  <WinTimerSecs>k__BackingField: 120
 --- !u!1 &3469381274656253427
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,7 +18,7 @@ MonoBehaviour:
   <ProjectileObject>k__BackingField: {fileID: 0}
   <ProjectileForce>k__BackingField: 20
   <WeaponType>k__BackingField: 0
-  <Damage>k__BackingField: 90
+  <Damage>k__BackingField: 200
   <ClipSize>k__BackingField: 0
   <LeftPatronsCount>k__BackingField: 0
   <ReloadTime>k__BackingField: 0
@@ -33,3 +33,5 @@ MonoBehaviour:
   <MuzzleEffectDestroyDelay>k__BackingField: 0
   <Effect>k__BackingField: {fileID: 0}
   <EffectDestroyDelay>k__BackingField: 0
+  <FakeWeaponObject>k__BackingField: {fileID: 0}
+  <FakeBulletsObject>k__BackingField: {fileID: 0}

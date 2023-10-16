@@ -24,9 +24,9 @@ namespace User
         }
 
 
-        public void SetPatronsCount(int patronsCount)
+        public void SetPatronsCount(int currentPatrons, int totalPatrons)
         {
-            _textBulletCount.text = (patronsCount == -1) ? "∞" : $"{patronsCount}";
+            _textBulletCount.text = (currentPatrons == -1) ? "" : $"{currentPatrons} / {totalPatrons}";
         }
 
 

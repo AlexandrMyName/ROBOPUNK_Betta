@@ -45,10 +45,14 @@ namespace Core
                         collider =>
                         {
 
-                            if(_canOpenChest)
-                                ApplyGettingItem(collider.GetComponent<IChest>().GetRandomItem());
+                            if (_canOpenChest)
+                            {
+                                var chest = collider.GetComponent<IChest>();
+                                var objectItem = (chest.Falling) ? chest.GetItem(ChestContentType.Weapon) : chest.GetRandomItem();
 
-                            else  _interactView.Show();
+                                ApplyGettingItem(objectItem);
+                            }
+                            else _interactView.Show();
                                
                             
                         }).AddTo(_disposables);
