@@ -19,6 +19,10 @@ namespace Abstracts
 
         ReactiveProperty<int> LeftPatronsCount { get; }
 
+        ReactiveProperty<int> TotalPatrons { get; set; }
+
+        int TotalPatronsMaxCount { get; }
+
         float ReloadTime { get; }
 
         float ShootDistance { get; }
@@ -47,7 +51,7 @@ namespace Abstracts
         ReactiveProperty<bool> IsReloadProcessing { get; }
 
         bool IsShootReady { get; }
-        
-        
+
+
     }
 }

@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: ChestDataConfig
   m_EditorClassIdentifier: 
   <WeaponsPossibleGeneration>k__BackingField:
-  - {fileID: 11400000, guid: 3b6538afe21c486458721f12758b87e4, type: 2}
   - {fileID: 11400000, guid: 7d4d0cf09ac337e43a27ab9bb23748f7, type: 2}
   - {fileID: 11400000, guid: ae13d1e5ccf1b8947a35cdba8a13a70b, type: 2}
   - {fileID: 11400000, guid: 79ddbc45dcc944546843cd1b88ead445, type: 2}
@@ -26,4 +25,5 @@ MonoBehaviour:
   - 30
   - 22
   - 60
+  ChestLandingEffect: {fileID: 19800000, guid: 18b5b59d2ecee1249b86221232d2704a, type: 3}
   COUNT_POSSIBLE_OBJECTS: 4

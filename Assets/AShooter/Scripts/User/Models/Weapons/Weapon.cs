@@ -30,6 +30,10 @@ namespace User
 
         public ReactiveProperty<int> LeftPatronsCount { get; protected set; }
 
+        public ReactiveProperty<int> TotalPatrons { get; set; }
+
+        public int TotalPatronsMaxCount { get; protected set; }
+
         public float ReloadTime { get; protected set; }
         
         public float ShootDistance { get; protected set; }
@@ -66,8 +70,8 @@ namespace User
         private RaycastAttack _attackTypeProcess;
 
 
-        public Weapon(int weaponId, GameObject weaponObject, Sprite weaponIcon, Projectile projectileObject,
-            float projectileForce, WeaponType weaponType, float damage, int clipSize, ReactiveProperty<int> leftPatronsCount,
+        public Weapon(int weaponId, GameObject weaponObject, Sprite weaponIcon, Projectile projectileObject, float projectileForce,
+            WeaponType weaponType, float damage, int clipSize, ReactiveProperty<int> leftPatronsCount, int totalPatronsMaxCount,
             float reloadTime, float shootDistance, float shootSpeed, float fireSpread, float spreadFactor, LayerMask layerMask,
             ParticleSystem muzzleEffect, float muzzleEffectDestroyDelay, ParticleSystem effect, float effectDestroyDelay,
             GameObject fakeWeaponObject, GameObject fakeBulletsObject, Camera camera)
@@ -81,6 +85,7 @@ namespace User
             Damage = damage;
             ClipSize = clipSize;
             LeftPatronsCount = leftPatronsCount;
+            TotalPatronsMaxCount = totalPatronsMaxCount;
             ReloadTime = reloadTime;
             ShootDistance = shootDistance;
             ShootSpeed = shootSpeed;
@@ -98,6 +103,7 @@ namespace User
 
             Laser = new Laser(WeaponObject);
             _attackTypeProcess = new RaycastAttack(this, camera);
+            TotalPatrons = new ReactiveProperty<int>(leftPatronsCount.Value);
         }
 
 
@@ -105,9 +111,10 @@ namespace User
         {
             _attackTypeProcess.Attack(mousePosition);
 
+            TotalPatrons.Value--;
             LeftPatronsCount.Value--;
 
-            if (LeftPatronsCount.Value == 0)
+            if ((LeftPatronsCount.Value == 0) && ((WeaponType == WeaponType.Pistol) || (TotalPatrons.Value != 0)))
                 ProcessReload();
 
             IsShootReady = false;
@@ -119,7 +126,10 @@ namespace User
 
         public void Reload()
         {
-            LeftPatronsCount.Value = ClipSize;
+            if (WeaponType == WeaponType.Pistol)
+                TotalPatrons.Value = TotalPatrons.Value > ClipSize ? TotalPatrons.Value : ClipSize;
+
+            LeftPatronsCount.Value = Math.Clamp(ClipSize, 0, TotalPatrons.Value);
             IsReloadProcessing.Value = false;
         }
 

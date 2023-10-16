@@ -93,7 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _meleeWeaponContainer: {fileID: 1162237825743712891}
   _mainWeaponContainer: {fileID: 128655333217865025}
-  _pickUpWeaponContainer: {fileID: 2281900217110141694}
+  _secondaryWeaponContainer: {fileID: 2281900217110141694}
   _explosionAbilityContainer: {fileID: 7649476576901115445}
 --- !u!114 &8948531179646284475
 MonoBehaviour:
@@ -262,8 +262,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2281900217110141694}
   m_Layer: 5
-  m_Name: PickUpWeaponContainer
-  m_TagString: PickUpWeapon
+  m_Name: SecondaryWeaponContainer
+  m_TagString: SecondaryWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

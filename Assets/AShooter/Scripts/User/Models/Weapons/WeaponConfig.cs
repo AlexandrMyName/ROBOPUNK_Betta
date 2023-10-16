@@ -26,6 +26,8 @@ namespace User
 
         [field: SerializeField, Min(0f)] public int LeftPatronsCount { get; private set; }
 
+        [field: SerializeField, Min(0f)] public int TotalPatronsMaxCount { get; private set; }
+
         [field: SerializeField, Min(0f)] public float ReloadTime { get; private set; }
 
         [field: SerializeField, Min(0f)] public float ShootDistance { get; private set; }

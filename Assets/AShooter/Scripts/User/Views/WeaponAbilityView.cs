@@ -11,13 +11,12 @@ namespace User
 
         [SerializeField] private Transform _meleeWeaponContainer;
         [SerializeField] private Transform _mainWeaponContainer;
-        [FormerlySerializedAs("_pickUpWeaponContainer")]
-        [SerializeField] private Transform secondaryWeaponContainer;
+        [SerializeField] private Transform _secondaryWeaponContainer;
         [SerializeField] private Transform _explosionAbilityContainer;
 
         public Transform MeleeWeaponContainer => _meleeWeaponContainer;
         public Transform MainWeaponContainer => _mainWeaponContainer;
-        public Transform SecondaryWeaponContainer => secondaryWeaponContainer;
+        public Transform SecondaryWeaponContainer => _secondaryWeaponContainer;
         public Transform ExplosionAbilityContainer => _explosionAbilityContainer;
 
 

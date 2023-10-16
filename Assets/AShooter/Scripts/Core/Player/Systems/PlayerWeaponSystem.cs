@@ -54,7 +54,11 @@ namespace Core
                     {
                         if (pressed && !_weaponState.IsMeleeWeaponPressed.Value && _weaponState.MainWeapon.Value != null)
                             HandleWeaponChangePress(_weaponState.MainWeapon.Value.WeaponType);
-                    })
+                    }),
+                    _weaponState.MainWeapon.Subscribe(weapon => {
+                        if (weapon != null)
+                            HandleWeaponChangePress(weapon.WeaponType);
+                        })
                 }
             );
 

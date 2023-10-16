@@ -171,6 +171,9 @@ namespace DI
             PlayerShieldSystem playerShieldSystem = new PlayerShieldSystem();
             Container.QueueForInject(playerShieldSystem);
 
+            PickUpItemSystem pickUpItemSystem = new PickUpItemSystem();
+            Container.QueueForInject(pickUpItemSystem);
+
             PlayeLevelRewardSystem playeRewardSystem = new PlayeLevelRewardSystem();
             Container.QueueForInject(playeRewardSystem);
 
@@ -188,6 +191,7 @@ namespace DI
             systems.Add(playerExperienceSystem);
             systems.Add(playerGoldWalletSystem);
             systems.Add(playerShieldSystem);
+            systems.Add(pickUpItemSystem);
             systems.Add(playeRewardSystem);
 
             return systems;

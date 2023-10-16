@@ -75,6 +75,7 @@ namespace Core
                 config.Damage,
                 config.ClipSize,
                 new ReactiveProperty<int>(config.LeftPatronsCount),
+                config.TotalPatronsMaxCount,
                 config.ReloadTime,
                 config.ShootDistance,
                 config.ShootSpeed,
@@ -122,7 +123,8 @@ namespace Core
                 _ => config.WeaponObject
             };
 
-            var weaponObject = GameObject.Instantiate(pickUpObject, pickUpItemModel.ParentPoint + Vector3.forward, Quaternion.identity);
+            var parentPoint = pickUpItemModel.ParentPoint;
+            var weaponObject = GameObject.Instantiate(pickUpObject, new Vector3(parentPoint.x, parentPoint.y + 1, parentPoint.z + 3), Quaternion.identity);
 
             PickUpItem pickUpItem = weaponObject.AddComponent<PickUpItem>();
             pickUpItem.WeaponType = config.WeaponType;
