@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1962ca57be3e3644c8ca9e9668f0b66b, type: 3}
+  m_Name: EnemyTestBullet
+  m_EditorClassIdentifier: 
+  Description: (test)
+  <Type>k__BackingField: 0
+  <Speed>k__BackingField: 200
+  <Drop>k__BackingField: 0
+  <MaxTime>k__BackingField: 3
+  <Traicer>k__BackingField: {fileID: 5813249375450545439, guid: a20a0a1d248286c4e9db50ed68d0a663, type: 3}

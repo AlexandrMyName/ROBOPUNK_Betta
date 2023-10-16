@@ -8763,8 +8763,10 @@ MonoBehaviour:
       - {fileID: 5144020777698071415}
       - {fileID: 7655438007028602114}
       _muzzleTransform: {fileID: 3330618966334637578}
+    BulletsConfig: {fileID: 11400000, guid: 4437eadb15fa8244eb6ec00f3bee56dc, type: 2}
     TrailRendererPrefab: {fileID: 5813249375450545439, guid: a20a0a1d248286c4e9db50ed68d0a663, type: 3}
     AimingDuration: 0.455
+  _inernalShield: {fileID: 0}
   _isEnemy: 1
 --- !u!114 &1523842184781726660
 MonoBehaviour:
