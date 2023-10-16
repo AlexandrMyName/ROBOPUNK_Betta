@@ -12,7 +12,7 @@ namespace Core.DTO
 
         public ReactiveProperty<IRangeWeapon> MainWeapon { get; }
 
-        public ReactiveProperty<IRangeWeapon> PickUpWeapon { get; }
+        public ReactiveProperty<IRangeWeapon> SecondaryWeapon { get; }
 
         public ReactiveProperty<bool> IsMeleeWeaponPressed { get; }
 
@@ -23,7 +23,7 @@ namespace Core.DTO
         {
             MeleeWeapon = new ReactiveProperty<IMeleeWeapon>();
             MainWeapon = new ReactiveProperty<IRangeWeapon>();
-            PickUpWeapon = new ReactiveProperty<IRangeWeapon>();
+            SecondaryWeapon = new ReactiveProperty<IRangeWeapon>();
             IsMeleeWeaponPressed = new ReactiveProperty<bool>();
         }
         

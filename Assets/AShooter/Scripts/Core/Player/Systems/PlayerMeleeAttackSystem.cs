@@ -17,6 +17,7 @@ namespace Core
 
         [Inject] private IInput _input;
         [Inject] private WeaponState _weaponState;
+        [Inject] private WeaponAbilityPresenter _weaponAbilityPresenter;
 
         private IGameComponents _components;
         private List<IDisposable> _disposables = new();

@@ -1,6 +1,8 @@
 ﻿using Abstracts;
 using System.Collections.Generic;
 using System;
+using Core;
+using Core.DTO;
 using UniRx;
 using UnityEngine;
 
@@ -16,76 +18,106 @@ namespace User
 
         private WeaponAbilityItemView _meleeWeaponItem;
         private WeaponAbilityItemView _mainWeaponItem;
-        private WeaponAbilityItemView _pickUpWeaponItem;
+        private WeaponAbilityItemView _secondaryWeaponItem;
         private WeaponAbilityItemView _explosionAbilityItem;
 
         private List<IDisposable> _disposables = new();
         private List<IDisposable> _pickUpWeaponDisposables = new();
 
+        private IWeaponStorage _weaponStorage;
+        private WeaponState _weaponState;
 
-        public void InitWeapons(IWeaponStorage weaponStorage)
+
+        private void Start()
         {
-            _meleeWeaponItem = CreateWeaponView(weaponStorage.Weapons[WeaponType.Sword], _weaponAbilityView.MeleeWeaponContainer, "Shift");
-            _mainWeaponItem = CreateWeaponView(weaponStorage.WeaponState.MainWeapon.Value, _weaponAbilityView.MainWeaponContainer, "ЛКМ");
-            _pickUpWeaponItem = CreateWeaponView(weaponStorage.WeaponState.PickUpWeapon.Value, _weaponAbilityView.PickUpWeaponContainer, "ПКМ");
+            _meleeWeaponItem = CreateAbilityView(_weaponAbilityView.MeleeWeaponContainer, "Shift");
+            _mainWeaponItem = CreateAbilityView(_weaponAbilityView.MainWeaponContainer, "LMB");
+            _secondaryWeaponItem = CreateAbilityView(_weaponAbilityView.SecondaryWeaponContainer, "RMB");
+            _explosionAbilityItem = CreateAbilityView(_weaponAbilityView.ExplosionAbilityContainer, "Q");
+        }
 
-            WeaponSubscribe(weaponStorage);
+        
+        public void Init(IWeaponStorage weaponStorage)
+        {
+            _weaponStorage = weaponStorage;
+            _weaponState = weaponStorage.WeaponState;
         }
 
 
-        public void InitAbilities(IAbility ability)
+        public void SubscribeAbility(IAbility ability)
         {
-            _explosionAbilityItem = CreateAbilityView(ability, _weaponAbilityView.ExplosionAbilityContainer, "Q");
-
-            AbilitySubscribe(ability, _explosionAbilityItem);
-
-            _weaponAbilityView.Show();
+            _explosionAbilityItem.SetItemIcon(ability.ExplosionIcon);
+            _explosionAbilityItem.SetPatronsCount(-1);
+            
+            _disposables.Add(
+                ability.IsReady.Subscribe(isReady =>
+                {
+                    if (!isReady)
+                        OnReload(_explosionAbilityItem, ability.UsageTimeout, !isReady);
+                })
+            );
+        }
+        
+        
+        public void MeleeWeaponSubscribe(IMeleeWeapon weapon)
+        {
+            _meleeWeaponItem.SetItemIcon(weapon.WeaponIcon);
+            _meleeWeaponItem.SetPatronsCount(-1);
+            
+            _disposables.Add(
+                _weaponStorage.WeaponState.IsMeleeWeaponPressed.Subscribe(isPressed =>
+                {
+                    _meleeWeaponItem.gameObject.SetActive(isPressed);
+                })
+            );
         }
 
 
-        private WeaponAbilityItemView CreateWeaponView(IWeapon weapon, Transform itemContainer, string buttonName)
+        public void SecondaryWeaponSubscribe(IRangeWeapon weapon)
+        {
+            var patronsCount = weapon.LeftPatronsCount.Value;
+            
+            _secondaryWeaponItem.SetItemIcon(weapon.WeaponIcon);
+            _secondaryWeaponItem.SetPatronsCount(patronsCount);
+            
+            _weaponState.SecondaryWeapon.Subscribe(_ =>
+            {
+                RangeWeaponSubscribe(
+                    _weaponState.SecondaryWeapon, 
+                    _secondaryWeaponItem, 
+                    _disposables,
+                    false
+                );
+            }).AddTo(_disposables);
+        }
+
+
+        public void MainWeaponSubscribe(IRangeWeapon weapon)
+        {
+            var patronsCount = weapon.LeftPatronsCount.Value;
+            
+            _mainWeaponItem.SetItemIcon(weapon.WeaponIcon);
+            _mainWeaponItem.SetPatronsCount(patronsCount);
+            
+            _weaponState.MainWeapon.Subscribe(_ =>
+            {
+                RangeWeaponSubscribe(
+                    _weaponState.MainWeapon, 
+                    _mainWeaponItem, 
+                    _pickUpWeaponDisposables,
+                    true
+                );
+            }).AddTo(_disposables);
+        }
+        
+        
+        private WeaponAbilityItemView CreateAbilityView(Transform itemContainer, string buttonName)
         {
             var itemObject = Instantiate(_itemViewPrefab, itemContainer);
-
             WeaponAbilityItemView itemView = itemObject.GetComponent<WeaponAbilityItemView>();
-
-            var patronsCount = 0;
-            if (weapon is IRangeWeapon rangeWeapon)
-                patronsCount = rangeWeapon.LeftPatronsCount.Value;
-            else
-                patronsCount = -1;
-
-            itemView.SetItemIcon(weapon.WeaponIcon);
-            itemView.SetPatronsCount(patronsCount);
+            
             itemView.SetButtonName(buttonName);
-
             return itemView;
-        }
-
-
-        private WeaponAbilityItemView CreateAbilityView(IAbility ability, Transform itemContainer, string buttonName)
-        {
-            var itemObject = Instantiate(_itemViewPrefab, itemContainer);
-
-            WeaponAbilityItemView itemView = itemObject.GetComponent<WeaponAbilityItemView>();
-            itemView.SetItemIcon(ability.ExplosionIcon);
-            itemView.SetPatronsCount(-1);
-            itemView.SetButtonName(buttonName);
-
-            return itemView;
-        }
-
-
-        private void WeaponSubscribe(IWeaponStorage weaponStorage)
-        {
-            MeleeWeaponSubscribe(weaponStorage, _meleeWeaponItem);
-
-            var weaponState = weaponStorage.WeaponState;
-
-            _disposables.AddRange(new List<IDisposable> {
-                weaponState.MainWeapon.Subscribe(_ => { RangeWeaponSubscribe(weaponState.MainWeapon, _mainWeaponItem, _disposables, false); }),
-                weaponState.PickUpWeapon.Subscribe(_ => { RangeWeaponSubscribe(weaponState.PickUpWeapon, _pickUpWeaponItem, _pickUpWeaponDisposables, true); })
-            });
         }
 
 
@@ -102,32 +134,7 @@ namespace User
             });
         }
 
-
-        private void MeleeWeaponSubscribe(IWeaponStorage weaponStorage, WeaponAbilityItemView weaponItemView)
-        {
-            var weapon = weaponStorage.Weapons[WeaponType.Sword];
-
-            if (weapon is IMeleeWeapon meleeWeapon)
-            {
-                _disposables.Add(
-                    weaponStorage.WeaponState.IsMeleeWeaponPressed.Subscribe(isPressed => { weaponItemView.gameObject.SetActive(isPressed); })
-                );
-            }
-        }
-
-
-        private void AbilitySubscribe(IAbility ability, WeaponAbilityItemView weaponItemView)
-        {
-            _disposables.Add(
-                ability.IsReady.Subscribe(isReady =>
-                {
-                    if (!isReady)
-                        OnReload(weaponItemView, ability.UsageTimeout, !isReady);
-                })
-            );
-        }
-
-
+        
         public void OnReload(WeaponAbilityItemView weaponItemView, float reloadTime, bool isReload)
         {
             if (isReload)
@@ -159,7 +166,9 @@ namespace User
             _pickUpWeaponDisposables.ForEach(d => d.Dispose());
         }
 
+        
         private void OnDestroy() => Dispose();
+        
         
     }
 }

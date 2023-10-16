@@ -60,7 +60,7 @@ namespace Core
         {
             if (_pickUpItemType == PickUpItemType.Weapon)
             {
-                _weaponStorage.WeaponState.PickUpWeapon.Value = _weaponStorage.Weapons[_weaponType] as IRangeWeapon;
+                _weaponStorage.WeaponState.SecondaryWeapon.Value = _weaponStorage.Weapons[_weaponType] as IRangeWeapon;
 
                 ChangeWeapon();
             }
