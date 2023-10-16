@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/AShooter/Scenes/MainMenu_EI.unity
     guid: 4c2e13d4e835bb0489692b361a428b02
   - enabled: 1
-    path: Assets/AShooter/Scenes/Release_0.0.5/Release_0.0.5.unity
-    guid: cbf2fa870ce149b42b9108493c701081
+    path: Assets/AShooter/Scenes/Release_0.0.6/Release_0.0.6.unity
+    guid: cebd251d52b93ac4b8e19bd27b35685f
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 3c562b1f8c447324aae0afc3b11d4d90, type: 2}

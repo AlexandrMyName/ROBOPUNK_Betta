@@ -19,8 +19,9 @@ MonoBehaviour:
       nameEnemy: 
       enemyType: 0
       prefab: {fileID: 1034927544983750824, guid: 95724134bbd849a4a8e3e464c61ce05c, type: 3}
-      maxHealth: 1000
-      maxAttackDamage: 4.8
+      maxHealth: 350
+      maxProtection: 100
+      maxAttackDamage: 20
       attackDistance: 1.3
       attackFrequency: 2
       goldDropRate: 60
@@ -40,8 +41,9 @@ MonoBehaviour:
       nameEnemy: 
       enemyType: 1
       prefab: {fileID: 8264848538888882622, guid: c2a183e5b899cc14aa9a041dced48506, type: 3}
-      maxHealth: 1000
-      maxAttackDamage: 40
+      maxHealth: 450
+      maxProtection: 0
+      maxAttackDamage: 20
       attackDistance: 10
       attackFrequency: 2
       goldDropRate: 50
@@ -61,7 +63,8 @@ MonoBehaviour:
       nameEnemy: 
       enemyType: 1
       prefab: {fileID: 8612538968296841362, guid: 797c09d975a74634383988e34e5c301e, type: 3}
-      maxHealth: 450
+      maxHealth: 350
+      maxProtection: 0
       maxAttackDamage: 40
       attackDistance: 10
       attackFrequency: 2
@@ -82,9 +85,32 @@ MonoBehaviour:
       nameEnemy: 
       enemyType: 1
       prefab: {fileID: 5521032368774563715, guid: e03c9257cd1d56248bcd645243d52cea, type: 3}
-      maxHealth: 655.3
+      maxHealth: 666
+      maxProtection: 0
       maxAttackDamage: 40
       attackDistance: 10
+      attackFrequency: 2
+      goldDropRate: 50
+      goldValueRange:
+        min: 5
+        max: 10
+      experienceRange:
+        min: 3
+        max: 6
+      probabilityWeigh: 1
+    respawnEnemyInWaveDelay: 1
+    spawnRadiusRelativeToPlayer: 25
+    numberEnemiesInWave: 5
+    numberEnemiesInScene: 3
+  - Enemy:
+    - description: 
+      nameEnemy: 
+      enemyType: 0
+      prefab: {fileID: 1034927544983750824, guid: 95724134bbd849a4a8e3e464c61ce05c, type: 3}
+      maxHealth: 250
+      maxProtection: 0
+      maxAttackDamage: 33.3
+      attackDistance: 1.3
       attackFrequency: 2
       goldDropRate: 50
       goldValueRange:

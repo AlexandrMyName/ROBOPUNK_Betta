@@ -48,26 +48,26 @@ namespace AShooter.Scripts.User.Presenters
 
         private void Update()
         {
-
-            WinTimerSecs -= Time.deltaTime;
-            _time = TimeSpan.FromSeconds(WinTimerSecs);
-            Timer.text = $"{_time.Minutes:D2}:{_time.Seconds:D2}";
-
-            
-
-
+             
             if (WinTimerSecs <= 0)
             {
 
-                Timer.gameObject.SetActive(false);
-                 
+                Timer.text = "BOSS";
+                Timer.color = Color.red;
+
                 if(!_isBoss)
                 Boss.BossSpawner.Spawn(()=>ShowFullWinPanel());
 
                 _isBoss = true;
 
             }
-            
+            else
+            {
+                WinTimerSecs -= Time.deltaTime;
+                _time = TimeSpan.FromSeconds(WinTimerSecs);
+                Timer.text = $"{_time.Minutes:D2}:{_time.Seconds:D2}";
+            }
+
             if (_isNeedBarUpdate)
                 _sceneLoader.UpdateLoadingBar();
         }
