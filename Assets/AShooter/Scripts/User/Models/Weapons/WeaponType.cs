@@ -8,6 +8,7 @@
         Shotgun,
         RocketLauncher,
         Rifle,
-        Saw
+        Saw,
+        Turret,
     }
 }

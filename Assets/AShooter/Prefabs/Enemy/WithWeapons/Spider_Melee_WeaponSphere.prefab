@@ -214,6 +214,7 @@ MonoBehaviour:
     Muzzle:
       _muzzleEffects: []
       _muzzleTransform: {fileID: 0}
+    BulletsConfig: {fileID: 11400000, guid: 4437eadb15fa8244eb6ec00f3bee56dc, type: 2}
     TrailRendererPrefab: {fileID: 0}
     AimingDuration: 0
   _inernalShield: {fileID: 7171825408564734971}

@@ -18,6 +18,7 @@ namespace Core
         private TrailRenderer _trailInstance;
         private Transform _playerTransform;
         private IPlayer _player;
+        private IAnimatorIK _animatorIK;
 
 
         public EnemyBossDistantAttackSystem(IEnemyBossComponent bossComponent, Transform playerTransform)

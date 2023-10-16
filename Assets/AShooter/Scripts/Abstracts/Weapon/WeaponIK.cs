@@ -18,6 +18,7 @@ namespace Abstracts
         public Rig AimingRig;
         public Rig DefaultRig;
         public WeaponRaycast Muzzle;
+        public BulletConfig BulletsConfig;
         public TrailRenderer TrailRendererPrefab;
         [Range(.1f,1f)] public float AimingDuration;
 

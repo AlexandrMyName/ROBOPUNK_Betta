@@ -106,8 +106,10 @@ namespace Core
   
         public void ShootIK() {
 
-            if(_currentWeapon != null)
-                _currentWeapon.Muzzle.Shoot();
+            if (_currentWeapon != null && _currentWeapon.AimingRig.weight > .7f)
+            {
+                _currentWeapon.Muzzle.Shoot(_currentWeapon.BulletsConfig);
+            }
         }
 
 
@@ -237,7 +239,9 @@ namespace Core
 
                 if (_currentWeapon == null) return;
                 UpdateAimingState();
-
+ 
+               _currentWeapon.Muzzle.UpdateBullets(Time.deltaTime);
+                 
                 if (_animator.runtimeAnimatorController == null) return;
 
 
@@ -247,7 +251,7 @@ namespace Core
                 }
 
 
-              
+                
             }
         }
 

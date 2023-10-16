@@ -15,7 +15,7 @@ public class BosSpawner : MonoBehaviour
 {
 
     [SerializeField] private bool _canAttackForOtherEnemies;
-    [SerializeField] private bool _enableDistantAttackSystem;
+ 
     [SerializeField] private EnemyBossComponent _enemyBossComponent;
     [SerializeField] private EnemyConfig _config;
     [SerializeField] private GameObject _enemyViews_Prefab;
@@ -69,7 +69,7 @@ public class BosSpawner : MonoBehaviour
         ViewsCreation(bossInstance.transform);
         bossInstance.SetActive(true);
 
-
+        
 
     }
 
@@ -83,7 +83,7 @@ public class BosSpawner : MonoBehaviour
                    _componentsPlayer.Movable.Rigidbody.transform.position.x - 25,
                    _componentsPlayer.Movable.Rigidbody.transform.position.x + 25
                ),
-               1
+               2f
                 ,
                Random.Range(
                    _componentsPlayer.Movable.Rigidbody.transform.position.z - 25,
@@ -97,7 +97,7 @@ public class BosSpawner : MonoBehaviour
 
         var viewsInstance = GameObject.Instantiate(_enemyViews_Prefab, parent, false);
    
-        viewsInstance.transform.localPosition = Vector3.zero + Vector3.up * 1.5f;
+        viewsInstance.transform.localPosition = Vector3.zero + Vector3.up * 2f;
         viewsInstance.GetComponent<IEnemyViews>().InitViews();
     }
 
@@ -110,23 +110,25 @@ public class BosSpawner : MonoBehaviour
         systems.Add(new EnemyRewardSystem(_componentsPlayer.ExperienceHandle, _componentsPlayer.GoldWallet));
         systems.Add(new EnemyDamageSystem(item.maxHealth, item.maxProtection));
         systems.Add(new EnemyMovementSystem(_componentsPlayer.Movable.Rigidbody.transform));
-
-        if (_enableDistantAttackSystem)
-            systems.Add(new EnemyBossDistantAttackSystem(_enemyBossComponent, _componentsPlayer.Movable.Rigidbody.transform));  
          
 
         switch (item.enemyType)
         {
             case EnemyType.MeleeEnemy:
-                systems.Add(new EnemyBossMeleeAttackSystem(_canAttackForOtherEnemies));
+                 systems.Add(new EnemyBossMeleeAttackSystem(_canAttackForOtherEnemies));
                 break;
 
             case EnemyType.DistantEnemy:
-                systems.Add(new EnemyDistantAttackSystem(_componentsPlayer.Movable.Rigidbody.transform));
+                 systems.Add(new EnemyBossDistantAttackSystem(_enemyBossComponent, _componentsPlayer.Movable.Rigidbody.transform));
                 break;
 
+                case EnemyType.DistantMeleeEnemy:
+
+                 systems.Add(new EnemyBossMeleeAttackSystem(_canAttackForOtherEnemies));
+                 systems.Add(new EnemyDistantAttackSystem(_componentsPlayer.Movable.Rigidbody.transform));
+                break;
             default:
-                systems.Add(new EnemyBossMeleeAttackSystem(_canAttackForOtherEnemies));
+                 systems.Add(new EnemyBossMeleeAttackSystem(_canAttackForOtherEnemies));
                 break;
         }
         return systems;

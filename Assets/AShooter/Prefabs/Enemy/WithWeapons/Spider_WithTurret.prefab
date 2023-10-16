@@ -21220,6 +21220,7 @@ MonoBehaviour:
   _layersForIK:
     serializedVersion: 2
     m_Bits: 9
+  Length: 3
   NormalLeg: {x: 0, y: 0, z: 0}
 --- !u!1 &4104782332949777643
 GameObject:
@@ -26707,6 +26708,7 @@ MonoBehaviour:
   _layersForIK:
     serializedVersion: 2
     m_Bits: 9
+  Length: 3
   NormalLeg: {x: 0, y: 0, z: 0}
 --- !u!1 &5530333783511200701
 GameObject:
@@ -26755,6 +26757,7 @@ MonoBehaviour:
   _layersForIK:
     serializedVersion: 2
     m_Bits: 9
+  Length: 3
   NormalLeg: {x: 0, y: 0, z: 0}
 --- !u!1 &5827929531011862148
 GameObject:
@@ -32335,8 +32338,10 @@ MonoBehaviour:
       - {fileID: 6777399673939198983}
       - {fileID: 371620541879096602}
       _muzzleTransform: {fileID: 7582014381075429873}
+    BulletsConfig: {fileID: 11400000, guid: 4437eadb15fa8244eb6ec00f3bee56dc, type: 2}
     TrailRendererPrefab: {fileID: 5813249375450545439, guid: a20a0a1d248286c4e9db50ed68d0a663, type: 3}
     AimingDuration: 0.382
+  _inernalShield: {fileID: 0}
   _isEnemy: 1
 --- !u!1 &8861020287023266656
 GameObject:
@@ -32490,6 +32495,7 @@ MonoBehaviour:
   _layersForIK:
     serializedVersion: 2
     m_Bits: 9
+  Length: 3
   NormalLeg: {x: 0, y: 0, z: 0}
 --- !u!1 &8895183815799939368
 GameObject:
