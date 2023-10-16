@@ -12,30 +12,8 @@ public class Chest : MonoBehaviour, IChest
 
     [SerializeField] private ChestDataConfig chestConfig;
     [SerializeField] private Animator chestAnimator;
-    [SerializeField] private Animator _fallAnimator;
-    [SerializeField] private bool _falling;
 
-    private bool _canFall;
-
-    public bool Falling => _falling;
-
-
-    private void Awake()
-    {
-        gameObject.SetActive(!_falling);
-        _canFall = _falling;
-    }
-
-
-    public void FallingProcess()
-    {
-        if (_canFall && _fallAnimator)
-        {
-            _fallAnimator.SetTrigger("Fell");
-            gameObject.SetActive(true);
-            _canFall = false;
-        }
-    }
+    public bool Falling { get; set; }
 
 
     public object GetRandomItem()

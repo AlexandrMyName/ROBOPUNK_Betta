@@ -1,8 +1,6 @@
 ﻿using Abstracts;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using Random = System.Random;
+using Random = UnityEngine.Random;
 
 
 namespace User
@@ -11,9 +9,12 @@ namespace User
     public class FallingChestContainer : MonoBehaviour
     {
 
-        [SerializeField] public List<Chest> _chestList;
-        [SerializeField, Min(1)] public int _chestToFallCount;
-        [SerializeField] public bool _fallTriggerWorks;
+        [SerializeField] private Chest _chest;
+        [SerializeField] private GameObject _chestContainerPrefab;
+        [SerializeField] private ParticleSystem _fallEffect;
+        [SerializeField] private int _fallRadius;
+        [SerializeField, Min(1)] private int _chestToFallCount;
+        [SerializeField] private bool _fallTriggerWorks;
 
 
         private void Awake()
@@ -26,39 +27,38 @@ namespace User
         {
             if (other.TryGetComponent(out IPlayer player) && _fallTriggerWorks)
             {
-                GetChest();
+                var targetPosition = player.ComponentsStore.Movable.Rigidbody.transform.position;
+                GetChest(targetPosition);
                 _fallTriggerWorks = false;
             }
         }
 
 
-        public void GetChest()
+        private void GetChest(Vector3 targetPosition)
         {
-            var chests = RandomPermutation(_chestList.Where(chest => chest.Falling).ToArray());
-
-            if (_chestToFallCount > chests.Length)
-                _chestToFallCount = chests.Length;
+            var chestContainer = Instantiate(_chestContainerPrefab);
+            var fallAnimator = chestContainer.GetComponent<Animator>();
 
             for (int i = 0; i < _chestToFallCount; i++)
-                chests[i].FallingProcess();
-        }
-
-
-        static Chest[] RandomPermutation(Chest[] chests)
-        {
-            Random random = new Random();
-            var chestLength = chests.Length;
-
-            while (chestLength > 1)
             {
-                chestLength--;
-                var chestIndex = random.Next(chestLength + 1);
-                var tempItem = chests[chestIndex];
-                chests[chestIndex] = chests[chestLength];
-                chests[chestLength] = tempItem;
+                Vector3 randomPosition = Random.insideUnitSphere * _fallRadius;
+
+                var chest = Instantiate(
+                    _chest, 
+                    targetPosition + new Vector3(randomPosition.x, 0, randomPosition.z), 
+                    Quaternion.identity,
+                    chestContainer.transform);
+
+                if (_fallEffect)
+                {
+                    var effect = Instantiate(_fallEffect, chest.transform);
+                    Destroy(effect, 2);
+                }
+
+                chest.Falling = true;
             }
 
-            return chests;
+            fallAnimator.SetTrigger("Fell");
         }
 
 
