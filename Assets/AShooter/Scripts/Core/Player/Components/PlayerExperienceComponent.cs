@@ -14,9 +14,12 @@ namespace Core
 
         public ReactiveProperty<float> CurrentExperience { get; }
 
+        public ReactiveProperty<int> CurrentLevel { get; }
+
         public PlayerExperienceComponent()
         {
             CurrentExperience = new ReactiveProperty<float>(0);
+            CurrentLevel = new ReactiveProperty<int>(1);
         }
 
 

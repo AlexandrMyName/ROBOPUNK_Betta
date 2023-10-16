@@ -16,7 +16,7 @@ namespace Core
         }
 
 
-        public float MaxProtection {get; private set;}
+        public float MaxProtection {get; set;}
 
         public float MaxRegenerationSeconds { get; private set; }
 

@@ -23,7 +23,10 @@ namespace Core
         public IExperienceHandle ExperienceHandle { get; private set; }
 
         public IWeaponStorage WeaponStorage { get; private set; }
-        public IStoreEnhancement StoreEnhancement { get; private set; }
+
+        public ILevelReward LevelReward { get; private set; }
+
+        public ILevelProgress LevelProgress { get; private set; }
 
         public IShield Shield { get; private set; }
         
@@ -37,8 +40,9 @@ namespace Core
             IPlayerHP playerHP, 
             IViews views, 
             IGoldWallet gold, 
-            IExperienceHandle exp, 
-            IStoreEnhancement store,
+            IExperienceHandle exp,
+            ILevelReward levelReward,
+            ILevelProgress levelProgress,
             IWeaponStorage weapons,
             IShield shield,
             IPlayerStats playerStats)
@@ -53,7 +57,8 @@ namespace Core
             GoldWallet = gold;
             ExperienceHandle = exp;
             WeaponStorage = weapons;
-            StoreEnhancement = store;
+            LevelReward = levelReward;
+            LevelProgress = levelProgress;
             Shield = shield;
             PlayerStats = playerStats;
         } 

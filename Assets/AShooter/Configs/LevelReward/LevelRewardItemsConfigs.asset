@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 826b49d7eb7a71b48bc21e8d02cdf5e5, type: 3}
+  m_Name: LevelRewardItemsConfigs
+  m_EditorClassIdentifier: 
+  RewardItemsConfigs:
+  - id: 0
+    description: Speed Upgrade
+    nameItem: Speed
+    Icon: {fileID: 21300000, guid: bcef3bb3e863a0b47bc29230664c187c, type: 3}
+    upgradeCoefficient: 10
+    unitImprovementCoefficient: '%'
+    effectPrefrab: {fileID: 7155335147208632822, guid: 9bea9964cac96414ebbba8a54403fe7d, type: 3}
+  - id: 1
+    description: Damage Upgrade
+    nameItem: Damage
+    Icon: {fileID: 21300000, guid: dc609ed06ad96334b99034f63f3072ec, type: 3}
+    upgradeCoefficient: 25
+    unitImprovementCoefficient: '%'
+    effectPrefrab: {fileID: 7155335147208632822, guid: 9bea9964cac96414ebbba8a54403fe7d, type: 3}
+  - id: 2
+    description: Health Upgrade
+    nameItem: Health
+    Icon: {fileID: 21300000, guid: 2c36633b3f4616d429aaef19f8e28ca4, type: 3}
+    upgradeCoefficient: 25
+    unitImprovementCoefficient: HP
+    effectPrefrab: {fileID: 9017484664307500583, guid: 053d6522123c3054daa35e15639a88f6, type: 3}
+  - id: 3
+    description: Get Bonus Gold
+    nameItem: Gold
+    Icon: {fileID: 21300000, guid: e2cb3da7e4ee10b4eb1a8d77b88c5495, type: 3}
+    upgradeCoefficient: 50
+    unitImprovementCoefficient: G
+    effectPrefrab: {fileID: 7053385775836331393, guid: 1a15b2e72447146429993b166c98535a, type: 3}
+  - id: 4
+    description: Get Bonus Experience
+    nameItem: Experience
+    Icon: {fileID: 21300000, guid: e2cb3da7e4ee10b4eb1a8d77b88c5495, type: 3}
+    upgradeCoefficient: 50
+    unitImprovementCoefficient: XP
+    effectPrefrab: {fileID: 7053385775836331393, guid: 1a15b2e72447146429993b166c98535a, type: 3}
+  - id: 5
+    description: Shield Strength Upgrade
+    nameItem: Shield
+    Icon: {fileID: 21300000, guid: d6e0c61226318b64db8f2ca9069b2dae, type: 3}
+    upgradeCoefficient: 25
+    unitImprovementCoefficient: 
+    effectPrefrab: {fileID: 7155335147208632822, guid: 9bea9964cac96414ebbba8a54403fe7d, type: 3}
+  - id: 6
+    description: Distance Dash Upgrade
+    nameItem: Distance Dash
+    Icon: {fileID: 21300000, guid: b1ca7598084e20445b98996a45b9d87f, type: 3}
+    upgradeCoefficient: 15
+    unitImprovementCoefficient: '%'
+    effectPrefrab: {fileID: 7155335147208632822, guid: 9bea9964cac96414ebbba8a54403fe7d, type: 3}
+  - id: 7
+    description: Recharge Dash Upgrade
+    nameItem: Recharge Dash
+    Icon: {fileID: 21300000, guid: b1ca7598084e20445b98996a45b9d87f, type: 3}
+    upgradeCoefficient: 15
+    unitImprovementCoefficient: '%'
+    effectPrefrab: {fileID: 7155335147208632822, guid: 9bea9964cac96414ebbba8a54403fe7d, type: 3}
+  - id: 8
+    description: Replenishment Of Ammunition
+    nameItem: Ammunition
+    Icon: {fileID: 21300000, guid: 8c27f27f721c286448525b0b2549c3fd, type: 3}
+    upgradeCoefficient: 100
+    unitImprovementCoefficient: '%'
+    effectPrefrab: {fileID: 7131401307255788800, guid: 93ea7aefa082a50478d6d25076b6932c, type: 3}
+  numberOfActiveRewardItems: 3

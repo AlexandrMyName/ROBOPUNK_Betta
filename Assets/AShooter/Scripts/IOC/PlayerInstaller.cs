@@ -20,7 +20,7 @@ namespace DI
     public class PlayerInstaller : MonoInstaller
     {
 
-        [SerializeField] private StoreItemsDataConfigs _storeItemsDataConfigs;
+
         [SerializeField] private DashConfig _dashConfig;
         [SerializeField] private PlayerHPConfig _playerHPConfig;
         [SerializeField] private CinemachineVirtualCamera _camera;
@@ -41,7 +41,13 @@ namespace DI
         private SpawnPlayerFactory _spawnPlayerFactory;
         
         private Player _player;
- 
+
+        [Space(10)]
+        [Header("Progress Configs:")]
+        [SerializeField] private LevelRewardItemsConfigs _levelRewardItemsConfigs;
+        [SerializeField] private float requiredExperienceForNextLevel = 10f;
+        [SerializeField] private float _progressRate = 2.0f;
+
 
         [Space,SerializeField, Header("Test (can be bull)")]
         private World _world;
@@ -90,13 +96,13 @@ namespace DI
             PlayerGoldWalletComponent gold = new PlayerGoldWalletComponent();
             PlayerExperienceComponent exp = new PlayerExperienceComponent();
             WeaponStorage weapons = new WeaponStorage();
-            PlayerStoreEnhancementComponent store = new PlayerStoreEnhancementComponent(_storeItemsDataConfigs);
+            PlayerLevelRewardComponent levelReward = new PlayerLevelRewardComponent(_levelRewardItemsConfigs);
+            PlayerLevelProgressComponent levelProgress = new PlayerLevelProgressComponent(requiredExperienceForNextLevel, _progressRate);
             PlayerShieldComponent shield = new PlayerShieldComponent(_maxPlayerProtection, _protectionRegenerationTime);
 
             var repository = new Repository();
             IPlayerStats playerStatsSaved = repository.Load();
-            gold.CurrentGold.Value = playerStatsSaved.Money;
-            exp.CurrentExperience.Value = playerStatsSaved.Experience;
+
             IPlayerStats playerStatsRuntime = new PlayerStatsComponent(
                 playerStatsSaved.Name,
                 playerStatsSaved.Money,
@@ -112,7 +118,7 @@ namespace DI
             Container.QueueForInject(playerStatsRuntime);
 
             ComponentsStore components = new ComponentsStore(attackable, movable, dash, playerHP, 
-                views, gold, exp, store, weapons, shield, playerStatsRuntime);
+                views, gold, exp, levelReward, levelProgress, weapons, shield, playerStatsRuntime);
 
             return components;
         }
@@ -165,6 +171,9 @@ namespace DI
             PlayerShieldSystem playerShieldSystem = new PlayerShieldSystem();
             Container.QueueForInject(playerShieldSystem);
 
+            PlayeLevelRewardSystem playeRewardSystem = new PlayeLevelRewardSystem();
+            Container.QueueForInject(playeRewardSystem);
+
             systems.Add(moveSystem);
             systems.Add(shootSystem);
             systems.Add(healthSystem);
@@ -179,6 +188,7 @@ namespace DI
             systems.Add(playerExperienceSystem);
             systems.Add(playerGoldWalletSystem);
             systems.Add(playerShieldSystem);
+            systems.Add(playeRewardSystem);
 
             return systems;
         }

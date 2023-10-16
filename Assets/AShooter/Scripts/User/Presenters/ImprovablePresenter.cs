@@ -40,7 +40,6 @@ namespace User.Presenters
                     
                     break;
                 case ImprovementType.Movable:
-                    Debug.Log($"Speed improve - accept! |{improvement.Value}|");
                   
                     _movable.Speed.Value *= improvement.Value;
 
@@ -55,11 +54,8 @@ namespace User.Presenters
             switch (improvement.GetImproveType())
             {
                 case ImprovementType.Attackable:
-
-                    Debug.Log($"Attack improve - canseled! |{improvement.Value}|");
                     break;
                 case ImprovementType.Movable:
-                    Debug.Log($"Speed improve - canseled! |{improvement.Value}|");
                     _movable.Speed.Value /= improvement.Value;
                     break;
 

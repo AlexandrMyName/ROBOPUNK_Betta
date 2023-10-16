@@ -10,7 +10,7 @@ namespace DI
     public class UIInstaller : MonoInstaller
     {
 
-        [SerializeField] private Transform _containerForUI;
+    [SerializeField] private Transform _containerForUI;
 
     [SerializeField] private GameObject _deathViewPrefab;
     [SerializeField] private GameObject _dashViewPrefab;
@@ -26,9 +26,10 @@ namespace DI
     [SerializeField] private GameObject _pauseMenuViewPrefab;
     [SerializeField] private GameObject _storeMenuViewPrefab;
     [SerializeField] private GameObject _winView_Prefab;
+    [SerializeField] private GameObject _rewardMenuViewPrefab;
 
 
-    public override void InstallBindings()
+        public override void InstallBindings()
     {
         
         Container
@@ -89,6 +90,11 @@ namespace DI
             Container
                 .Bind<IWinView>()
                 .FromInstance(InstantiateView<IWinView>(_winView_Prefab))
+                .AsCached();
+
+            Container
+                .Bind<IRewardMenuView>()
+                .FromInstance(InstantiateView<IRewardMenuView>(_rewardMenuViewPrefab))
                 .AsCached();
         }
 
