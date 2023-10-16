@@ -4,6 +4,7 @@ using Abstracts;
 using Core.DTO;
 using UniRx;
 using UnityEngine;
+using User;
 using Zenject;
 
 
@@ -105,7 +106,8 @@ namespace Core
                     if (weapon.LeftPatronsCount.Value > 0)
                         weapon.Shoot(_mousePosition);
                     else
-                        weapon.ProcessReload();
+                        if ((weapon.WeaponType == WeaponType.Pistol) || (weapon.TotalPatrons.Value != 0))
+                            weapon.ProcessReload();
                 }
             }
         }

@@ -8,10 +8,11 @@ TagManager:
   - Muzzle
   - Chest
   - ExplosionAbility
-  - PickUpWeapon
   - MeeleWeapon
   - MainWeapon
   - DI
+  - Undefined
+  - SecondaryWeapon
   layers:
   - Default
   - TransparentFX
