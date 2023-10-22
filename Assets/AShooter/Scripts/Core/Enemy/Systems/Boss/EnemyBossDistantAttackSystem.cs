@@ -59,10 +59,6 @@ namespace Core
                 GameObject.Destroy(trail, 15);
                 _player.ComponentsStore.Attackable.TakeDamage(Time.deltaTime * 6);
             }
-
-            if ((!_audioSource.isPlaying) && (SoundManager.AudioSource.volume < 1))
-                SoundManager.AudioSource.volume = 1f;
-
         }
 
         private TrailRenderer SetActiveTrail(bool isActive)
@@ -80,8 +76,6 @@ namespace Core
 
         private void PlaySound(AudioSource audioSource, AudioClip audioClip)
         {
-            SoundManager.AudioSource.volume = 0.3f;
-
             if ((audioSource != null) && (audioClip != null))
                 audioSource.PlayOneShot(audioClip);
         }
