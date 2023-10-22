@@ -28,6 +28,7 @@ namespace DI.Spawn
         private DiContainer _diContainer;
         private IExperienceHandle _experienceHandle;
         private IGoldWallet _goldWallet;
+        private IWeaponStorage _weaponStorage;
 
         private ObjectPool<GameObject> _pool;
         private List<float> _enemySpawnWeight;
@@ -45,7 +46,8 @@ namespace DI.Spawn
             int maxNumberEnemy,
             IExperienceHandle experienceHandle,  
             IGoldWallet goldWallet,
-            GameObject enemyViews){
+            GameObject enemyViews,
+            IWeaponStorage weaponStorage){
             ////[CONSTRUCT]\\\\
 
             _enemyViews_Prefab = enemyViews;
@@ -56,6 +58,7 @@ namespace DI.Spawn
 
             _experienceHandle = experienceHandle;
             _goldWallet = goldWallet;
+            _weaponStorage = weaponStorage;
 
             _disposables.Add(
                 _pool = new ObjectPool<GameObject>(
@@ -197,7 +200,7 @@ namespace DI.Spawn
             EnemyAttackComponent attackable = new EnemyAttackComponent(item.maxHealth, item.maxProtection, item.maxAttackDamage, item.attackDistance, item.attackFrequency);
             EnemyPriceComponent enemyPrice = new EnemyPriceComponent(item.goldDropRate, item.goldValueRange, item.experienceRange);
 
-            return new EnemyComponentsStore(attackable, enemyPrice);
+            return new EnemyComponentsStore(attackable, enemyPrice, _weaponStorage);
         }
 
      

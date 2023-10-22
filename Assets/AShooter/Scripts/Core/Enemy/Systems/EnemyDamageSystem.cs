@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Abstracts;
 using UniRx;
+using UnityEngine;
+using User;
+using static UnityEditor.Progress;
 using UnityEngine;
 
 namespace Core
@@ -20,6 +24,7 @@ namespace Core
         private float _maxProtection;
         private IEnemyHealthView _healthView;
         private IAnimatorIK _animatorIK;
+        private IWeaponStorage _weaponStorage;
         private AudioClip _deathAudioClip;
         private AudioSource _audioSource;
 
@@ -40,6 +45,7 @@ namespace Core
             _isDead = _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.Attackable.IsDeadFlag;
             _attackable = _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.Attackable;
             _animatorIK = _components.BaseObject.GetComponent<IAnimatorIK>();
+            _weaponStorage = _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.WeaponStorage;
             _audioSource = _components.BaseObject.GetComponent<AudioSource>();
             _deathAudioClip = SoundManager.Config.GetSound(SoundType.Death, SoundModelType.Enemy);
         }
@@ -99,6 +105,7 @@ namespace Core
             if (healthCompleted <= 0 )
             {
                 _healthView.Deactivate();
+                _healthView.Deactivate();
 
                 if (_components.Animator != null)
                     _components.Animator
@@ -114,6 +121,8 @@ namespace Core
 
                 _isRewardReady.Value = true;
                 Dispose();
+
+                GetPickUpItem();
             }
         }
 
@@ -122,6 +131,26 @@ namespace Core
         {
             if ((audioSource != null) && (audioClip != null))
                 audioSource.PlayOneShot(audioClip);
+        }
+
+
+        private void GetPickUpItem()
+        {
+            float random = UnityEngine.Random.Range(0f, 1f);
+            float dropProbability = 0.4f;
+            var weaponTypes = new HashSet<WeaponType>() { WeaponType.Shotgun, WeaponType.Rifle, WeaponType.RocketLauncher };
+
+            var weaponConfigs = _weaponStorage.WeaponConfigs
+                .Where(weaponConfig => weaponTypes.Contains(weaponConfig.WeaponType))
+                .ToList();
+            var configIndex = UnityEngine.Random.Range(0, weaponConfigs.Count);
+            var config = weaponConfigs[configIndex];
+            var pickUpItemTypeIndex = UnityEngine.Random.Range(0, Enum.GetNames(typeof(PickUpItemType)).Length);
+
+            PickUpItemModel pickUpItemModel = new PickUpItemModel(config, (PickUpItemType)pickUpItemTypeIndex, _components.BaseObject.transform.position);
+
+            if (random <= dropProbability)
+                _weaponStorage.GetPickUpItem(pickUpItemModel);
         }
 
 

@@ -37,7 +37,8 @@ namespace DI
                     _container, 
                     _componentsPlayer.Movable.Rigidbody.transform,
                     _componentsPlayer.GoldWallet,
-                    _componentsPlayer.ExperienceHandle);
+                    _componentsPlayer.ExperienceHandle,
+                    _componentsPlayer.WeaponStorage);
                 _spawner.StartSpawnProcess(_enemyViews_Prefab);
 
                 BosSpawner.Init(_spawner);

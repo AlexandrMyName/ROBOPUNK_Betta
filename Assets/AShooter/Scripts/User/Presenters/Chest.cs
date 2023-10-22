@@ -67,7 +67,7 @@ public class Chest : MonoBehaviour, IChest
 
     private object GetRandomPickUpItem()
     {
-        var configIndex = Random.Range(0, chestConfig.WeaponsPossibleGeneration.Count - 1);
+        var configIndex = Random.Range(0, chestConfig.WeaponsPossibleGeneration.Count);
         var config = chestConfig.WeaponsPossibleGeneration[configIndex];
         var pickUpItemTypeIndex = Random.Range(0, Enum.GetNames(typeof(PickUpItemType)).Length);
 
