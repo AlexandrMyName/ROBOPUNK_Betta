@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 826b49d7eb7a71b48bc21e8d02cdf5e5, type: 3}
+  m_Name: MainStoreData
+  m_EditorClassIdentifier: 
+  PassiveUpgradeItemsConfigs:
+  - id: 0
+    description: Upgrade base movement speed of player
+    nameItem: Speed Upgrade
+    Icon: {fileID: 21300000, guid: bcef3bb3e863a0b47bc29230664c187c, type: 3}
+    price: 100
+    upgradeCoefficient: 10
+    ItemType: 0
+  - id: 1
+    description: Upgrade base damage of player
+    nameItem: Damage Upgrade
+    Icon: {fileID: 21300000, guid: b17f6817766118d45930fb33b327f92c, type: 3}
+    price: 100
+    upgradeCoefficient: 10
+    ItemType: 1
+  - id: 2
+    description: Upgrade base shield capacity
+    nameItem: Shield Upgrade
+    Icon: {fileID: 21300000, guid: d6e0c61226318b64db8f2ca9069b2dae, type: 3}
+    price: 100
+    upgradeCoefficient: 10
+    ItemType: 2
+  - id: 3
+    description: Upgrade base dash distance
+    nameItem: Dash Upgrade
+    Icon: {fileID: 21300000, guid: b1ca7598084e20445b98996a45b9d87f, type: 3}
+    price: 100
+    upgradeCoefficient: 10
+    ItemType: 3
+  - id: 4
+    description: Upgrade base shoot speed of player
+    nameItem: Shoot Speed Upgrade
+    Icon: {fileID: 21300000, guid: c9581c2162623c149959a8fc7d54f4b8, type: 3}
+    price: 100
+    upgradeCoefficient: 10
+    ItemType: 4
+  AssistUpgradeItemsConfigs: []
+  WeaponItemsConfigs: []
+  ArmorItemsConfigs: []
+  StoreItemPrefab: {fileID: 5248134214841062366, guid: 329b96beaa09cf749a2aebc7937c3d86, type: 3}
