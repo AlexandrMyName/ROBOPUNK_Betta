@@ -121,7 +121,7 @@ namespace DI
                 playerStatsSaved.BaseShieldCapacityMultiplier,
                 playerStatsSaved.BaseDashDistanceMultiplier,
                 playerStatsSaved.BaseShootSpeedMultiplier);
-            
+
             Container.QueueForInject(movable);
             Container.QueueForInject(attackable);
             Container.QueueForInject(views);

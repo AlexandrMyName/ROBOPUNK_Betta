@@ -27,7 +27,7 @@ namespace Abstracts
 
         float ShootDistance { get; }
 
-        float ShootSpeed { get; }
+        float ShootSpeed { get; set; }
 
         float FireSpread { get; }
 

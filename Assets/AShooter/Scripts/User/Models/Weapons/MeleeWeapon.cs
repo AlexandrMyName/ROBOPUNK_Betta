@@ -29,7 +29,7 @@ namespace User
         
         public float EffectDestroyDelay { get; }
         
-        public float AttackTimeout { get; }
+        public float AttackTimeout { get; set; }
         
         public bool IsAttackReady { get; private set; }
         

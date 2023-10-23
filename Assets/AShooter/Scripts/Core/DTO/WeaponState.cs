@@ -18,6 +18,10 @@ namespace Core.DTO
 
         public IWeapon CurrentWeapon { get; set; }
 
+        public float BasicDamageMultiplier { get; set; }
+
+        public float BasicShootSpeedMultiplier { get; set; }
+
 
         public WeaponState()
         {

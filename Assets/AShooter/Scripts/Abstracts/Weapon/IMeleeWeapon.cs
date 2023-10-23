@@ -4,7 +4,7 @@
     public interface IMeleeWeapon : IWeapon
     {
 
-        float AttackTimeout { get; }
+        float AttackTimeout { get; set; }
 
         bool IsAttackReady { get; }
 
