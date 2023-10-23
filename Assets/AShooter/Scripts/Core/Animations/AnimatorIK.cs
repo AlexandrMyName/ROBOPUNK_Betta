@@ -110,7 +110,7 @@ namespace Core
 
             if (_currentWeapon != null)
             {
-                _currentWeapon.Muzzle.Shoot();
+                _currentWeapon.Muzzle.Shoot(_currentWeapon.BulletsConfig);
 
                 PlaySound(_audioSource, _currentWeapon);
             }
