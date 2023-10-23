@@ -9,7 +9,7 @@ using Core.DTO;
 using UnityEngine.Pool;
 using User;
 using Random = UnityEngine.Random;
-
+using UnityEngine.InputSystem.iOS;
 
 namespace DI.Spawn
 {
@@ -48,8 +48,7 @@ namespace DI.Spawn
             IExperienceHandle experienceHandle,  
             IGoldWallet goldWallet,
             GameObject enemyViews,
-            IPlayerStats playerStats){
-            GameObject enemyViews,
+            IPlayerStats playerStats,    
             IWeaponStorage weaponStorage){
             ////[CONSTRUCT]\\\\
 
@@ -80,7 +79,7 @@ namespace DI.Spawn
         }
 
 
-        internal void StartSpawnWave(EnemyWaveConfig enemyWaveConfig, int waveCount)
+        public void StartSpawnWave(EnemyWaveConfig enemyWaveConfig, int waveCount)
         {
             Dispose();
 

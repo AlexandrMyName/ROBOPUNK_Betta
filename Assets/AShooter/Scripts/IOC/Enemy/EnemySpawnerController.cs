@@ -35,8 +35,7 @@ namespace DI.Spawn
             Transform playerPosition, 
             IGoldWallet goldWallet,
             IExperienceHandle experienceHandle,
-            IPlayerStats playerStats){
-            IExperienceHandle experienceHandle,
+            IPlayerStats playerStats,
             IWeaponStorage weaponStorage){
             ////[CONSTRUCT]\\\\
             
@@ -74,10 +73,8 @@ namespace DI.Spawn
                 _experienceHandle, 
                 _goldWallet,
                 viewsPrefab,
-                _playerStats
-                viewsPrefab,
-                _weaponStorage
-                );
+                _playerStats,
+                _weaponStorage);
         }
 
 
