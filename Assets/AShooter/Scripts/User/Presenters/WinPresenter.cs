@@ -1,5 +1,6 @@
 ﻿using System;
 using Abstracts;
+using Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -29,10 +30,14 @@ namespace AShooter.Scripts.User.Presenters
         private TimeSpan _time;
 
         private SceneLoader _sceneLoader;
-        
+
+        private AudioClip _winAudioClip;
+        private AudioSource _audioSource;
+
         private bool _isInit;
         private bool _isNeedBarUpdate;
         private bool _isBoss;
+
         
         private void Awake()
         {
@@ -43,6 +48,13 @@ namespace AShooter.Scripts.User.Presenters
             MainMenuButton.onClick.AddListener(SwitchOnMainMenu);
 
             _sceneLoader = new SceneLoader(SceneLoaderView);
+        }
+
+
+        private void Start()
+        {
+            _winAudioClip = SoundManager.Config.GetSound(SoundType.Win, SoundModelType.Player);
+            _audioSource = gameObject.GetComponent<AudioSource>();
         }
 
 
@@ -87,6 +99,7 @@ namespace AShooter.Scripts.User.Presenters
             InputManager.DisableSystem();
             WinLabel.SetActive(true);
             ButtonsPanel.SetActive(true);
+            PlaySound(_audioSource, _winAudioClip);
         }
 
 
@@ -114,7 +127,17 @@ namespace AShooter.Scripts.User.Presenters
             gameObject.SetActive(false);
         }
 
-        
+
+        private void PlaySound(AudioSource audioSource, AudioClip audioClip)
+        {
+            SoundManager.IsPlaying = false;
+            SoundManager.AudioSource.clip = null;
+
+            if ((audioSource != null) && (audioClip != null))
+                audioSource.PlayOneShot(audioClip);
+        }
+
+
         public bool GetActivityState() => gameObject.activeSelf;
         
         

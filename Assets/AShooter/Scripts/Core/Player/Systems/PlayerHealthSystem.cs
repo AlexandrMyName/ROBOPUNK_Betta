@@ -18,7 +18,8 @@ namespace Core
         private IDeathView _loseView;
         private IHealthView _healthView;
         private List<IDisposable> _disposables = new();
-         
+        private AudioClip _deathAudioClip;
+        private AudioSource _audioSource;
 
 
         protected override void Awake(IGameComponents components)
@@ -36,6 +37,9 @@ namespace Core
 
             _loseView = _components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.Death;
             _disposables.Add(_attackable.Health.Subscribe(DeathCheck));
+
+            _audioSource = _components.BaseObject.GetComponent<AudioSource>();
+            _deathAudioClip = SoundManager.Config.GetSound(SoundType.Death, SoundModelType.Player);
         }
 
 
@@ -64,11 +68,24 @@ namespace Core
 
                 InputManager.DisableSystem();
 
+                PlaySound(_audioSource, _deathAudioClip);
+
                 _loseView.Show();
 
             }
            
         }
+
+
+        private void PlaySound(AudioSource audioSource, AudioClip audioClip)
+        {
+            SoundManager.IsPlaying = false;
+            SoundManager.AudioSource.clip = null;
+
+            if ((audioSource != null) && (audioClip != null))
+                audioSource.PlayOneShot(audioClip);
+        }
+
 
     }
 }

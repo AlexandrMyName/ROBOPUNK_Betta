@@ -15,23 +15,31 @@ public class Sound
 public enum SoundType : byte
 {
 
-    Step = 0,
-    Death = 1,
-    Damage = 2,
-    ProtectionAdd = 3,
-    ProtectionRemove = 4,
-
+    None = 0,
+    Step = 1,
+    Death = 2,
+    Damage = 3,
+    ProtectionAdd = 4,
+    ProtectionRemove = 5,
+    DamageOverTime = 6,
+    Fly = 7,
+    Spawn = 8,
+    Win = 9,
 }
 
 public enum SoundModelType : byte
 {
 
-    CyberSpider = 0,
-    Player = 1,
-    CyberSpider_Boss = 2,
-    Weapon_Auto = 3,
-    Weapon_Pistol = 4,
-    Weapon_RocketLouncher = 5,
-    Ability_Expolision = 6,
-    Ability_Dash = 7,
+    None = 0,
+    CyberSpider = 1,
+    Player = 2,
+    CyberSpider_Boss = 3,
+    Weapon_Rifle = 4,
+    Weapon_Pistol = 5,
+    Weapon_RocketLouncher = 6,
+    Ability_Expolision = 7,
+    Ability_Dash = 8,
+    Weapon_Shotgun = 9,
+    Weapon_Sword = 10,
+    Enemy = 11,
 }

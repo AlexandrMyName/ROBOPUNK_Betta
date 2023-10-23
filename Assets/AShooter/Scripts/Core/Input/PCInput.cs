@@ -36,6 +36,8 @@ namespace Core
 
         public ISubjectInputProxy<Unit> PauseMenu { get; }
 
+        public ISubjectInputProxy<Unit> MP3Player { get; }
+
 
         public PCInput([NotNull] InputConfig config)
         {
@@ -53,6 +55,7 @@ namespace Core
             DashClick = new PCDashInput(config);
             Interact = new PCInteractInput(config);
             PauseMenu = new PCPauseMenu(config);
+            MP3Player = new PCMP3PlayerInput(config);
         }
     }
 }

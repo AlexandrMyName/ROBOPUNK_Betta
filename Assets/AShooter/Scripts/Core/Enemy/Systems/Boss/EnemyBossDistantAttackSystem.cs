@@ -18,6 +18,8 @@ namespace Core
         private TrailRenderer _trailInstance;
         private Transform _playerTransform;
         private IPlayer _player;
+        private AudioClip _bossSpawnAudioClip;
+        private AudioSource _audioSource;
         private IAnimatorIK _animatorIK;
 
 
@@ -34,6 +36,14 @@ namespace Core
 
             _gameComponents = components;
             _player = _playerTransform.GetComponent<IPlayer>();
+            _bossSpawnAudioClip = SoundManager.Config.GetSound(SoundType.Spawn, SoundModelType.CyberSpider_Boss);
+            _audioSource = components.BaseObject.GetComponent<AudioSource>();
+        }
+
+
+        protected override void Start()
+        {
+            PlaySound(_audioSource, _bossSpawnAudioClip);
         }
 
 
@@ -49,6 +59,10 @@ namespace Core
                 GameObject.Destroy(trail, 15);
                 _player.ComponentsStore.Attackable.TakeDamage(Time.deltaTime * 6);
             }
+
+            if ((!_audioSource.isPlaying) && (SoundManager.AudioSource.volume < 1))
+                SoundManager.AudioSource.volume = 1f;
+
         }
 
         private TrailRenderer SetActiveTrail(bool isActive)
@@ -62,7 +76,17 @@ namespace Core
             trailInstance.emitting = isActive;
             return trailInstance;
         }
-         
+
+
+        private void PlaySound(AudioSource audioSource, AudioClip audioClip)
+        {
+            SoundManager.AudioSource.volume = 0.3f;
+
+            if ((audioSource != null) && (audioClip != null))
+                audioSource.PlayOneShot(audioClip);
+        }
+
+
         public void Dispose() { }
     }
 }

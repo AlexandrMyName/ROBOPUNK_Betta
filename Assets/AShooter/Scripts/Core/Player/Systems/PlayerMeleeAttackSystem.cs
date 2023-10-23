@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Abstracts;
 using Core.DTO;
 using UniRx;
-using Unity.VisualScripting;
 using UnityEngine;
 using User;
 using Zenject;
@@ -20,14 +19,21 @@ namespace Core
         [Inject] private WeaponAbilityPresenter _weaponAbilityPresenter;
 
         private IGameComponents _components;
+        private Camera _camera;
         private List<IDisposable> _disposables = new();
 
         private IMeleeWeapon _currentMeleeWeapon;
-        
-        
+
+        private AudioSource _audioSource;
+        private AudioClip _hitAudioClip;
+
+
         protected override void Awake(IGameComponents components)
         {
             _components = components;
+            _camera = _components.MainCamera;
+            _audioSource = components.BaseObject.GetComponent<AudioSource>();
+            _hitAudioClip = SoundManager.Config.GetSound(SoundType.Damage, SoundModelType.Weapon_Sword);
         }
 
 
@@ -63,10 +69,20 @@ namespace Core
         private void TryAttackPerform()
         {
             if (_currentMeleeWeapon.IsAttackReady)
+            {
                 _currentMeleeWeapon.Attack();
+                PlaySound(_audioSource, _hitAudioClip);
+            }
         }
 
-        
+
+        private void PlaySound(AudioSource audioSource, AudioClip audioClip)
+        {
+            if ((audioSource != null) && (audioClip != null))
+                audioSource.PlayOneShot(audioClip);
+        }
+
+
         public void Dispose() => _disposables.ForEach(d => d.Dispose());
         
 

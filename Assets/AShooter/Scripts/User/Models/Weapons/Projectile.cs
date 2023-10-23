@@ -4,7 +4,7 @@ using NTC.OverlapSugar;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
-
+using Core;
 
 namespace User
 {
@@ -26,6 +26,8 @@ namespace User
 
         private Projectile _collidedProjectile;
 
+        private AudioClip _expolisionAudioClip;
+
 
         public bool IsProjectileDisposed { get; private set; }
         public Rigidbody Rigidbody => _projectileRigidbody;
@@ -33,6 +35,12 @@ namespace User
         public ParticleSystem Effect { get; set; }
         public float EffectDestroyDelay { get; set; }
         public List<IDisposable> _disposables = new();
+
+
+        private void Awake()
+        {
+            _expolisionAudioClip = SoundManager.Config.GetSound(SoundType.Damage, SoundModelType.Ability_Expolision);
+        }
 
 
         private void Start()
@@ -83,7 +91,18 @@ namespace User
         private void SpawnEffectOnDestroy()
         {
             var effect = Instantiate(Effect, transform.position, Effect.transform.rotation);
+
+            var effectAudioSource = effect.GetComponent<AudioSource>();
+            PlaySound(effectAudioSource, _expolisionAudioClip);
+
             Destroy(effect.gameObject, EffectDestroyDelay);
+        }
+
+
+        private void PlaySound(AudioSource audioSource, AudioClip audioClip)
+        {
+            if ((audioSource != null) && (audioClip != null))
+                audioSource.PlayOneShot(audioClip);
         }
 
 

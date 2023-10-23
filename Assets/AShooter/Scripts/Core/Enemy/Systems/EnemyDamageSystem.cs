@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Abstracts;
 using UniRx;
-
+using UnityEngine;
 
 namespace Core
 {
@@ -20,6 +20,8 @@ namespace Core
         private float _maxProtection;
         private IEnemyHealthView _healthView;
         private IAnimatorIK _animatorIK;
+        private AudioClip _deathAudioClip;
+        private AudioSource _audioSource;
 
 
         public EnemyDamageSystem(float maxHealth, float maxProtection)
@@ -38,6 +40,8 @@ namespace Core
             _isDead = _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.Attackable.IsDeadFlag;
             _attackable = _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.Attackable;
             _animatorIK = _components.BaseObject.GetComponent<IAnimatorIK>();
+            _audioSource = _components.BaseObject.GetComponent<AudioSource>();
+            _deathAudioClip = SoundManager.Config.GetSound(SoundType.Death, SoundModelType.Enemy);
         }
 
 
@@ -94,7 +98,8 @@ namespace Core
  
             if (healthCompleted <= 0 )
             {
-                    _healthView.Deactivate();
+                _healthView.Deactivate();
+
                 if (_components.Animator != null)
                     _components.Animator
                         .ActivateDeathAnimation(
@@ -104,9 +109,19 @@ namespace Core
                 {
                     _isDead.Value = true;
                 }
+
+                PlaySound(_audioSource, _deathAudioClip);
+
                 _isRewardReady.Value = true;
                 Dispose();
             }
+        }
+
+
+        private void PlaySound(AudioSource audioSource, AudioClip audioClip)
+        {
+            if ((audioSource != null) && (audioClip != null))
+                audioSource.PlayOneShot(audioClip);
         }
 
 

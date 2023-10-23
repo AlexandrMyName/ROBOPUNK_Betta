@@ -26,6 +26,11 @@ namespace Core
         private IRangeWeapon _secondaryRangeWeapon;
 
         private bool _isMainWeaponAvailable;
+        private bool _isPickUpWeaponAvailable;
+
+        private AudioSource _audioSource;
+
+
         private bool _isSecondaryWeaponAvailable;
         
         
@@ -33,6 +38,7 @@ namespace Core
         {
             _components = components;
             _camera = _components.MainCamera;
+            _audioSource = components.BaseObject.GetComponent<AudioSource>();
         }
 
 
@@ -104,10 +110,37 @@ namespace Core
                 if (weapon.IsShootReady)
                 {
                     if (weapon.LeftPatronsCount.Value > 0)
+                    {
                         weapon.Shoot(_mousePosition);
+                        PlaySound(_audioSource, weapon);
+                    }
                     else
                         if ((weapon.WeaponType == WeaponType.Pistol) || (weapon.TotalPatrons.Value != 0))
                             weapon.ProcessReload();
+                }
+            }
+        }
+
+
+        private void PlaySound(AudioSource audioSource, IRangeWeapon weapon)
+        {
+            if (audioSource != null)
+            {
+                var soundModelType = weapon.WeaponType switch
+                {
+                    WeaponType.Pistol => SoundModelType.Weapon_Pistol,
+                    WeaponType.Shotgun => SoundModelType.Weapon_Shotgun,
+                    WeaponType.RocketLauncher => SoundModelType.Weapon_RocketLouncher,
+                    WeaponType.Rifle => SoundModelType.Weapon_Rifle,
+                    _ => SoundModelType.None
+                };
+
+                if (soundModelType != SoundModelType.None)
+                {
+                    AudioClip audioClip = SoundManager.Config.GetSound(SoundType.Damage, soundModelType);
+
+                    if (audioClip != null)
+                        audioSource.PlayOneShot(audioClip);
                 }
             }
         }

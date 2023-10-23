@@ -2,7 +2,7 @@ using Abstracts;
 using System;
 using System.Collections.Generic;
 using UniRx;
-
+using UnityEngine;
 
 namespace Core
 {
@@ -17,6 +17,10 @@ namespace Core
 
         private List<IDisposable> _disposables = new();
         private List<IDisposable> _regenerationTimers = new();
+
+        private AudioClip _protectionRemoveAudioClip;
+        private AudioSource _audioSource;
+        private bool _brokenShield;
 
 
         public void Dispose()
@@ -39,6 +43,10 @@ namespace Core
             _attackable.HealthProtection.Value = _shield.MaxProtection;
             _attackable.HealthProtection.SkipLatestValueOnSubscribe();
             _view.Show();
+
+            _protectionRemoveAudioClip = SoundManager.Config.GetSound(SoundType.ProtectionRemove, SoundModelType.Player);
+            _audioSource = components.BaseObject.GetComponent<AudioSource>();
+            _brokenShield = false;
         }
 
 
@@ -66,6 +74,12 @@ namespace Core
                 _view.Deactivate();
                 _view.RefreshProtection(0, _shield.MaxProtection);
                 StartRegenerationProccess();
+
+                if (!_brokenShield)
+                {
+                    _brokenShield = true;
+                    PlaySound(_audioSource, _protectionRemoveAudioClip);
+                }
             }
         }
 
@@ -81,8 +95,16 @@ namespace Core
                         _attackable.HealthProtection.Value = _shield.MaxProtection;
                         _shield.IsRegeneration.Value = false;
                         _view.Show();
+                        _brokenShield = false;
 
                     }).AddTo(_regenerationTimers);
+        }
+
+
+        private void PlaySound(AudioSource audioSource, AudioClip audioClip)
+        {
+            if ((audioSource != null) && (audioClip != null))
+                audioSource.PlayOneShot(audioClip);
         }
 
 

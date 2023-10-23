@@ -18,7 +18,7 @@ namespace Core
         
         private Vector3 _direction;
         private IMovable _movable;
-     
+
         private List<IDisposable> _disposables = new();
 
 
@@ -52,7 +52,6 @@ namespace Core
                 _movable.Rigidbody.velocity.y, 
                 _direction.z * _movable.Speed.Value
                 );
-
         }
 
 

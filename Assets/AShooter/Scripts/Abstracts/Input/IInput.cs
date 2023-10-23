@@ -34,5 +34,7 @@ namespace Abstracts
 
         ISubjectInputProxy<Unit> PauseMenu { get; }
 
+        ISubjectInputProxy<Unit> MP3Player { get; }
+
     }
 }
