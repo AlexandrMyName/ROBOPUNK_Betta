@@ -68,8 +68,8 @@ namespace AShooter.Scripts.User.Presenters
             itemView.transform.localScale = Vector3.one;
             itemView.transform.localPosition = Vector3.zero;
             itemView.transform.localRotation = Quaternion.identity;
-            
-            itemView.Init(itemConfig, ResolveCurrentMultiplierValueByItem(itemView));
+            var multiplier = ResolveCurrentMultiplierValueByItem(itemConfig.ItemType);
+            itemView.Init(itemConfig, multiplier);
             itemView.SubscribeClickButton(OnItemClick);
         }
 
@@ -121,17 +121,18 @@ namespace AShooter.Scripts.User.Presenters
                 
                 itemView.UpdateItemByMultiplier(multiplier);
                 isOperationSucceed = true;
+                MainStoreView.MetaExperienceValue.text = $"{PlayerStats.MetaExperience}";
             }
 
             return isOperationSucceed;
         }
         
         
-        private float ResolveCurrentMultiplierValueByItem(StoreItemView itemView)
+        private float ResolveCurrentMultiplierValueByItem(StoreItemType itemType)
         {
             float multiplier = 0.0f;
             
-            switch (itemView.ItemData.ItemType)
+            switch (itemType)
             {
                 case StoreItemType.BaseDamage:
                     multiplier = PlayerStats.BaseDamageMultiplier;
@@ -158,7 +159,7 @@ namespace AShooter.Scripts.User.Presenters
                     break;
                 
                 default:
-                    throw new ArgumentException($"Unknown item type [{itemView.ItemData.ItemType}]");
+                    throw new ArgumentException($"Unknown item type [{itemType}]");
             }
 
             return multiplier;
