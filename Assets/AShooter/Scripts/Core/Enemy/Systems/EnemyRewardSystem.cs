@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UniRx;
 using User.Components.Repository;
+using Zenject;
 
 
 namespace Core
@@ -14,14 +15,17 @@ namespace Core
         private List<IDisposable> _disposables = new();
         private IExperienceHandle _experienceHandle;
         private IGoldWallet _goldWallet;
+        private IPlayerStats _playerStats;
+        
         private ReactiveProperty<bool> _isRewardReadyFlag;
         private Enemy _enemy;
 
 
-        public EnemyRewardSystem(IExperienceHandle experienceHandle, IGoldWallet goldWallet)
+        public EnemyRewardSystem(IExperienceHandle experienceHandle, IGoldWallet goldWallet, IPlayerStats playerStats)
         {
             _experienceHandle = experienceHandle;
             _goldWallet = goldWallet;
+            _playerStats = playerStats;
         }
 
 
@@ -63,6 +67,7 @@ namespace Core
         {
             float experienceValue = _enemy.ComponentsStore.EnemyPrice.GetExperienceValue();
             _experienceHandle.AddExperience(experienceValue);
+            _playerStats.AddMetaExperience(experienceValue);
         }
 
 

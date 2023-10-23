@@ -19,6 +19,7 @@ namespace DI.Spawn
         private Transform _playerPosition;
         private IExperienceHandle _experienceHandle;
         private IGoldWallet _goldWallet;
+        private IPlayerStats _playerStats;
         private IWeaponStorage _weaponStorage;
 
         private int _waveNumber;
@@ -34,6 +35,8 @@ namespace DI.Spawn
             Transform playerPosition, 
             IGoldWallet goldWallet,
             IExperienceHandle experienceHandle,
+            IPlayerStats playerStats){
+            IExperienceHandle experienceHandle,
             IWeaponStorage weaponStorage){
             ////[CONSTRUCT]\\\\
             
@@ -45,6 +48,7 @@ namespace DI.Spawn
             _playerPosition = playerPosition;
             _goldWallet = goldWallet;
             _experienceHandle = experienceHandle;
+            _playerStats = playerStats;
             _weaponStorage = weaponStorage;
         }
 
@@ -69,6 +73,8 @@ namespace DI.Spawn
                 numberEnemiesInScene, 
                 _experienceHandle, 
                 _goldWallet,
+                viewsPrefab,
+                _playerStats
                 viewsPrefab,
                 _weaponStorage
                 );

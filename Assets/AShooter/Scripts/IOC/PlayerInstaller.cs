@@ -10,6 +10,7 @@ using Cinemachine;
 using Core.Components;
 using TMPro;
 using UniRx;
+using UnityEngine.Serialization;
 using User;
 using User.Components;
 using User.Components.Repository;
@@ -20,6 +21,11 @@ namespace DI
     public class PlayerInstaller : MonoInstaller
     {
 
+        [FormerlySerializedAs("_loadPlayerStatsFromRepository")]
+        [Header("Set True - to use player stats multiplier from repository \n" +
+                "Set False - to use default stats ")]
+        [SerializeField] private bool _loadMetaMultipliersFromRepository;
+        [Space(20)]
 
         [SerializeField] private DashConfig _dashConfig;
         [SerializeField] private PlayerHPConfig _playerHPConfig;
@@ -80,8 +86,6 @@ namespace DI
                 .Bind<CinemachineVirtualCamera>()
                 .FromInstance(_camera)
                 .AsCached();
-
-            
         }
         
 
@@ -109,7 +113,14 @@ namespace DI
                 playerStatsSaved.Experience,
                 0,
                 gold.CurrentGold,
-                exp.CurrentExperience);
+                exp.CurrentExperience,
+                playerStatsSaved.MetaExperience,
+                playerStatsSaved.BaseHealthMultiplier,
+                playerStatsSaved.BaseDamageMultiplier,
+                playerStatsSaved.BaseMoveSpeedMultiplier,
+                playerStatsSaved.BaseShieldCapacityMultiplier,
+                playerStatsSaved.BaseDashDistanceMultiplier,
+                playerStatsSaved.BaseShootSpeedMultiplier);
             
             Container.QueueForInject(movable);
             Container.QueueForInject(attackable);

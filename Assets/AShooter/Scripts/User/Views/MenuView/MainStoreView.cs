@@ -29,7 +29,10 @@ namespace User.Presenters
         
         [field: SerializeField] public GameObject SkinsGroupUI { get; private set; }
         [field: SerializeField] public GameObject SkinsContent { get; private set; }
-        
+
+        [field: SerializeField] public TMP_Text MetaExperienceValue { get; private set; }
+        [field: SerializeField] public TMP_Text GoldValue { get; private set; }
+
 
         public void OnClickPassiveSkills()
         {
@@ -41,17 +44,17 @@ namespace User.Presenters
 
         public void OnClickWeapons()
         {
-            PassiveSkillsGroupUI.SetActive(true);
-            WeaponsGroupUI.SetActive(false);
+            PassiveSkillsGroupUI.SetActive(false);
+            WeaponsGroupUI.SetActive(true);
             SkinsGroupUI.SetActive(false);
         }
 
 
         public void OnClickSkins()
         {
-            PassiveSkillsGroupUI.SetActive(true);
+            PassiveSkillsGroupUI.SetActive(false);
             WeaponsGroupUI.SetActive(false);
-            SkinsGroupUI.SetActive(false);
+            SkinsGroupUI.SetActive(true);
         }
 
 

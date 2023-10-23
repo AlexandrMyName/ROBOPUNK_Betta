@@ -2,6 +2,7 @@
 {
     public enum StoreItemType
     {
+        BaseHealth,
         BaseSpeed,
         BaseDamage,
         ShieldCapacity,

@@ -196,7 +196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4858824554439851099}
   - component: {fileID: 6308873504558989474}
-  - component: {fileID: 1586328817293063504}
+  - component: {fileID: 4359276273611708400}
   m_Layer: 5
   m_Name: StoreItem_Skin_EI
   m_TagString: Untagged
@@ -233,7 +233,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5248134214841062366}
   m_CullTransparentMesh: 1
---- !u!114 &1586328817293063504
+--- !u!114 &4359276273611708400
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -242,13 +242,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5248134214841062366}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 724e913412910d8458d2553f4ab71c58, type: 3}
+  m_Script: {fileID: 11500000, guid: c70830ab482fa1e40af98d5ddf4c550d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _button: {fileID: 8961786303704145894}
-  _description: {fileID: 0}
-  _price: {fileID: 5253984096932777646}
-  _characteristic: {fileID: 0}
+  <Button>k__BackingField: {fileID: 0}
+  <Image>k__BackingField: {fileID: 0}
+  <Description>k__BackingField: {fileID: 0}
+  <Price>k__BackingField: {fileID: 0}
+  <PlayersCurrent>k__BackingField: {fileID: 0}
 --- !u!1 &5421180938531374306
 GameObject:
   m_ObjectHideFlags: 0

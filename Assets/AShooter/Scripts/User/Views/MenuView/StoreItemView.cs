@@ -1,3 +1,4 @@
+using Abstracts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -24,12 +25,13 @@ namespace User.Presenters
         public StoreItemConfig ItemData { get; private set; }
 
 
-        public void Init(StoreItemConfig itemConfig)
+        public void Init(StoreItemConfig itemConfig, float statsMultiplier)
         {
             ItemData = itemConfig;
-            PlayersCurrent.text = "Here should be actual player's state value";
-            Description.text = $"{itemConfig.description} by {itemConfig.upgradeCoefficient}%";
-            Price.text = $"Price: {itemConfig.price}";
+            
+            PlayersCurrent.text = $"Current Player's Stats Multiplier: {statsMultiplier}";
+            Description.text = $"{itemConfig.Description} by {itemConfig.UpgradeCoefficient}%";
+            Price.text = $"{itemConfig.Price * (statsMultiplier < 1 ? 1 : statsMultiplier)}";
             Image.sprite = itemConfig.Icon;
         }
 
@@ -38,11 +40,19 @@ namespace User.Presenters
         {
             Button.onClick.AddListener(() => onClickButton(this));
         }
-        
-        
+
+
+        public void UpdateItemByMultiplier(float multiplier)
+        {
+            PlayersCurrent.text = $"Current Player's Stats Multiplier: {multiplier}";
+            Price.text = $"{ItemData.Price * (multiplier < 1 ? 1 : multiplier)}";
+        }
+
+
         private void OnDestroy()
         {
-            Button.onClick.RemoveAllListeners();
+            if (Button != null) 
+                Button.onClick.RemoveAllListeners();
         }
 
         
