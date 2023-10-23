@@ -15,6 +15,7 @@ namespace User.View
     {
 
         [SerializeField] private Button _start;
+        [SerializeField] private Button _store;
         [SerializeField] private Button _settings;
         [SerializeField] private Button _leaderBoardButton;
         [SerializeField] private Button _exit;
@@ -23,12 +24,14 @@ namespace User.View
        // [SerializeField] private GameObject _optionMenuPanel; 
 
         [SerializeField] private int _sceneIndexToLoad;
-
-
+        
         [SerializeField] private SceneLoaderView _loadingView;
+
+
         private SceneLoader _sceneLoader;
 
         [Inject] private LeaderBoardPresenter _leaderBoardPresenter;
+        [Inject] private MainStorePresenter _mainStorePresenter;
 
 
         public void Awake()
@@ -37,7 +40,7 @@ namespace User.View
             //_optionMenuPanel.SetActive(false);
             _mainMenuPanel.SetActive(true);
 
-            MakeSubscribtions();
+            MakeSubscriptions();
             // не надо работать с эдитором, делаем так
             // в OnDestroy отписываемся
            // _settings.onClick.AddListener(OnB);
@@ -48,19 +51,23 @@ namespace User.View
         }
 
         
-        private void MakeSubscribtions()
+        private void MakeSubscriptions()
         {
             _start.onClick.AddListener(OnButtonClickStart);
+            _store.onClick.AddListener(OnStoreButtonPressed);
             _exit.onClick.AddListener(OnButtonClickExit);
             _leaderBoardButton.onClick.AddListener(OnLeaderBoardButtonPressed);
+            _mainStorePresenter.MainStoreView.BackButton.onClick.AddListener(OnButtonClickBack);
         }
         
         
         private void Unsubscribe()
         {
             _start.onClick.RemoveAllListeners();
+            _store.onClick.RemoveAllListeners();
             _exit.onClick.RemoveAllListeners();
             _leaderBoardButton.onClick.RemoveAllListeners();
+            _mainStorePresenter.MainStoreView.BackButton.onClick.RemoveAllListeners();
         }
 
 
@@ -97,6 +104,13 @@ namespace User.View
         {
             _leaderBoardPresenter.LeaderBoardView.gameObject.SetActive(true);
             gameObject.SetActive(false);
+        }
+
+
+        private void OnStoreButtonPressed()
+        {
+            _mainMenuPanel.SetActive(false);
+            _mainStorePresenter.MainStoreView.Show();
         }
 
 

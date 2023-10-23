@@ -107,7 +107,7 @@ public class BosSpawner : MonoBehaviour
          
         var systems = new List<ISystem>();
 
-        systems.Add(new EnemyRewardSystem(_componentsPlayer.ExperienceHandle, _componentsPlayer.GoldWallet));
+        systems.Add(new EnemyRewardSystem(_componentsPlayer.ExperienceHandle, _componentsPlayer.GoldWallet, _componentsPlayer.PlayerStats));
         systems.Add(new EnemyDamageSystem(item.maxHealth, item.maxProtection));
         systems.Add(new EnemyMovementSystem(_componentsPlayer.Movable.Rigidbody.transform));
          

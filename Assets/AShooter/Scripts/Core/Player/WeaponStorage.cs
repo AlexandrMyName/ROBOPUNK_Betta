@@ -1,6 +1,7 @@
 using Abstracts;
 using Core.DTO;
 using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 using User;
@@ -129,6 +130,26 @@ namespace Core
             PickUpItem pickUpItem = weaponObject.AddComponent<PickUpItem>();
             pickUpItem.WeaponType = config.WeaponType;
             pickUpItem.PickUpItemType = pickUpItemModel.PickUpItemType;
+        }
+
+
+        public void UpgradeWeaponsStatesAccordingPlayerBaseStats(float baseDamageMultiplier, float baseAttackSpeedMultiplier)
+        {
+            foreach (var weaponPair in Weapons)
+            {
+                if (weaponPair.Key.Equals(WeaponType.Sword) || weaponPair.Key.Equals(WeaponType.Saw))
+                {
+                    var meleeWeapon = (IMeleeWeapon) weaponPair.Value;
+                    meleeWeapon.Damage *= baseDamageMultiplier;
+                    meleeWeapon.AttackTimeout -= (meleeWeapon.AttackTimeout * baseAttackSpeedMultiplier - meleeWeapon.AttackTimeout);
+                }
+                else
+                {
+                    var rangeWeapon = (IRangeWeapon) weaponPair.Value;
+                    rangeWeapon.Damage *= baseDamageMultiplier;
+                    rangeWeapon.ShootSpeed -= (rangeWeapon.ShootSpeed * baseAttackSpeedMultiplier - rangeWeapon.ShootSpeed);
+                }
+            }
         }
 
         

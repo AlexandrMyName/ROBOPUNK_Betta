@@ -9,7 +9,7 @@ using Core.DTO;
 using UnityEngine.Pool;
 using User;
 using Random = UnityEngine.Random;
-
+using UnityEngine.InputSystem.iOS;
 
 namespace DI.Spawn
 {
@@ -28,6 +28,7 @@ namespace DI.Spawn
         private DiContainer _diContainer;
         private IExperienceHandle _experienceHandle;
         private IGoldWallet _goldWallet;
+        private IPlayerStats _playerStats;
         private IWeaponStorage _weaponStorage;
 
         private ObjectPool<GameObject> _pool;
@@ -47,6 +48,7 @@ namespace DI.Spawn
             IExperienceHandle experienceHandle,  
             IGoldWallet goldWallet,
             GameObject enemyViews,
+            IPlayerStats playerStats,    
             IWeaponStorage weaponStorage){
             ////[CONSTRUCT]\\\\
 
@@ -58,6 +60,7 @@ namespace DI.Spawn
 
             _experienceHandle = experienceHandle;
             _goldWallet = goldWallet;
+            _playerStats = playerStats;
             _weaponStorage = weaponStorage;
 
             _disposables.Add(
@@ -76,7 +79,7 @@ namespace DI.Spawn
         }
 
 
-        internal void StartSpawnWave(EnemyWaveConfig enemyWaveConfig, int waveCount)
+        public void StartSpawnWave(EnemyWaveConfig enemyWaveConfig, int waveCount)
         {
             Dispose();
 
@@ -173,7 +176,7 @@ namespace DI.Spawn
         {
 
             var systems = new List<ISystem>();
-            systems.Add(new EnemyRewardSystem(_experienceHandle, _goldWallet));
+            systems.Add(new EnemyRewardSystem(_experienceHandle, _goldWallet, _playerStats));
             systems.Add(new EnemyDamageSystem(item.maxHealth,item.maxProtection));
             systems.Add(new EnemyMovementSystem(_targetPosition));
 

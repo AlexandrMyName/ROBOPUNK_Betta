@@ -17,5 +17,7 @@ namespace Abstracts
         void InitializeWeapons( Transform weaponContainer );
         void GetPickUpItem(PickUpItemModel pickUpItemModel);
 
+        void UpgradeWeaponsStatesAccordingPlayerBaseStats(float baseDamageMultiplier, float baseAttackSpeedMultiplier);
+
     }
 }

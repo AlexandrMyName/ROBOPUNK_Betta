@@ -38,7 +38,7 @@ namespace User
         
         public float ShootDistance { get; protected set; }
         
-        public float ShootSpeed { get; protected set; }
+        public float ShootSpeed { get; set; }
         
         public float FireSpread { get; protected set; }
         
