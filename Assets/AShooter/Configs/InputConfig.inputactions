@@ -364,6 +364,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "MP3Player",
+            "id": "51837825-1f0b-4e5f-b653-b7a89f68d2f7",
+            "actions": [
+                {
+                    "name": "Play",
+                    "type": "Button",
+                    "id": "1f436587-fdd8-44c8-92dc-e806f2b885d5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "effb75f4-57ad-4efe-8395-64091796991d",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Play",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

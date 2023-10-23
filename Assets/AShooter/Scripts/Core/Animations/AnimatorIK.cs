@@ -6,7 +6,7 @@ using UniRx;
 using UnityEngine.AI;
 using UnityEngine.Animations.Rigging;
 using User;
-
+using Core.DTO;
 
 namespace Core
 {
@@ -36,6 +36,8 @@ namespace Core
         private WeaponIK _currentWeapon;
         private bool _isAimingAnimation;
         private List<RagdollData> _ragdoll = new();
+
+        private AudioSource _audioSource;
 
 
         /// <summary>
@@ -106,6 +108,12 @@ namespace Core
   
         public void ShootIK() {
 
+            if (_currentWeapon != null)
+            {
+                _currentWeapon.Muzzle.Shoot(_currentWeapon.BulletsConfig);
+
+                PlaySound(_audioSource, _currentWeapon);
+            }
             if (_currentWeapon != null && _currentWeapon.AimingRig.weight > .7f)
             {
                 _currentWeapon.Muzzle.Shoot(_currentWeapon.BulletsConfig);
@@ -211,6 +219,8 @@ namespace Core
                 if(_rigBuilder != null)
                     _rigBuilder.Build();
             }
+
+            _audioSource = gameObject.GetComponent<AudioSource>();
         }
 
 
@@ -392,6 +402,27 @@ namespace Core
         }
 
 
-      
+        private void PlaySound(AudioSource audioSource, WeaponIK weapon)
+        {
+            if ((weapon != null) && (audioSource != null))
+            {
+                var soundModelType = weapon.Type switch
+                {
+                    WeaponType.Sword => SoundModelType.Weapon_Sword,
+                    WeaponType.Rifle => SoundModelType.Weapon_Rifle,
+                    _ => SoundModelType.None
+                };
+
+                if (soundModelType != SoundModelType.None)
+                {
+                    AudioClip audioClip = SoundManager.Config.GetSound(SoundType.Damage, soundModelType);
+
+                    if (audioClip != null)
+                        audioSource.PlayOneShot(audioClip);
+                }
+            }
+        }
+
+
     }
 }

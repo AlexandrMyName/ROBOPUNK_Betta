@@ -386,6 +386,34 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""MP3Player"",
+            ""id"": ""51837825-1f0b-4e5f-b653-b7a89f68d2f7"",
+            ""actions"": [
+                {
+                    ""name"": ""Play"",
+                    ""type"": ""Button"",
+                    ""id"": ""1f436587-fdd8-44c8-92dc-e806f2b885d5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""effb75f4-57ad-4efe-8395-64091796991d"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Play"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -421,6 +449,9 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_PauseMenu = m_Menu.FindAction("PauseMenu", throwIfNotFound: true);
+        // MP3Player
+        m_MP3Player = asset.FindActionMap("MP3Player", throwIfNotFound: true);
+        m_MP3Player_Play = m_MP3Player.FindAction("Play", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -832,6 +863,52 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
         }
     }
     public MenuActions @Menu => new MenuActions(this);
+
+    // MP3Player
+    private readonly InputActionMap m_MP3Player;
+    private List<IMP3PlayerActions> m_MP3PlayerActionsCallbackInterfaces = new List<IMP3PlayerActions>();
+    private readonly InputAction m_MP3Player_Play;
+    public struct MP3PlayerActions
+    {
+        private @InputConfig m_Wrapper;
+        public MP3PlayerActions(@InputConfig wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Play => m_Wrapper.m_MP3Player_Play;
+        public InputActionMap Get() { return m_Wrapper.m_MP3Player; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MP3PlayerActions set) { return set.Get(); }
+        public void AddCallbacks(IMP3PlayerActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MP3PlayerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MP3PlayerActionsCallbackInterfaces.Add(instance);
+            @Play.started += instance.OnPlay;
+            @Play.performed += instance.OnPlay;
+            @Play.canceled += instance.OnPlay;
+        }
+
+        private void UnregisterCallbacks(IMP3PlayerActions instance)
+        {
+            @Play.started -= instance.OnPlay;
+            @Play.performed -= instance.OnPlay;
+            @Play.canceled -= instance.OnPlay;
+        }
+
+        public void RemoveCallbacks(IMP3PlayerActions instance)
+        {
+            if (m_Wrapper.m_MP3PlayerActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMP3PlayerActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MP3PlayerActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MP3PlayerActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MP3PlayerActions @MP3Player => new MP3PlayerActions(this);
     private int m_MoveSchemeIndex = -1;
     public InputControlScheme MoveScheme
     {
@@ -872,5 +949,9 @@ public partial class @InputConfig: IInputActionCollection2, IDisposable
     public interface IMenuActions
     {
         void OnPauseMenu(InputAction.CallbackContext context);
+    }
+    public interface IMP3PlayerActions
+    {
+        void OnPlay(InputAction.CallbackContext context);
     }
 }

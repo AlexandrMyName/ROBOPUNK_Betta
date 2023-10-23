@@ -107,10 +107,7 @@ namespace User
         }
 
 
-        public void Dispose()
-        {
-            _disposables.ForEach(d => d.Dispose());
-        }
+        public void Dispose() => _disposables.ForEach(d => d.Dispose());
 
 
     }

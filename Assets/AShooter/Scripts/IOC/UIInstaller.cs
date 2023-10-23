@@ -20,6 +20,7 @@ namespace DI
     [SerializeField] private GameObject _playerHpViewPrefab;
     [SerializeField] private GameObject _interactViewPrefab;
     [SerializeField] private GameObject _weaponAbilityViewPrefab;
+    [SerializeField] private GameObject _mp3PlayerViewPrefab;
 
     [Space(10)]
     [Header("Menu:")]
@@ -75,12 +76,12 @@ namespace DI
                 .FromInstance(weaponAbilityView)
                 .AsCached();
 
+            Container.Bind<WeaponAbilityPresenter>().FromInstance(weaponAbilityPresenter).AsCached();
+
             Container
                 .Bind<IShieldView>()
                 .FromInstance(InstantiateView<IShieldView>(_shieldViewPrefab))
                 .AsCached();
-
-            Container.Bind<WeaponAbilityPresenter>().FromInstance(weaponAbilityPresenter).AsCached();
 
             Container
                 .Bind<IInteractView>()
@@ -90,6 +91,11 @@ namespace DI
             Container
                 .Bind<IWinView>()
                 .FromInstance(InstantiateView<IWinView>(_winView_Prefab))
+                .AsCached();
+
+            Container
+                .Bind<IMP3PlayerView>()
+                .FromInstance(InstantiateView<IMP3PlayerView>(_mp3PlayerViewPrefab))
                 .AsCached();
 
             Container

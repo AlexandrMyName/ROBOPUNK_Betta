@@ -1,4 +1,5 @@
 ﻿using Abstracts;
+using Core;
 using System;
 using System.Collections.Generic;
 using UniRx;
@@ -15,6 +16,17 @@ namespace User
         public ExplosionAbility Ability {  get; set; }
 
         private List<IDisposable> _disposables = new();
+        private AudioClip _fireAudioClip;
+        private AudioClip _expolisionAudioClip;
+        private AudioSource _audioSource;
+
+
+        private void Awake()
+        {
+            _audioSource = gameObject.GetComponent<AudioSource>();
+            _fireAudioClip = SoundManager.Config.GetSound(SoundType.DamageOverTime, SoundModelType.Ability_Expolision);
+            _expolisionAudioClip = SoundManager.Config.GetSound(SoundType.Damage, SoundModelType.Ability_Expolision);
+        }
 
 
         private void Start()
@@ -52,20 +64,28 @@ namespace User
                 if (explode)
                 {
                     if (hit.TryGetComponent(out Rigidbody unitRB))
-                    {
                         unitRB.AddExplosionForce(Ability.Force, transform.position, Ability.Radius, Ability.UpwardsModifier, ForceMode.Impulse);
-                    }
                 }
             }
 
             if (!explode)
+            {
                 SpawnDamageOverTimeEffect();
+                PlaySound(_audioSource, _fireAudioClip);
+            }
         }
 
 
         public void ApplyDamage(IEnemy unit, float damage)
         {
             unit.ComponentsStore.Attackable.TakeDamage(damage);
+        }
+
+
+        private void PlaySound(AudioSource audioSource, AudioClip audioClip)
+        {
+            if ((audioSource != null) && (audioClip != null))
+                audioSource.PlayOneShot(audioClip);
         }
 
 
@@ -92,6 +112,8 @@ namespace User
             if (Ability.Effect)
             {
                 var effect = Instantiate(Ability.Effect, transform.position, Ability.Effect.transform.rotation);
+                var effectAudioSource = effect.GetComponent<AudioSource>();
+                PlaySound(effectAudioSource, _expolisionAudioClip);
                 Destroy(effect.gameObject, Ability.EffectDestroyDelay);
             }
         }
@@ -104,10 +126,7 @@ namespace User
         }
 
 
-        public void Dispose()
-        {
-            _disposables.ForEach(d => d.Dispose());
-        }
+        public void Dispose() => _disposables.ForEach(d => d.Dispose());
 
 
     }

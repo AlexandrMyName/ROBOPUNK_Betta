@@ -19,6 +19,8 @@ namespace Core
 
          
         [field: SerializeField] public Transform WeaponContainer;
+
+        [field: SerializeField] public Transform Headset;
          
 
         protected override List<ISystem> GetSystems()

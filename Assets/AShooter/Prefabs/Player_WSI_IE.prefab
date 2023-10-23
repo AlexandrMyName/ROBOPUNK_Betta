@@ -133,7 +133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85e223b72f0ed3f46a218604749370bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Rigidbody>k__BackingField: {fileID: 8831900685845476332}
   WeaponContainer: {fileID: 3097796908037374927}
 --- !u!136 &2241226216331610635
 CapsuleCollider:

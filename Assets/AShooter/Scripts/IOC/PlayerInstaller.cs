@@ -171,6 +171,9 @@ namespace DI
             PlayerShieldSystem playerShieldSystem = new PlayerShieldSystem();
             Container.QueueForInject(playerShieldSystem);
 
+            MP3PlayerSystem mp3PlayerSystem = new MP3PlayerSystem();
+            Container.QueueForInject(mp3PlayerSystem);
+
             PickUpItemSystem pickUpItemSystem = new PickUpItemSystem();
             Container.QueueForInject(pickUpItemSystem);
 
@@ -191,6 +194,7 @@ namespace DI
             systems.Add(playerExperienceSystem);
             systems.Add(playerGoldWalletSystem);
             systems.Add(playerShieldSystem);
+            systems.Add(mp3PlayerSystem);
             systems.Add(pickUpItemSystem);
             systems.Add(playeRewardSystem);
 
