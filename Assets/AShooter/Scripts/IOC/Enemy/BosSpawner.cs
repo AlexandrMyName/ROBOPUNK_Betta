@@ -62,7 +62,7 @@ public class BosSpawner : MonoBehaviour
 
         enemy.SetComponents(
 
-            new EnemyComponentsStore( attackable, price));
+            new EnemyComponentsStore( attackable, price, null));
 
         enemy.SetSystems(CreateSystems(_config));
 

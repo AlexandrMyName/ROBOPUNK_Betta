@@ -11,12 +11,14 @@ namespace Core
 
         public IEnemyPrice EnemyPrice { get; }
 
-        
+        public IWeaponStorage WeaponStorage { get; }
 
-        public EnemyComponentsStore(IEnemyAttackable attackable, IEnemyPrice enemyPrice)
+
+        public EnemyComponentsStore(IEnemyAttackable attackable, IEnemyPrice enemyPrice, IWeaponStorage weaponStorage)
         {
             Attackable = attackable;
             EnemyPrice = enemyPrice;
+            WeaponStorage = weaponStorage;
         }
 
 

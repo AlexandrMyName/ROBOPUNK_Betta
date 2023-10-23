@@ -124,7 +124,7 @@ namespace Core
             };
 
             var parentPoint = pickUpItemModel.ParentPoint;
-            var weaponObject = GameObject.Instantiate(pickUpObject, new Vector3(parentPoint.x, parentPoint.y + 1, parentPoint.z + 3), Quaternion.identity);
+            var weaponObject = GameObject.Instantiate(pickUpObject, new Vector3(parentPoint.x, parentPoint.y + 0.5f, parentPoint.z + 3), Quaternion.identity);
 
             PickUpItem pickUpItem = weaponObject.AddComponent<PickUpItem>();
             pickUpItem.WeaponType = config.WeaponType;

@@ -7,5 +7,6 @@ namespace Abstracts {
     {
         IEnemyAttackable Attackable { get; }
         IEnemyPrice EnemyPrice { get; }
+        IWeaponStorage WeaponStorage { get; }
     }
 }
