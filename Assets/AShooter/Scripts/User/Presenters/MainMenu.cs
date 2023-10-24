@@ -26,12 +26,13 @@ namespace User.View
         [SerializeField] private int _sceneIndexToLoad;
         
         [SerializeField] private SceneLoaderView _loadingView;
-
+         
 
         private SceneLoader _sceneLoader;
 
         [Inject] private LeaderBoardPresenter _leaderBoardPresenter;
         [Inject] private MainStorePresenter _mainStorePresenter;
+        [SerializeField] private GameObject _optionsView;
 
 
         public void Awake()
@@ -58,6 +59,7 @@ namespace User.View
             _exit.onClick.AddListener(OnButtonClickExit);
             _leaderBoardButton.onClick.AddListener(OnLeaderBoardButtonPressed);
             _mainStorePresenter.MainStoreView.BackButton.onClick.AddListener(OnButtonClickBack);
+            _settings.onClick.AddListener(OnButtonClickOption);
         }
         
         
@@ -67,6 +69,7 @@ namespace User.View
             _store.onClick.RemoveAllListeners();
             _exit.onClick.RemoveAllListeners();
             _leaderBoardButton.onClick.RemoveAllListeners();
+            _settings.onClick.RemoveAllListeners();
             _mainStorePresenter.MainStoreView.BackButton.onClick.RemoveAllListeners();
         }
 
@@ -87,8 +90,9 @@ namespace User.View
         private void OnButtonClickOption()
         {
 
-           // _optionMenuPanel.SetActive(true);
+           
             _mainMenuPanel.SetActive(false);
+            _optionsView.SetActive(true);
         }
 
 

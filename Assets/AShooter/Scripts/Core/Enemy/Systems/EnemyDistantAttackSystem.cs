@@ -9,7 +9,7 @@ using UnityEngine.AI;
 namespace Core
 {
 
-    public class EnemyDistantAttackSystem : BaseSystem
+    public class EnemyDistantAttackSystem : BaseSystem, IDisposable
     {
 
         private List<IDisposable> _disposables = new();
@@ -20,6 +20,7 @@ namespace Core
         private Transform _targetPosition;
         private float _attackFrequency;
         private NavMeshAgent _navMeshAgent ;
+       
 
         public EnemyDistantAttackSystem(Transform targetPosition)
         {
@@ -34,7 +35,7 @@ namespace Core
             _enemy = components.BaseObject.GetComponent<IEnemy>();
             _animator = components.BaseObject.GetComponent<IAnimatorIK>();
             _navMeshAgent = components.BaseObject.GetComponent<NavMeshAgent>();
-            _enemy.ComponentsStore.Attackable.IsCameAttackPosition.Subscribe(SetPositionReadiness);
+            _enemy.ComponentsStore.Attackable.IsCameAttackPosition.Subscribe(SetPositionReadiness).AddTo(_disposables);
             _attackFrequency = _enemy.ComponentsStore.Attackable.AttackFrequency;
 
             var shootDisposable = Observable
@@ -84,7 +85,10 @@ namespace Core
             UnityEngine.Object.Destroy(primitive, 5f);
         }
 
-
+        public void Dispose()
+        {
+            _disposables.ForEach(disposable => disposable.Dispose());
+        }
     }
 
 } 

@@ -33,6 +33,8 @@ namespace User.Components
 
         [Inject] public IRewardMenuView RewardMenu { get; }
 
+        [Inject] public IOptionsView Options { get; set; }
+
         public List<IView> GetListView()
         {
             var views = new List<IView>();
@@ -49,6 +51,7 @@ namespace User.Components
             views.Add(StoreMenu);
             views.Add(MP3PlayerView);
             views.Add(RewardMenu);
+            views.Add(Options);
 
             return views;
         }
@@ -56,7 +59,6 @@ namespace User.Components
 
 
         [Inject] public IWinView WinView { get; }
-        
-        
+         
     }
 }

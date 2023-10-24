@@ -57,6 +57,7 @@ namespace Core
                         CurrentClipIndex.Value = 0;
                     else
                     {
+                        if (_audioClips.Length < index - 1) return;
                         _audioSource.clip = _audioClips[index];
                         _audioSource.Play();
                         _view.ChangeText(_audioSource.clip.name);

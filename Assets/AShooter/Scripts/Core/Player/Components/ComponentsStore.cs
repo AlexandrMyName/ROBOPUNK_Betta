@@ -31,7 +31,7 @@ namespace Core
         public IShield Shield { get; private set; }
         
         public IPlayerStats PlayerStats { get; private set; }
-
+         
 
         public ComponentsStore(
             IAttackable attackable, 
@@ -45,7 +45,8 @@ namespace Core
             ILevelProgress levelProgress,
             IWeaponStorage weapons,
             IShield shield,
-            IPlayerStats playerStats)
+            IPlayerStats playerStats
+            )
         {
 
             /////[Construct]\\\\\
@@ -61,6 +62,7 @@ namespace Core
             LevelProgress = levelProgress;
             Shield = shield;
             PlayerStats = playerStats;
+             
         } 
 
 

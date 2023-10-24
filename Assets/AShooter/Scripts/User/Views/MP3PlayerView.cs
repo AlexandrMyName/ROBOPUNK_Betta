@@ -55,12 +55,14 @@ namespace User
 
         public void Hide()
         {
+            if(this)
             gameObject.SetActive(false);
         }
 
 
         public bool GetActivityState()
         {
+            if (!this) return false;
             return gameObject.activeSelf;
         }
 

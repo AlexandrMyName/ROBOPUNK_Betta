@@ -9,7 +9,7 @@ using Zenject;
 namespace Core
 {
 
-    public class EnemyRewardSystem : BaseSystem
+    public class EnemyRewardSystem : BaseSystem, IDisposable
     {
 
         private List<IDisposable> _disposables = new();
@@ -71,18 +71,13 @@ namespace Core
         }
 
 
-        private void Dispose()
+        public void Dispose()
         {
             _disposables.ForEach(d => d.Dispose());
             _disposables.Clear();
         }
 
 
-        protected override void OnDestroy()
-        {
-            Dispose();
-        }
-
-
+        
     }
 }

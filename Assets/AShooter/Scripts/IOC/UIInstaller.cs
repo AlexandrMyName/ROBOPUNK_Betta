@@ -21,6 +21,7 @@ namespace DI
     [SerializeField] private GameObject _interactViewPrefab;
     [SerializeField] private GameObject _weaponAbilityViewPrefab;
     [SerializeField] private GameObject _mp3PlayerViewPrefab;
+    [SerializeField] private GameObject _optionsView;
 
     [Space(10)]
     [Header("Menu:")]
@@ -67,7 +68,11 @@ namespace DI
             .Bind<IHealthView>()
             .FromInstance(InstantiateView<IHealthView>(_playerHpViewPrefab))
             .AsCached();
-        
+
+            Container
+            .Bind<IOptionsView>()
+            .FromInstance(InstantiateView<IOptionsView>(_optionsView))
+            .AsCached();
 
             var weaponAbilityPresenter = InstantiateView<WeaponAbilityPresenter>(_weaponAbilityViewPrefab);
             IWeaponAbilityView weaponAbilityView = weaponAbilityPresenter.GetComponent<WeaponAbilityView>();

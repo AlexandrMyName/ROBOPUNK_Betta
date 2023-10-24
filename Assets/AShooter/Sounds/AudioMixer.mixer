@@ -266,7 +266,21 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: 84e5372dd2710854698a56be451fd548
+    name: Boss
+  - guid: 5590a7e35a383564d901fb85ccc391b9
+    name: Enemy
+  - guid: 9a773fb403c30c243bebb87198d4506e
+    name: Explosion
+  - guid: 2bfae1d6c4edc304181182ce6e8c6cb7
+    name: Fire
+  - guid: 6b2c106b9681ff94ab2aac7752aee1a3
+    name: Music
+  - guid: 119bd3fc72d882f4f87a77d67bfcdff6
+    name: Player
+  - guid: 2ae4c771b6c79e040899bae9db0e0717
+    name: UI
   m_AudioMixerGroupViews:
   - guids:
     - 644fabd6833b2c34f884ce358610ed5d
