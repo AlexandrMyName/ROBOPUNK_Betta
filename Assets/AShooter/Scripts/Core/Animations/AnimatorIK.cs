@@ -11,7 +11,7 @@ using Core.DTO;
 namespace Core
 {
 
-    public class AnimatorIK : MonoBehaviour, IAnimatorIK
+    public class AnimatorIK : MonoBehaviour, IAnimatorIK, IDisposable
     {
 
         [Header("This contains data of RB && animations with IK")]
@@ -38,7 +38,7 @@ namespace Core
         private List<RagdollData> _ragdoll = new();
 
         private AudioSource _audioSource;
-
+        private List<IDisposable> _disposables = new();
 
         /// <summary>
         /// This method will determine which animation to use,
@@ -324,7 +324,7 @@ namespace Core
 
                         TryCompletelyDeath();
 
-                    });
+                    }).AddTo(_disposables);
             }
             else TryCompletelyDeath();
         }
@@ -355,7 +355,7 @@ namespace Core
 
             _ragdoll.ForEach(data =>
             {
-
+                
                 var collider = data.Rb.gameObject.GetComponent<Collider>();
                  
                 collider.isTrigger = !isActive;
@@ -423,6 +423,15 @@ namespace Core
             }
         }
 
+        public void Dispose()
+        {
+            _disposables.ForEach(disp=>disp.Dispose()); 
+        }
 
+        private void OnDestroy()
+        {
+            Dispose();
+            _disposables.Clear();
+        }
     }
 }

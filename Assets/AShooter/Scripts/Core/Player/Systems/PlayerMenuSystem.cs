@@ -16,7 +16,7 @@ using User.Components.Repository;
 namespace Core
 {
 
-    public class PlayerMenuSystem : BaseSystem , IDisposable
+    public class PlayerMenuSystem : BaseSystem, IDisposable
     {
 
         [Inject] private IInput _input;
@@ -27,8 +27,9 @@ namespace Core
 
         private IPauseMenuView _pauseMenu;
         private IStoreView _storeMenu;
-
+        private IOptionsView _optionsView;
         private bool _ShowPauseMenu;
+
 
         private List<LevelRewardItemConfig> _passiveUpgradeItemsData;
 
@@ -39,20 +40,28 @@ namespace Core
 
             _ShowPauseMenu = false;
 
-            _input.PauseMenu.AxisOnChange.Subscribe(_ => OnMenuButtonPressed());
-            
+            _input.PauseMenu.AxisOnChange.Subscribe(_ => OnMenuButtonPressed()).AddTo(_disposables);
+
             _componentsStore = components.BaseObject.GetComponent<IPlayer>().ComponentsStore;
 
             _pauseMenu = _componentsStore.Views.PauseMenu;
+            _optionsView = _componentsStore.Views.Options;
+
             _pauseMenu.SubscribeClickButtons(
                 onClickButtonSaveGame,
                 onClickButtonInventory,
                 onClickButtonJournal,
                 onClickButtonStore,
                 onClickButtonGame,
-                onClickButtonExitMainMenu);
+                onClickButtonExitMainMenu,
+                OnClickOptions);
 
             _storeMenu = _componentsStore.Views.StoreMenu;
+            _optionsView.SubscribeButtonBack(() =>
+            {
+                _pauseMenu?.Show();
+                _optionsView?.Hide();
+            });
             _storeMenu.SubscribeClickButtons(onClickButtonBack);
         }
 
@@ -72,6 +81,12 @@ namespace Core
             SceneManager.LoadScene(0);//  SceneLoader (Alexandr)
         }
 
+
+        private void OnClickOptions()
+        {
+            _pauseMenu?.Hide();
+            _optionsView?.Show();
+        }
 
         private void onClickButtonGame()
         {
@@ -125,10 +140,11 @@ namespace Core
                 view.Show();
             }
 
-            _activeViews.Clear();
-
-            _pauseMenu.Hide();
-            _storeMenu.Hide();
+            _activeViews?.Clear();
+            if (_optionsView != null)
+                _optionsView.Hide();
+            _pauseMenu?.Hide();
+            _storeMenu?.Hide();
         }
 
 
@@ -143,15 +159,18 @@ namespace Core
                 if (view.GetActivityState())
                 {
                     _activeViews.Add(view);
-                    view.Hide();
+                    view?.Hide();
                 }
             }
-
-            _pauseMenu.Show();
+           
+                 _pauseMenu?.Show();
         }
-        
 
-        public void Dispose() => _disposables.ForEach(disposable => disposable.Dispose());
+
+        public void Dispose() {
+            _disposables.ForEach(disposable => disposable.Dispose());
+            _componentsStore.Views.GetListView().Clear();
+        }
 
 
     }

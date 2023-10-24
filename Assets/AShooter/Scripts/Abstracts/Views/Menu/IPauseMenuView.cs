@@ -14,7 +14,8 @@ namespace Abstracts
             UnityAction onClickButtonJournal,
             UnityAction onClickButtonStore,
             UnityAction onClickButtonGame,
-            UnityAction onClickButtonExitMainMenu);
+            UnityAction onClickButtonExitMainMenu,
+            UnityAction onClickOptions);
 
     }
 

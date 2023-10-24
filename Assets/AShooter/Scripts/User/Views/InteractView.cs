@@ -15,11 +15,17 @@ namespace AShooter.Scripts.User.Views
         public void Show() => gameObject.SetActive(true);
 
 
-        public void Hide() => gameObject.SetActive(false);
+        public void Hide()
+        {
+            if(this)
+            gameObject.SetActive(false);
+
+        }
 
 
         public bool GetActivityState()
         {
+            if (!this) return false;
             return gameObject.activeSelf;
         }
 

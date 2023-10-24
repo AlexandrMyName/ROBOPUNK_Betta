@@ -31,7 +31,8 @@ namespace User
 
         public bool GetActivityState()
         {
-            return gameObject.activeSelf;
+            if(!this) return false;
+            else return gameObject.activeSelf;
         }
 
 

@@ -27,7 +27,7 @@ namespace Abstracts
         IShield Shield { get; }
 
         IPlayerStats PlayerStats { get; }
-
+         
 
     }
 }

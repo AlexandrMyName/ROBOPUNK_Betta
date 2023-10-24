@@ -20,6 +20,7 @@ namespace User.Presenters
 
         public bool GetActivityState()
         {
+            if (!this) return false;
             return gameObject.activeSelf;
         }
 
@@ -32,6 +33,7 @@ namespace User.Presenters
 
         public void Hide()
         {
+            if(this)
             gameObject.SetActive(false);
         }
 

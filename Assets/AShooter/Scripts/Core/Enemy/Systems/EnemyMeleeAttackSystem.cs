@@ -10,7 +10,7 @@ using UnityEngine.AI;
 namespace Core
 {
 
-    public class EnemyMeleeAttackSystem : BaseSystem
+    public class EnemyMeleeAttackSystem : BaseSystem, IDisposable
     {
 
         private List<IDisposable> _disposables = new();
@@ -20,6 +20,10 @@ namespace Core
         private NavMeshAgent _navMeshAgent;
         private IGameComponents _components;
 
+        public void Dispose()
+        {
+            _disposables.ForEach(disp => disp.Dispose());
+        }
 
         protected override void Awake(IGameComponents components)
         {

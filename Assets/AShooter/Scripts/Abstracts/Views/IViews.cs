@@ -35,6 +35,7 @@ namespace Abstracts
         public List<IView> GetListView();
 
         IMP3PlayerView MP3PlayerView { get; }
+        public IOptionsView Options { get;  set; }
 
     }
 }

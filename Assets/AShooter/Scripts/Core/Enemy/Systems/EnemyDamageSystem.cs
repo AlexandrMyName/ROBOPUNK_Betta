@@ -12,7 +12,7 @@ using UnityEngine;
 namespace Core
 {
 
-    public class EnemyDamageSystem : BaseSystem
+    public class EnemyDamageSystem : BaseSystem, IDisposable
     {
 
         private IGameComponents _components;
@@ -76,9 +76,7 @@ namespace Core
         }
 
 
-        protected override void OnDestroy() => Dispose();
-
-
+         
         private void OnSubscribe(ReactiveProperty<float> healthProperty)
         {
             Dispose();
@@ -154,11 +152,11 @@ namespace Core
         }
 
 
-        private void Dispose()
+        
+        public void Dispose()
         {
             _disposables.ForEach(d => d.Dispose());
             _disposables.Clear();
         }
-
     }
 }

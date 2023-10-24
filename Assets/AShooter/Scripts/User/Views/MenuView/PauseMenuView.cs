@@ -16,6 +16,7 @@ namespace User.Presenters
         [SerializeField] private Button _storeButton;
         [SerializeField] private Button _gameButton;
         [SerializeField] private Button _exitMainMenuButton;
+        [SerializeField] private Button _optionsButton;
 
 
         public void Show()
@@ -26,6 +27,7 @@ namespace User.Presenters
 
         public void Hide()
         {
+            if(this)
             gameObject.SetActive(false);
         }
 
@@ -36,7 +38,8 @@ namespace User.Presenters
             UnityAction onClickButtonJournal,
             UnityAction onClickButtonStore,
             UnityAction onClickButtonGame,
-            UnityAction onClickButtonExitMainMenu)
+            UnityAction onClickButtonExitMainMenu,
+            UnityAction onClickOptions)
         {
             _gameButton.onClick.AddListener(onClickButtonSaveGame);
             _inventoryButton.onClick.AddListener(onClickButtonInventory);
@@ -44,6 +47,7 @@ namespace User.Presenters
             _storeButton.onClick.AddListener(onClickButtonStore);
             _gameButton.onClick.AddListener(onClickButtonGame);
             _exitMainMenuButton.onClick.AddListener(onClickButtonExitMainMenu);
+            _optionsButton.onClick.AddListener(onClickOptions);
         }
 
 
@@ -55,14 +59,17 @@ namespace User.Presenters
             _storeButton.onClick.RemoveAllListeners();
             _gameButton.onClick.RemoveAllListeners();
             _exitMainMenuButton.onClick.RemoveAllListeners();
+            _optionsButton.onClick.RemoveAllListeners();
         }
 
 
         public bool GetActivityState()
         {
+            if (!this) return false;
             return gameObject.activeSelf;
         }
 
+        
 
     }
 }

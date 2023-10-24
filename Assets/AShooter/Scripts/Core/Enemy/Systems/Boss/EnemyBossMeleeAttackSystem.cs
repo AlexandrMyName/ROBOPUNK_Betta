@@ -10,7 +10,7 @@ using UnityEngine.AI;
 namespace Core
 {
 
-    public class EnemyBossMeleeAttackSystem : BaseSystem
+    public class EnemyBossMeleeAttackSystem : BaseSystem, IDisposable
     {
 
         private List<IDisposable> _disposables = new();
@@ -96,6 +96,11 @@ namespace Core
                         mainObject.ComponentsStore.Attackable.TakeDamage(2000);
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            _disposables.ForEach(disp => disp.Dispose());
         }
     }
 }

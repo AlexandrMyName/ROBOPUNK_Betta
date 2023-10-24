@@ -23,6 +23,7 @@ namespace User.View
 
         public bool GetActivityState()
         {
+            if(!this) return false;
             return gameObject.activeSelf;
         }
 

@@ -27,6 +27,15 @@ namespace Core
             
         }
 
+        private void OnDestroy()
+        {
+            foreach(var syst in _systems)
+            {
+                IDisposable disposable = syst as IDisposable;
+                if(disposable != null)
+                disposable.Dispose();
+            }
+        }
 
         public void SetSystems(List<ISystem> systems) => _systems = systems;
 
