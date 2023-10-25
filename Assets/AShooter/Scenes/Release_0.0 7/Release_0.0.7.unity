@@ -26179,7 +26179,7 @@ MonoBehaviour:
   _optionsView: {fileID: 8566131872191883616, guid: 6fad837a1ef35114eb5a3c160ebab418, type: 3}
   _pauseMenuViewPrefab: {fileID: 3175645268032309755, guid: fd055b6c5fe98d040bbbc9bb076e995e, type: 3}
   _storeMenuViewPrefab: {fileID: 7282505665994359049, guid: 00689ff3fa55ebb45a3ddfc7d7ad4039, type: 3}
-  _winView_Prefab: {fileID: 3010169044236182043, guid: 6fea3b772d9849541a363aac049b0d36, type: 3}
+  _winView_Prefab: {fileID: 1242513778590969115, guid: 37963f51ead40ab49a389aedbc0e5f3c, type: 3}
   _rewardMenuViewPrefab: {fileID: 7282505665994359049, guid: 4dd6799897916e04d98c214056a986d7, type: 3}
 --- !u!1 &540657179
 GameObject:
