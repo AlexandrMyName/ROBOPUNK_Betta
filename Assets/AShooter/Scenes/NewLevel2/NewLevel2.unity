@@ -3532,9 +3532,11 @@ MonoBehaviour:
   _playerHpViewPrefab: {fileID: 614481602410479457, guid: a0d6f93b9736f8440a5c6847dd82db80, type: 3}
   _interactViewPrefab: {fileID: 5828510425389693978, guid: 45c171eb53e18d24596b869c37b1dd09, type: 3}
   _weaponAbilityViewPrefab: {fileID: 3010169044236182043, guid: 6fea3b772d9849541a363aac049b0d36, type: 3}
+  _mp3PlayerViewPrefab: {fileID: 2064752235517260811, guid: 41750c33f3a4eb249be14879f29808d6, type: 3}
+  _optionsView: {fileID: 8566131872191883616, guid: 6fad837a1ef35114eb5a3c160ebab418, type: 3}
   _pauseMenuViewPrefab: {fileID: 3175645268032309755, guid: fd055b6c5fe98d040bbbc9bb076e995e, type: 3}
   _storeMenuViewPrefab: {fileID: 7282505665994359049, guid: 00689ff3fa55ebb45a3ddfc7d7ad4039, type: 3}
-  _winView_Prefab: {fileID: 1445234457471142472, guid: 37963f51ead40ab49a389aedbc0e5f3c, type: 3}
+  _winView_Prefab: {fileID: 3010169044236182043, guid: 6fea3b772d9849541a363aac049b0d36, type: 3}
   _rewardMenuViewPrefab: {fileID: 7282505665994359049, guid: 4dd6799897916e04d98c214056a986d7, type: 3}
 --- !u!1 &550520363
 GameObject:
@@ -8251,6 +8253,10 @@ PrefabInstance:
       propertyPath: _dashConfig
       value: 
       objectReference: {fileID: 11400000, guid: 30a2ad29a9613b74fa1e5c2355cec3d4, type: 2}
+    - target: {fileID: 6041886409023221945, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
+      propertyPath: _useMoveSystem
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6041886409023221945, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: _playerHPConfig
       value: 
