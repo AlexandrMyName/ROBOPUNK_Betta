@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.16963217, g: 0.14392343, b: 0.10819989, a: 1}
+  m_IndirectSpecularColor: {r: 0.1699208, g: 0.14420128, b: 0.10836155, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13299,7 +13299,9 @@ PrefabInstance:
       value: -75.11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2090372039344713984, guid: fcb949d12d3b7a34e9bc2a1e1a4ff36d, type: 3}
+    - {fileID: 3237281515653081406, guid: fcb949d12d3b7a34e9bc2a1e1a4ff36d, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcb949d12d3b7a34e9bc2a1e1a4ff36d, type: 3}
@@ -13372,14 +13374,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 135486937}
     m_Modifications:
-    - target: {fileID: 2218895862521455569, guid: b7ff314a683bf6c4d865815f78227dc8, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2937670289371013032, guid: b7ff314a683bf6c4d865815f78227dc8, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4558689948593995383, guid: b7ff314a683bf6c4d865815f78227dc8, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -13693,10 +13687,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 135486937}
     m_Modifications:
-    - target: {fileID: 1609210334248806008, guid: 1aa82e992737e874c8020f23c69fce83, type: 3}
-      propertyPath: m_LODs.Array.data[1].renderers.Array.data[0].renderer
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1643335606369720895, guid: 1aa82e992737e874c8020f23c69fce83, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -13741,24 +13731,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3363807384980953625, guid: 1aa82e992737e874c8020f23c69fce83, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5507449215381252288, guid: 1aa82e992737e874c8020f23c69fce83, type: 3}
-      propertyPath: m_LODs.Array.data[1].renderers.Array.data[0].renderer
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5637759092148287597, guid: 1aa82e992737e874c8020f23c69fce83, type: 3}
       propertyPath: m_Name
       value: Square
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 5507449215367094108, guid: 1aa82e992737e874c8020f23c69fce83, type: 3}
-    - {fileID: 1609210334234644964, guid: 1aa82e992737e874c8020f23c69fce83, type: 3}
-    - {fileID: 1609210334234628074, guid: 1aa82e992737e874c8020f23c69fce83, type: 3}
-    - {fileID: 5507449215367070034, guid: 1aa82e992737e874c8020f23c69fce83, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1aa82e992737e874c8020f23c69fce83, type: 3}
