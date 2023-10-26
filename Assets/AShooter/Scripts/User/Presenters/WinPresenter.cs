@@ -95,7 +95,7 @@ namespace AShooter.Scripts.User.Presenters
         {
             if (_isInit) return;
             _isInit = true;
-            //Time.timeScale = 0.0f;
+            Time.timeScale = 0.0f;
             InputManager.DisableSystem();
             WinLabel.SetActive(true);
             ButtonsPanel.SetActive(true);
@@ -106,16 +106,17 @@ namespace AShooter.Scripts.User.Presenters
         private async void SwitchOnMainMenu()
         {
             InputManager.EnableSystem();
+            Time.timeScale = 1.0f;
             _isNeedBarUpdate = true;
             await _sceneLoader.SceneLoad(0);
-            Time.timeScale = 1.0f;
+            
         }
 
         
         private async void ReloadGameAgain()
         {
             InputManager.EnableSystem();
-            
+            Time.timeScale = 1.0f;
             _isNeedBarUpdate = true;
             await _sceneLoader.SceneLoad(1);
             Time.timeScale = 1.0f;

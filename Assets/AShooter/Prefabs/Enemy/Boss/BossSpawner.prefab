@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3281667720241192294
 MonoBehaviour:
@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canAttackForOtherEnemies: 1
-  _enableDistantAttackSystem: 1
   _enemyBossComponent:
     <HealTrail>k__BackingField: {fileID: 5813249375450545439, guid: f7f90e72e9fd1d9439d0b2d1392fcb15, type: 3}
   _config:
@@ -55,15 +54,15 @@ MonoBehaviour:
     prefab: {fileID: 6753984060383874401, guid: d176f1975b9667944a0bdf383e392fb9, type: 3}
     maxHealth: 8000
     maxProtection: 20000
-    maxAttackDamage: 1198.7
-    attackDistance: 1.4
-    attackFrequency: 0.05
+    maxAttackDamage: 18
+    attackDistance: 10
+    attackFrequency: 0.5
     goldDropRate: 100
     goldValueRange:
-      min: 200
+      min: 150
       max: 200
     experienceRange:
-      min: 200
-      max: 200
+      min: 0
+      max: 0
     probabilityWeigh: 0.505
   _enemyViews_Prefab: {fileID: 5632509733137239380, guid: d944d64d1ac535e49a0ce9efe5975819, type: 3}
