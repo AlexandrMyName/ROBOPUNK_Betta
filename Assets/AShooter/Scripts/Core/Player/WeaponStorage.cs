@@ -3,6 +3,7 @@ using Core.DTO;
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using User;
 using Zenject;
@@ -21,8 +22,9 @@ namespace Core
 
         private Camera _camera;
         private Transform _weaponContainer;
-        
-        
+        private PlayerAnimatorIK _animatorIK;
+
+
         public WeaponStorage()
         { 
             Weapons = new Dictionary<WeaponType, IWeapon>();
@@ -30,11 +32,16 @@ namespace Core
         }
 
 
-        public void InitializeWeapons(Transform weaponContainer)
+        public void InitializeWeapons(Transform weaponContainer, PlayerAnimatorIK animatorIK)
         {
 
-            _weaponContainer = weaponContainer;
+            if(_animatorIK == null)
+            {
+                _animatorIK = animatorIK;
+            }
 
+            _weaponContainer = weaponContainer;
+            
             for (int i = 0; i < WeaponConfigs.Count; i++)
             {
                 var config = WeaponConfigs[i];
@@ -61,9 +68,12 @@ namespace Core
         }
 
 
+        private GameObject FindWeapon(WeaponConfig config)
+        => _animatorIK.WeaponData.Find(weap => weap.Type == config.WeaponType).WeaponHolder.gameObject;
+         
         private IWeapon CreateRangeWeapon(WeaponConfig config)
         {
-            var weaponObject = GameObject.Instantiate(config.WeaponObject, _weaponContainer);
+            var weaponObject = FindWeapon(config);
             weaponObject.SetActive(false);
 
             return new Weapon(
@@ -96,7 +106,7 @@ namespace Core
 
         private IWeapon CreateMeleeWeapon(WeaponConfig config)
         {
-            var meleeWeaponObject = GameObject.Instantiate(config.WeaponObject, _weaponContainer);
+            var meleeWeaponObject = FindWeapon(config);
             meleeWeaponObject.SetActive(false);
 
             return new MeleeWeapon(

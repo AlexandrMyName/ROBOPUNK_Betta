@@ -334,6 +334,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BossSpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 548945831295417300, guid: 0c73415a04bc3b049afe3ca150ef16b4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3256414897094556690, guid: 0c73415a04bc3b049afe3ca150ef16b4, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -1052,18 +1056,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3010596652908279198, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4383781397521461427, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: _improvablePresenter
       value: 
       objectReference: {fileID: 1109672221}
-    - target: {fileID: 4917123984271577704, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -4.87
-      objectReference: {fileID: 0}
-    - target: {fileID: 4917123984271577704, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -4.73
-      objectReference: {fileID: 0}
     - target: {fileID: 5007015147164041087, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: m_Name
       value: '[DI] '

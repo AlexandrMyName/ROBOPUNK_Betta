@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Abstracts;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using Zenject;
 
 
@@ -23,22 +24,46 @@ namespace Core
         private Quaternion _rotation = Quaternion.identity;
         private Vector3 _direction;
         
+        private PlayerAnimatorIK _animatorIK;
+        private Transform _crossHairTransform;
+
 
         protected override void Awake(IGameComponents components)
         {
             _player = components.BaseObject.GetComponent<Player>();
+            _animatorIK = components.BaseObject.GetComponent<PlayerAnimatorIK>();
             _rigidbody = _player.GetComponent<Rigidbody>();
             _camera = Camera.main;
+
+
+            GameObject crossHairObject = new("CrossHair");
+            _crossHairTransform = crossHairObject.transform;
+
+            _animatorIK.AimConstraints.ForEach(aim =>
+            {
+
+                var weightArray = new WeightedTransformArray(0);
+                var weightTransform = new WeightedTransform(_crossHairTransform,1);
+                weightArray.Add(weightTransform);
+
+                aim.data.sourceObjects = weightArray;
+            });
+
+             
         }
         
+       
 
         protected override void Start()
         {
+
             _disposables.AddRange(new List<IDisposable>
                 {
                     _input.MousePosition.AxisOnChange.Subscribe(OnMousePositionChanged)
                 }
             );
+
+            _animatorIK.RigBuilder.Build();
         }
         
 
@@ -53,6 +78,14 @@ namespace Core
                 SetRotation();
             }
         }
+
+
+        protected override void Update()
+        {
+
+            _crossHairTransform.position = Vector3.Lerp(_crossHairTransform.position, _closestHitPoint, 10 * Time.deltaTime);
+        }
+
 
         protected override void FixedUpdate()
         {

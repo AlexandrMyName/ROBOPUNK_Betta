@@ -120,7 +120,7 @@ namespace User
             IsShootReady = false;
             ProcessShootTimeout();
 
-            Laser.Blink(ShootSpeed);
+            //Laser.Blink(ShootSpeed);
         }
 
 
