@@ -1,8 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/AShooter/Materials/Weapon/EnemyTurret.mat.meta
 guid: ee37782bcc5f5664d9a426752798d883
+========
+guid: d56b341fb6cba0e4f96669e4995bcbe6
+>>>>>>>> 21d1949b7ef1090b74609141e2f0ef7dc4d6f391:Assets/AShooter/Models/NewLevel/DownloadableAssets/Sherbbs Particle Collection/Materials/DarkSkybox.mat.meta
 NativeFormatImporter:
   externalObjects: {}
-  mainObjectFileID: 2100000
+  mainObjectFileID: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

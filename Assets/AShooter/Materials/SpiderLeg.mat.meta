@@ -1,8 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/AShooter/Materials/SpiderLeg.mat.meta
 guid: 3452641d6b1d2214c9fc947c771e0dd7
+========
+guid: 084ea724e5ff86b48a0ed85e424b7817
+>>>>>>>> 21d1949b7ef1090b74609141e2f0ef7dc4d6f391:Assets/AShooter/Materials/NewLevel/Animation/HeadlightsAnimation.anim.meta
 NativeFormatImporter:
   externalObjects: {}
-  mainObjectFileID: 2100000
+  mainObjectFileID: 7400000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

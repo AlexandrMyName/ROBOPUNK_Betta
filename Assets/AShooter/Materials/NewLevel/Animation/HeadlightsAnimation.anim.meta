@@ -1,8 +1,15 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/AShooter/Materials/NewLevel/Animation/HeadlightsAnimation.anim.meta
 guid: 084ea724e5ff86b48a0ed85e424b7817
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 7400000
+========
+guid: 59953f7353e764d428a2cb38205b3ec3
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+>>>>>>>> 21d1949b7ef1090b74609141e2f0ef7dc4d6f391:Assets/AShooter/Models/NewLevel/DownloadableAssets/Sherbbs Particle Collection/Materials/UnlitBlack.mat.meta
   userData: 
   assetBundleName: 
   assetBundleVariant: 
