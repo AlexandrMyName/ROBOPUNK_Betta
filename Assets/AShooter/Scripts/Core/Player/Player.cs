@@ -45,12 +45,13 @@ namespace Core
         
         private void RecalculateBasicParametersBasedOnStatsMultipliers()
         {
-            ComponentsStore.Movable.Speed.Value *= _playerStats.BaseMoveSpeedMultiplier;
-            ComponentsStore.Attackable.Health.Value *= _playerStats.BaseHealthMultiplier;
-            ComponentsStore.Shield.MaxProtection *= _playerStats.BaseShieldCapacityMultiplier;
-            ComponentsStore.Dash.DashForce *= _playerStats.BaseDashDistanceMultiplier;
-            ComponentsStore.WeaponStorage.WeaponState.BasicDamageMultiplier = _playerStats.BaseDamageMultiplier;
-            ComponentsStore.WeaponStorage.WeaponState.BasicShootSpeedMultiplier = _playerStats.BaseShootSpeedMultiplier;
+
+            ComponentsStore.Movable.Speed.Value *= _playerStats.BaseMoveSpeedMultiplier == 0 ? 1 : _playerStats.BaseMoveSpeedMultiplier;
+            ComponentsStore.Attackable.Health.Value *= _playerStats.BaseHealthMultiplier == 0 ? 1 : _playerStats.BaseHealthMultiplier;
+            ComponentsStore.Shield.MaxProtection *= _playerStats.BaseShieldCapacityMultiplier == 0 ? 1 : _playerStats.BaseShieldCapacityMultiplier;
+            ComponentsStore.Dash.DashForce *= _playerStats.BaseDashDistanceMultiplier == 0 ? 1 : _playerStats.BaseDashDistanceMultiplier;
+            ComponentsStore.WeaponStorage.WeaponState.BasicDamageMultiplier = _playerStats.BaseDamageMultiplier == 0 ? 1 : _playerStats.BaseDamageMultiplier;
+            ComponentsStore.WeaponStorage.WeaponState.BasicShootSpeedMultiplier = _playerStats.BaseShootSpeedMultiplier == 0 ? 1 : _playerStats.BaseShootSpeedMultiplier;
             ComponentsStore.WeaponStorage.UpgradeWeaponsStatesAccordingPlayerBaseStats(_playerStats.BaseDamageMultiplier, _playerStats.BaseShootSpeedMultiplier);
         }
 
