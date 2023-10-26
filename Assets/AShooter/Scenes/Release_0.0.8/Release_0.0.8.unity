@@ -1473,6 +1473,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5334222204397396251, guid: b7ff314a683bf6c4d865815f78227dc8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334222204411001509, guid: b7ff314a683bf6c4d865815f78227dc8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8170141148706911715, guid: b7ff314a683bf6c4d865815f78227dc8, type: 3}
       propertyPath: m_Name
       value: OfficeComplex
