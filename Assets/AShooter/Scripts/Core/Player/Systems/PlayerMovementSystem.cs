@@ -18,16 +18,28 @@ namespace Core
         
         private Vector3 _direction;
         private IMovable _movable;
-
+        private IGameComponents _components;
         private List<IDisposable> _disposables = new();
+
+        private PlayerAnimatorIK _animatorIK;
+
+        private Transform _playerTransform;
+
+        private Plane _plane;
+
+        private Vector3 _v = Vector3.zero;
+        private Vector3 _h = Vector3.zero;
+        private Vector3 _movement = Vector3.zero;
 
 
         protected override void Awake(IGameComponents components)
         {
-             
-            _animator = components.BaseObject.GetComponent<AnimatorIK>();
 
+             _components = components;
+            _animator = components.BaseObject.GetComponent<AnimatorIK>();
+            _playerTransform = components.BaseTransform;
             _movable = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Movable;
+            _animatorIK = components.BaseObject.GetComponent<PlayerAnimatorIK>();
         }
 
 
@@ -40,8 +52,54 @@ namespace Core
             });
         }
 
+        
+        protected override void Update()
+        {
 
-        protected override void Update() => _movable.MoveDirection = _direction;
+            _movable.MoveDirection = _direction;
+             
+            _v = _direction.z * _components.MainCamera.transform.up;
+            _h = _direction.x * _components.MainCamera.transform.right;
+
+            _v.y = 0;
+            _h.y = 0;
+
+            _movement = (_h + _v).normalized;
+
+            Vector3 localMove = _playerTransform.InverseTransformDirection(_movement);
+
+            _animatorIK.RootAnimator.SetFloat("Right", localMove.x, 0.5f, 3 * Time.deltaTime);
+
+            _animatorIK.RootAnimator.SetFloat("Forward", localMove.z, 0.5f , 3 * Time.deltaTime);
+        }
+
+
+        //private Vector3 GetRelativePos(Vector3 dir)
+        //{
+        //    Vector3 relativeDir = GetPlanePosition(Input.mousePosition) - _playerTransform.position;
+        //    relativeDir.Normalize();
+        //    relativeDir.y = 0;
+        //    return relativeDir;
+        //}
+
+
+        //private Vector3 GetPlanePosition(Vector3 mousePos)
+        //{
+
+        //    var ray = _components.MainCamera.ScreenPointToRay(mousePos);
+
+        //    if (Physics.Raycast(ray, out var s))
+        //    {
+        //        return s.point;
+        //    }
+        //    if (_plane.Raycast(ray, out float enterPoint))
+        //    {
+
+        //        return ray.GetPoint(enterPoint);
+        //    }
+        //    return Vector3.zero;
+        //}
+
 
 
         protected override void FixedUpdate()

@@ -49,19 +49,30 @@ namespace Core
             if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.gameObject != _player.gameObject)
             {
                 _closestHitPoint = hit.point;
-                RotatePlayer();
+                SetDirection();
+                SetRotation();
             }
         }
-        
 
-        private void RotatePlayer()
+        protected override void FixedUpdate()
+        {
+
+            _rigidbody.rotation = Quaternion.Slerp(_rigidbody.rotation, Quaternion.Euler(0, _rotation.eulerAngles.y, 0),10 * Time.fixedDeltaTime);
+        }
+
+
+        private void SetDirection()
         {
             _direction = _closestHitPoint - _player.transform.position;
-            _rotation = Quaternion.LookRotation(_direction, Vector3.up);
-            _rigidbody.rotation = Quaternion.Euler(0, _rotation.eulerAngles.y, 0);
         }
-        
-        
+
+
+        private void SetRotation()
+        {
+            _rotation = Quaternion.LookRotation(_direction, Vector3.up);
+        }
+
+         
         public void Dispose() => _disposables.ForEach(d => d.Dispose());
 
     }
