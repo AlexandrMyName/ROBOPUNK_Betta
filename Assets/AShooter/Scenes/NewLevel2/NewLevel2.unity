@@ -5851,11 +5851,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7154681999141088422, guid: dfef54581946e1241879a76cb3b21796, type: 3}
       propertyPath: m_FollowOffset.y
-      value: 20.72
+      value: 17.63
       objectReference: {fileID: 0}
     - target: {fileID: 7154681999141088422, guid: dfef54581946e1241879a76cb3b21796, type: 3}
       propertyPath: m_FollowOffset.z
-      value: -5
+      value: -5.8
       objectReference: {fileID: 0}
     - target: {fileID: 8727706908153784934, guid: dfef54581946e1241879a76cb3b21796, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7506,7 +7506,7 @@ PrefabInstance:
     - target: {fileID: 6041886409023221945, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: _prefab
       value: 
-      objectReference: {fileID: 5887370203132432508, guid: 647882c5eb3320b4db6412a816a72151, type: 3}
+      objectReference: {fileID: 1174952368415166349, guid: 1d87fe6fe1f031c429319935e9994777, type: 3}
     - target: {fileID: 6041886409023221945, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: _dashConfig
       value: 

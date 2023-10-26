@@ -58,6 +58,7 @@ namespace User
 
         private void InitLaserObject()
         {
+            if (_lineRenderer == null) return;
             _laserObject = _lineRenderer.transform.gameObject;
             _laserTransform = _laserObject.transform;
             _distance = _lineRenderer.GetPosition(1).z;
@@ -68,6 +69,7 @@ namespace User
 
         private Vector3 DrawRayUntilCollision()
         {
+            
             _hitVector = _endLineVectorDefault;
             
             var ray = new Ray(_laserTransform.position, _laserTransform.forward);

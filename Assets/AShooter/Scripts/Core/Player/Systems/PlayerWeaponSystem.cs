@@ -20,7 +20,7 @@ namespace Core
         private List<IDisposable> _disposables = new();
         private IWeaponStorage _weaponStorage;
         private WeaponState _weaponState;
-
+        private PlayerAnimatorIK _animatorIK;
         private bool _isAlredyFalsed;
 
 
@@ -29,8 +29,8 @@ namespace Core
           
             var weaponContainer = components.BaseObject.GetComponent<Player>().WeaponContainer;
             _weaponStorage = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.WeaponStorage;
-
-            _weaponStorage.InitializeWeapons(weaponContainer);
+            _animatorIK = components.BaseObject.GetComponent<PlayerAnimatorIK>();
+            _weaponStorage.InitializeWeapons(weaponContainer, _animatorIK);
             _weaponState = _weaponStorage.WeaponState;
             _weaponAbilityPresenter.Init(_weaponStorage);
         }
@@ -91,7 +91,9 @@ namespace Core
             _weaponStorage.Weapons[weaponType].WeaponObject.SetActive(true);
             _weaponState.CurrentWeapon = _weaponStorage.Weapons[weaponType];
 
+            SetAnimation(weaponType);
             ResolveWeaponStateByType(weaponType);
+             
         }
 
 
@@ -101,10 +103,12 @@ namespace Core
             {
                 case WeaponType.Sword:
                     _weaponState.MeleeWeapon.Value = _weaponStorage.Weapons[WeaponType.Sword] as IMeleeWeapon;
+                    
                     break;
                 
                 case WeaponType.Pistol:
                     _weaponState.SecondaryWeapon.Value = _weaponStorage.Weapons[WeaponType.Pistol] as IRangeWeapon;
+                    
                     break;
                     
                 default:
@@ -113,6 +117,12 @@ namespace Core
                     break;
             }
         }
+
+
+
+        private void SetAnimation(WeaponType weaponType)
+        => _animatorIK._rigAnimator.Play(weaponType.ToString() + "Aim",0 );
+          
 
 
         private void HandleMeleeButtonPressed(bool isPressing)
