@@ -15,5 +15,8 @@ namespace Abstracts
         ReactiveProperty<float> Speed { get; }
 
         void InitComponent(Rigidbody rb);
+
+        float JumpHeight { get; set; }
+        float JumpTime { get; set; }
     }
 }

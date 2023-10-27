@@ -29,6 +29,7 @@ namespace DI
 
         [SerializeField] private DashConfig _dashConfig;
         [SerializeField] private PlayerHPConfig _playerHPConfig;
+        [SerializeField] private ExperienceConfig _experienceConfig;
         [SerializeField] private CinemachineVirtualCamera _camera;
         [SerializeField] private Spawner _spawner;
 
@@ -39,11 +40,13 @@ namespace DI
         [SerializeField] private float _maxPlayerHealth;
         [SerializeField] private float _maxPlayerProtection = 50f;
         [SerializeField] private float _protectionRegenerationTime = 7f;
+        [SerializeField] private float _jumpHeight = 2.6f;
+        [SerializeField] private float _jumpTime = 3f;
         [SerializeField] private float _speed;
         
         [SerializeField] private GameObject _prefab;
         [SerializeField] private Transform _spawnTransform;
-        
+
         private SpawnPlayerFactory _spawnPlayerFactory;
         
         private Player _player;
@@ -92,13 +95,13 @@ namespace DI
         private IComponentsStore InitComponents()
         {
 
-            PlayerMoveComponent movable = new PlayerMoveComponent();
+            PlayerMoveComponent movable = new PlayerMoveComponent(_jumpHeight,_jumpTime);
             PlayerAttackComponent attackable = new PlayerAttackComponent();
             PlayerDashComponent dash = new PlayerDashComponent(_dashConfig);
             PlayerHPComponent playerHP = new PlayerHPComponent(_playerHPConfig);
             ViewsComponent views = new ViewsComponent();
             PlayerGoldWalletComponent gold = new PlayerGoldWalletComponent();
-            PlayerExperienceComponent exp = new PlayerExperienceComponent();
+            PlayerExperienceComponent exp = new PlayerExperienceComponent(_experienceConfig);
             WeaponStorage weapons = new WeaponStorage();
             PlayerLevelRewardComponent levelReward = new PlayerLevelRewardComponent(_levelRewardItemsConfigs);
             PlayerLevelProgressComponent levelProgress = new PlayerLevelProgressComponent(requiredExperienceForNextLevel, _progressRate);

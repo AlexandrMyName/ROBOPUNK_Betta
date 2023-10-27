@@ -177,7 +177,7 @@ namespace DI.Spawn
         {
 
             var systems = new List<ISystem>();
-            systems.Add(new EnemyRewardSystem(_experienceHandle, _goldWallet, _playerStats));
+            systems.Add(new EnemyRewardSystem(_experienceHandle, _goldWallet, _playerStats, _targetPosition));
             systems.Add(new EnemyDamageSystem(item.maxHealth,item.maxProtection));
             systems.Add(new EnemyMovementSystem(_targetPosition));
 

@@ -28,17 +28,12 @@ public class MainOptionsView : MonoBehaviour, IOptionsView
             _musicSlider.value = PlayerPrefs.GetFloat("Sound");
 
             _mixer.SetFloat("Music", _musicSlider.value);
-            _mixer.SetFloat("Player", _soundSlider.value);
-            _mixer.SetFloat("Enemy", _soundSlider.value);
-            _mixer.SetFloat("Explosion", _soundSlider.value);
-            _mixer.SetFloat("Boss", _soundSlider.value);
-            _mixer.SetFloat("Fire", _soundSlider.value);
-            _mixer.SetFloat("UI", _soundSlider.value);
+            _mixer.SetFloat("Sound", _soundSlider.value);
         }
         else
         {
             _mixer.GetFloat("Music", out var musValue);
-            _mixer.GetFloat("Player", out var soundValue);
+            _mixer.GetFloat("Sound", out var soundValue);
 
             _soundSlider.value = soundValue;
             _musicSlider.value = musValue;
@@ -65,14 +60,7 @@ public class MainOptionsView : MonoBehaviour, IOptionsView
     {
        
         _mixer.SetFloat("Music",_musicSlider.value);
-        _mixer.SetFloat("Player", _soundSlider.value);
-
-        _mixer.SetFloat("Enemy", _soundSlider.value);
-        _mixer.SetFloat("Explosion", _soundSlider.value);
-
-        _mixer.SetFloat("Boss", _soundSlider.value);
-        _mixer.SetFloat("Fire", _soundSlider.value);
-        _mixer.SetFloat("UI", _soundSlider.value);
+        _mixer.SetFloat("Sound", _soundSlider.value);
     }
 
 
