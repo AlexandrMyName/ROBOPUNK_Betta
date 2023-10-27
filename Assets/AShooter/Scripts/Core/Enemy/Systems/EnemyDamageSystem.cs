@@ -25,8 +25,8 @@ namespace Core
         private IEnemyHealthView _healthView;
         private IAnimatorIK _animatorIK;
         private IWeaponStorage _weaponStorage;
-        private AudioClip _deathAudioClip;
         private AudioSource _audioSource;
+        private AudioClip _deathAudioClip;
 
 
         public EnemyDamageSystem(float maxHealth, float maxProtection)
@@ -46,13 +46,14 @@ namespace Core
             _attackable = _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.Attackable;
             _animatorIK = _components.BaseObject.GetComponent<IAnimatorIK>();
             _weaponStorage = _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.WeaponStorage;
-            _audioSource = _components.BaseObject.GetComponent<AudioSource>();
-            _deathAudioClip = SoundManager.Config.GetSound(SoundType.Death, SoundModelType.Enemy);
         }
 
 
         protected override void OnEnable()
         {
+
+            _audioSource = _components.BaseObject.GetComponent<AudioSource>();
+            _deathAudioClip = SoundManager.Config.GetSound(SoundType.Death, SoundModelType.Enemy);
 
             _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.Attackable.SetMaxHealth(_maxHealth, OnSubscribe);
             _isDead = _components.BaseObject.GetComponent<IEnemy>().ComponentsStore.Attackable.IsDeadFlag;

@@ -18,8 +18,8 @@ namespace Core
         private TrailRenderer _trailInstance;
         private Transform _playerTransform;
         private IPlayer _player;
-        private AudioClip _bossSpawnAudioClip;
         private AudioSource _audioSource;
+        private AudioClip _bossSpawnAudioClip;
         private IAnimatorIK _animatorIK;
 
 
@@ -36,13 +36,15 @@ namespace Core
 
             _gameComponents = components;
             _player = _playerTransform.GetComponent<IPlayer>();
-            _bossSpawnAudioClip = SoundManager.Config.GetSound(SoundType.Spawn, SoundModelType.CyberSpider_Boss);
-            _audioSource = components.BaseObject.GetComponent<AudioSource>();
+            
         }
 
 
         protected override void Start()
         {
+            _audioSource = _gameComponents.BaseObject.GetComponent<AudioSource>();
+            _bossSpawnAudioClip = SoundManager.Config.GetSound(SoundType.Spawn, SoundModelType.CyberSpider_Boss);
+
             PlaySound(_audioSource, _bossSpawnAudioClip);
         }
 

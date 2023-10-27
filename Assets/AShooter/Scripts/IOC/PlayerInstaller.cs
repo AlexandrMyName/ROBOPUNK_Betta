@@ -29,6 +29,7 @@ namespace DI
 
         [SerializeField] private DashConfig _dashConfig;
         [SerializeField] private PlayerHPConfig _playerHPConfig;
+        [SerializeField] private ExperienceConfig _experienceConfig;
         [SerializeField] private CinemachineVirtualCamera _camera;
         [SerializeField] private Spawner _spawner;
 
@@ -45,7 +46,7 @@ namespace DI
         
         [SerializeField] private GameObject _prefab;
         [SerializeField] private Transform _spawnTransform;
-        
+
         private SpawnPlayerFactory _spawnPlayerFactory;
         
         private Player _player;
@@ -100,7 +101,7 @@ namespace DI
             PlayerHPComponent playerHP = new PlayerHPComponent(_playerHPConfig);
             ViewsComponent views = new ViewsComponent();
             PlayerGoldWalletComponent gold = new PlayerGoldWalletComponent();
-            PlayerExperienceComponent exp = new PlayerExperienceComponent();
+            PlayerExperienceComponent exp = new PlayerExperienceComponent(_experienceConfig);
             WeaponStorage weapons = new WeaponStorage();
             PlayerLevelRewardComponent levelReward = new PlayerLevelRewardComponent(_levelRewardItemsConfigs);
             PlayerLevelProgressComponent levelProgress = new PlayerLevelProgressComponent(requiredExperienceForNextLevel, _progressRate);

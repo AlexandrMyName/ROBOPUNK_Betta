@@ -10,16 +10,16 @@ namespace Core
     public class PlayerShieldSystem : BaseSystem, IDisposable
     {
 
+        private IGameComponents _components;
         private IShield _shield;
         private IAttackable _attackable;
-        private IGameComponents _components;
         private IShieldView _view;
 
         private List<IDisposable> _disposables = new();
         private List<IDisposable> _regenerationTimers = new();
 
-        private AudioClip _protectionRemoveAudioClip;
         private AudioSource _audioSource;
+        private AudioClip _protectionRemoveAudioClip;
         private bool _brokenShield;
 
          

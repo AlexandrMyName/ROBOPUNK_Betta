@@ -106,10 +106,11 @@ public class BosSpawner : MonoBehaviour
     {
          
         var systems = new List<ISystem>();
+        var targetPosition = _componentsPlayer.Movable.Rigidbody.transform;
 
-        systems.Add(new EnemyRewardSystem(_componentsPlayer.ExperienceHandle, _componentsPlayer.GoldWallet, _componentsPlayer.PlayerStats));
+        systems.Add(new EnemyRewardSystem(_componentsPlayer.ExperienceHandle, _componentsPlayer.GoldWallet, _componentsPlayer.PlayerStats, targetPosition));
         systems.Add(new EnemyDamageSystem(item.maxHealth, item.maxProtection));
-        systems.Add(new EnemyMovementSystem(_componentsPlayer.Movable.Rigidbody.transform));
+        systems.Add(new EnemyMovementSystem(targetPosition));
          
 
         switch (item.enemyType)

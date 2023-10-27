@@ -44,6 +44,8 @@ namespace Core
 
         protected override void Start()
         {
+            _audioSource = _components.BaseObject.GetComponent<AudioSource>();
+
             _disposables.AddRange(new List<IDisposable>{
                 _input.MousePosition.AxisOnChange.Subscribe(OnMousePositionChanged),
                 

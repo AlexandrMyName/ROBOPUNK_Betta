@@ -39,6 +39,9 @@ namespace Core
 
         protected override void Start()
         {
+            _audioSource = _components.BaseObject.GetComponent<AudioSource>();
+            _hitAudioClip = SoundManager.Config.GetSound(SoundType.Damage, SoundModelType.Weapon_Sword);
+
             _disposables.AddRange(new List<IDisposable>{
                 _input.LeftClick.AxisOnChange.Subscribe(pressed =>
                 {

@@ -21,16 +21,12 @@ namespace User
         private AudioSource _audioSource;
 
 
-        private void Awake()
+        private void Start()
         {
             _audioSource = gameObject.GetComponent<AudioSource>();
             _fireAudioClip = SoundManager.Config.GetSound(SoundType.DamageOverTime, SoundModelType.Ability_Expolision);
             _expolisionAudioClip = SoundManager.Config.GetSound(SoundType.Damage, SoundModelType.Ability_Expolision);
-        }
 
-
-        private void Start()
-        {
             _disposables.Add(
                 Observable
                     .Interval(TimeSpan.FromSeconds(Ability.DamageRate))
