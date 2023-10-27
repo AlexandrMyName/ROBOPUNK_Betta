@@ -101,6 +101,8 @@ MonoBehaviour:
   _maxPlayerHealth: 100
   _maxPlayerProtection: 50
   _protectionRegenerationTime: 7
+  _jumpHeight: 2.6
+  _jumpTime: 3
   _speed: 10
   _prefab: {fileID: 1174952368415166349, guid: 1d87fe6fe1f031c429319935e9994777, type: 3}
   _spawnTransform: {fileID: 4917123984271577704}
@@ -182,7 +184,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8079262153542790522
 Transform:
   m_ObjectHideFlags: 0
@@ -267,6 +269,7 @@ MonoBehaviour:
   _interactViewPrefab: {fileID: 5828510425389693978, guid: 45c171eb53e18d24596b869c37b1dd09, type: 3}
   _weaponAbilityViewPrefab: {fileID: 3010169044236182043, guid: 6fea3b772d9849541a363aac049b0d36, type: 3}
   _mp3PlayerViewPrefab: {fileID: 2064752235517260811, guid: 41750c33f3a4eb249be14879f29808d6, type: 3}
+  _jetPackViewPrefab: {fileID: 8883014059306586274, guid: 2501d0d6988cfab4ab8bb2e92aec3314, type: 3}
   _optionsView: {fileID: 8566131872191883616, guid: 6fad837a1ef35114eb5a3c160ebab418, type: 3}
   _pauseMenuViewPrefab: {fileID: 3175645268032309755, guid: fd055b6c5fe98d040bbbc9bb076e995e, type: 3}
   _storeMenuViewPrefab: {fileID: 7282505665994359049, guid: 00689ff3fa55ebb45a3ddfc7d7ad4039, type: 3}

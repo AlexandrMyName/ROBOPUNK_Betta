@@ -29,8 +29,7 @@ namespace Core
 
             _view = components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.MP3PlayerView;
             _view.Show();
-
-            _audioSource = SoundManager.AudioSource;
+             
             CurrentClipIndex = new ReactiveProperty<int>(-1);
             _isPaused = false;
         }
@@ -38,6 +37,7 @@ namespace Core
 
         protected override void Start()
         {
+            _audioSource = SoundManager.AudioSource;
             _audioClips = RandomPermutation(SoundManager.MP3PlayerConfig.AudioClips.ToArray());
 
             _input.MP3Player.AxisOnChange.Subscribe(_ => {

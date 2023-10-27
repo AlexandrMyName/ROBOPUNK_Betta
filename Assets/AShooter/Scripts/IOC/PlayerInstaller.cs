@@ -39,6 +39,8 @@ namespace DI
         [SerializeField] private float _maxPlayerHealth;
         [SerializeField] private float _maxPlayerProtection = 50f;
         [SerializeField] private float _protectionRegenerationTime = 7f;
+        [SerializeField] private float _jumpHeight = 2.6f;
+        [SerializeField] private float _jumpTime = 3f;
         [SerializeField] private float _speed;
         
         [SerializeField] private GameObject _prefab;
@@ -92,7 +94,7 @@ namespace DI
         private IComponentsStore InitComponents()
         {
 
-            PlayerMoveComponent movable = new PlayerMoveComponent();
+            PlayerMoveComponent movable = new PlayerMoveComponent(_jumpHeight,_jumpTime);
             PlayerAttackComponent attackable = new PlayerAttackComponent();
             PlayerDashComponent dash = new PlayerDashComponent(_dashConfig);
             PlayerHPComponent playerHP = new PlayerHPComponent(_playerHPConfig);

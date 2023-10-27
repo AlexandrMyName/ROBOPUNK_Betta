@@ -32,6 +32,8 @@ namespace Abstracts
 
         IRewardMenuView RewardMenu { get; }
 
+        IJetPackView JetPackView { get; }
+
         public List<IView> GetListView();
 
         IMP3PlayerView MP3PlayerView { get; }

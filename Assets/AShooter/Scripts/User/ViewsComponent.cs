@@ -35,6 +35,9 @@ namespace User.Components
 
         [Inject] public IOptionsView Options { get; set; }
 
+        [Inject] public IJetPackView JetPackView { get; }
+
+
         public List<IView> GetListView()
         {
             var views = new List<IView>();
@@ -52,7 +55,7 @@ namespace User.Components
             views.Add(MP3PlayerView);
             views.Add(RewardMenu);
             views.Add(Options);
-
+            views.Add(JetPackView);
             return views;
         }
 

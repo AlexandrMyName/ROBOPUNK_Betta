@@ -21,6 +21,7 @@ namespace DI
     [SerializeField] private GameObject _interactViewPrefab;
     [SerializeField] private GameObject _weaponAbilityViewPrefab;
     [SerializeField] private GameObject _mp3PlayerViewPrefab;
+    [SerializeField] private GameObject _jetPackViewPrefab;
     [SerializeField] private GameObject _optionsView;
 
     [Space(10)]
@@ -106,6 +107,11 @@ namespace DI
             Container
                 .Bind<IRewardMenuView>()
                 .FromInstance(InstantiateView<IRewardMenuView>(_rewardMenuViewPrefab))
+                .AsCached();
+
+            Container
+                .Bind<IJetPackView>()
+                .FromInstance(InstantiateView<IJetPackView>(_jetPackViewPrefab))
                 .AsCached();
         }
 
