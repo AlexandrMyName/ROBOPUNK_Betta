@@ -139,17 +139,21 @@ namespace Core
             float dropProbability = 0.4f;
             var weaponTypes = new HashSet<WeaponType>() { WeaponType.Shotgun, WeaponType.Rifle, WeaponType.RocketLauncher };
 
-            var weaponConfigs = _weaponStorage.WeaponConfigs
-                .Where(weaponConfig => weaponTypes.Contains(weaponConfig.WeaponType))
-                .ToList();
-            var configIndex = UnityEngine.Random.Range(0, weaponConfigs.Count);
-            var config = weaponConfigs[configIndex];
-            var pickUpItemTypeIndex = UnityEngine.Random.Range(0, Enum.GetNames(typeof(PickUpItemType)).Length);
+            // Можеть быть null, если выпадение из босса.
+            if (_weaponStorage != null)
+            {
+                var weaponConfigs = _weaponStorage.WeaponConfigs
+                    .Where(weaponConfig => weaponTypes.Contains(weaponConfig.WeaponType))
+                    .ToList();
+                var configIndex = UnityEngine.Random.Range(0, weaponConfigs.Count);
+                var config = weaponConfigs[configIndex];
+                var pickUpItemTypeIndex = UnityEngine.Random.Range(0, Enum.GetNames(typeof(PickUpItemType)).Length);
 
-            PickUpItemModel pickUpItemModel = new PickUpItemModel(config, (PickUpItemType)pickUpItemTypeIndex, _components.BaseObject.transform.position);
+                PickUpItemModel pickUpItemModel = new PickUpItemModel(config, (PickUpItemType)pickUpItemTypeIndex, _components.BaseObject.transform.position);
 
-            if (random <= dropProbability)
-                _weaponStorage.GetPickUpItem(pickUpItemModel);
+                if (random <= dropProbability)
+                    _weaponStorage.GetPickUpItem(pickUpItemModel);
+            }
         }
 
 
