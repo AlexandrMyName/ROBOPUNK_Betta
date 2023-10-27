@@ -12,7 +12,7 @@ namespace Core
 
         private IShield _shield;
         private IAttackable _attackable;
-
+        private IGameComponents _components;
         private IShieldView _view;
 
         private List<IDisposable> _disposables = new();
@@ -22,7 +22,8 @@ namespace Core
         private AudioSource _audioSource;
         private bool _brokenShield;
 
-
+         
+         
         public void Dispose()
         {
 
@@ -34,6 +35,7 @@ namespace Core
         protected override void Awake(IGameComponents components)
         {
 
+            _components = components;
             _shield = components.BaseTransform.GetComponent<IPlayer>().ComponentsStore.Shield;
             _attackable = components.BaseTransform.GetComponent<IPlayer>().ComponentsStore.Attackable;
 
@@ -43,12 +45,16 @@ namespace Core
             _attackable.HealthProtection.Value = _shield.MaxProtection;
             _attackable.HealthProtection.SkipLatestValueOnSubscribe();
             _view.Show();
-
-            _protectionRemoveAudioClip = SoundManager.Config.GetSound(SoundType.ProtectionRemove, SoundModelType.Player);
-            _audioSource = components.BaseObject.GetComponent<AudioSource>();
             _brokenShield = false;
         }
 
+
+        protected override void Start()
+        {
+
+            _protectionRemoveAudioClip = SoundManager.Config.GetSound(SoundType.ProtectionRemove, SoundModelType.Player);
+            _audioSource = _components.BaseObject.GetComponent<AudioSource>();
+        }
 
         protected void RefreshProtection(float protection)
         {

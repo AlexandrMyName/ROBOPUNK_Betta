@@ -31,6 +31,8 @@ namespace Core
         private Vector3 _h = Vector3.zero;
         private Vector3 _movement = Vector3.zero;
 
+        private float _reactiveJumpHeight = 4.5f;
+        
 
         protected override void Awake(IGameComponents components)
         {
@@ -68,40 +70,14 @@ namespace Core
 
             Vector3 localMove = _playerTransform.InverseTransformDirection(_movement);
 
-            _animatorIK.RootAnimator.SetFloat("Right", localMove.x, 0.5f, 3 * Time.deltaTime);
+             
+                _animatorIK.RootAnimator.SetFloat("Right", localMove.x, 0.5f, 3 * Time.deltaTime);
 
-            _animatorIK.RootAnimator.SetFloat("Forward", localMove.z, 0.5f , 3 * Time.deltaTime);
+                _animatorIK.RootAnimator.SetFloat("Forward", localMove.z, 0.5f, 3 * Time.deltaTime);
+             
         }
 
-
-        //private Vector3 GetRelativePos(Vector3 dir)
-        //{
-        //    Vector3 relativeDir = GetPlanePosition(Input.mousePosition) - _playerTransform.position;
-        //    relativeDir.Normalize();
-        //    relativeDir.y = 0;
-        //    return relativeDir;
-        //}
-
-
-        //private Vector3 GetPlanePosition(Vector3 mousePos)
-        //{
-
-        //    var ray = _components.MainCamera.ScreenPointToRay(mousePos);
-
-        //    if (Physics.Raycast(ray, out var s))
-        //    {
-        //        return s.point;
-        //    }
-        //    if (_plane.Raycast(ray, out float enterPoint))
-        //    {
-
-        //        return ray.GetPoint(enterPoint);
-        //    }
-        //    return Vector3.zero;
-        //}
-
-
-
+         
         protected override void FixedUpdate()
         {
 
@@ -110,6 +86,27 @@ namespace Core
                 _movable.Rigidbody.velocity.y, 
                 _direction.z * _movable.Speed.Value
                 );
+
+            if (Input.GetKey(KeyCode.Space))
+            {
+                _movable.Rigidbody.transform.position
+                    = Vector3.Lerp(_movable.Rigidbody.transform.position,
+                    new Vector3(_movable.Rigidbody.transform.position.x,
+                    _reactiveJumpHeight,
+                    _movable.Rigidbody.transform.position.z), 10 * Time.deltaTime);
+
+                _movable.Rigidbody.velocity = new Vector3(_movable.Rigidbody.velocity.x, 0, _movable.Rigidbody.velocity.z);
+
+                _animatorIK.RootAnimator.SetBool("ReactiveJump", true);
+
+                _animatorIK.JetPackEffects.ForEach(effect => effect.gameObject.SetActive(true));
+
+            }
+            else
+            {
+                _animatorIK.RootAnimator.SetBool("ReactiveJump", false);
+                _animatorIK.JetPackEffects.ForEach(effect => effect.gameObject.SetActive(false));
+            }
         }
 
 

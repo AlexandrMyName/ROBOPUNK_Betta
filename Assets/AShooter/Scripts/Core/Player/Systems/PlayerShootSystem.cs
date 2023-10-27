@@ -36,9 +36,9 @@ namespace Core
         
         protected override void Awake(IGameComponents components)
         {
+
             _components = components;
             _camera = _components.MainCamera;
-            _audioSource = components.BaseObject.GetComponent<AudioSource>();
         }
 
 
@@ -61,6 +61,7 @@ namespace Core
                         TryShootPerform(_mainRangeWeapon);
                 })
             });
+            _audioSource = _components.BaseObject.GetComponent<AudioSource>();
         }
 
 

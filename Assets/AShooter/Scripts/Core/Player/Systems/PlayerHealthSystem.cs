@@ -37,6 +37,12 @@ namespace Core
 
             _loseView = _components.BaseObject.GetComponent<IPlayer>().ComponentsStore.Views.Death;
             _disposables.Add(_attackable.Health.Subscribe(DeathCheck));
+             
+        }
+
+
+        protected override void Start()
+        {
 
             _audioSource = _components.BaseObject.GetComponent<AudioSource>();
             _deathAudioClip = SoundManager.Config.GetSound(SoundType.Death, SoundModelType.Player);

@@ -17,6 +17,9 @@ public class PlayerAnimatorIK : MonoBehaviour
     [field:SerializeField] public List<MultiAimConstraint> AimConstraints { get; set; }
      
     [field: SerializeField] public List<PlayerWeaponData> WeaponData { get; set; }
+
+
+    [field: SerializeField] public List<ParticleSystem> JetPackEffects { get; set; }
 }
 
 [Serializable]
