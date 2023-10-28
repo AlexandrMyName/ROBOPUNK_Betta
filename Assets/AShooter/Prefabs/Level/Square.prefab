@@ -3539,10 +3539,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: chainlink_single (45)
       objectReference: {fileID: 0}
-    - target: {fileID: 1000013955223658, guid: ecc15abaa2d4963428bdf7fc9eb09410, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4000012378391202, guid: ecc15abaa2d4963428bdf7fc9eb09410, type: 3}
       propertyPath: m_RootOrder
       value: -1
