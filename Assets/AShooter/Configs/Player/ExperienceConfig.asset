@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: ExperienceConfig
   m_EditorClassIdentifier: 
   ExperienceBall: {fileID: 7095654237708315589, guid: 659ecfddda7556a4d9c9f643be121f52, type: 3}
+  LevelUpEffect: {fileID: 6810471105834413002, guid: aa573ab379dc9264eaf4db8cb30ffc99, type: 3}

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 using User;
 using User.Presenters;
 using Object = UnityEngine.Object;
@@ -136,16 +135,32 @@ namespace Core
             {
                 _rewardMenuUI.Show();
                 _isMenuActive = true;
-                Time.timeScale = 0;
-
-                while (_chosenRewards.Count < _numberOfActiveRewardItems)
-                {
-                    var rewardButtonGO = _rewardButtonGameObjects[UnityEngine.Random.Range(0, _rewardButtonGameObjects.Length)];
-                    if (!_chosenRewards.Contains(rewardButtonGO))
+                
+                Observable.Timer(TimeSpan.FromSeconds(2))
+                    .Subscribe(_ =>
                     {
-                        rewardButtonGO.SetActive(true);
-                        _chosenRewards.Add(rewardButtonGO);
-                    }
+                        _rewardMenuUI.Animation.Play("LevelRewardMenuAnimationOpen");
+                    }).AddTo(_baseObject);
+
+                Observable.Timer(TimeSpan.FromSeconds(3))
+                    .Subscribe(_ =>
+                    {
+                        Time.timeScale = 0;
+                        ShowMenuContent();
+                    }).AddTo(_baseObject);
+            }
+        }
+
+
+        private void ShowMenuContent()
+        {
+            while (_chosenRewards.Count < _numberOfActiveRewardItems)
+            {
+                var rewardButtonGO = _rewardButtonGameObjects[UnityEngine.Random.Range(0, _rewardButtonGameObjects.Length)];
+                if (!_chosenRewards.Contains(rewardButtonGO))
+                {
+                    rewardButtonGO.SetActive(true);
+                    _chosenRewards.Add(rewardButtonGO);
                 }
             }
         }
@@ -186,6 +201,8 @@ namespace Core
 
         public void CloseUpgradeMenu()
         {
+            _rewardMenuUI.Animation.Rewind("LevelRewardMenuAnimationOpen");
+
             if (_isMenuActive)
             {
                 _rewardMenuUI.Hide();

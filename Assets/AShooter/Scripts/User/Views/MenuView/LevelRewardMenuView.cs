@@ -1,4 +1,5 @@
 using Abstracts;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,8 @@ namespace User.Presenters
 
         public GameObject LevelRewardItemPrefab { get { return _levelRewardItemPrefab; } }
 
+        public Animation Animation { get { return gameObject.GetComponent<Animation>(); } }
+
 
         public bool GetActivityState()
         {
@@ -33,8 +36,19 @@ namespace User.Presenters
 
         public void Hide()
         {
-            if(this)
-            gameObject.SetActive(false);
+            if (this)
+            {
+                gameObject.SetActive(false);
+                ResetInitialState();
+                
+            }
+        }
+
+
+        private void ResetInitialState()
+        {
+            var rectTransform = gameObject.GetComponent<RectTransform>();
+            rectTransform.sizeDelta = Vector2.zero;
         }
 
 
