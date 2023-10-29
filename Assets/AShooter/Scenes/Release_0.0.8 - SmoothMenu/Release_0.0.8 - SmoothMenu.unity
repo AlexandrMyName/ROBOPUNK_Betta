@@ -1078,7 +1078,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 46116f5c97ef9d445b69200bc9a70807, type: 2}
     - target: {fileID: 6041886409023221945, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: requiredExperienceForNextLevel
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7243575379766156545, guid: 426aa636cf0e1d844b699628f9fa269e, type: 3}
       propertyPath: _containerForUI
