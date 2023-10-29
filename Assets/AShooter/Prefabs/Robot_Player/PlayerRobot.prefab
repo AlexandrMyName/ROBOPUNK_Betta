@@ -1257,7 +1257,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 716d1c38f985926428abb91d09b05c93, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 716d1c38f985926428abb91d09b05c93, type: 3}
       propertyPath: m_LocalScale.x
@@ -1312,9 +1312,25 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7483265010278249696, guid: 716d1c38f985926428abb91d09b05c93, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7483265010278249696, guid: 716d1c38f985926428abb91d09b05c93, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7483265010278249696, guid: 716d1c38f985926428abb91d09b05c93, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 612f062b669f72f45a2f13edd1287054, type: 2}
+    - target: {fileID: -1206874426333947015, guid: 716d1c38f985926428abb91d09b05c93, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1206874426333947015, guid: 716d1c38f985926428abb91d09b05c93, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -1206874426333947015, guid: 716d1c38f985926428abb91d09b05c93, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -1330,6 +1346,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 716d1c38f985926428abb91d09b05c93, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2236237030686087061, guid: 716d1c38f985926428abb91d09b05c93, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2236237030686087061, guid: 716d1c38f985926428abb91d09b05c93, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2236237030686087061, guid: 716d1c38f985926428abb91d09b05c93, type: 3}
       propertyPath: m_Materials.Array.data[0]
