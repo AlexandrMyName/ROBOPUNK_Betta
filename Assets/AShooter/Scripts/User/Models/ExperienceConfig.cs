@@ -10,6 +10,8 @@ namespace User
 
         public ParticleSystem ExperienceBall;
 
+        public ParticleSystem LevelUpEffect;
+
 
     }
 }

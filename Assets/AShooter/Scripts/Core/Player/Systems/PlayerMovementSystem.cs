@@ -33,7 +33,8 @@ namespace Core
         private float _currentJumpValue = 0;
         private bool _isRegenerationJump;
 
-         
+        private Vector3 _hitJump;
+
         protected override void Awake(IGameComponents components)
         {
 
@@ -60,8 +61,10 @@ namespace Core
         protected override void Update()
         {
 
+            UpdateJumpHit();
+
             _movable.MoveDirection = _direction;
-             
+
             _v = _direction.z * _components.MainCamera.transform.up;
             _h = _direction.x * _components.MainCamera.transform.right;
 
@@ -72,13 +75,24 @@ namespace Core
 
             Vector3 localMove = _playerTransform.InverseTransformDirection(_movement);
 
-             
-                _animatorIK.RootAnimator.SetFloat("Right", localMove.x, 0.5f, 3 * Time.deltaTime);
 
-                _animatorIK.RootAnimator.SetFloat("Forward", localMove.z, 0.5f, 3 * Time.deltaTime);
+            _animatorIK.RootAnimator.SetFloat("Right", localMove.x, 0.5f, 3 * Time.deltaTime);
+
+            _animatorIK.RootAnimator.SetFloat("Forward", localMove.z, 0.5f, 3 * Time.deltaTime);
         }
 
-         
+
+        private void UpdateJumpHit()
+        {
+
+            if (Physics.Raycast(new Ray(_movable.Rigidbody.transform.position, Vector3.down), out var hit))
+            {
+                if (_hitJump.y - hit.point.y >= Mathf.Abs(0.2f)) return;
+                _hitJump = Vector3.Lerp(_movable.Rigidbody.transform.position, hit.point, 10 * Time.deltaTime);
+            }
+        }
+
+
         protected override void FixedUpdate()
         {
 
@@ -96,13 +110,15 @@ namespace Core
         private void UpdateJumpState()
         {
 
+           
+            
             if (Input.GetKey(KeyCode.Space) && _currentJumpValue >= 0)
             {
 
                 _movable.Rigidbody.transform.position
                     = Vector3.Lerp(_movable.Rigidbody.transform.position,
                     new Vector3(_movable.Rigidbody.transform.position.x,
-                    _movable.JumpHeight,
+                   _hitJump.y + _movable.JumpHeight,
                     _movable.Rigidbody.transform.position.z), 10 * Time.deltaTime);
 
                 _movable.Rigidbody.velocity = new Vector3(_movable.Rigidbody.velocity.x, 0, _movable.Rigidbody.velocity.z);
@@ -138,7 +154,7 @@ namespace Core
 
         private void UpdateJumpTime()
         {
-            Debug.Log("S");
+            
             _currentJumpValue = 1f;
             _jetPackView.RefreshValue(_currentJumpValue, _movable.JumpTime);
             _isRegenerationJump = false;

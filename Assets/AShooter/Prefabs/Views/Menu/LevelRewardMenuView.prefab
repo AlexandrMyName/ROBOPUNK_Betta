@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 5558831859825257353}
   - component: {fileID: 229760103541983678}
   - component: {fileID: 5696746529958751555}
+  - component: {fileID: 5181716547278025630}
   m_Layer: 5
   m_Name: LevelRewardMenuView
   m_TagString: Untagged
@@ -174,7 +175,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1280, y: 720}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &229760103541983678
 CanvasRenderer:
@@ -198,3 +199,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rewardButtons: {fileID: 6358440086264056517}
   _levelRewardItemPrefab: {fileID: 7254147764770633463, guid: 8bdf300d9d5271945aa4368cf9cef328, type: 3}
+--- !u!111 &5181716547278025630
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7282505665994359049}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: e6dc8dfafa7e4ed4eae294df77992ef9, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: e6dc8dfafa7e4ed4eae294df77992ef9, type: 2}
+  - {fileID: 7400000, guid: 3249a28fc403d96429a936af7128ff91, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0

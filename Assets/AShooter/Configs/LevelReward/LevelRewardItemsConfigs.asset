@@ -19,14 +19,14 @@ MonoBehaviour:
     Icon: {fileID: 21300000, guid: bcef3bb3e863a0b47bc29230664c187c, type: 3}
     upgradeCoefficient: 10
     unitImprovementCoefficient: '%'
-    effectPrefrab: {fileID: 7155335147208632822, guid: 9bea9964cac96414ebbba8a54403fe7d, type: 3}
+    effectPrefrab: {fileID: 7053385775836331393, guid: 1a15b2e72447146429993b166c98535a, type: 3}
   - id: 1
     description: Damage Upgrade
     nameItem: Damage
     Icon: {fileID: 21300000, guid: dc609ed06ad96334b99034f63f3072ec, type: 3}
     upgradeCoefficient: 25
     unitImprovementCoefficient: '%'
-    effectPrefrab: {fileID: 7155335147208632822, guid: 9bea9964cac96414ebbba8a54403fe7d, type: 3}
+    effectPrefrab: {fileID: 7053385775836331393, guid: 1a15b2e72447146429993b166c98535a, type: 3}
   - id: 2
     description: Health Upgrade
     nameItem: Health
@@ -54,21 +54,21 @@ MonoBehaviour:
     Icon: {fileID: 21300000, guid: d6e0c61226318b64db8f2ca9069b2dae, type: 3}
     upgradeCoefficient: 25
     unitImprovementCoefficient: 
-    effectPrefrab: {fileID: 7155335147208632822, guid: 9bea9964cac96414ebbba8a54403fe7d, type: 3}
+    effectPrefrab: {fileID: 7053385775836331393, guid: 1a15b2e72447146429993b166c98535a, type: 3}
   - id: 6
     description: Distance Dash Upgrade
     nameItem: Distance Dash
     Icon: {fileID: 21300000, guid: b1ca7598084e20445b98996a45b9d87f, type: 3}
     upgradeCoefficient: 15
     unitImprovementCoefficient: '%'
-    effectPrefrab: {fileID: 7155335147208632822, guid: 9bea9964cac96414ebbba8a54403fe7d, type: 3}
+    effectPrefrab: {fileID: 7053385775836331393, guid: 1a15b2e72447146429993b166c98535a, type: 3}
   - id: 7
     description: Recharge Dash Upgrade
     nameItem: Recharge Dash
     Icon: {fileID: 21300000, guid: b1ca7598084e20445b98996a45b9d87f, type: 3}
     upgradeCoefficient: 15
     unitImprovementCoefficient: '%'
-    effectPrefrab: {fileID: 7155335147208632822, guid: 9bea9964cac96414ebbba8a54403fe7d, type: 3}
+    effectPrefrab: {fileID: 7053385775836331393, guid: 1a15b2e72447146429993b166c98535a, type: 3}
   - id: 8
     description: Replenishment Of Ammunition
     nameItem: Ammunition

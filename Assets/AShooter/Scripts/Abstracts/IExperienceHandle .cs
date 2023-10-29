@@ -14,6 +14,8 @@ namespace Abstracts
 
         public ParticleSystem ExperienceBall { get; }
 
+        public ParticleSystem LevelUpEffect { get; }
+
         public void AddExperience(float amountExp);
 
     }

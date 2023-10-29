@@ -10,7 +10,9 @@ namespace Abstracts
 
         public HorizontalLayoutGroup HorizontalLayoutGroup { get; }
 
-        public GameObject LevelRewardItemPrefab { get; } 
+        public GameObject LevelRewardItemPrefab { get; }
+
+        public Animation Animation { get; }
 
     }
 

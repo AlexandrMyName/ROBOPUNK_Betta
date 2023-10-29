@@ -19,12 +19,15 @@ namespace Core
 
         public ParticleSystem ExperienceBall { get; }
 
+        public ParticleSystem LevelUpEffect { get; }
+
 
         public PlayerExperienceComponent(ExperienceConfig experienceConfig)
         {
             CurrentExperience = new ReactiveProperty<float>(0);
             CurrentLevel = new ReactiveProperty<int>(1);
             ExperienceBall = experienceConfig.ExperienceBall;
+            LevelUpEffect = experienceConfig.LevelUpEffect;
         }
 
 
